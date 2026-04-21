@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.5rem);
+}
+
+:root {
+  --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+
+  --background: oklch(0.975 0.006 235);
+  --foreground: oklch(0.24 0.02 258);
+  --card: oklch(0.992 0.004 235);
+  --card-foreground: oklch(0.25 0.02 258);
+  --popover: oklch(0.995 0.004 235);
+  --popover-foreground: oklch(0.25 0.02 258);
+  --primary: oklch(0.29 0.035 255);
+  --primary-foreground: oklch(0.985 0.003 235);
+  --secondary: oklch(0.943 0.012 245);
+  --secondary-foreground: oklch(0.28 0.02 258);
+  --muted: oklch(0.955 0.01 240);
+  --muted-foreground: oklch(0.5 0.018 255);
+  --accent: oklch(0.76 0.055 55);
+  --accent-foreground: oklch(0.22 0.02 258);
+  --border: oklch(0.886 0.01 248);
+  --input: oklch(0.915 0.008 245);
+  --ring: oklch(0.42 0.035 255);
+  --radius: 1.35rem;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, color-mix(in oklab, var(--accent) 16%, transparent), transparent 28%),
+    radial-gradient(circle at top right, color-mix(in oklab, var(--primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg, color-mix(in oklab, var(--secondary) 64%, white), var(--background));
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 36%, white);
+}
+
+.project-card-marquee-track,
+.project-card-marquee-track-reverse {
+  display: inline-flex;
+  min-width: max-content;
+}
+
+.project-card-marquee-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.35rem;
+  padding-right: 1.35rem;
+}
+
+.project-card-marquee-track {
+  animation: project-card-marquee 18s linear infinite;
+}
+
+.project-card-marquee-track-reverse {
+  animation: project-card-marquee-reverse 20s linear infinite;
+}
+
+.marquee-text-track {
+  will-change: transform;
+}
+
+.marquee-text-track-forward {
+  animation: section-marquee-forward linear infinite;
+}
+
+.marquee-text-track-reverse {
+  animation: section-marquee-reverse linear infinite;
+}
+
+.group:hover .marquee-text-track-forward,
+.group:hover .marquee-text-track-reverse {
+  animation-play-state: paused;
+}
+
+.moving-showcase-track {
+  animation: moving-showcase-loop 34s linear infinite;
+}
+
+.moving-showcase:hover .moving-showcase-track {
+  animation-play-state: paused;
+}
+
+@keyframes project-card-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes project-card-marquee-reverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes section-marquee-forward {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
+@keyframes section-marquee-reverse {
+  from {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moving-showcase-loop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-marquee-track,
+  .project-card-marquee-track-reverse,
+  .marquee-text-track-forward,
+  .marquee-text-track-reverse,
+  .moving-showcase-track {
+    animation: none;
+    transform: none;
+  }
+}
