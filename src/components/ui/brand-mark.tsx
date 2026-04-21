@@ -1,64 +1,37 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
 type BrandMarkProps = {
   className?: string;
-  letterClassName?: string;
-  dotClassName?: string;
-  letterStyle?: CSSProperties;
-  dotStyle?: CSSProperties;
-  variant?: "solid" | "image";
-  imageUrl?: string;
+  variant?: "white" | "black";
+  alt?: string;
+  priority?: boolean;
 };
 
-const defaultImageUrl =
-  "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80";
+const logoSrc = {
+  white: "/images/logo-white.png",
+  black: "/images/logo-black.png",
+} as const;
 
 export function BrandMark({
   className,
-  letterClassName,
-  dotClassName,
-  letterStyle,
-  dotStyle,
-  variant = "solid",
-  imageUrl = defaultImageUrl,
+  variant = "white",
+  alt = "Shree Developers Group logo",
+  priority = false,
 }: BrandMarkProps) {
-  const imageFillStyle =
-    variant === "image"
-      ? {
-          backgroundImage: `linear-gradient(180deg, rgba(172, 150, 223, 0.28), rgba(112, 86, 182, 0.5)), url(${imageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          color: "transparent",
-        }
-      : undefined;
-
   return (
-    <span className={cn("relative inline-block align-top text-[12rem] leading-none", className)}>
-      <span
-        className={cn(
-          "block font-display text-[1em] leading-[0.78] tracking-[-0.12em]",
-          variant === "solid" && "text-current",
-          letterClassName
-        )}
-        style={{ ...imageFillStyle, ...letterStyle }}
-      >
-        A
-      </span>
-      <span
-        aria-hidden="true"
-        className={cn("absolute rounded-full", variant === "solid" && "bg-current", dotClassName)}
-        style={{
-          left: "0.74em",
-          top: "0.1em",
-          width: "0.17em",
-          height: "0.17em",
-          ...dotStyle,
-        }}
+    <div className={cn("relative inline-block h-20 w-[12rem]", className)}>
+      <Image
+        src={logoSrc[variant]}
+        alt={alt}
+        fill
+        priority={priority}
+        className="object-contain"
+        sizes="(max-width: 640px) 10rem, (max-width: 1024px) 14rem, 18rem"
       />
-    </span>
+    </div>
   );
 }

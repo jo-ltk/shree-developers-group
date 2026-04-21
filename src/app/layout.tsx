@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Archipelago Style Premium Real Estate",
-  description: "Premium real estate landing page rebuilt in Next.js with animated editorial sections.",
+  title: "Shree Developers Group",
+  description: "Premium real estate landing page for Shree Developers Group.",
 };
 
 export default function RootLayout({

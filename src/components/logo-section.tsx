@@ -57,11 +57,9 @@ export function LogoSection() {
         <div data-logo-shell className="flex items-center justify-center">
           <div data-logo-mark>
             <BrandMark
-              variant="image"
-              className="text-[9rem] sm:text-[12rem] lg:text-[16rem]"
-              dotStyle={{
-                backgroundColor: "color-mix(in oklab, var(--ring) 72%, white)",
-              }}
+              variant="black"
+              className="h-[14rem] w-[16rem] sm:h-[18rem] sm:w-[20rem] lg:h-[24rem] lg:w-[28rem]"
+              alt="Shree Developers Group black logo"
             />
           </div>
         </div>

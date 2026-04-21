@@ -113,7 +113,11 @@ export function Hero() {
           </div>
           <div data-hero-meta className="flex justify-center sm:justify-center">
             <div data-hero-brand>
-              <BrandMark className="text-[5.5rem] text-white/96 sm:text-[6.5rem] lg:text-[7.5rem]" />
+              <BrandMark
+                variant="white"
+                className="h-20 w-[12rem] sm:h-24 sm:w-[15rem] lg:h-28 lg:w-[18rem]"
+                alt="Shree Developers Group white logo"
+              />
             </div>
           </div>
           <div

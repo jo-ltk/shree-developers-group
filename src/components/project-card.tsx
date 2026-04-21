@@ -20,7 +20,7 @@ const sizeClasses = {
     shell: "min-h-[26rem] px-7 pb-12 pt-14 sm:px-9 sm:pb-14 sm:pt-16 lg:px-12 lg:pb-16 lg:pt-18",
     index: "text-[0.76rem] sm:text-[0.82rem]",
     location: "mt-5 text-[0.9rem] sm:text-[0.98rem]",
-    mark: "mt-1 text-[2.8rem] sm:text-[3.4rem] lg:text-[4rem]",
+    mark: "mt-1 h-12 w-[6.75rem] sm:h-14 sm:w-[8rem] lg:h-16 lg:w-[9rem]",
     title: "mt-8 text-[2.9rem] leading-[0.92] sm:mt-10 sm:text-[4rem] lg:text-[5.3rem]",
     summary: "max-w-[38rem] text-[1.06rem] leading-8 sm:text-[1.14rem] sm:leading-9 lg:text-[1.22rem] lg:leading-10",
     meta: "text-[0.78rem] sm:text-[0.84rem]",
@@ -30,7 +30,7 @@ const sizeClasses = {
     shell: "min-h-[24rem] px-7 pb-11 pt-13 sm:px-8 sm:pb-12 sm:pt-15 lg:px-9 lg:pb-13 lg:pt-16",
     index: "text-[0.72rem] sm:text-[0.76rem]",
     location: "mt-4 text-[0.84rem] sm:text-[0.9rem]",
-    mark: "mt-1 text-[2.5rem] sm:text-[2.9rem] lg:text-[3.2rem]",
+    mark: "mt-1 h-11 w-[6rem] sm:h-12 sm:w-[7rem] lg:h-14 lg:w-[8rem]",
     title: "mt-7 text-[2.35rem] leading-[0.94] sm:text-[3rem] lg:text-[3.7rem]",
     summary: "max-w-[34rem] text-[0.98rem] leading-8 sm:text-[1.04rem] sm:leading-8 lg:text-[1.08rem] lg:leading-9",
     meta: "text-[0.76rem] sm:text-[0.8rem]",
@@ -40,7 +40,7 @@ const sizeClasses = {
     shell: "min-h-[22rem] px-6 pb-10 pt-12 sm:px-7 sm:pb-12 sm:pt-14 lg:px-8 lg:pb-12 lg:pt-14",
     index: "text-[0.68rem]",
     location: "mt-4 text-[0.8rem]",
-    mark: "mt-1 text-[2.2rem] sm:text-[2.5rem]",
+    mark: "mt-1 h-10 w-[5.5rem] sm:h-11 sm:w-[6.25rem]",
     title: "mt-6 text-[1.95rem] leading-[0.96] sm:mt-7 sm:text-[2.35rem] lg:text-[2.7rem]",
     summary: "max-w-[30rem] text-[0.95rem] leading-7 sm:text-[1rem] sm:leading-8",
     meta: "text-[0.74rem]",
@@ -108,13 +108,18 @@ export function ProjectCard({
             </p>
           </div>
 
-          <BrandMark
-            className={cn(
-              "text-white/92 transition-colors duration-500 group-hover:text-[color:var(--ring)]",
-              styles.mark
-            )}
-            dotStyle={{ opacity: 0.92 }}
-          />
+          <div className={cn("relative", styles.mark)}>
+            <BrandMark
+              variant="white"
+              className="h-full w-full transition-opacity duration-500 group-hover:opacity-0"
+              alt="Shree Developers Group white logo"
+            />
+            <BrandMark
+              variant="black"
+              className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              alt="Shree Developers Group black logo"
+            />
+          </div>
         </div>
 
         <div className="space-y-4">

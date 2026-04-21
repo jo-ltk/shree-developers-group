@@ -5,11 +5,13 @@ import { ArrowRight } from "lucide-react";
 
 import { ensureGsapPlugins } from "@/lib/gsap";
 
-const navColumns = [
-  ["Projects"],
-  ["About Us", "Workshops"],
-  ["Team", "Careers"],
-  ["Articles"],
+const footerLinks = [
+  { label: "Projects", href: "#gallery" },
+  { label: "About Us", href: "#team" },
+  { label: "Team", href: "#team" },
+  { label: "Articles", href: "#articles" },
+  { label: "Workshops", href: "#team" },
+  { label: "Careers", href: "#team" },
 ];
 
 export function FooterSection() {
@@ -53,25 +55,44 @@ export function FooterSection() {
       }}
     >
       <div className="mx-auto max-w-[112rem]">
-        <div className="pb-8 sm:pb-10 lg:pb-12">
-          <a
-            href="#top"
-            className="inline-block max-w-full font-sans text-[4.4rem] font-medium leading-[0.84] tracking-[-0.09em] text-primary-foreground transition-all duration-300 hover:translate-x-1 hover:text-[color:color-mix(in_oklab,var(--accent)_26%,white)] sm:text-[6.6rem] lg:text-[9.5rem] xl:text-[10.8rem]"
-          >
-            Archipelago
-          </a>
-        </div>
-
         <div
           data-footer-grid
-          className="grid gap-10 border-t border-primary-foreground/12 pt-10 md:grid-cols-2 xl:grid-cols-[1.1fr_0.9fr_1.1fr_1.2fr] xl:gap-14 xl:pt-12"
+          className="space-y-10 sm:space-y-12"
         >
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-[1.65rem] font-medium tracking-[-0.03em] text-primary-foreground sm:text-[1.8rem]">
+          <div className="grid gap-10 border-y border-primary-foreground/12 py-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] lg:items-end lg:py-12">
+            <div className="space-y-5">
+              <p className="text-[0.78rem] font-medium uppercase tracking-[0.32em] text-primary-foreground/48">
+                Shree Developers Group
+              </p>
+              <h2 className="max-w-[12ch] font-sans text-[clamp(2.6rem,5vw,5.4rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-primary-foreground">
+                Premium property with a cleaner, more personal approach.
+              </h2>
+              <p className="max-w-[42rem] text-[1rem] leading-8 text-primary-foreground/70 sm:text-[1.06rem]">
+                Crafted for modern buyers, investors, and communities with a sharper eye on detail,
+                quality, and long-term value.
+              </p>
+            </div>
+
+            <div className="space-y-4 lg:justify-self-end lg:text-right">
+              <p className="text-[0.78rem] font-medium uppercase tracking-[0.32em] text-primary-foreground/48">
+                Start A Conversation
+              </p>
+              <a
+                href="mailto:hello@shreedevelopersgroup.com"
+                className="inline-flex items-center gap-3 text-[1.15rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_28%,white)] sm:text-[1.3rem]"
+              >
+                hello@shreedevelopersgroup.com
+                <ArrowRight className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+
+          <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-[1fr_0.9fr_0.9fr_1.2fr] xl:gap-14">
+            <div className="space-y-5">
+              <p className="text-[0.78rem] font-medium uppercase tracking-[0.32em] text-primary-foreground/48">
                 Office
-              </h3>
-              <p className="max-w-[22rem] text-[1rem] leading-8 text-primary-foreground/78 sm:text-[1.04rem]">
+              </p>
+              <p className="max-w-[22rem] text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
                 Turrbal and Yuggera/Jagera Country
                 <br />
                 Level 3, 199 George Street
@@ -79,75 +100,77 @@ export function FooterSection() {
                 Brisbane QLD 4000
               </p>
             </div>
-          </div>
 
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-[1.65rem] font-medium tracking-[-0.03em] text-primary-foreground sm:text-[1.8rem]">
-                Phone
-              </h3>
-              <a
-                href="tel:+61732364606"
-                className="block text-[1rem] leading-8 text-primary-foreground/78 transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_34%,white)] sm:text-[1.04rem]"
-              >
-                +61 7 3236 4606
-              </a>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-[1.65rem] font-medium tracking-[-0.03em] text-primary-foreground sm:text-[1.8rem]">
-                Email
-              </h3>
-              <a
-                href="mailto:hello@archipelago.com.au"
-                className="block text-[1rem] leading-8 text-primary-foreground/78 transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_34%,white)] sm:text-[1.04rem]"
-              >
-                hello@archipelago.com.au
-              </a>
-            </div>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 xl:col-span-1 xl:grid-cols-2">
-            {navColumns.map((column, index) => (
-              <div key={`footer-nav-${index}`} className="space-y-4">
-                {column.map((item) => (
+            <div className="space-y-8">
+              <div className="space-y-5">
+                <p className="text-[0.78rem] font-medium uppercase tracking-[0.32em] text-primary-foreground/48">
+                  Contact
+                </p>
+                <div className="space-y-3 text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
                   <a
-                    key={item}
-                    href="#"
-                    className="block text-[1.42rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_28%,white)]"
+                    href="tel:+61732364606"
+                    className="block transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_32%,white)]"
                   >
-                    {item}
+                    +61 7 3236 4606
+                  </a>
+                  <a
+                    href="mailto:hello@shreedevelopersgroup.com"
+                    className="block transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_32%,white)]"
+                  >
+                    hello@shreedevelopersgroup.com
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <p className="text-[0.78rem] font-medium uppercase tracking-[0.32em] text-primary-foreground/48">
+                Navigation
+              </p>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+                {footerLinks.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-[1.05rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_28%,white)]"
+                  >
+                    {item.label}
                   </a>
                 ))}
               </div>
-            ))}
+            </div>
+
+            <div className="space-y-5 xl:pl-4">
+              <p className="text-[0.78rem] font-medium uppercase tracking-[0.32em] text-primary-foreground/48">
+                Subscribe
+              </p>
+              <p className="max-w-[26rem] text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
+                Market updates, launches, and development insights delivered with restraint.
+              </p>
+
+              <label className="group/footer-input block">
+                <span className="sr-only">Enter your email</span>
+                <div className="flex items-center gap-4 border-b border-primary-foreground/24 pb-3 transition-colors duration-300 group-focus-within/footer-input:border-[color:color-mix(in_oklab,var(--accent)_42%,white)] hover:border-primary-foreground/42">
+                  <input
+                    type="email"
+                    placeholder="Enter Your Email"
+                    className="w-full bg-transparent text-[1.12rem] tracking-[-0.02em] text-primary-foreground placeholder:text-primary-foreground/46 focus:outline-none sm:text-[1.2rem]"
+                  />
+                  <button
+                    type="button"
+                    aria-label="Submit email"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-primary-foreground transition-transform duration-300 hover:translate-x-1 hover:text-[color:color-mix(in_oklab,var(--accent)_34%,white)]"
+                  >
+                    <ArrowRight className="h-6 w-6" />
+                  </button>
+                </div>
+              </label>
+            </div>
           </div>
 
-          <div className="space-y-6 xl:pl-4">
-            <h3 className="text-[1.9rem] font-medium tracking-[-0.03em] text-primary-foreground sm:text-[2.1rem]">
-              Subscribe
-            </h3>
-            <p className="max-w-[28rem] text-[1rem] leading-8 text-primary-foreground/78 sm:text-[1.04rem]">
-              Our strategy, thinking and insights. Shared with you.
-            </p>
-
-            <label className="group/footer-input block">
-              <span className="sr-only">Enter your email</span>
-              <div className="flex items-center gap-4 border-b border-primary-foreground/24 pb-3 transition-colors duration-300 group-focus-within/footer-input:border-[color:color-mix(in_oklab,var(--accent)_42%,white)] hover:border-primary-foreground/42">
-                <input
-                  type="email"
-                  placeholder="Enter Your Email"
-                  className="w-full bg-transparent text-[1.2rem] tracking-[-0.02em] text-primary-foreground placeholder:text-primary-foreground/46 focus:outline-none sm:text-[1.32rem]"
-                />
-                <button
-                  type="button"
-                  aria-label="Submit email"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-primary-foreground transition-transform duration-300 hover:translate-x-1 hover:-rotate-6 hover:text-[color:color-mix(in_oklab,var(--accent)_34%,white)]"
-                >
-                  <ArrowRight className="h-6 w-6" />
-                </button>
-              </div>
-            </label>
+          <div className="flex flex-col gap-3 border-t border-primary-foreground/10 pt-6 text-[0.82rem] uppercase tracking-[0.22em] text-primary-foreground/42 sm:flex-row sm:items-center sm:justify-between">
+            <p>Shree Developers Group</p>
+            <p>Designed for modern city living</p>
           </div>
         </div>
       </div>

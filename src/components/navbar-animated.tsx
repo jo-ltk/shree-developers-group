@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, ChevronDown, Menu } from "lucide-react";
 
+import { BrandMark } from "@/components/ui/brand-mark";
+
 const navColumns = [
   { title: "Projects", href: "#gallery", links: [] as string[] },
   { title: "Practice", href: "#team", links: ["About Us", "Workshops"] },
@@ -35,9 +37,12 @@ export function NavbarAnimated() {
       <div className="mx-auto max-w-[96rem] px-6 pt-6 sm:px-8 lg:px-10 lg:pt-8">
         <div className={`${desktopGridClass} hidden xl:grid`}>
           <a href="#top" className="w-fit text-primary-foreground">
-            <span className="font-display text-[2.1rem] leading-none tracking-[0.04em] sm:text-[2.35rem]">
-              A.
-            </span>
+            <BrandMark
+              variant="white"
+              className="h-12 w-[8.5rem]"
+              alt="Shree Developers Group white logo"
+              priority
+            />
           </a>
 
           {columnsWithMeta.map((item) => (
@@ -56,7 +61,12 @@ export function NavbarAnimated() {
 
         <div className="flex items-center justify-between xl:hidden">
           <a href="#top" className="text-primary-foreground">
-            <span className="font-display text-[2rem] leading-none tracking-[0.04em]">A.</span>
+            <BrandMark
+              variant="white"
+              className="h-11 w-[7.5rem]"
+              alt="Shree Developers Group white logo"
+              priority
+            />
           </a>
 
           <button

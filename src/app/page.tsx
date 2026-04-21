@@ -9,6 +9,7 @@ import { MovingShowcaseSection } from "@/components/moving-showcase-section";
 import { NavbarAnimated } from "@/components/navbar-animated";
 import { RecentArticlesSection } from "@/components/recent-articles-section";
 import { TeamSection } from "@/components/team-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <RecentArticlesSection />
       <TeamSection />
       <MovingShowcaseSection />
+      <TestimonialsSection />
       <FooterSection />
     </main>
   );
