@@ -48,10 +48,7 @@ export function LogoSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden"
-      style={{
-        backgroundColor: "color-mix(in oklab, var(--secondary) 34%, white)",
-      }}
+      className="bg-background relative overflow-hidden"
     >
       <div className="mx-auto flex min-h-[84svh] max-w-[120rem] items-center justify-center px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36">
         <div data-logo-shell className="flex items-center justify-center">

@@ -80,11 +80,11 @@ export function ProjectCard({
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,17,28,0.18),rgba(11,17,28,0.28)_40%,rgba(11,17,28,0.72))] transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0" />
       </div>
 
-      <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-background opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100" />
 
       <div
         className={cn(
-          "relative flex h-full flex-col justify-between text-white transition-colors duration-500 group-hover:text-foreground",
+          "relative flex h-full flex-col justify-between text-primary-foreground transition-colors duration-500 group-hover:text-foreground",
           styles.shell
         )}
       >
@@ -92,7 +92,7 @@ export function ProjectCard({
           <div className="pr-4">
             <p
               className={cn(
-                "font-semibold uppercase tracking-[0.34em] text-white/70 transition-colors duration-500 group-hover:text-muted-foreground",
+                "font-semibold uppercase tracking-[0.34em] text-primary-foreground/70 transition-colors duration-500 group-hover:text-muted-foreground",
                 styles.index
               )}
             >
@@ -100,7 +100,7 @@ export function ProjectCard({
             </p>
             <p
               className={cn(
-                "max-w-[12rem] uppercase tracking-[0.24em] text-white/78 transition-colors duration-500 group-hover:text-muted-foreground",
+                "max-w-[12rem] uppercase tracking-[0.24em] text-primary-foreground/78 transition-colors duration-500 group-hover:text-muted-foreground",
                 styles.location
               )}
             >
@@ -127,7 +127,7 @@ export function ProjectCard({
             <h3 className={cn("max-w-[14ch] font-sans font-medium tracking-[-0.06em]", styles.title)}>{title}</h3>
             <p
               className={cn(
-                "text-white/78 transition-colors duration-500 group-hover:text-muted-foreground",
+                "text-primary-foreground/78 transition-colors duration-500 group-hover:text-muted-foreground",
                 styles.summary
               )}
             >
@@ -137,7 +137,7 @@ export function ProjectCard({
 
           <div
             className={cn(
-              "flex items-center justify-between gap-4 uppercase tracking-[0.24em] text-white/68 transition-all duration-500 group-hover:translate-y-1 group-hover:text-foreground/56",
+              "flex items-center justify-between gap-4 uppercase tracking-[0.24em] text-primary-foreground/68 transition-all duration-500 group-hover:translate-y-1 group-hover:text-foreground/56",
               styles.meta
             )}
           >

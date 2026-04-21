@@ -52,10 +52,7 @@ export function IntroStatement() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden"
-      style={{
-        backgroundColor: "color-mix(in oklab, var(--secondary) 34%, white)",
-      }}
+      className="bg-background relative overflow-hidden"
     >
       <div className="mx-auto flex min-h-[92svh] max-w-[120rem] items-center justify-center px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36">
         <div className="max-w-[86rem] text-center">
@@ -67,19 +64,13 @@ export function IntroStatement() {
               >
                 {line.map((word, wordIndex) => (
                   <span key={`${word}-${lineIndex}-${wordIndex}`} className="relative inline-block overflow-hidden pb-[0.06em]">
-                    <span
-                      className="block"
-                      style={{
-                        color: "color-mix(in oklab, var(--accent) 38%, white)",
-                      }}
-                    >
+                    <span className="block text-foreground/20">
                       {word}
                     </span>
                     <span
                       data-fill-word
-                      className="pointer-events-none absolute inset-0 block"
+                      className="pointer-events-none absolute inset-0 block text-foreground"
                       style={{
-                        color: "var(--foreground)",
                         clipPath: "inset(100% 0 0 0)",
                       }}
                     >

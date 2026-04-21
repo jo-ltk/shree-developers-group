@@ -4,15 +4,25 @@
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
 
+  /* Strict Color System Tokens */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-background-light: var(--background-light);
+  --color-background-dark: var(--background-dark);
+
+  /* Hover & Active States */
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-background-dark-hover: var(--background-dark-hover);
+
+  /* Standard Role Mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -32,23 +42,40 @@
   --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 
-  --background: oklch(0.975 0.006 235);
-  --foreground: oklch(0.24 0.02 258);
-  --card: oklch(0.992 0.004 235);
-  --card-foreground: oklch(0.25 0.02 258);
-  --popover: oklch(0.995 0.004 235);
-  --popover-foreground: oklch(0.25 0.02 258);
-  --primary: oklch(0.29 0.035 255);
-  --primary-foreground: oklch(0.985 0.003 235);
-  --secondary: oklch(0.943 0.012 245);
-  --secondary-foreground: oklch(0.28 0.02 258);
-  --muted: oklch(0.955 0.01 240);
-  --muted-foreground: oklch(0.5 0.018 255);
-  --accent: oklch(0.76 0.055 55);
-  --accent-foreground: oklch(0.22 0.02 258);
-  --border: oklch(0.886 0.01 248);
-  --input: oklch(0.915 0.008 245);
-  --ring: oklch(0.42 0.035 255);
+  /* Strict Color System */
+  --primary: #1E1E1E;
+  --secondary: #DAA96B;
+  --background-light: #FAFAFA; /* Changed from #F7F0F0 for a clean, non-yellow look */
+  --background-dark: #2A2A2A;
+
+  /* Hover & Active States Derived from Palette */
+  --primary-hover: #333333;
+  --secondary-hover: #C69558;
+  --background-dark-hover: #383838;
+
+  /* Standard Role Mappings */
+  --background: var(--background-light);
+  --foreground: var(--primary);
+  
+  --card: var(--background-dark);
+  --card-foreground: var(--background-light);
+  
+  --popover: var(--background-light);
+  --popover-foreground: var(--primary);
+  
+  --primary-foreground: var(--background-light);
+  --secondary-foreground: var(--primary);
+  
+  --muted: #F2F2F2; /* Clean light gray, removed warm tint */
+  --muted-foreground: #6B6B6B; /* Muted text */
+  
+  --accent: var(--secondary);
+  --accent-foreground: var(--primary);
+  
+  --border: #EAEAEA; /* Clean border, removed warm tint */
+  --input: #EAEAEA;
+  --ring: var(--secondary);
+  
   --radius: 1.35rem;
 }
 
@@ -62,10 +89,7 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, color-mix(in oklab, var(--accent) 16%, transparent), transparent 28%),
-    radial-gradient(circle at top right, color-mix(in oklab, var(--primary) 10%, transparent), transparent 30%),
-    linear-gradient(180deg, color-mix(in oklab, var(--secondary) 64%, white), var(--background));
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
   text-rendering: optimizeLegibility;
@@ -78,7 +102,8 @@ a {
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 36%, white);
+  background: var(--secondary);
+  color: var(--primary);
 }
 
 .project-card-marquee-track,

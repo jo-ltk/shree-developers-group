@@ -83,16 +83,16 @@ export function Hero() {
 
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,30,0.02),rgba(12,18,30,0.08)_34%,rgba(12,18,30,0.16)_68%,rgba(12,18,30,0.24))]" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-[120rem] flex-col justify-between px-5 pb-8 pt-24 text-white sm:px-7 md:pt-28 lg:px-10 lg:pb-10">
+      <div className="relative mx-auto flex min-h-screen max-w-[120rem] flex-col justify-between px-5 pb-8 pt-24 text-primary-foreground sm:px-7 md:pt-28 lg:px-10 lg:pb-10">
         <div className="flex flex-1 items-start justify-center">
-          <div data-hero-copy className="max-w-[62rem] text-center text-white">
-            <p className="font-sans text-[clamp(2.8rem,5.5vw,5.8rem)] font-light leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
+          <div data-hero-copy className="max-w-[62rem] text-center text-primary-foreground">
+            <p className="font-sans text-[clamp(2.8rem,5.5vw,5.8rem)] font-light leading-[0.98] tracking-[-0.055em] text-primary-foreground drop-shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
               The right property exists,
             </p>
-            <p className="mt-2 font-display text-[clamp(3rem,6vw,6.2rem)] italic leading-[0.94] tracking-[-0.04em] text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
+            <p className="mt-2 font-display text-[clamp(3rem,6vw,6.2rem)] italic leading-[0.94] tracking-[-0.04em] text-primary-foreground drop-shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
               finding it is our job
             </p>
-            <p className="mx-auto mt-6 max-w-[36rem] text-[1.02rem] leading-8 text-white/90 sm:text-[1.12rem]">
+            <p className="mx-auto mt-6 max-w-[36rem] text-[1.02rem] leading-8 text-primary-foreground/90 sm:text-[1.12rem]">
               We shape premium residential opportunities with clarity, discretion, and a more personal
               process from first conversation to final decision.
             </p>

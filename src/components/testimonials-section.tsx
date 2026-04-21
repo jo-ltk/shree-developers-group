@@ -7,7 +7,6 @@ const testimonials = [
     name: "Nathan Harper",
     role: "Software Developer",
     initials: "NH",
-    gradient: "from-[#d9cab3] to-[#8f6f59]",
   },
   {
     quote:
@@ -15,7 +14,6 @@ const testimonials = [
     name: "Logan Price",
     role: "Environmental Consultant",
     initials: "LP",
-    gradient: "from-[#8ab0c9] to-[#315f7e]",
   },
   {
     quote:
@@ -23,7 +21,6 @@ const testimonials = [
     name: "Aria Sullivan",
     role: "Digital Nomad",
     initials: "AS",
-    gradient: "from-[#d8c1b1] to-[#8f7d78]",
   },
   {
     quote:
@@ -31,14 +28,13 @@ const testimonials = [
     name: "Grace Powell",
     role: "Financial Consultant",
     initials: "GP",
-    gradient: "from-[#97bfd0] to-[#38657a]",
   },
 ];
 
 export function TestimonialsSection() {
   return (
     <section
-      className="bg-[color:color-mix(in_oklab,var(--secondary)_24%,white)] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
+      className="bg-muted px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
     >
       <div className="mx-auto max-w-[112rem]">
         <div className="max-w-[58rem]">
@@ -58,7 +54,7 @@ export function TestimonialsSection() {
           {testimonials.map((item) => (
             <article
               key={item.name}
-              className="flex min-h-[22rem] flex-col justify-between rounded-none border border-foreground/10 bg-white p-7 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] sm:p-8"
+              className="flex min-h-[22rem] flex-col justify-between rounded-none border border-foreground/10 bg-background p-7 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] sm:p-8"
             >
               <div>
                 <div className="flex items-center gap-2 text-foreground">
@@ -74,7 +70,7 @@ export function TestimonialsSection() {
 
               <div className="mt-8 flex items-center gap-4 border-t border-foreground/8 pt-6">
                 <div
-                  className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${item.gradient} text-[1rem] font-semibold text-white`}
+                  className="flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-[1rem] font-semibold text-primary"
                 >
                   {item.initials}
                 </div>

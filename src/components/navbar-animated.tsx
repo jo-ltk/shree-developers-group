@@ -71,7 +71,7 @@ export function NavbarAnimated() {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/16 bg-white/10 text-primary-foreground backdrop-blur-sm"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary-foreground/16 bg-primary-foreground/10 text-primary-foreground backdrop-blur-sm"
             aria-label="Open navigation menu"
           >
             <Menu className="h-5 w-5" />
@@ -84,7 +84,7 @@ export function NavbarAnimated() {
           isOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-6 opacity-0"
         }`}
       >
-        <div className="bg-[#f2a078] text-white shadow-[0_32px_110px_rgba(20,28,44,0.24)]">
+        <div className="bg-background text-foreground shadow-[0_32px_110px_rgba(20,28,44,0.14)] border-b border-border">
           <div className="mx-auto max-w-[96rem] px-6 pb-16 pt-10 sm:px-8 lg:px-10">
             <div className={desktopGridClass}>
               <div aria-hidden="true" />
@@ -99,7 +99,7 @@ export function NavbarAnimated() {
                 >
                   <a
                     href={column.href}
-                    className="flex min-h-[2.5rem] items-center gap-2 text-[0.92rem] font-medium tracking-[0.01em] text-white"
+                    className="flex min-h-[2.5rem] items-center gap-2 text-[0.92rem] font-medium tracking-[0.01em] text-foreground hover:text-secondary transition-colors duration-200"
                   >
                     <span>{column.title}</span>
                     {column.links.length > 0 ? <ChevronDown className="h-4 w-4 rotate-180" /> : null}
@@ -120,7 +120,7 @@ export function NavbarAnimated() {
                   style={{ transitionDelay: `${120 + index * 35}ms` }}
                 >
                   {column.links.length > 0 ? (
-                    <div className="space-y-5 text-[1rem] leading-[1.5] text-white/95">
+                    <div className="space-y-5 text-[1rem] leading-[1.5] text-foreground/80">
                       {column.links.map((item) => (
                         <a key={item} href={column.href} className="block transition-opacity duration-300 hover:opacity-75">
                           {item}
@@ -141,7 +141,7 @@ export function NavbarAnimated() {
               <div aria-hidden="true" />
               <div className="col-span-5 flex justify-end">
                 <div className="w-full max-w-[38rem] pt-1">
-                  <div className="flex items-center border-b border-white/80 pb-3 text-[1rem] text-white/92">
+                  <div className="flex items-center border-b border-foreground/20 pb-3 text-[1rem] text-foreground/70">
                     <span className="flex-1">Search...</span>
                     <ArrowRight className="h-7 w-7" />
                   </div>

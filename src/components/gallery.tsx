@@ -139,10 +139,7 @@ export function Gallery() {
     <section
       id="gallery"
       ref={sectionRef}
-      className="min-h-screen px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36"
-      style={{
-        backgroundColor: "color-mix(in oklab, var(--secondary) 26%, white)",
-      }}
+      className="bg-background min-h-screen px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36"
     >
       <div className="mx-auto max-w-[110rem]">
         <div data-gallery-copy>

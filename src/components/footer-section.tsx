@@ -48,11 +48,7 @@ export function FooterSection() {
     <footer
       id="footer"
       ref={footerRef}
-      className="relative overflow-hidden px-6 py-14 text-primary-foreground sm:px-8 sm:py-16 lg:px-10 lg:py-20"
-      style={{
-        background:
-          "radial-gradient(circle at top left, rgba(237, 193, 168, 0.08), transparent 24%), linear-gradient(180deg, color-mix(in oklab, var(--primary) 74%, #5d5a41), color-mix(in oklab, var(--primary) 82%, #4f513f))",
-      }}
+      className="bg-card relative overflow-hidden px-6 py-14 text-primary-foreground sm:px-8 sm:py-16 lg:px-10 lg:py-20"
     >
       <div className="mx-auto max-w-[112rem]">
         <div
@@ -83,7 +79,7 @@ export function FooterSection() {
               </p>
               <a
                 href="mailto:hello@shreedevelopersgroup.com"
-                className="inline-flex items-center gap-3 text-[1.15rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_28%,white)] sm:text-[1.3rem]"
+                className="inline-flex items-center gap-3 text-[1.15rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-secondary sm:text-[1.3rem]"
               >
                 hello@shreedevelopersgroup.com
                 <ArrowRight className="h-5 w-5" />
@@ -113,13 +109,13 @@ export function FooterSection() {
                 <div className="space-y-3 text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
                   <a
                     href="tel:+61732364606"
-                    className="block transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_32%,white)]"
+                    className="block transition-colors duration-300 hover:text-secondary"
                   >
                     +61 7 3236 4606
                   </a>
                   <a
                     href="mailto:hello@shreedevelopersgroup.com"
-                    className="block transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_32%,white)]"
+                    className="block transition-colors duration-300 hover:text-secondary"
                   >
                     hello@shreedevelopersgroup.com
                   </a>
@@ -136,7 +132,7 @@ export function FooterSection() {
                   <a
                     key={item.label}
                     href={item.href}
-                    className="text-[1.05rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-[color:color-mix(in_oklab,var(--accent)_28%,white)]"
+                    className="text-[1.05rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-secondary"
                   >
                     {item.label}
                   </a>
@@ -154,7 +150,7 @@ export function FooterSection() {
 
               <label className="group/footer-input block">
                 <span className="sr-only">Enter your email</span>
-                <div className="flex items-center gap-4 border-b border-primary-foreground/24 pb-3 transition-colors duration-300 group-focus-within/footer-input:border-[color:color-mix(in_oklab,var(--accent)_42%,white)] hover:border-primary-foreground/42">
+                <div className="flex items-center gap-4 border-b border-primary-foreground/24 pb-3 transition-colors duration-300 group-focus-within/footer-input:border-secondary hover:border-secondary">
                   <input
                     type="email"
                     placeholder="Enter Your Email"
@@ -163,7 +159,7 @@ export function FooterSection() {
                   <button
                     type="button"
                     aria-label="Submit email"
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-primary-foreground transition-transform duration-300 hover:translate-x-1 hover:text-[color:color-mix(in_oklab,var(--accent)_34%,white)]"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-primary-foreground transition-transform duration-300 hover:translate-x-1 hover:text-secondary"
                   >
                     <ArrowRight className="h-6 w-6" />
                   </button>

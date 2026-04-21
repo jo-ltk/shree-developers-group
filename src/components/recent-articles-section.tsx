@@ -75,7 +75,7 @@ export function RecentArticlesSection() {
     <section
       id="articles"
       ref={sectionRef}
-      className="bg-[color:color-mix(in_oklab,var(--secondary)_34%,white)] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
+      className="bg-background px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
     >
       <div className="mx-auto max-w-[112rem]">
         <div data-articles-heading>
@@ -105,13 +105,13 @@ export function RecentArticlesSection() {
                   />
                 </div>
                 <div className="pt-5 sm:pt-6">
-                  <h3 className="max-w-[16ch] font-sans text-[2rem] font-normal leading-[1.02] tracking-[-0.05em] text-foreground transition-colors duration-300 group-hover:text-[color:color-mix(in_oklab,var(--ring)_84%,black)]">
+                  <h3 className="max-w-[16ch] font-sans text-[2rem] font-normal leading-[1.02] tracking-[-0.05em] text-foreground transition-colors duration-300 group-hover:text-secondary">
                     {article.title}
                   </h3>
                   <p className="mt-4 max-w-[30rem] text-[1rem] leading-8 text-foreground/78">
                     {article.description}
                   </p>
-                  <div className="mt-5 inline-flex items-center gap-2 text-[0.95rem] font-medium text-foreground transition-colors duration-300 group-hover:text-[color:color-mix(in_oklab,var(--ring)_84%,black)]">
+                  <div className="mt-5 inline-flex items-center gap-2 text-[0.95rem] font-medium text-foreground transition-colors duration-300 group-hover:text-secondary">
                     <span>Read more</span>
                     <span aria-hidden="true">-&gt;</span>
                   </div>

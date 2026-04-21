@@ -28,7 +28,7 @@ export function MovingShowcaseSection() {
           {repeatedItems.map((item, index) => (
             <article
               key={`${item.title}-${index}`}
-              className="group/slide relative h-[20rem] w-[88vw] shrink-0 overflow-hidden rounded-none bg-black sm:h-[28rem] sm:w-[82vw] lg:h-[40rem] lg:w-[78vw]"
+              className="group/slide relative h-[20rem] w-[88vw] shrink-0 overflow-hidden rounded-none bg-background sm:h-[28rem] sm:w-[82vw] lg:h-[40rem] lg:w-[78vw]"
             >
               <Image
                 src={item.image}
@@ -39,7 +39,7 @@ export function MovingShowcaseSection() {
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,12,20,0.08),rgba(8,12,20,0.16)_36%,rgba(8,12,20,0.34)_70%,rgba(8,12,20,0.52))]" />
               <div className="absolute inset-x-0 bottom-0 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
-                <div className="moving-showcase-text font-sans text-[clamp(3.4rem,8.8vw,9.2rem)] font-normal uppercase leading-[0.84] tracking-[-0.055em] text-primary-foreground/96 transition-colors duration-300 group-hover:text-[color:color-mix(in_oklab,var(--accent)_28%,white)]">
+                <div className="moving-showcase-text font-sans text-[clamp(3.4rem,8.8vw,9.2rem)] font-normal uppercase leading-[0.84] tracking-[-0.055em] text-primary-foreground/96 transition-colors duration-300 group-hover:text-secondary">
                   {item.title}
                 </div>
               </div>

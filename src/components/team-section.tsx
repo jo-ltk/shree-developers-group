@@ -72,7 +72,7 @@ export function TeamSection() {
     <section
       id="team"
       ref={sectionRef}
-      className="bg-[color:color-mix(in_oklab,var(--secondary)_32%,white)] px-6 pb-16 pt-0 sm:px-8 sm:pb-20 sm:pt-0 lg:px-10 lg:pb-24 lg:pt-0"
+      className="bg-background px-6 pb-16 pt-0 sm:px-8 sm:pb-20 sm:pt-0 lg:px-10 lg:pb-24 lg:pt-0"
     >
       <div className="mx-auto max-w-[112rem]">
         <div data-team-heading>
