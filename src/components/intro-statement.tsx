@@ -59,7 +59,7 @@ export function IntroStatement() {
     >
       <div className="mx-auto flex min-h-[92svh] max-w-[120rem] items-center justify-center px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36">
         <div className="max-w-[86rem] text-center">
-          <div className="space-y-2 text-balance font-sans text-[clamp(2.25rem,4.8vw,5rem)] font-normal leading-[1.14] tracking-[-0.055em] text-foreground sm:space-y-3">
+          <div className="space-y-2 text-balance font-sans text-[clamp(2.25rem,4.8vw,5rem)] font-normal leading-[1.14] tracking-[-0.06em] text-foreground sm:space-y-3">
             {statementLines.map((line, lineIndex) => (
               <div
                 key={`line-${lineIndex}`}

@@ -65,7 +65,7 @@ export function ProjectCard({
   return (
     <article
       className={cn(
-        "group relative overflow-hidden rounded-[2rem] border border-border/45 shadow-[0_24px_70px_rgba(20,28,44,0.1)]",
+        "group relative overflow-hidden rounded-none border border-border/45 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)]",
         className
       )}
     >
@@ -124,7 +124,7 @@ export function ProjectCard({
 
         <div className="space-y-4">
           <div className="space-y-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2">
-            <h3 className={cn("max-w-[14ch] font-display tracking-[-0.05em]", styles.title)}>{title}</h3>
+            <h3 className={cn("max-w-[14ch] font-sans font-medium tracking-[-0.06em]", styles.title)}>{title}</h3>
             <p
               className={cn(
                 "text-white/78 transition-colors duration-500 group-hover:text-muted-foreground",
@@ -181,3 +181,4 @@ export function ProjectCard({
     </article>
   );
 }
+

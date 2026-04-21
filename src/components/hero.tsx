@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 
-import { BrandMark } from "@/components/ui/brand-mark";
+
 import { ensureGsapPlugins } from "@/lib/gsap";
 
 export function Hero() {
@@ -83,8 +83,8 @@ export function Hero() {
 
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,30,0.02),rgba(12,18,30,0.08)_34%,rgba(12,18,30,0.16)_68%,rgba(12,18,30,0.24))]" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-[120rem] flex-col justify-between px-5 pb-8 pt-28 text-white sm:px-7 md:pt-32 lg:px-10 lg:pb-10">
-        <div className="flex flex-1 items-center justify-center">
+      <div className="relative mx-auto flex min-h-screen max-w-[120rem] flex-col justify-between px-5 pb-8 pt-24 text-white sm:px-7 md:pt-28 lg:px-10 lg:pb-10">
+        <div className="flex flex-1 items-start justify-center">
           <div data-hero-copy className="max-w-[62rem] text-center text-white">
             <p className="font-sans text-[clamp(2.8rem,5.5vw,5.8rem)] font-light leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
               The right property exists,
@@ -96,37 +96,10 @@ export function Hero() {
               We shape premium residential opportunities with clarity, discretion, and a more personal
               process from first conversation to final decision.
             </p>
-            <div className="mt-8">
-              <a
-                href="#gallery"
-                className="inline-flex items-center justify-center rounded-full bg-white/92 px-7 py-3 text-[1rem] font-medium text-foreground shadow-[0_18px_44px_rgba(10,14,24,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
-              >
-                Find my property
-              </a>
-            </div>
           </div>
         </div>
 
-        <div className="grid items-end gap-6 text-white/95 sm:grid-cols-3">
-          <div data-hero-meta className="text-[0.92rem] sm:text-[1rem]">
-            Scroll Down
-          </div>
-          <div data-hero-meta className="flex justify-center sm:justify-center">
-            <div data-hero-brand>
-              <BrandMark
-                variant="white"
-                className="h-20 w-[12rem] sm:h-24 sm:w-[15rem] lg:h-28 lg:w-[18rem]"
-                alt="Shree Developers Group white logo"
-              />
-            </div>
-          </div>
-          <div
-            data-hero-meta
-            className="text-[0.92rem] text-white/92 sm:text-right sm:text-[1rem]"
-          >
-            Project: Halcyon Coves
-          </div>
-        </div>
+        
       </div>
     </section>
   );

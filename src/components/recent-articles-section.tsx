@@ -81,6 +81,9 @@ export function RecentArticlesSection() {
         <div data-articles-heading>
           <div className="h-px w-full bg-foreground/18" />
           <div className="py-6 sm:py-8 lg:py-10">
+            <p className="mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-foreground/70">
+              Insight & Analysis
+            </p>
             <h2 className="font-sans text-[3rem] font-normal leading-[0.92] tracking-[-0.06em] text-foreground sm:text-[4.4rem] lg:text-[5.4rem]">
               Recent Articles
             </h2>

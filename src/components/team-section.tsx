@@ -72,33 +72,41 @@ export function TeamSection() {
     <section
       id="team"
       ref={sectionRef}
-      className="bg-[color:color-mix(in_oklab,var(--secondary)_32%,white)] px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
+      className="bg-[color:color-mix(in_oklab,var(--secondary)_32%,white)] px-6 pb-16 pt-0 sm:px-8 sm:pb-20 sm:pt-0 lg:px-10 lg:pb-24 lg:pt-0"
     >
       <div className="mx-auto max-w-[112rem]">
         <div data-team-heading>
-          <div className="h-px w-full bg-foreground/18" />
-          <div className="py-6 sm:py-8 lg:py-10">
-            <h2 className="font-sans text-[3rem] font-normal leading-[0.92] tracking-[-0.06em] text-foreground sm:text-[4.3rem] lg:text-[5.2rem]">
+          <div className="pb-6 pt-2 sm:pb-8 sm:pt-4 lg:pb-10 lg:pt-6">
+            <p className="mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-foreground/70">
+              Our People
+            </p>
+            <h2 className="font-sans text-[3rem] font-normal leading-[0.92] tracking-[-0.06em] text-foreground sm:text-[4.4rem] lg:text-[5.4rem]">
               Team
             </h2>
           </div>
           <div className="h-px w-full bg-foreground/18" />
         </div>
 
-        <div className="grid gap-10 pb-10 pt-10 lg:grid-cols-[minmax(0,34rem)_1fr] lg:items-start lg:gap-16 lg:pb-14 lg:pt-14">
-          <div data-team-copy className="space-y-8">
-            <p className="max-w-[24ch] text-[1.18rem] leading-9 text-foreground/82 sm:text-[1.24rem] lg:text-[1.32rem]">
+        <div className="pb-10 pt-10 lg:pb-14 lg:pt-14">
+          <div
+            data-team-copy
+            className="grid gap-8 text-left lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12"
+          >
+            <p className="max-w-[40rem] text-[1rem] leading-8 text-foreground/78">
               The depth of our multi-disciplinary experience coupled with our tight-knit, team-based
               approach ensures that Archipelago offers the intelligence and breadth of larger
               corporate practices with the immediacy and flexibility of a small design studio.
             </p>
 
-            <a href="#" className="group/team inline-flex w-fit flex-col gap-3 text-foreground">
-              <span className="inline-flex items-center gap-3 text-[1.3rem] font-medium leading-none tracking-[-0.02em] sm:text-[1.42rem]">
+            <a
+              href="#"
+              className="group/team inline-flex w-fit flex-col items-start gap-3 text-foreground transition-transform duration-300 hover:-translate-y-0.5 lg:justify-self-end"
+            >
+              <span className="inline-flex items-center gap-3 text-[1rem] font-medium leading-none tracking-[-0.02em] sm:text-[1.1rem]">
                 <span>Meet The Team</span>
-                <ArrowRight className="h-6 w-6 transition-transform duration-300 group-hover/team:translate-x-1.5" />
+                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover/team:translate-x-1.5" />
               </span>
-              <span className="h-px w-full origin-left bg-foreground/42 transition-transform duration-300 group-hover/team:scale-x-[1.04]" />
+              <span className="h-px w-full origin-left bg-foreground/42 transition-transform duration-300 group-hover/team:scale-x-[1.08]" />
             </a>
           </div>
         </div>
