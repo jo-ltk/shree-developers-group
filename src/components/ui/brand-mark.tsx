@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 type BrandMarkProps = {
   className?: string;
+  imageClassName?: string;
   variant?: "white" | "black";
   alt?: string;
   priority?: boolean;
@@ -18,6 +19,7 @@ const logoSrc = {
 
 export function BrandMark({
   className,
+  imageClassName,
   variant = "white",
   alt = "Shree Developers Group logo",
   priority = false,
@@ -29,7 +31,7 @@ export function BrandMark({
         alt={alt}
         fill
         priority={priority}
-        className="object-contain"
+        className={cn("object-contain", imageClassName)}
         sizes="(max-width: 640px) 10rem, (max-width: 1024px) 14rem, 18rem"
       />
     </div>

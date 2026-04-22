@@ -43,7 +43,8 @@ export function NavbarAnimated() {
             <a href="#top" className="w-fit text-primary-foreground">
               <BrandMark
                 variant="white"
-                className="h-10 w-[7.5rem]"
+                className="h-24 w-[16rem]"
+                imageClassName="object-left"
                 alt="Shree Developers Group white logo"
                 priority
               />
@@ -65,11 +66,12 @@ export function NavbarAnimated() {
 
           {/* Mobile */}
           <div className="flex items-center justify-between xl:hidden">
-            <a href="#top" className="text-primary-foreground">
+            <a href="#top" className="text-primary-foreground relative z-50">
               <BrandMark
-                variant="white"
-                className="h-10 w-[7rem]"
-                alt="Shree Developers Group white logo"
+                variant={mobileOpen ? "black" : "white"}
+                className="h-14 w-[10rem]"
+                imageClassName="object-left"
+                alt={`Shree Developers Group ${mobileOpen ? "black" : "white"} logo`}
                 priority
               />
             </a>
@@ -77,7 +79,11 @@ export function NavbarAnimated() {
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary-foreground/16 bg-primary-foreground/10 text-primary-foreground backdrop-blur-sm"
+              className={`relative z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-sm transition-colors ${
+                mobileOpen
+                  ? "border-foreground/16 bg-foreground/5 text-foreground"
+                  : "border-primary-foreground/16 bg-primary-foreground/10 text-primary-foreground"
+              }`}
               aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
