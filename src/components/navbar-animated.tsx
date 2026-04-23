@@ -56,7 +56,7 @@ export function NavbarAnimated() {
                 key={item.title}
                 href={item.href}
                 style={{ color: "rgba(245,243,239,0.85)" }}
-                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.8rem] font-medium tracking-[0.12em] uppercase transition-all duration-300 hover:text-[#C6A96B] ${
+                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.8rem] font-medium tracking-[0.12em] uppercase transition-all duration-300 hover:text-[var(--color-accent)] ${
                   item.isTrailing ? "justify-self-end" : "justify-self-start"
                 }`}
               >
@@ -118,7 +118,7 @@ export function NavbarAnimated() {
                 >
                   <div className="flex flex-col pr-10">
                     {/* Gold accent line */}
-                    <span className="mb-4 block h-[1.5px] w-9 bg-[#C6A96B]" />
+                    <span className="mb-4 block h-[1.5px] w-9 bg-[var(--color-accent)]" />
                     <p
                       className="text-[1.2rem] leading-[1.25] tracking-[-0.01em] text-[#0F1113]"
                       style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
@@ -130,7 +130,7 @@ export function NavbarAnimated() {
                     </p>
                     <a
                       href="#gallery"
-                      className="mt-4 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C6A96B] transition-opacity duration-200 hover:opacity-70"
+                      className="mt-4 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)] transition-opacity duration-200 hover:opacity-70"
                     >
                       View all projects
                       <ArrowRight className="h-3 w-3" />
@@ -151,7 +151,7 @@ export function NavbarAnimated() {
                   >
                     <a
                       href={column.href}
-                      className="flex min-h-[2.5rem] items-center gap-1.5 text-[0.8rem] font-semibold tracking-[0.12em] text-[#0F1113] uppercase hover:text-[#C6A96B] transition-colors duration-200"
+                      className="flex min-h-[2.5rem] items-center gap-1.5 text-[0.8rem] font-semibold tracking-[0.12em] text-[#0F1113] uppercase hover:text-[var(--color-accent)] transition-colors duration-200"
                     >
                       <span>{column.title}</span>
                       {column.links.length > 0 ? (
@@ -180,7 +180,7 @@ export function NavbarAnimated() {
                           <a
                             key={item}
                             href={column.href}
-                            className="block transition-all duration-200 hover:text-[#C6A96B] hover:translate-x-0.5"
+                            className="block transition-all duration-200 hover:text-[var(--color-accent)] hover:translate-x-0.5"
                           >
                             {item}
                           </a>
@@ -203,9 +203,9 @@ export function NavbarAnimated() {
                   <div aria-hidden="true" />
                   <div className="col-span-5 flex justify-end">
                     <div className="w-full max-w-[36rem]">
-                      <div className="group flex items-center border-b border-[#0F1113]/20 pb-2 text-[0.82rem] text-[#0F1113]/45 tracking-[0.05em] transition-colors duration-200 hover:border-[#C6A96B]/50 cursor-text">
+                      <div className="group flex items-center border-b border-[#0F1113]/20 pb-2 text-[0.82rem] text-[#0F1113]/45 tracking-[0.05em] transition-colors duration-200 hover:border-[var(--color-accent)]/50 cursor-text">
                         <span className="flex-1">Search projects, articles...</span>
-                        <ArrowRight className="h-4 w-4 text-[#0F1113]/30 group-hover:text-[#C6A96B] transition-colors duration-200" />
+                        <ArrowRight className="h-4 w-4 text-[#0F1113]/30 group-hover:text-[var(--color-accent)] transition-colors duration-200" />
                       </div>
                     </div>
                   </div>
@@ -237,7 +237,7 @@ export function NavbarAnimated() {
 
             {/* Brand blurb */}
             <div className="mb-8 border-b border-[#0F1113]/10 pb-8">
-              <span className="mb-4 block h-[1.5px] w-8 bg-[#C6A96B]" />
+              <span className="mb-4 block h-[1.5px] w-8 bg-[var(--color-accent)]" />
               <p
                 className="text-[1.5rem] leading-[1.25] tracking-[-0.01em] text-[#0F1113]"
                 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
@@ -256,7 +256,7 @@ export function NavbarAnimated() {
                   <a
                     href={column.href}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-between py-4 text-[0.82rem] font-semibold tracking-[0.14em] text-[#0F1113] uppercase border-b border-[#0F1113]/08 hover:text-[#C6A96B] transition-colors duration-200"
+                    className="flex items-center justify-between py-4 text-[0.82rem] font-semibold tracking-[0.14em] text-[#0F1113] uppercase border-b border-[#0F1113]/08 hover:text-[var(--color-accent)] transition-colors duration-200"
                   >
                     <span>{column.title}</span>
                     {column.links.length > 0 ? (
@@ -272,7 +272,7 @@ export function NavbarAnimated() {
                           key={link}
                           href={column.href}
                           onClick={() => setMobileOpen(false)}
-                          className="block text-[0.82rem] font-light tracking-[0.04em] text-[#0F1113]/50 hover:text-[#C6A96B] transition-colors duration-200"
+                          className="block text-[0.82rem] font-light tracking-[0.04em] text-[#0F1113]/50 hover:text-[var(--color-accent)] transition-colors duration-200"
                         >
                           {link}
                         </a>
@@ -294,7 +294,7 @@ export function NavbarAnimated() {
               <a
                 href="#footer"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center gap-3 bg-[#C6A96B] px-7 h-[48px] text-[11px] font-bold tracking-[0.18em] text-[#0F1113] uppercase transition-all duration-200 hover:brightness-105"
+                className="inline-flex items-center gap-3 bg-[var(--color-accent)] px-7 h-[48px] text-[11px] font-bold tracking-[0.18em] text-[#0F1113] uppercase transition-all duration-200 hover:brightness-105"
                 style={{
                   clipPath:
                     "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))",

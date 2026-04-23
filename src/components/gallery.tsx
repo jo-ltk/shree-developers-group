@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 
-import { SectionHeading } from "@/components/ui/section-heading";
 import { ensureGsapPlugins } from "@/lib/gsap";
 
 const featuredProjects = [
@@ -139,54 +138,88 @@ export function Gallery() {
     <section
       id="gallery"
       ref={sectionRef}
-      className="bg-background min-h-screen px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36"
+      className="bg-[var(--color-primary)] py-20 lg:py-28"
     >
-      <div className="mx-auto max-w-[110rem]">
-        <div data-gallery-copy>
-          <SectionHeading
-            eyebrow="Featured Projects"
-            title="A larger, more immersive project showcase with image-led cards and richer hover detail."
-            description="The lead project plays as a near full-screen feature, while the supporting projects follow in larger editorial cards."
-            align="center"
-          />
+      <div className="mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
+        <div data-gallery-copy className="flex flex-col items-center text-center max-w-[48rem] mx-auto">
+          <div className="flex items-center gap-4 mb-7">
+            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
+            <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">Featured Projects</p>
+            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
+          </div>
+          
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+              className="text-[var(--text-light)] leading-[1.1] tracking-[-0.01em]">
+            A larger, more immersive project showcase with image-led cards and richer <em style={{ fontStyle: "italic" }} className="text-[var(--color-accent)]">hover detail.</em>
+          </h2>
+          <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
+          
+          <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/55">
+            The lead project plays as a near full-screen feature, while the supporting projects follow in larger editorial cards.
+          </p>
         </div>
 
         <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-6 lg:mt-20 lg:gap-7">
           {featuredProjects.map((project) => (
             <div key={project.title} data-project-card className={`${project.layout} ${project.height}`}>
-              <div className="border border-[#C6A96B]/15 bg-[#F5F3EF] p-6 sm:p-8 transition-all duration-500 hover:border-[#C6A96B]/40 hover:shadow-[0_8px_40px_rgba(198,169,107,0.08)] hover:-translate-y-1 flex flex-col group h-full cursor-pointer">
-                
-                {/* Image Container */}
-                <div className="relative w-full flex-1 min-h-[220px] mb-6 sm:mb-8 overflow-hidden rounded-[2px]">
+              <div className="group relative overflow-hidden border border-[var(--color-secondary)]/10 bg-[var(--color-primary)] transition-all duration-500 hover:border-[var(--color-accent)]/50 flex flex-col h-full cursor-pointer">
+
+                {/* Gold top accent bar */}
+                <div className="h-[2px] w-full bg-gradient-to-r from-[var(--color-accent)] via-[var(--color-accent)]/50 to-transparent flex-shrink-0" />
+
+                {/* Image */}
+                <div className="relative flex-1 min-h-[240px] overflow-hidden">
                   <Image 
                     src={project.image} 
                     alt={project.title} 
                     fill 
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]" 
+                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-black/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary)]/30 to-transparent" />
+
+                  {/* Status badge */}
+                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-[var(--color-primary)]/80 backdrop-blur-sm border border-[var(--color-accent)]/30 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+                    <span className="text-[9px] font-semibold tracking-[0.15em] text-[var(--color-accent)] uppercase">{project.year}</span>
+                  </div>
+
+                  {/* Type badge */}
+                  <div className="absolute top-4 right-4 bg-[var(--color-accent)] px-3 py-1">
+                    <span className="text-[9px] font-bold tracking-[0.12em] text-[var(--text-primary)] uppercase">{project.type}</span>
+                  </div>
+
+                  {/* Name over image */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <p className="text-[10px] font-semibold tracking-[0.18em] text-[var(--color-accent)] uppercase mb-1">{project.location}</p>
+                    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "1.6rem" }}
+                        className="text-[var(--text-light)] leading-tight">{project.title}</h3>
+                  </div>
                 </div>
 
-                {/* Text Content Container */}
-                <div className="flex flex-col">
-                  {/* Gold icon or number */}
-                  <div className="text-[#C6A96B] font-medium text-lg sm:text-xl mb-4 tracking-widest">{project.index}</div>
-                  
-                  {/* Eyebrow or label */}
-                  <div className="text-[0.68rem] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#787b78] mb-3">
-                    {project.type} &mdash; {project.location}
+                {/* 4 section tabs */}
+                <div className="grid grid-cols-4 border-t border-[var(--color-secondary)]/08 flex-shrink-0">
+                  {["Brief", "Plans", "Renders", "Progress"].map((tab, i) => (
+                    <div key={tab} className={`py-2.5 text-center border-r border-[var(--color-secondary)]/08 last:border-r-0 ${i === 0 ? "bg-[var(--color-accent)]/10" : ""}`}>
+                      <span className="text-[8.5px] font-semibold tracking-[0.12em] text-[var(--text-light)]/40 uppercase">{tab}</span>
+                      {i === 0 && <div className="h-[1.5px] w-4 bg-[var(--color-accent)] mx-auto mt-1" />}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex-shrink-0">
+                  <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/55 mb-5">{project.summary}</p>
+
+                  {/* CTA */}
+                  <div className="group/btn flex h-[44px] w-full items-center justify-center gap-3 bg-[var(--color-accent)] text-[10px] font-bold tracking-[0.18em] text-[var(--text-primary)] uppercase transition-all duration-200 hover:brightness-110"
+                       style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))" }}>
+                    View Full Project
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                         className="transition-transform duration-200 group-hover/btn:translate-x-1">
+                      <path d="M5 12H19M19 12L12 5M19 12L12 19" />
+                    </svg>
                   </div>
-                  
-                  {/* Headline in Cormorant */}
-                  <h3 className="font-cormorant text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.05] text-[#112025] mb-4">
-                    {project.title}
-                  </h3>
-                  
-                  {/* Body in Outfit light */}
-                  <p className="font-outfit font-light text-[#787b78] leading-relaxed text-[0.95rem] sm:text-[1.05rem]">
-                    {project.summary}
-                  </p>
                 </div>
               </div>
             </div>

@@ -72,8 +72,8 @@ export function Hero() {
 
             {/* Eyebrow */}
             <div className="flex items-center gap-4 mb-7">
-              <span className="h-[1.5px] w-9 bg-[#C6A96B] flex-shrink-0" />
-              <p className="text-[10px] font-semibold tracking-[0.2em] text-[#C6A96B] uppercase">
+              <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
+              <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">
                 Building Spaces. Building Trust.
               </p>
             </div>
@@ -98,7 +98,7 @@ export function Hero() {
               }}
             >
               Building{" "}
-              <em className="not-italic text-[#C6A96B]" style={{ fontStyle: "italic" }}>
+              <em className="not-italic text-[var(--color-accent)]" style={{ fontStyle: "italic" }}>
                 Trust.
               </em>
             </h1>
@@ -110,7 +110,7 @@ export function Hero() {
             </p>
 
             {/* Divider */}
-            <div className="my-8 h-[1px] w-12 bg-[#C6A96B]/30" />
+            <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
 
             {/* Buttons — stack vertically on mobile, side by side on sm+ */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -118,7 +118,7 @@ export function Hero() {
               {/* Primary CTA */}
               <a
                 href="#projects"
-                className="group relative flex h-[50px] items-center justify-center gap-3 bg-[#C6A96B] px-8 text-[11px] font-bold tracking-[0.18em] text-[#0F1113] uppercase transition-all duration-200 hover:brightness-110 hover:-translate-y-px"
+                className="group relative flex h-[50px] items-center justify-center gap-3 bg-[var(--color-accent)] px-8 text-[11px] font-bold tracking-[0.18em] text-[#0F1113] uppercase transition-all duration-200 hover:brightness-110 hover:-translate-y-px"
                 style={{
                   clipPath:
                     "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
@@ -143,7 +143,7 @@ export function Hero() {
               {/* Ghost CTA */}
               <a
                 href="#about"
-                className="group flex h-[50px] items-center justify-center gap-3 border border-[#C6A96B]/40 bg-transparent px-7 text-[11px] font-semibold tracking-[0.18em] text-[#C6A96B] uppercase transition-all duration-200 hover:border-[#C6A96B] hover:bg-[#C6A96B]/10 hover:-translate-y-px"
+                className="group flex h-[50px] items-center justify-center gap-3 border border-[var(--color-accent)]/40 bg-transparent px-7 text-[11px] font-semibold tracking-[0.18em] text-[var(--color-accent)] uppercase transition-all duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 hover:-translate-y-px"
               >
                 About Us
                 <svg
@@ -167,7 +167,7 @@ export function Hero() {
       </div>
 
       {/* Stats bar — bottom right, desktop only */}
-      <div className="absolute bottom-10 right-10 z-10 hidden lg:flex border border-[#C6A96B]/18 bg-[#0F1113]/70 backdrop-blur-sm">
+      <div className="absolute bottom-10 right-10 z-10 hidden lg:flex border border-[var(--color-accent)]/18 bg-[#0F1113]/70 backdrop-blur-sm">
         {[
           { num: "15+", label: "Years" },
           { num: "50+", label: "Projects" },
@@ -176,11 +176,11 @@ export function Hero() {
           <div
             key={s.label}
             className={`px-7 py-[18px] text-center ${
-              i < 2 ? "border-r border-[#C6A96B]/15" : ""
+              i < 2 ? "border-r border-[var(--color-accent)]/15" : ""
             }`}
           >
             <p
-              className="text-[#C6A96B] leading-none"
+              className="text-[var(--color-accent)] leading-none"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "1.75rem",

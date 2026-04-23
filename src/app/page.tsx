@@ -17,7 +17,7 @@ export default function Home() {
       <NavbarAnimated />
       <Hero />
       <IntroStatement />
-      <LogoSection />
+      {/* <LogoSection /> */}
       <Gallery />
       <MetricsSection />
       <MarqueeTextSection />

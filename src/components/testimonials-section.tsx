@@ -33,18 +33,19 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section
-      className="bg-muted px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
-    >
-      <div className="mx-auto max-w-[112rem]">
-        <div className="max-w-[58rem]">
-          <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
-            What Our Clients Say
-          </p>
-          <h2 className="mt-4 font-cormorant text-[3.5rem] leading-[1.05] text-[#112025] sm:text-[4.4rem] lg:text-[5.4rem]">
-            Trusted by Many, Loved by All
+    <section className="bg-[var(--color-primary)] py-20 lg:py-28 text-[var(--text-light)]">
+      <div className="mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
+        <div>
+          <div className="flex items-center gap-4 mb-7">
+            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
+            <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">What Our Clients Say</p>
+          </div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+              className="text-[var(--text-light)] leading-[1.1] tracking-[-0.01em] max-w-[48rem]">
+            Trusted by Many, Loved by <em style={{ fontStyle: "italic" }} className="text-[var(--color-accent)]">All.</em>
           </h2>
-          <p className="mt-5 max-w-[30rem] font-outfit font-light text-[1.1rem] leading-relaxed text-[#787b78]">
+          <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
+          <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/60 max-w-[36rem]">
             Our clients&apos; success stories reflect our commitment to excellence. See how we&apos;ve
             helped them find their dream homes, sustainable investments, and perfect getaways.
           </p>
@@ -54,28 +55,30 @@ export function TestimonialsSection() {
           {testimonials.map((item) => (
             <article
               key={item.name}
-              className="border border-[#C6A96B]/15 bg-[#F5F3EF] p-8 transition-all duration-500 hover:border-[#C6A96B]/40 hover:shadow-[0_8px_40px_rgba(198,169,107,0.08)] hover:-translate-y-1 flex flex-col justify-between group cursor-pointer h-full min-h-[22rem]"
+              className="border border-[var(--color-secondary)]/10 bg-[var(--color-secondary)]/[0.03] p-8 hover:border-[var(--color-accent)]/40 hover:bg-[var(--color-secondary)]/[0.05] transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full min-h-[22rem]"
             >
               <div>
-                <div className="flex items-center gap-2 text-[#C6A96B] mb-6">
+                <div className="flex items-center gap-2 text-[var(--color-accent)] mb-6">
                   {Array.from({ length: 5 }).map((_, index) => (
                     <Star key={`${item.name}-${index}`} className="h-5 w-5 fill-current" strokeWidth={1.8} />
                   ))}
                 </div>
 
-                <h3 className="font-cormorant text-[1.8rem] sm:text-[2rem] leading-[1.3] text-[#112025] mb-8">
+                <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "1.8rem" }}
+                    className="leading-[1.3] text-[var(--text-light)] mb-8 group-hover:text-[var(--color-accent)] transition-colors duration-300">
                   &ldquo;{item.quote}&rdquo;
                 </h3>
               </div>
 
-              <div className="mt-auto flex items-center gap-4 pt-6 border-t border-[#C6A96B]/15">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#C6A96B] text-[0.95rem] font-semibold text-[#F5F3EF]">
+              <div className="mt-auto flex items-center gap-5 pt-6 border-t border-[var(--color-secondary)]/10 group-hover:border-[var(--color-accent)]/30 transition-colors duration-300">
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center bg-[var(--color-accent)] text-[1.1rem] font-bold text-[var(--text-primary)] uppercase" 
+                     style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))" }}>
                   {item.initials}
                 </div>
 
                 <div>
-                  <p className="font-outfit font-medium text-[1.1rem] tracking-wide text-[#112025]">{item.name}</p>
-                  <p className="font-outfit font-light text-[0.95rem] text-[#787b78]">{item.role}</p>
+                  <p className="text-[0.95rem] font-semibold tracking-wider text-[var(--text-light)] uppercase">{item.name}</p>
+                  <p className="text-[0.82rem] font-light text-[var(--text-light)]/50 mt-1">{item.role}</p>
                 </div>
               </div>
             </article>

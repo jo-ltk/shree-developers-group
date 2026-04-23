@@ -72,27 +72,27 @@ export function TeamSection() {
     <section
       id="team"
       ref={sectionRef}
-      className="bg-background px-6 pb-16 pt-0 sm:px-8 sm:pb-20 sm:pt-0 lg:px-10 lg:pb-24 lg:pt-0"
+      className="bg-[var(--color-secondary)] py-20 lg:py-28 text-[var(--text-primary)]"
     >
-      <div className="mx-auto max-w-[112rem]">
+      <div className="mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
         <div data-team-heading>
-          <div className="pb-6 pt-2 sm:pb-8 sm:pt-4 lg:pb-10 lg:pt-6">
-            <p className="mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
-              Our People
-            </p>
-            <h2 className="font-cormorant text-[3.5rem] leading-[1.05] text-[#112025] sm:text-[4.4rem] lg:text-[5.4rem]">
-              Team
-            </h2>
+          <div className="flex items-center gap-4 mb-7">
+            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
+            <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">Our People</p>
           </div>
-          <div className="h-px w-full bg-[#C6A96B]/20" />
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+              className="text-[var(--text-primary)] leading-[1.1] tracking-[-0.01em] max-w-[36rem]">
+            Leadership & <em style={{ fontStyle: "italic" }} className="text-[var(--color-accent)]">Team.</em>
+          </h2>
+          <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
         </div>
 
-        <div className="pb-10 pt-10 lg:pb-14 lg:pt-14">
+        <div className="pb-10 lg:pb-14">
           <div
             data-team-copy
             className="grid gap-8 text-left lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12"
           >
-            <p className="font-outfit font-light max-w-[40rem] text-[1.1rem] leading-relaxed text-[#787b78]">
+            <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-primary)]/60 max-w-[40rem]">
               The depth of our multi-disciplinary experience coupled with our tight-knit, team-based
               approach ensures that Archipelago offers the intelligence and breadth of larger
               corporate practices with the immediacy and flexibility of a small design studio.
@@ -100,20 +100,21 @@ export function TeamSection() {
 
             <a
               href="#"
-              className="group/team inline-flex w-fit flex-col items-start gap-3 text-[#112025] transition-transform duration-300 hover:-translate-y-0.5 lg:justify-self-end hover:text-[#C6A96B]"
+              className="group/btn flex h-[50px] items-center justify-center gap-3 border border-[var(--color-primary)]/20 bg-transparent px-7 text-[11px] font-semibold tracking-[0.18em] text-[var(--text-primary)] uppercase transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:-translate-y-px"
             >
-              <span className="inline-flex items-center gap-3 font-semibold uppercase tracking-[0.1em] text-[0.85rem]">
-                <span>Meet The Team</span>
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/team:translate-x-1.5" />
-              </span>
-              <span className="h-px w-full origin-left bg-[#C6A96B]/40 transition-transform duration-300 group-hover/team:scale-x-[1.08] group-hover/team:bg-[#C6A96B]" />
+              Meet The Team
+              <ArrowRight className="h-4 w-4 opacity-40 transition-all duration-200 group-hover/btn:translate-x-1 group-hover/btn:opacity-100" />
             </a>
           </div>
         </div>
 
-        <div data-team-image-shell className="relative overflow-hidden mt-4">
-          <div className="relative aspect-[16/9] min-h-[20rem] bg-[#F5F3EF] border border-[#C6A96B]/15 p-4 sm:p-6 lg:p-8 sm:min-h-[26rem] lg:min-h-[40rem] shadow-[0_8px_40px_rgba(198,169,107,0.08)]">
-            <div data-team-image className="absolute inset-4 sm:inset-6 lg:inset-8 will-change-transform overflow-hidden rounded-[2px]">
+        <div data-team-image-shell className="relative overflow-visible mt-4">
+          <div className="relative aspect-[16/9] min-h-[20rem] sm:min-h-[26rem] lg:min-h-[40rem] mx-3 my-3">
+            {/* Gold corner accents */}
+            <div className="absolute -bottom-3 -right-3 h-16 w-16 border-b-2 border-r-2 border-[var(--color-accent)]/50 z-10" />
+            <div className="absolute -top-3 -left-3 h-16 w-16 border-t-2 border-l-2 border-[var(--color-accent)]/50 z-10" />
+            
+            <div data-team-image className="absolute inset-0 will-change-transform overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.06)]">
               <Image
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=2200&q=80"
                 alt="Team gathered together in a bright architectural setting"

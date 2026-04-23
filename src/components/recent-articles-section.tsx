@@ -75,57 +75,61 @@ export function RecentArticlesSection() {
     <section
       id="articles"
       ref={sectionRef}
-      className="bg-background px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
+      className="bg-[var(--color-primary)] py-20 lg:py-28 text-[var(--text-light)]"
     >
-      <div className="mx-auto max-w-[112rem]">
+      <div className="mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
         <div data-articles-heading>
-          <div className="h-px w-full bg-[#C6A96B]/20" />
-          <div className="py-6 sm:py-8 lg:py-10">
-            <p className="mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
-              Insight & Analysis
-            </p>
-            <h2 className="font-cormorant text-[3.5rem] leading-[1.05] text-[#112025] sm:text-[4.4rem] lg:text-[5.4rem]">
-              Recent Articles
-            </h2>
+          <div className="flex items-center gap-4 mb-7">
+            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
+            <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">Insight & Analysis</p>
           </div>
-          <div className="h-px w-full bg-[#C6A96B]/20" />
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+              className="text-[var(--text-light)] leading-[1.1] tracking-[-0.01em] max-w-[36rem]">
+            Recent <em style={{ fontStyle: "italic" }} className="text-[var(--color-accent)]">Articles.</em>
+          </h2>
+          <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
           {articles.map((article) => (
             <article key={article.title} data-article-card className="h-full">
-              <a href="#" className="border border-[#C6A96B]/15 bg-[#F5F3EF] p-6 sm:p-8 transition-all duration-500 hover:border-[#C6A96B]/40 hover:shadow-[0_8px_40px_rgba(198,169,107,0.08)] hover:-translate-y-1 flex flex-col group h-full cursor-pointer">
+              <a href="#" className="border border-[var(--color-secondary)]/10 bg-[var(--color-secondary)]/[0.03] p-8 hover:border-[var(--color-accent)]/40 hover:bg-[var(--color-secondary)]/[0.05] transition-all duration-300 flex flex-col group h-full cursor-pointer">
                 
                 {/* Image Container */}
-                <div className="relative w-full aspect-[16/10] mb-6 sm:mb-8 overflow-hidden rounded-[2px]">
+                <div className="relative w-full aspect-[16/10] mb-6 sm:mb-8 overflow-hidden">
+                  {/* Gold corner accents */}
+                  <div className="absolute -bottom-1 -right-1 h-6 w-6 border-b-2 border-r-2 border-[var(--color-accent)]/50 z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
+                  <div className="absolute -top-1 -left-1 h-6 w-6 border-t-2 border-l-2 border-[var(--color-accent)]/50 z-10 transition-transform duration-500 group-hover:-translate-x-1 group-hover:-translate-y-1" />
+
                   <Image
                     src={article.image}
                     alt={article.title}
                     fill
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-black/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-[var(--color-primary)]/10 transition-opacity duration-500 group-hover:bg-transparent" />
                 </div>
                 
                 {/* Text Content */}
                 <div className="flex flex-col flex-1">
                   {/* Eyebrow or label */}
-                  <div className="text-[#C6A96B] text-[0.68rem] sm:text-xs font-semibold uppercase tracking-[0.2em] mb-3">
+                  <div className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase mb-4">
                     Article
                   </div>
                   
                   {/* Headline in Cormorant */}
-                  <h3 className="font-cormorant text-3xl sm:text-[2.2rem] leading-[1.1] text-[#112025] mb-4 transition-colors duration-300 group-hover:text-[#C6A96B]">
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "1.8rem" }}
+                      className="text-[var(--text-light)] leading-[1.1] mb-4 transition-colors duration-300 group-hover:text-[var(--color-accent)]">
                     {article.title}
                   </h3>
                   
-                  {/* Body in Outfit light */}
-                  <p className="font-outfit font-light text-[#787b78] leading-relaxed text-[0.95rem] sm:text-[1.05rem] mb-6">
+                  {/* Body */}
+                  <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/60 mb-6">
                     {article.description}
                   </p>
 
-                  <div className="mt-auto inline-flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-widest text-[#112025] transition-colors duration-300 group-hover:text-[#C6A96B]">
+                  <div className="mt-auto inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-widest text-[var(--text-light)]/80 transition-colors duration-300 group-hover:text-[var(--color-accent)]">
                     <span>Read more</span>
                     <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">-&gt;</span>
                   </div>
