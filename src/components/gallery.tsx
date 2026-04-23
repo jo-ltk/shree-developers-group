@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 
-import { ProjectCard } from "@/components/project-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ensureGsapPlugins } from "@/lib/gsap";
 
@@ -154,17 +154,41 @@ export function Gallery() {
         <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-6 lg:mt-20 lg:gap-7">
           {featuredProjects.map((project) => (
             <div key={project.title} data-project-card className={`${project.layout} ${project.height}`}>
-              <ProjectCard
-                index={project.index}
-                title={project.title}
-                location={project.location}
-                type={project.type}
-                year={project.year}
-                summary={project.summary}
-                image={project.image}
-                size={project.size}
-                className="h-full"
-              />
+              <div className="border border-[#C6A96B]/15 bg-[#F5F3EF] p-6 sm:p-8 transition-all duration-500 hover:border-[#C6A96B]/40 hover:shadow-[0_8px_40px_rgba(198,169,107,0.08)] hover:-translate-y-1 flex flex-col group h-full cursor-pointer">
+                
+                {/* Image Container */}
+                <div className="relative w-full flex-1 min-h-[220px] mb-6 sm:mb-8 overflow-hidden rounded-[2px]">
+                  <Image 
+                    src={project.image} 
+                    alt={project.title} 
+                    fill 
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]" 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-black/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                </div>
+
+                {/* Text Content Container */}
+                <div className="flex flex-col">
+                  {/* Gold icon or number */}
+                  <div className="text-[#C6A96B] font-medium text-lg sm:text-xl mb-4 tracking-widest">{project.index}</div>
+                  
+                  {/* Eyebrow or label */}
+                  <div className="text-[0.68rem] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#787b78] mb-3">
+                    {project.type} &mdash; {project.location}
+                  </div>
+                  
+                  {/* Headline in Cormorant */}
+                  <h3 className="font-cormorant text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.05] text-[#112025] mb-4">
+                    {project.title}
+                  </h3>
+                  
+                  {/* Body in Outfit light */}
+                  <p className="font-outfit font-light text-[#787b78] leading-relaxed text-[0.95rem] sm:text-[1.05rem]">
+                    {project.summary}
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>

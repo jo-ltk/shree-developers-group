@@ -106,24 +106,24 @@ const metrics: MetricItem[] = [
 export function MetricsSection() {
   return (
     <section
-      className="bg-primary px-6 py-16 text-primary-foreground sm:px-8 sm:py-20 lg:px-10 lg:py-24"
+      className="bg-primary px-6 py-20 text-primary-foreground sm:px-8 sm:py-24 lg:px-10 lg:py-32"
     >
       <div className="mx-auto max-w-[112rem]">
-        <div className="grid gap-8 pb-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.72fr)] lg:items-end lg:pb-12">
-          <div className="space-y-3">
-            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-secondary">
+        <div className="grid gap-8 pb-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.72fr)] lg:items-end lg:pb-16">
+          <div className="space-y-4">
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
               Metrics
             </p>
-            <h2 className="font-sans text-[3rem] font-normal leading-[0.92] tracking-[-0.06em] text-primary-foreground sm:text-[4.4rem] lg:text-[5.4rem]">
+            <h2 className="font-cormorant text-[3.5rem] leading-[1.05] text-[#F5F3EF] sm:text-[4.4rem] lg:text-[5.4rem]">
               We&apos;re City Making Design Leaders
             </h2>
           </div>
 
-          <div className="space-y-3 lg:justify-self-end lg:pt-1">
-            <p className="max-w-[30rem] text-[1rem] leading-8 text-primary-foreground/82">
+          <div className="space-y-6 lg:justify-self-end lg:pt-1">
+            <p className="font-outfit font-light max-w-[30rem] text-[1.1rem] leading-relaxed text-[#F5F3EF]/80">
               From health precincts to club houses, overlays, master plans, and public interfaces.
             </p>
-            <div className="w-fit border-b border-primary-foreground/34 pb-1.5 text-[0.94rem] font-medium text-primary-foreground transition-colors duration-300 hover:border-secondary hover:text-secondary">
+            <div className="w-fit border-b border-[#C6A96B]/40 pb-1.5 font-outfit text-[1rem] tracking-wide text-[#F5F3EF] transition-all duration-300 hover:border-[#C6A96B] hover:text-[#C6A96B] cursor-pointer">
               Discover Our Process
             </div>
           </div>
@@ -133,24 +133,22 @@ export function MetricsSection() {
           {metrics.map((metric) => (
             <article
               key={metric.label}
-              className="flex min-h-[15rem] flex-col justify-between rounded-none border border-primary-foreground/14 bg-primary-foreground/[0.07] p-6 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-secondary hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] sm:p-7"
+              className="border border-[#C6A96B]/15 bg-[#F5F3EF] p-8 transition-all duration-500 hover:border-[#C6A96B]/40 hover:shadow-[0_8px_40px_rgba(198,169,107,0.08)] hover:-translate-y-1 flex min-h-[16rem] flex-col justify-between group cursor-pointer"
             >
-              <div className="flex items-start justify-between gap-6">
-                <div>
-                  <p className="font-sans text-[3rem] font-light leading-none tracking-[-0.08em] text-primary-foreground sm:text-[3.4rem] lg:text-[3.75rem]">
-                    {metric.value}
-                  </p>
-                  <p className="mt-4 max-w-[18ch] text-[1rem] leading-7 text-secondary sm:text-[1.04rem]">
-                    {metric.label}
-                  </p>
-                </div>
-
-                <div className="shrink-0 text-secondary">
+              <div className="flex items-start justify-between gap-6 mb-8">
+                {/* Gold icon or number */}
+                <p className="font-cormorant text-[3.5rem] sm:text-[4rem] text-[#C6A96B] leading-none">
+                  {metric.value}
+                </p>
+                <div className="shrink-0 text-[#C6A96B] opacity-80 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:opacity-100">
                   {metric.icon}
                 </div>
               </div>
 
-              <div className="mt-8 h-px w-full bg-primary-foreground/10" />
+              {/* Body in Outfit light */}
+              <p className="font-outfit font-light text-[1.2rem] sm:text-[1.3rem] leading-snug text-[#112025]">
+                {metric.label}
+              </p>
             </article>
           ))}
         </div>

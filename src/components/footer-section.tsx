@@ -55,31 +55,31 @@ export function FooterSection() {
           data-footer-grid
           className="space-y-10 sm:space-y-12"
         >
-          <div className="grid gap-10 border-t border-primary-foreground/12 py-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-16 lg:py-12">
+          <div className="grid gap-10 border-t border-[#C6A96B]/20 py-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-16 lg:py-12">
             <div className="space-y-5">
-              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
                 Shree Developers Group
               </p>
-              <h2 className="font-sans text-[3rem] font-normal leading-[0.92] tracking-[-0.06em] text-primary-foreground sm:text-[4.4rem] lg:text-[5.4rem]">
+              <h2 className="font-cormorant text-[3.5rem] leading-[1.05] text-[#F5F3EF] sm:text-[4.4rem] lg:text-[5.4rem]">
                 Premium property with a cleaner, more personal approach.
               </h2>
-              <p className="max-w-[52rem] text-[1rem] leading-8 text-primary-foreground/70 sm:text-[1.06rem]">
+              <p className="max-w-[52rem] font-outfit font-light text-[1.1rem] leading-relaxed text-[#F5F3EF]/80">
                 Crafted for modern buyers, investors, and communities with a sharper eye on detail,
                 quality, and long-term value.
               </p>
             </div>
 
             <div className="space-y-5 lg:max-w-[28rem] lg:justify-self-end">
-              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
                 Start A Conversation
               </p>
-              <p className="text-[1rem] leading-8 text-primary-foreground/72 sm:text-[1.04rem]">
+              <p className="font-outfit font-light text-[1.1rem] leading-relaxed text-[#F5F3EF]/80">
                 Let&apos;s talk about homes, investments, and future-ready developments shaped around
                 better design and clearer decision-making.
               </p>
               <a
                 href="mailto:hello@shreedevelopersgroup.com"
-                className="inline-flex items-center gap-3 text-[1.15rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-secondary sm:text-[1.3rem]"
+                className="inline-flex items-center gap-3 font-outfit text-[1.2rem] font-medium tracking-wide text-[#F5F3EF] transition-colors duration-300 hover:text-[#C6A96B] sm:text-[1.3rem]"
               >
                 hello@shreedevelopersgroup.com
                 <ArrowRight className="h-5 w-5" />
@@ -89,10 +89,10 @@ export function FooterSection() {
 
           <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-[1fr_0.9fr_0.9fr_1.2fr] xl:gap-14">
             <div className="space-y-5">
-              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
                 Office
               </p>
-              <p className="max-w-[22rem] text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
+              <p className="max-w-[22rem] font-outfit font-light text-[1.05rem] leading-8 text-[#F5F3EF]/80">
                 Turrbal and Yuggera/Jagera Country
                 <br />
                 Level 3, 199 George Street
@@ -103,19 +103,19 @@ export function FooterSection() {
 
             <div className="space-y-8">
               <div className="space-y-5">
-                <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+                <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
                   Contact
                 </p>
-                <div className="space-y-3 text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
+                <div className="space-y-3 font-outfit font-light text-[1.05rem] leading-8 text-[#F5F3EF]/80">
                   <a
                     href="tel:+61732364606"
-                    className="block transition-colors duration-300 hover:text-secondary"
+                    className="block transition-colors duration-300 hover:text-[#C6A96B]"
                   >
                     +61 7 3236 4606
                   </a>
                   <a
                     href="mailto:hello@shreedevelopersgroup.com"
-                    className="block transition-colors duration-300 hover:text-secondary"
+                    className="block transition-colors duration-300 hover:text-[#C6A96B]"
                   >
                     hello@shreedevelopersgroup.com
                   </a>
@@ -124,7 +124,7 @@ export function FooterSection() {
             </div>
 
             <div className="space-y-5">
-              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
                 Navigation
               </p>
               <div className="grid grid-cols-2 gap-x-8 gap-y-3">
@@ -132,7 +132,7 @@ export function FooterSection() {
                   <a
                     key={item.label}
                     href={item.href}
-                    className="text-[1.05rem] font-medium tracking-[-0.02em] text-primary-foreground transition-colors duration-300 hover:text-secondary"
+                    className="font-outfit font-light text-[1.05rem] tracking-wide text-[#F5F3EF]/80 transition-colors duration-300 hover:text-[#C6A96B]"
                   >
                     {item.label}
                   </a>
@@ -141,25 +141,25 @@ export function FooterSection() {
             </div>
 
             <div className="space-y-5 xl:pl-4">
-              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
                 Subscribe
               </p>
-              <p className="max-w-[26rem] text-[1rem] leading-8 text-primary-foreground/76 sm:text-[1.04rem]">
+              <p className="max-w-[26rem] font-outfit font-light text-[1.05rem] leading-8 text-[#F5F3EF]/80">
                 Market updates, launches, and development insights delivered with restraint.
               </p>
 
               <label className="group/footer-input block">
                 <span className="sr-only">Enter your email</span>
-                <div className="flex items-center gap-4 border-b border-primary-foreground/24 pb-3 transition-colors duration-300 group-focus-within/footer-input:border-secondary hover:border-secondary">
+                <div className="flex items-center gap-4 border-b border-[#C6A96B]/30 pb-3 transition-colors duration-300 group-focus-within/footer-input:border-[#C6A96B] hover:border-[#C6A96B]">
                   <input
                     type="email"
                     placeholder="Enter Your Email"
-                    className="w-full bg-transparent text-[1.12rem] tracking-[-0.02em] text-primary-foreground placeholder:text-primary-foreground/46 focus:outline-none sm:text-[1.2rem]"
+                    className="w-full bg-transparent font-outfit text-[1.12rem] tracking-wide text-[#F5F3EF] placeholder:text-[#F5F3EF]/40 focus:outline-none sm:text-[1.2rem]"
                   />
                   <button
                     type="button"
                     aria-label="Submit email"
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-primary-foreground transition-transform duration-300 hover:translate-x-1 hover:text-secondary"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#F5F3EF] transition-transform duration-300 hover:translate-x-1 hover:text-[#C6A96B]"
                   >
                     <ArrowRight className="h-6 w-6" />
                   </button>
@@ -168,7 +168,7 @@ export function FooterSection() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 border-t-0 sm:border-t border-primary-foreground/10 pt-6 text-[0.82rem] uppercase tracking-[0.22em] text-primary-foreground/42 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 border-t-0 sm:border-t border-[#C6A96B]/20 pt-6 text-[0.82rem] uppercase tracking-[0.22em] text-[#F5F3EF]/40 sm:flex-row sm:items-center sm:justify-between">
             <p>Shree Developers Group</p>
             <p>Designed for modern city living</p>
           </div>

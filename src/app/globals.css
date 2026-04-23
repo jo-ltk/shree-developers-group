@@ -3,6 +3,8 @@
 @theme inline {
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-outfit: "Outfit", sans-serif;
 
   /* Strict Color System Tokens */
   --color-primary: var(--primary);

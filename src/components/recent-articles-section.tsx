@@ -79,41 +79,55 @@ export function RecentArticlesSection() {
     >
       <div className="mx-auto max-w-[112rem]">
         <div data-articles-heading>
-          <div className="h-px w-full bg-foreground/18" />
+          <div className="h-px w-full bg-[#C6A96B]/20" />
           <div className="py-6 sm:py-8 lg:py-10">
-            <p className="mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-foreground/70">
+            <p className="mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#C6A96B]">
               Insight & Analysis
             </p>
-            <h2 className="font-sans text-[3rem] font-normal leading-[0.92] tracking-[-0.06em] text-foreground sm:text-[4.4rem] lg:text-[5.4rem]">
+            <h2 className="font-cormorant text-[3.5rem] leading-[1.05] text-[#112025] sm:text-[4.4rem] lg:text-[5.4rem]">
               Recent Articles
             </h2>
           </div>
-          <div className="h-px w-full bg-foreground/18" />
+          <div className="h-px w-full bg-[#C6A96B]/20" />
         </div>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
           {articles.map((article) => (
-            <article key={article.title} data-article-card className="group cursor-pointer border-b border-foreground/12 pb-6">
-              <a href="#" className="block">
-                <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+            <article key={article.title} data-article-card className="h-full">
+              <a href="#" className="border border-[#C6A96B]/15 bg-[#F5F3EF] p-6 sm:p-8 transition-all duration-500 hover:border-[#C6A96B]/40 hover:shadow-[0_8px_40px_rgba(198,169,107,0.08)] hover:-translate-y-1 flex flex-col group h-full cursor-pointer">
+                
+                {/* Image Container */}
+                <div className="relative w-full aspect-[16/10] mb-6 sm:mb-8 overflow-hidden rounded-[2px]">
                   <Image
                     src={article.image}
                     alt={article.title}
                     fill
-                    className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-black/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 </div>
-                <div className="pt-5 sm:pt-6">
-                  <h3 className="max-w-[16ch] font-sans text-[2rem] font-normal leading-[1.02] tracking-[-0.05em] text-foreground transition-colors duration-300 group-hover:text-secondary">
+                
+                {/* Text Content */}
+                <div className="flex flex-col flex-1">
+                  {/* Eyebrow or label */}
+                  <div className="text-[#C6A96B] text-[0.68rem] sm:text-xs font-semibold uppercase tracking-[0.2em] mb-3">
+                    Article
+                  </div>
+                  
+                  {/* Headline in Cormorant */}
+                  <h3 className="font-cormorant text-3xl sm:text-[2.2rem] leading-[1.1] text-[#112025] mb-4 transition-colors duration-300 group-hover:text-[#C6A96B]">
                     {article.title}
                   </h3>
-                  <p className="mt-4 max-w-[30rem] text-[1rem] leading-8 text-foreground/78">
+                  
+                  {/* Body in Outfit light */}
+                  <p className="font-outfit font-light text-[#787b78] leading-relaxed text-[0.95rem] sm:text-[1.05rem] mb-6">
                     {article.description}
                   </p>
-                  <div className="mt-5 inline-flex items-center gap-2 text-[0.95rem] font-medium text-foreground transition-colors duration-300 group-hover:text-secondary">
+
+                  <div className="mt-auto inline-flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-widest text-[#112025] transition-colors duration-300 group-hover:text-[#C6A96B]">
                     <span>Read more</span>
-                    <span aria-hidden="true">-&gt;</span>
+                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">-&gt;</span>
                   </div>
                 </div>
               </a>
