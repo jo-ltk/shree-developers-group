@@ -122,7 +122,6 @@ export function MetricsSection() {
 
           <div className="relative overflow-hidden border border-[var(--color-accent)]/25 bg-[var(--color-primary)] px-6 py-7 text-[var(--text-light)] shadow-[0_24px_60px_rgba(15,17,19,0.12)] ring-1 ring-white/6 sm:px-8 sm:py-8">
             <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(198,169,107,0),rgba(198,169,107,0.8),rgba(198,169,107,0))]" />
-            <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full border border-[var(--color-accent)]/18" />
 
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
               What These Numbers Signal
@@ -178,12 +177,8 @@ export function MetricsSection() {
 
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] xl:items-stretch">
           <article className="group relative overflow-hidden border border-[var(--color-accent)]/25 bg-[var(--color-primary)] px-6 py-7 text-[var(--text-light)] shadow-[0_28px_70px_rgba(15,17,19,0.12)] ring-1 ring-white/6 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(198,169,107,0.18),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.02),transparent_42%)]" />
-            <div className="absolute right-6 top-6 rounded-full border border-[var(--color-accent)]/14 bg-white/[0.02] p-5 text-[var(--color-accent)]/22 transition-transform duration-700 group-hover:scale-110 sm:right-8 sm:top-8">
-              <div className="flex h-12 w-12 items-center justify-center sm:h-16 sm:w-16 lg:h-20 lg:w-20">
-                {featuredMetric.icon}
-              </div>
-            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.02),transparent_42%)]" />
+
 
             <div className="relative">
               <div className="flex flex-wrap items-start justify-between gap-4">
