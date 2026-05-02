@@ -58,17 +58,7 @@ export function RecentArticlesSection() {
           y: 24,
           duration: 0.85,
           stagger: 0.12,
-        })
-        .from(
-          "[data-article-card]",
-          {
-            autoAlpha: 0,
-            y: 28,
-            duration: 0.85,
-            stagger: 0.12,
-          },
-          "<0.14"
-        );
+        });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -138,7 +128,6 @@ export function RecentArticlesSection() {
           {articles.map((article, index) => (
             <article
               key={article.title}
-              data-article-card
               className="group relative flex h-[28rem] flex-col justify-between overflow-hidden rounded-[8px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="absolute inset-0 bg-[#1C1208]" />
