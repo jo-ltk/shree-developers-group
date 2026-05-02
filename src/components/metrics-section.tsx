@@ -1,11 +1,11 @@
 import { type ReactNode } from "react";
 import {
   Building2,
+  ClipboardCheck,
   House,
+  Landmark,
   Map,
-  MessageSquareMore,
   Users,
-  Waves,
 } from "lucide-react";
 
 type MetricItem = {
@@ -14,150 +14,108 @@ type MetricItem = {
   detail: string;
   eyebrow: string;
   icon: ReactNode;
+  image: string;
 };
 
-const iconClassName = "h-9 w-9";
+const iconClassName = "h-7 w-7";
 
 const metrics: MetricItem[] = [
   {
-    value: "100+",
-    label: "Workshops this year",
-    detail: "Briefing, alignment, and design review sessions that keep momentum moving.",
-    eyebrow: "Studio Dialogue",
-    icon: <MessageSquareMore className={iconClassName} strokeWidth={1.75} />,
+    value: "15+",
+    label: "Years of trusted delivery",
+    detail: "A steady builder presence shaped by transparent timelines and practical site decisions.",
+    eyebrow: "Legacy",
+    icon: <Landmark className={iconClassName} strokeWidth={1.75} />,
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
   },
   {
-    value: "12",
-    label: "Games precincts, venues + overlay plans",
-    detail: "Large-scale planning packages spanning event, civic, and legacy thinking.",
-    eyebrow: "City Scale",
+    value: "50+",
+    label: "Completed developments",
+    detail: "Residential and mixed-use work delivered with attention to approvals, finishes, and everyday usability.",
+    eyebrow: "Portfolio",
     icon: <Building2 className={iconClassName} strokeWidth={1.75} />,
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=82",
   },
   {
-    value: "1,250+",
-    label: "Dwellings currently on our boards",
-    detail: "A live pipeline of residential work shaped with commercial clarity and long-horizon value.",
-    eyebrow: "Live Pipeline",
-    icon: <House className={iconClassName} strokeWidth={1.75} />,
-  },
-  {
-    value: "100+",
-    label: "City shaping master planning",
-    detail: "Frameworks that connect land use, movement, public life, and future growth.",
-    eyebrow: "Framework Thinking",
-    icon: <Map className={iconClassName} strokeWidth={1.75} />,
-  },
-  {
-    value: "40+",
-    label: "People-oriented precincts",
-    detail: "Places designed around usability, welcome, and a stronger civic experience.",
-    eyebrow: "Human Focus",
+    value: "1000+",
+    label: "Families served",
+    detail: "A growing community of homeowners who chose Shree for clarity, comfort, and long-term confidence.",
+    eyebrow: "Community",
     icon: <Users className={iconClassName} strokeWidth={1.75} />,
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=82",
   },
   {
-    value: "20+",
-    label: "Beautiful bridges",
-    detail: "Infrastructure moments treated as part of the place story, not just the crossing.",
-    eyebrow: "Public Interface",
-    icon: <Waves className={iconClassName} strokeWidth={1.75} />,
+    value: "89",
+    label: "Homesites in the current map",
+    detail: "A detailed site experience that helps buyers compare availability, scale, and the shape of each lot.",
+    eyebrow: "Homesites",
+    icon: <Map className={iconClassName} strokeWidth={1.75} />,
+    image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1400&q=82",
+  },
+  {
+    value: "24/7",
+    label: "After-sales support mindset",
+    detail: "The relationship continues after possession with responsive service and a clear point of contact.",
+    eyebrow: "Support",
+    icon: <ClipboardCheck className={iconClassName} strokeWidth={1.75} />,
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=82",
+  },
+  {
+    value: "3",
+    label: "Core residential formats",
+    detail: "Apartments, villas, and plotted communities planned for different life stages and investment goals.",
+    eyebrow: "Choice",
+    icon: <House className={iconClassName} strokeWidth={1.75} />,
+    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=82",
   },
 ];
 
 const featuredMetric = metrics[2];
 const supportingMetrics = [metrics[0], metrics[1], metrics[3], metrics[4], metrics[5]];
-const staggeredCardOffsets = [
-  "xl:translate-y-0",
-  "xl:translate-y-8",
-  "xl:-translate-y-3",
-  "xl:translate-y-10",
-  "xl:translate-y-2",
-];
 
 export function MetricsSection() {
   return (
     <section
       id="metrics"
-      className="relative overflow-hidden bg-[var(--color-secondary)] py-20 text-[var(--text-primary)] lg:py-28"
+      className="relative overflow-hidden bg-[#FAF8F3] py-28 text-[var(--text-primary)] lg:py-36"
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(198,169,107,0.45),transparent)]" />
-        <div className="absolute left-0 top-16 h-[24rem] w-[24rem] rounded-full bg-[radial-gradient(circle,rgba(198,169,107,0.12),transparent_68%)]" />
-        <div className="absolute right-[-6rem] top-[-2rem] h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(15,17,19,0.08),transparent_72%)]" />
-        <div className="absolute inset-y-0 left-[6%] hidden w-px bg-[linear-gradient(180deg,transparent,rgba(15,17,19,0.06),transparent)] xl:block" />
-        <div className="absolute inset-y-0 right-[10%] hidden w-px bg-[linear-gradient(180deg,transparent,rgba(15,17,19,0.05),transparent)] xl:block" />
-      </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(201,174,123,0.55),transparent)]" />
+      <div className="pointer-events-none absolute inset-y-0 left-[50%] hidden w-px bg-[rgba(183,170,152,0.18)] lg:block" />
 
       <div className="relative mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
-        <div className="grid gap-8 pb-12 xl:grid-cols-[minmax(0,1.05fr)_minmax(23rem,0.95fr)] xl:items-end xl:pb-16">
-          <div>
-            <div className="mb-7 flex items-center gap-4">
-              <span className="h-[1.5px] w-9 shrink-0 bg-[var(--color-accent)]" />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                Metrics
-              </p>
-            </div>
-
+        <div className="mb-16 flex flex-col gap-8 md:mb-20 lg:mb-24 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+          <div className="flex flex-col gap-6 lg:w-[55%]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#1C1208]">
+              Proof Of Trust
+            </p>
             <h2
-              style={{
+              className="font-medium leading-[1.05] tracking-tight text-[#1C1208]"
+              style={{ 
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontWeight: 300,
-                fontSize: "clamp(2.2rem, 4.4vw, 4.4rem)",
+                fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" 
               }}
-              className="max-w-[48rem] leading-[1.02] tracking-[-0.02em] text-[var(--text-primary)]"
             >
-              The shape of our work is measured in{" "}
+              The numbers matter because every one represents a{" "}
               <em className="text-[var(--color-accent)]" style={{ fontStyle: "italic" }}>
-                places, not just projects.
+                lived address.
               </em>
             </h2>
-
-            <div className="my-8 h-px w-12 bg-[var(--color-accent)]/30" />
-
-            <p className="max-w-[38rem] text-[0.95rem] font-light leading-[1.85] text-[var(--text-primary)]/62">
-              Residential communities, city frameworks, event overlays, and public-realm
-              infrastructure all sit inside the same design conversation here. This section now
-              reads like proof of range rather than a row of disconnected counters.
-            </p>
           </div>
 
-          <div className="relative overflow-hidden border border-[var(--color-accent)]/25 bg-[var(--color-primary)] px-6 py-7 text-[var(--text-light)] shadow-[0_24px_60px_rgba(15,17,19,0.12)] ring-1 ring-white/6 sm:px-8 sm:py-8">
-            <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(198,169,107,0),rgba(198,169,107,0.8),rgba(198,169,107,0))]" />
-
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-              What These Numbers Signal
-            </p>
-            <p
-              style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
-              className="mt-5 text-[2rem] leading-[1.05] text-[var(--text-light)]"
+          <div className="flex flex-col items-start lg:w-[35%] lg:items-end">
+            <p 
+              className="font-light leading-[1.6] text-[#1C1208]/70 lg:mt-4 lg:text-right"
+              style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
             >
-              Scale without losing precision.
+              Shree&apos;s premium feeling is not only in finishes. It is in fewer unknowns, clearer
+              documentation, and a composed journey from first inquiry to handover.
             </p>
-            <p className="mt-4 max-w-[32rem] text-[0.88rem] font-light leading-[1.8] text-[var(--text-light)]/64">
-              The studio moves comfortably from early strategy through spatial detail, with the same
-              emphasis on clarity, usability, and a strong public-facing outcome.
-            </p>
-
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {["Residential", "Urban Planning", "Public Realm"].map((item) => (
-                <div
-                  key={item}
-                  className="border border-[var(--color-secondary)]/12 bg-[var(--color-secondary)]/[0.03] px-4 py-4"
-                >
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]/90">
-                    Discipline
-                  </p>
-                  <p className="mt-2 text-[0.88rem] font-light leading-[1.5] text-[var(--text-light)]/82">
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-
             <a
               href="#gallery"
-              className="group mt-8 inline-flex h-[50px] items-center justify-center gap-3 border border-[var(--color-accent)]/32 px-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-light)] transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:-translate-y-px"
+              className="group mt-8 inline-flex h-[50px] items-center justify-center gap-3 border border-[#1C1208]/20 px-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1C1208] transition-all duration-200 hover:-translate-y-px hover:border-[#1C1208]/40 hover:bg-[#1C1208]/5"
+              style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))" }}
             >
-              View Selected Work
+              View Projects
               <svg
                 width="14"
                 height="14"
@@ -175,143 +133,50 @@ export function MetricsSection() {
           </div>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] xl:items-stretch">
-          <article className="group relative overflow-hidden border border-[var(--color-accent)]/25 bg-[var(--color-primary)] px-6 py-7 text-[var(--text-light)] shadow-[0_28px_70px_rgba(15,17,19,0.12)] ring-1 ring-white/6 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.02),transparent_42%)]" />
-
-
-            <div className="relative">
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                    {featuredMetric.eyebrow}
-                  </p>
-                  <p
-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
-                    className="mt-5 text-[clamp(4rem,9vw,7rem)] leading-none tracking-[-0.04em] text-[var(--color-accent)]"
-                  >
-                    {featuredMetric.value}
-                  </p>
-                </div>
-
-                <div className="rounded-full border border-[var(--color-accent)]/20 bg-[var(--color-secondary)]/[0.04] px-4 py-2">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--text-light)]/68">
-                    Active now
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-10 max-w-[34rem]">
-                <h3
-                  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
-                  className="text-[clamp(1.8rem,3.4vw,2.8rem)] leading-[1.04] text-[var(--text-light)]"
-                >
-                  {featuredMetric.label}
-                </h3>
-                <p className="mt-4 text-[0.95rem] font-light leading-[1.8] text-[var(--text-light)]/66">
-                  {featuredMetric.detail}
-                </p>
-              </div>
-
-              <div className="mt-10 grid gap-4 border-t border-[var(--color-secondary)]/10 pt-6 sm:grid-cols-2">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]/88">
-                    Program Mix
-                  </p>
-                  <p className="mt-2 text-[0.86rem] font-light leading-[1.75] text-[var(--text-light)]/64">
-                    Apartments, communities, and broader place-led residential environments.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]/88">
-                    Why It Matters
-                  </p>
-                  <p className="mt-2 text-[0.86rem] font-light leading-[1.75] text-[var(--text-light)]/64">
-                    It shows sustained delivery capacity without flattening design ambition.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-1">
-            <div className="border border-[var(--color-primary)]/14 bg-[var(--color-secondary)]/70 px-6 py-6 shadow-[0_12px_30px_rgba(15,17,19,0.05)] backdrop-blur-sm sm:px-7">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
-                Studio Reach
-              </p>
-              <div className="mt-6 grid gap-5">
-                {metrics.slice(0, 3).map((metric) => (
-                  <div key={metric.label} className="flex items-start gap-4 border-b border-[var(--color-primary)]/10 pb-5 last:border-b-0 last:pb-0">
-                    <div className="shrink-0 rounded-full border border-[var(--color-accent)]/22 bg-[var(--color-accent)]/8 p-3 text-[var(--color-accent)]/80">
-                      {metric.icon}
-                    </div>
-                    <div>
-                      <p
-                        style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
-                        className="text-[2rem] leading-none text-[var(--text-primary)]"
-                      >
-                        {metric.value}
-                      </p>
-                      <p className="mt-2 text-[0.92rem] font-light leading-[1.6] text-[var(--text-primary)]/66">
-                        {metric.label}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative overflow-hidden border border-[var(--color-primary)]/14 bg-[var(--color-secondary)] px-6 py-6 shadow-[0_12px_30px_rgba(15,17,19,0.05)] sm:px-7">
-              <div className="absolute bottom-0 right-0 h-24 w-24 translate-x-6 translate-y-6 rounded-full border border-[var(--color-accent)]/20" />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
-                Design Lens
-              </p>
-              <p
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
-                className="mt-5 text-[1.9rem] leading-[1.08] text-[var(--text-primary)]"
-              >
-                Every metric still points back to experience.
-              </p>
-              <p className="mt-4 max-w-[25rem] text-[0.88rem] font-light leading-[1.8] text-[var(--text-primary)]/62">
-                The through-line is not just scale. It is the ability to make large systems feel
-                legible, welcoming, and well-composed at human level.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-5 grid gap-5 md:grid-cols-2 xl:mt-6 xl:grid-cols-5">
-          {supportingMetrics.map((metric, index) => (
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {metrics.map((metric) => (
             <article
               key={metric.label}
-              className={`group relative overflow-hidden border border-[var(--color-primary)]/14 bg-[var(--color-secondary)]/80 px-5 py-6 shadow-[0_10px_30px_rgba(15,17,19,0.05)] ring-1 ring-black/4 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-accent)]/55 hover:shadow-[0_18px_40px_rgba(15,17,19,0.08)] sm:px-6 ${staggeredCardOffsets[index]}`}
+              className="group relative flex h-[28rem] flex-col justify-between overflow-hidden rounded-[8px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(198,169,107,0),rgba(198,169,107,0.55),rgba(198,169,107,0))] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-[#1C1208]" />
+              <img
+                src={metric.image}
+                alt={metric.label}
+                className="absolute inset-0 h-full w-full object-cover opacity-50 transition-transform duration-1000 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05] group-hover:opacity-70"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-[#1C1208]/50 to-[#1C1208]/10" />
 
-              <div className="flex items-start justify-between gap-5">
+              <div className="relative z-10 flex h-full flex-col justify-between">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
-                    {metric.eyebrow}
-                  </p>
+                  <div className="flex items-start justify-between gap-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9AE7B]">
+                      {metric.eyebrow}
+                    </p>
+                    <div className="text-[#C9AE7B] transition-transform duration-300 group-hover:scale-110">
+                      {metric.icon}
+                    </div>
+                  </div>
                   <p
-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
-                    className="mt-5 text-[3rem] leading-none tracking-[-0.03em] text-[var(--text-primary)]"
+                    className="mt-8 leading-none text-[#FAF8F3]"
+                    style={{ 
+                      fontFamily: "'Cormorant Garamond', Georgia, serif", 
+                      fontWeight: 400,
+                      fontSize: "clamp(3.5rem, 5vw, 4.5rem)"
+                    }}
                   >
                     {metric.value}
                   </p>
                 </div>
-                <div className="shrink-0 rounded-full border border-[var(--color-primary)]/10 bg-white/60 p-3 text-[var(--text-primary)]/40 transition-all duration-500 group-hover:scale-105 group-hover:border-[var(--color-accent)]/30 group-hover:text-[var(--color-accent)]/80">
-                  {metric.icon}
-                </div>
-              </div>
 
-              <div className="mt-8 border-t border-[var(--color-primary)]/8 pt-4">
-                <p className="text-[1rem] font-light leading-[1.55] text-[var(--text-primary)]/72">
-                  {metric.label}
-                </p>
-                <p className="mt-3 text-[0.8rem] font-light leading-[1.75] text-[var(--text-primary)]/52">
-                  {metric.detail}
-                </p>
+                <div className="mt-12">
+                  <h3 className="text-[1.2rem] font-medium leading-[1.3] tracking-tight text-[#FAF8F3]">
+                    {metric.label}
+                  </h3>
+                  <p className="mt-3 text-[0.95rem] font-light leading-[1.65] text-[#FAF8F3]/80">
+                    {metric.detail}
+                  </p>
+                </div>
               </div>
             </article>
           ))}

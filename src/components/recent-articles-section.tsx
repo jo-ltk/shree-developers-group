@@ -7,25 +7,25 @@ import { ensureGsapPlugins } from "@/lib/gsap";
 
 const articles = [
   {
-    title: "Victoria Park: A Vision Realised, A Legacy Secured",
+    title: "How We Choose A Residential Site",
     description:
-      "Victoria Park will be the centrepiece of Brisbane's 2032 Games. This milestone reshapes the city and sets a long-view legacy for public life.",
+      "A closer look at frontage, approach roads, service access, and the quieter details that make a project feel dependable for years.",
     image:
-      "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=82",
   },
   {
-    title: "2024 End Of Year Wrap Up",
+    title: "The Value Of A Clear Handover",
     description:
-      "A look back at the work, partnerships, and city-shaping projects that defined the year, and the momentum carrying into the next one.",
+      "Premium ownership is shaped by documentation, finishing checks, and simple communication during the weeks before possession.",
     image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=82",
   },
   {
-    title: "Knowledge Precincts As A Catalyst For Renewal",
+    title: "Designing Communities With Breathing Room",
     description:
-      "How knowledge precincts can renew cities and regional places through stronger public interfaces, mixed programs, and long-term civic value.",
+      "Why internal roads, landscape edges, and shared open areas matter as much as individual plans and specifications.",
     image:
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=82",
   },
 ];
 
@@ -75,63 +75,65 @@ export function RecentArticlesSection() {
     <section
       id="articles"
       ref={sectionRef}
-      className="bg-[var(--color-primary)] py-20 lg:py-28 text-[var(--text-light)]"
+      className="bg-[#E8DFD2] py-28 text-[var(--text-primary)] lg:py-36"
     >
       <div className="mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
-        <div data-articles-heading>
-          <div className="flex items-center gap-4 mb-7">
-            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
-            <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">Insight & Analysis</p>
+        <div data-articles-heading className="mx-auto flex max-w-[48rem] flex-col items-center text-center">
+          <div className="mb-7 flex flex-col items-center gap-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
+              Builder Notes
+            </p>
+            <span className="h-px w-10 shrink-0 bg-[var(--color-accent)]" />
           </div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
-              className="text-[var(--text-light)] leading-[1.1] tracking-[-0.01em] max-w-[36rem]">
-            Recent <em style={{ fontStyle: "italic" }} className="text-[var(--color-accent)]">Articles.</em>
+          <h2
+            className="text-[2.55rem] font-light leading-[1.06] tracking-normal text-[var(--text-primary)] sm:text-[3.25rem] lg:text-[4rem]"
+            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+          >
+            A quieter journal of materials, sites, and{" "}
+            <em className="text-[var(--color-accent)]" style={{ fontStyle: "italic" }}>
+              decisions.
+            </em>
           </h2>
-          <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
+          <p className="mt-6 text-[0.98rem] font-light leading-[1.85] text-[var(--text-primary)]">
+            Short reads for buyers who want to understand the thinking behind a Shree development,
+            from planning discipline to the details that make ownership simpler.
+          </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
-          {articles.map((article) => (
-            <article key={article.title} data-article-card className="h-full">
-              <a href="#" className="border border-[var(--color-secondary)]/10 bg-[var(--color-secondary)]/[0.03] p-8 hover:border-[var(--color-accent)]/40 hover:bg-[var(--color-secondary)]/[0.05] transition-all duration-300 flex flex-col group h-full cursor-pointer">
-                
-                {/* Image Container */}
-                <div className="relative w-full aspect-[16/10] mb-6 sm:mb-8 overflow-hidden">
-                  {/* Gold corner accents */}
-                  <div className="absolute -bottom-1 -right-1 h-6 w-6 border-b-2 border-r-2 border-[var(--color-accent)]/50 z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
-                  <div className="absolute -top-1 -left-1 h-6 w-6 border-t-2 border-l-2 border-[var(--color-accent)]/50 z-10 transition-transform duration-500 group-hover:-translate-x-1 group-hover:-translate-y-1" />
-
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          {articles.map((article, index) => (
+            <article key={article.title} data-article-card className={index === 1 ? "md:mt-12" : ""}>
+              <a
+                href="#"
+                className="group flex h-full flex-col overflow-hidden rounded-[8px] border border-[rgba(183,170,152,0.35)] bg-[#FAF8F3] transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(201,174,123,0.65)]"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={article.image}
                     alt={article.title}
                     fill
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-[var(--color-primary)]/10 transition-opacity duration-500 group-hover:bg-transparent" />
+                  <div className="absolute inset-0 bg-[rgba(58,52,46,0.08)] transition-opacity duration-500 group-hover:opacity-0" />
                 </div>
-                
-                {/* Text Content */}
-                <div className="flex flex-col flex-1">
-                  {/* Eyebrow or label */}
-                  <div className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase mb-4">
-                    Article
-                  </div>
-                  
-                  {/* Headline in Cormorant */}
-                  <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "1.8rem" }}
-                      className="text-[var(--text-light)] leading-[1.1] mb-4 transition-colors duration-300 group-hover:text-[var(--color-accent)]">
+
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
+                    Note {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3
+                    className="mt-5 text-[2rem] font-light leading-[1.08] tracking-normal text-[var(--text-primary)] transition-colors duration-300 group-hover:text-[var(--color-accent)]"
+                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+                  >
                     {article.title}
                   </h3>
-                  
-                  {/* Body */}
-                  <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/60 mb-6">
+                  <p className="mt-5 text-[0.88rem] font-light leading-[1.8] text-[var(--text-primary)]">
                     {article.description}
                   </p>
 
-                  <div className="mt-auto inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-widest text-[var(--text-light)]/80 transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-                    <span>Read more</span>
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">-&gt;</span>
+                  <div className="mt-auto pt-8 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                    Read more
                   </div>
                 </div>
               </a>

@@ -115,7 +115,7 @@ export function MapStage({
   }, [svgMarkup]);
 
   return (
-    <div className="absolute inset-0 bg-neutral-200 flex flex-col">
+    <div className="absolute inset-0 flex flex-col bg-[#F2EADF]">
       <div className="flex-1 relative">
       <TransformWrapper
         centerOnInit
@@ -129,7 +129,7 @@ export function MapStage({
       >
         <MapControls />
         <TransformComponent
-          wrapperClass="!h-[calc(100vh-64px)] !w-full"
+          wrapperClass="!h-full !w-full"
           contentClass="!w-full"
           contentStyle={{ width: "100%" }}
         >
@@ -165,10 +165,10 @@ export function MapStage({
                       y={hotspot.y}
                       width={hotspot.width}
                       height={hotspot.height}
-                      fill={isSelected ? "rgba(255, 215, 0, 0.25)" : "rgba(255, 0, 0, 0.08)"}
-                      stroke={isSelected ? "#eab308" : "rgba(255, 0, 0, 0.25)"}
-                      strokeWidth={isSelected ? 4 : 1}
-                      className={`transition-colors ${matchesFilter ? "cursor-pointer hover:fill-blue-500/20" : "cursor-default"}`}
+                      fill={isSelected ? "rgba(201, 174, 123, 0.34)" : "rgba(201, 174, 123, 0.10)"}
+                      stroke={isSelected ? "#C9AE7B" : "rgba(201, 174, 123, 0.35)"}
+                      strokeWidth={isSelected ? 5 : 1.5}
+                      className={`site-map-hotspot ${isSelected ? "site-map-hotspot-selected" : ""} ${matchesFilter ? "cursor-pointer" : "cursor-default"}`}
                       pointerEvents={matchesFilter ? "auto" : "none"}
                       onClick={() => onSelectLot(hotspot.id)}
                     />

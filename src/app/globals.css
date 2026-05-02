@@ -45,60 +45,60 @@
   --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 
   /* Core Colors */
-  --color-primary: #0F1113;   /* Midnight Black */
-  --color-secondary: #F5F3EF; /* Soft Ivory */
-  --color-accent: #C6A96B;    /* Rich Gold */
-  --color-support: #6B7280;   /* Slate Grey */
-  --color-depth: #3E3A36;     /* Warm Stone */
+  --color-primary: #FAF8F3;   /* Warm Ivory Base */
+  --color-secondary: #F2EADF; /* Soft Beige Section */
+  --color-accent: #C9AE7B;    /* Muted Gold Accent */
+  --color-support: #B7AA98;   /* Warm Stone Border */
+  --color-depth: #E8DFD2;     /* Premium Sand */
 
   /* Text Colors */
-  --text-primary: #0F1113;
-  --text-secondary: #6B7280;
-  --text-light: #F5F3EF;
+  --text-primary: #3A342E;    /* Deep Warm Text */
+  --text-secondary: #B7AA98;  /* Warm Stone Border */
+  --text-light: #3A342E;      /* Remapped to dark for light theme */
 
   /* Backgrounds */
-  --bg-main: #F5F3EF;
-  --bg-dark: #0F1113;
+  --bg-main: #FAF8F3;
+  --bg-dark: #F2EADF;
 
   /* Borders */
-  --border-light: rgba(0, 0, 0, 0.08);
-  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(183, 170, 152, 0.35); /* #B7AA98 */
+  --border-dark: rgba(183, 170, 152, 0.35);
 
   /* Strict Color System */
-  --primary: #1E1E1E;
-  --secondary: #DAA96B;
-  --background-light: #FAFAFA; /* Changed from #F7F0F0 for a clean, non-yellow look */
-  --background-dark: #2A2A2A;
+  --primary: #FAF8F3;
+  --secondary: #C9AE7B;
+  --background-light: #FAF8F3;
+  --background-dark: #F2EADF;
 
   /* Hover & Active States Derived from Palette */
-  --primary-hover: #333333;
-  --secondary-hover: #C69558;
-  --background-dark-hover: #383838;
+  --primary-hover: #F2EADF;
+  --secondary-hover: #C9AE7B;
+  --background-dark-hover: #E8DFD2;
 
   /* Standard Role Mappings */
   --background: var(--background-light);
-  --foreground: var(--primary);
+  --foreground: var(--text-primary);
   
-  --card: var(--background-dark);
-  --card-foreground: var(--background-light);
+  --card: var(--color-secondary);
+  --card-foreground: var(--text-primary);
   
-  --popover: var(--background-light);
-  --popover-foreground: var(--primary);
+  --popover: var(--color-secondary);
+  --popover-foreground: var(--text-primary);
   
-  --primary-foreground: var(--background-light);
-  --secondary-foreground: var(--primary);
+  --primary-foreground: var(--color-primary);
+  --secondary-foreground: var(--text-primary);
   
-  --muted: #F2F2F2; /* Clean light gray, removed warm tint */
-  --muted-foreground: #6B6B6B; /* Muted text */
+  --muted: #E8DFD2;
+  --muted-foreground: #B7AA98;
   
   --accent: var(--secondary);
-  --accent-foreground: var(--primary);
+  --accent-foreground: var(--text-primary);
   
-  --border: #EAEAEA; /* Clean border, removed warm tint */
-  --input: #EAEAEA;
+  --border: rgba(183, 170, 152, 0.35);
+  --input: rgba(183, 170, 152, 0.35);
   --ring: var(--secondary);
   
-  --radius: 1.35rem;
+  --radius: 0.5rem;
 }
 
 * {
@@ -130,7 +130,7 @@ body::-webkit-scrollbar {
 }
 
 h1 {
-  font-size: 2.5rem; /* bigger */
+  font-size: 2.5rem;
   font-weight: 600;
 }
 
@@ -144,7 +144,7 @@ h3 {
 }
 
 p {
-  font-size: 1.05rem; /* slightly bigger than default */
+  font-size: 1.05rem;
   color: var(--text-secondary);
 }
 
@@ -165,7 +165,7 @@ p {
 }
 
 .card {
-  background: #ffffff;
+  background: var(--bg-main);
   border: 1px solid var(--border-light);
   padding: 24px;
 }
@@ -176,7 +176,7 @@ p {
 }
 
 .section-dark p {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
 }
 
 .section-light {
@@ -238,6 +238,24 @@ a {
 
 .moving-showcase:hover .moving-showcase-track {
   animation-play-state: paused;
+}
+
+.site-map-hotspot {
+  transition:
+    fill 240ms ease,
+    stroke 240ms ease,
+    filter 240ms ease,
+    opacity 240ms ease;
+}
+
+.site-map-hotspot:hover {
+  fill: rgba(201, 174, 123, 0.24);
+  stroke: #C9AE7B;
+  filter: drop-shadow(0 0 12px rgba(201, 174, 123, 0.58));
+}
+
+.site-map-hotspot-selected {
+  filter: drop-shadow(0 0 16px rgba(201, 174, 123, 0.7));
 }
 
 @keyframes project-card-marquee {

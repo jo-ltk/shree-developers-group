@@ -1,96 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 
 import { ensureGsapPlugins } from "@/lib/gsap";
-
-const featuredProjects = [
-  {
-    index: "01",
-    title: "Halcyon Coves",
-    location: "Gold Coast",
-    type: "Coastal Residential Community",
-    year: "2026",
-    summary:
-      "A calm waterfront address shaped through generous setbacks, layered landscape, and a hospitality-led arrival sequence.",
-    image:
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1800&q=80",
-    size: "featured" as const,
-    layout: "md:col-span-2 xl:col-span-6",
-    height: "min-h-[72svh] sm:min-h-[78svh] xl:min-h-[88svh]",
-  },
-  {
-    index: "02",
-    title: "Harbour Quarter",
-    location: "Sydney",
-    type: "Mixed-Use Precinct",
-    year: "2025",
-    summary:
-      "A dense urban block organized around public movement, layered retail, and premium residential outlooks.",
-    image:
-      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1400&q=80",
-    size: "medium" as const,
-    layout: "xl:col-span-3",
-    height: "min-h-[34rem] sm:min-h-[38rem] xl:min-h-[44rem]",
-  },
-  {
-    index: "03",
-    title: "Southbank Terrace",
-    location: "Melbourne",
-    type: "Residential Collection",
-    year: "2024",
-    summary:
-      "A restrained apartment series balancing softer interiors with a more sculpted street presence.",
-    image:
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80",
-    size: "medium" as const,
-    layout: "xl:col-span-3",
-    height: "min-h-[34rem] sm:min-h-[38rem] xl:min-h-[44rem]",
-  },
-  {
-    index: "04",
-    title: "Lakeside Pavilion",
-    location: "Brisbane",
-    type: "Hospitality & Public Realm",
-    year: "2027",
-    summary:
-      "A civic-facing hospitality concept pairing generous shade, water views, and a more social ground plane.",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80",
-    size: "regular" as const,
-    layout: "xl:col-span-2",
-    height: "min-h-[24rem] sm:min-h-[28rem] xl:min-h-[32rem]",
-  },
-  {
-    index: "05",
-    title: "Head to Health Kids",
-    location: "Nerang",
-    type: "Community Health",
-    year: "2025",
-    summary:
-      "A family-focused health environment designed to feel welcoming, intuitive, and quietly optimistic.",
-    image:
-      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80",
-    size: "regular" as const,
-    layout: "xl:col-span-2",
-    height: "min-h-[24rem] sm:min-h-[28rem] xl:min-h-[32rem]",
-  },
-  {
-    index: "06",
-    title: "Aurora Commons",
-    location: "Sunshine Coast",
-    type: "Education & Public Interface",
-    year: "2026",
-    summary:
-      "A flexible public-facing campus edge where learning spaces and communal life are carefully blended.",
-    image:
-      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80",
-    size: "regular" as const,
-    layout: "xl:col-span-2",
-    height: "min-h-[24rem] sm:min-h-[28rem] xl:min-h-[32rem]",
-  },
-];
+import { allProjects } from "@/lib/projects-data";
+import type { ProjectData } from "@/lib/projects-data";
 
 export function Gallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -102,130 +18,159 @@ export function Gallery() {
 
     const { gsap } = ensureGsapPlugins();
     const ctx = gsap.context(() => {
+      // Header animation
       gsap
         .timeline({
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 72%",
+            trigger: "[data-gallery-header]",
+            start: "top 78%",
             once: true,
           },
-          defaults: {
-            ease: "power3.out",
-          },
+          defaults: { ease: "power3.out" },
         })
-        .from("[data-gallery-copy] > *", {
+        .from("[data-gallery-header] > *", {
           autoAlpha: 0,
           y: 28,
           duration: 0.95,
           stagger: 0.14,
-        })
-        .from(
-          "[data-project-card]",
-          {
-            autoAlpha: 0,
-            y: 34,
-            duration: 0.95,
-            stagger: 0.1,
-          },
-          "<0.12"
-        );
+        });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  // Triple the items for a smooth infinite marquee loop
+  const repeatedProjects = [...allProjects, ...allProjects, ...allProjects];
+
   return (
     <section
       id="gallery"
       ref={sectionRef}
-      className="bg-[var(--color-primary)] py-20 lg:py-28"
+      className="bg-[#FAF8F3] py-24 md:py-36 lg:py-48 rounded-t-[2.5rem] lg:rounded-t-[4rem] mt-[-2.5rem] lg:mt-[-4rem] relative z-10 overflow-hidden"
     >
-      <div className="mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
-        <div data-gallery-copy className="flex flex-col items-center text-center max-w-[48rem] mx-auto">
-          <div className="flex items-center gap-4 mb-7">
-            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
-            <p className="text-[10px] font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">Featured Projects</p>
-            <span className="h-[1.5px] w-9 bg-[var(--color-accent)] flex-shrink-0" />
-          </div>
-          
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
-              className="text-[var(--text-light)] leading-[1.1] tracking-[-0.01em]">
-            A larger, more immersive project showcase with image-led cards and richer <em style={{ fontStyle: "italic" }} className="text-[var(--color-accent)]">hover detail.</em>
+      <style>{`
+        @keyframes marquee-right {
+          from { transform: translateX(-33.3333%); }
+          to { transform: translateX(0); }
+        }
+        .animate-marquee-right {
+          animation: marquee-right 40s linear infinite;
+        }
+        .animate-marquee-right:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      <div className="mx-auto max-w-[90rem] px-5 sm:px-7 lg:px-20">
+        <div data-gallery-header className="mb-16 flex flex-col gap-8 md:mb-20 lg:mb-24 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+          <h2
+            className="font-medium leading-[1.05] tracking-tight text-[#1C1208] lg:w-[55%]"
+            style={{ 
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" 
+            }}
+          >
+            Communities composed for daily comfort.
           </h2>
-          <div className="my-8 h-[1px] w-12 bg-[var(--color-accent)]/30" />
-          
-          <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/55">
-            The lead project plays as a near full-screen feature, while the supporting projects follow in larger editorial cards.
+          <p 
+            className="font-light leading-[1.6] text-[#1C1208]/70 lg:mt-4 lg:w-[35%] lg:text-right"
+            style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
+          >
+            Each development is presented with measured planning, dependable
+            approvals, and a clear ownership journey — so the premium
+            feeling begins before the first site visit.
           </p>
         </div>
+      </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-6 lg:mt-20 lg:gap-7">
-          {featuredProjects.map((project) => (
-            <div key={project.title} data-project-card className={`${project.layout} ${project.height}`}>
-              <div className="group relative overflow-hidden border border-[var(--color-secondary)]/10 bg-[var(--color-primary)] transition-all duration-500 hover:border-[var(--color-accent)]/50 flex flex-col h-full cursor-pointer">
-
-                {/* Gold top accent bar */}
-                <div className="h-[2px] w-full bg-gradient-to-r from-[var(--color-accent)] via-[var(--color-accent)]/50 to-transparent flex-shrink-0" />
-
-                {/* Image */}
-                <div className="relative flex-1 min-h-[240px] overflow-hidden">
-                  <Image 
-                    src={project.image} 
-                    alt={project.title} 
-                    fill 
-                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary)]/30 to-transparent" />
-
-                  {/* Status badge */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-[var(--color-primary)]/80 backdrop-blur-sm border border-[var(--color-accent)]/30 px-3 py-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-                    <span className="text-[9px] font-semibold tracking-[0.15em] text-[var(--color-accent)] uppercase">{project.year}</span>
-                  </div>
-
-                  {/* Type badge */}
-                  <div className="absolute top-4 right-4 bg-[var(--color-accent)] px-3 py-1">
-                    <span className="text-[9px] font-bold tracking-[0.12em] text-[var(--text-primary)] uppercase">{project.type}</span>
-                  </div>
-
-                  {/* Name over image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <p className="text-[10px] font-semibold tracking-[0.18em] text-[var(--color-accent)] uppercase mb-1">{project.location}</p>
-                    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: "1.6rem" }}
-                        className="text-[var(--text-light)] leading-tight">{project.title}</h3>
-                  </div>
-                </div>
-
-                {/* 4 section tabs */}
-                <div className="grid grid-cols-4 border-t border-[var(--color-secondary)]/08 flex-shrink-0">
-                  {["Brief", "Plans", "Renders", "Progress"].map((tab, i) => (
-                    <div key={tab} className={`py-2.5 text-center border-r border-[var(--color-secondary)]/08 last:border-r-0 ${i === 0 ? "bg-[var(--color-accent)]/10" : ""}`}>
-                      <span className="text-[8.5px] font-semibold tracking-[0.12em] text-[var(--text-light)]/40 uppercase">{tab}</span>
-                      {i === 0 && <div className="h-[1.5px] w-4 bg-[var(--color-accent)] mx-auto mt-1" />}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Content */}
-                <div className="p-6 flex-shrink-0">
-                  <p className="text-[0.82rem] font-light leading-[1.75] text-[var(--text-light)]/55 mb-5">{project.summary}</p>
-
-                  {/* CTA */}
-                  <div className="group/btn flex h-[44px] w-full items-center justify-center gap-3 bg-[var(--color-accent)] text-[10px] font-bold tracking-[0.18em] text-[var(--text-primary)] uppercase transition-all duration-200 hover:brightness-110"
-                       style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))" }}>
-                    View Full Project
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                         className="transition-transform duration-200 group-hover/btn:translate-x-1">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* ───── Infinite Scrolling Marquee ───── */}
+      <div className="group relative w-full overflow-hidden">
+        <div className="flex w-max animate-marquee-right border-y border-dashed border-[#1C1208]/20">
+          {repeatedProjects.map((project, index) => (
+            <ProjectCard key={`${project.title}-${index}`} project={project} />
           ))}
         </div>
       </div>
+
+      {/* ───── Bottom CTA ───── */}
+      <div className="mt-16 flex flex-col items-center gap-6 text-center md:mt-24">
+        <a
+          href="/gallery"
+          className="group relative flex h-[52px] items-center justify-center gap-3 rounded-full border border-[#1C1208]/20 bg-[#1C1208]/5 px-10 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1C1208] transition-all duration-300 hover:-translate-y-px hover:border-[#1C1208]/40 hover:bg-[#1C1208]/10"
+        >
+          View Full Portfolio
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" />
+          </svg>
+        </a>
+      </div>
     </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+function ProjectCard({ project }: { project: ProjectData }) {
+  return (
+    <article className="relative flex h-[28rem] w-[20rem] shrink-0 flex-col justify-between overflow-hidden border-r border-dashed border-[#1C1208]/30 p-8 sm:h-[32rem] sm:w-[24rem] lg:h-[36rem] lg:w-[28rem] lg:p-10">
+      {/* Background Image */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src={project.image}
+          alt={`${project.title} — ${project.location}`}
+          fill
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+        {/* Dark overlay: subtle at top, solid dark at bottom for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1C1208]/20 via-[#1C1208]/40 to-[#1C1208]/95" />
+      </div>
+
+      {/* Top Left Number */}
+      <div 
+        className="text-[2.5rem] font-light text-[#FAF8F3] sm:text-[3rem]"
+        style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+      >
+        {project.index}
+      </div>
+
+      {/* Bottom Content */}
+      <div className="relative z-10 flex flex-col gap-3 text-[#FAF8F3]">
+        <h3
+          className="text-[2rem] font-light leading-[1.05] tracking-normal sm:text-[2.4rem] lg:text-[2.8rem]"
+          style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+        >
+          {project.title}
+        </h3>
+        <p className="text-[0.9rem] font-light leading-[1.6] text-[#FAF8F3]/80 sm:text-[1rem]">
+          {project.summary}
+        </p>
+
+        {/* Explore link overlayed on hover */}
+        <div className="mt-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="group/link inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#FAF8F3]/80 transition-colors duration-300 hover:text-[#FAF8F3]"
+          >
+            Explore
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover/link:translate-x-1">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </article>
   );
 }

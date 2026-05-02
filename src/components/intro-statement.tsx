@@ -5,11 +5,9 @@ import { useLayoutEffect, useRef } from "react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 
 const statementLines = [
-  ["Archipelago", "is", "a", "distinguished", "Australian"],
-  ["city-making", "practice."],
-  ["We", "challenge", "the", "boundaries", "of", "conventional"],
-  ["design", "to", "create", "great", "cities", "and", "buildings", "for"],
-  ["people,", "now", "and", "in", "the", "future."],
+  ["We", "shape", "residences", "that", "feel", "settled", "from", "day", "one."],
+  ["Every", "site", "is", "planned", "with", "clarity,", "warmth,", "and", "care."],
+  ["For", "families", "and", "investors,", "Shree", "means", "a", "promise", "kept."],
 ];
 
 export function IntroStatement() {
@@ -51,36 +49,50 @@ export function IntroStatement() {
 
   return (
     <section
+      id="about"
       ref={sectionRef}
-      className="bg-[var(--color-secondary)] relative overflow-hidden"
+      className="relative overflow-hidden bg-[linear-gradient(180deg,#FAF8F3_0%,#F2EADF_100%)]"
     >
-      <div className="mx-auto flex min-h-[92svh] max-w-[120rem] items-center justify-center px-6 py-24 sm:px-8 md:py-28 lg:px-10 lg:py-36">
-        <div className="max-w-[86rem] text-center">
-          <div 
-            className="space-y-2 text-balance text-[clamp(2.25rem,4.8vw,5rem)] leading-[1.1] tracking-[-0.01em] text-[var(--text-primary)] sm:space-y-3"
-            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
+      <div className="mx-auto flex min-h-[78svh] max-w-[120rem] flex-col items-center justify-center gap-10 px-5 py-28 text-center sm:px-7 lg:px-20 lg:py-36">
+        <div className="flex flex-col items-center">
+          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
+            Built The Shree Way
+          </p>
+          <span className="h-px w-10 bg-[var(--color-accent)]" />
+        </div>
+
+        <div className="max-w-[72rem]">
+          <div
+            className="flex flex-col items-center justify-center space-y-4 text-[2.55rem] font-light leading-[1.08] tracking-normal text-[var(--text-primary)] sm:text-[3.35rem] lg:text-[4.2rem] 2xl:text-[5rem]"
+            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
           >
             {statementLines.map((line, lineIndex) => (
               <div
                 key={`line-${lineIndex}`}
-                className="flex flex-wrap justify-center gap-x-[0.22em] gap-y-[0.08em] px-[0.04em] py-[0.04em]"
+                className="flex flex-wrap justify-center gap-x-[0.22em] gap-y-[0.08em]"
               >
                 {line.map((word, wordIndex) => {
-                  const isGoldWord = word === "distinguished" || word === "great" || word === "future.";
+                  const cleanWord = word.replace(/[.,]/g, "");
+                  const isGoldWord =
+                    cleanWord === "settled" ||
+                    cleanWord === "warmth" ||
+                    cleanWord === "Shree" ||
+                    cleanWord === "promise";
+
                   return (
                     <span key={`${word}-${lineIndex}-${wordIndex}`} className="relative inline-block overflow-hidden pb-[0.06em]">
-                      <span 
-                        className={`block ${isGoldWord ? "text-[var(--color-accent)]/30" : "text-[var(--text-primary)]/20"}`}
-                        style={isGoldWord ? { fontStyle: "italic" } : {}}
+                      <span
+                        className={isGoldWord ? "block text-[rgba(201,174,123,0.28)]" : "block text-[rgba(58,52,46,0.22)]"}
+                        style={isGoldWord ? { fontStyle: "italic" } : undefined}
                       >
                         {word}
                       </span>
                       <span
                         data-fill-word
-                        className={`pointer-events-none absolute inset-0 block ${isGoldWord ? "text-[var(--color-accent)]" : "text-[var(--text-primary)]"}`}
+                        className={isGoldWord ? "pointer-events-none absolute inset-0 block text-[var(--color-accent)]" : "pointer-events-none absolute inset-0 block text-[var(--text-primary)]"}
                         style={{
                           clipPath: "inset(100% 0 0 0)",
-                          ...(isGoldWord ? { fontStyle: "italic" } : {})
+                          ...(isGoldWord ? { fontStyle: "italic" } : {}),
                         }}
                       >
                         {word}
@@ -91,6 +103,12 @@ export function IntroStatement() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="max-w-[38rem]">
+          <p className="text-[1.05rem] font-light leading-[1.85] text-[var(--text-primary)]">
+            A home should feel considered before the first visit and dependable long after possession.
+          </p>
         </div>
       </div>
     </section>
