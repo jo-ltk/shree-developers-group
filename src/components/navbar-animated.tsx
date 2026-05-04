@@ -53,8 +53,12 @@ export function NavbarAnimated() {
               <a
                 key={item.title}
                 href={item.href}
-                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-300 hover:text-[var(--color-accent)] ${
+                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-[var(--color-accent)] ${
                   item.isTrailing ? "justify-self-end" : "justify-self-start"
+                } ${
+                  (item.title === "Notes" || item.title === "Contact") && !isOpen
+                    ? "!text-[#FAF8F3]"
+                    : "text-[var(--text-primary)]"
                 }`}
               >
                 <span>{item.title}</span>

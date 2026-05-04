@@ -53,7 +53,7 @@ export function IntroStatement() {
       ref={sectionRef}
       className="relative overflow-hidden bg-[linear-gradient(180deg,#FAF8F3_0%,#F2EADF_100%)]"
     >
-      <div className="mx-auto flex min-h-[78svh] max-w-[120rem] flex-col items-center justify-center gap-10 px-5 py-28 text-center sm:px-7 lg:px-20 lg:py-36">
+      <div className="mx-auto flex min-h-[78svh] max-w-[120rem] flex-col items-center justify-center gap-10 px-5 pt-12 pb-24 text-center sm:px-7 lg:px-20 lg:py-36">
         <div className="flex flex-col items-center">
           <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
             Built The Shree Way
