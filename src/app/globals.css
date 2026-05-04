@@ -240,23 +240,95 @@ a {
   animation-play-state: paused;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Interactive Site Map — Premium Plotted Masterplan Style
+═══════════════════════════════════════════════════════════════════════════ */
+
+.site-map-stage-framing {
+  perspective: 2000px;
+}
+
+/* Base Hotspot - The 'Veil' that makes underlying numbers look subtle */
+.site-map-hotspot-hit {
+  transition: 
+    fill 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-width 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Soft neutral veil to mute the map artwork numbers */
+  fill: rgba(242, 234, 223, 0.45); 
+  stroke: rgba(58, 52, 46, 0.08);
+  stroke-width: 1px;
+  
+  /* No heavy shadows by default */
+  filter: none;
+}
+
+.site-map-lot-scale {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.32, 1);
+}
+
+/* Hover State — Subtle red-tinted hover */
+.site-map-lot-group--interactive:hover .site-map-hotspot-hit {
+  fill: rgba(139, 42, 42, 0.12);
+  stroke: rgba(139, 42, 42, 0.5);
+  stroke-width: 2px;
+  filter: drop-shadow(0 4px 12px rgba(139, 42, 42, 0.2));
+}
+
+.site-map-lot-group--interactive:hover .site-map-lot-scale {
+  transform: scale(1.005); /* Minimal scale */
+}
+
+/* Selected State — Illuminated Red highlight for cinematic focus */
+.site-map-hotspot-selected-layer .site-map-hotspot-hit {
+  fill: rgba(255, 255, 255, 0.02); 
+  stroke: #8B2A2A; /* Deep Burgundy */
+  stroke-width: 4px;
+  filter: drop-shadow(0 0 20px rgba(139, 42, 42, 0.45));
+  opacity: 1 !important;
+}
+
+.site-map-lot-scale--selected {
+  transform: scale(1.035); /* Slightly more prominent scale */
+}
+
+/* Neighbor Lots dimming handled in MapStage.tsx JSX for better filter coordination */
+
+@keyframes lot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.lot-pulse-ring {
+  animation: lot-pulse 2s ease-in-out infinite;
+}
+
+.site-map-hotspot-floor {
+  display: none; /* Removed heavy floor shadows */
+}
+
+.site-map-hotspot-ring {
+  display: none; /* Removed extra debug rings */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-map-lot-scale {
+    transition: none;
+  }
+  .site-map-hotspot-hit {
+    transition: none;
+  }
+}
+
 .site-map-hotspot {
-  transition:
-    fill 240ms ease,
-    stroke 240ms ease,
-    filter 240ms ease,
-    opacity 240ms ease;
+  /* Legacy wrapper transition */
+  transition: all 240ms ease;
 }
 
-.site-map-hotspot:hover {
-  fill: rgba(201, 174, 123, 0.24);
-  stroke: #C9AE7B;
-  filter: drop-shadow(0 0 12px rgba(201, 174, 123, 0.58));
-}
 
-.site-map-hotspot-selected {
-  filter: drop-shadow(0 0 16px rgba(201, 174, 123, 0.7));
-}
 
 @keyframes project-card-marquee {
   from {
@@ -308,6 +380,11 @@ a {
   }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-card-marquee-track,
   .project-card-marquee-track-reverse,
@@ -316,5 +393,22 @@ a {
   .moving-showcase-track {
     animation: none;
     transform: none;
+  }
+
+  .site-map-lot-group--interactive:hover .site-map-lot-scale,
+  .site-map-lot-scale--selected {
+    transform: none !important;
+  }
+
+  .site-map-lot-group--interactive:hover .site-map-hotspot-ring {
+    stroke-dasharray: none;
+  }
+
+  .site-map-plane {
+    transform: none !important;
+  }
+
+  .site-map-stage-framing {
+    perspective: none !important;
   }
 }
