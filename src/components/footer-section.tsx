@@ -138,7 +138,7 @@ export function FooterSection() {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <BrandMark 
               variant="steel" 
-              className="h-20 w-52" 
+              className="h-40 w-96" 
               imageClassName="object-left"
             />
             <div className="hidden md:block h-6 w-px bg-[#F5F0E8]/10" />

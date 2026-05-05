@@ -76,7 +76,7 @@ export function MovingShowcaseSection() {
               {/* Decorative Corner Label */}
               <div className="absolute top-8 right-8 lg:top-12 lg:right-12 z-20 hidden md:flex flex-col items-end gap-2 transition-opacity duration-700 group-hover/slide:opacity-100 opacity-30">
                 <BrandMark 
-                  variant="steel" 
+                  variant="black" 
                   className="h-8 w-24" 
                   imageClassName="object-right" 
                 />
