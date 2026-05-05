@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SectionHeadline } from "@/components/ui/section-headline";
@@ -29,120 +30,116 @@ const metrics = [
 
 export function MetricsSection() {
   return (
-    <SectionWrapper id="metrics" className="!bg-[#F5F0E8]">
-      {/* ================= TOP EDITORIAL GRID ================= */}
-      <div className="grid grid-cols-12 gap-px bg-[#1C1208]/10">
-        {/* LEFT MAIN BLOCK */}
-        <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] p-8 md:p-12 lg:p-16 flex flex-col justify-between min-h-[520px]">
-          <div>
-            <SectionLabel counter="04 / 08">Measured Proof</SectionLabel>
+    <SectionWrapper id="metrics" className="!bg-[#F5F0E8]" noPadding>
+      {/* ================= EDITORIAL GRID ================= */}
+      <div className="grid grid-cols-12 gap-px bg-[#1C1208]/10 border-y border-[#1C1208]/10">
+        
+        {/* ROW 1 LEFT: MAIN NARRATIVE */}
+        <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] p-6 md:p-10 lg:p-12 flex flex-col justify-center">
+          <div className="max-w-[640px]">
+            <div className="flex items-center gap-4 mb-4 md:mb-6">
+              <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.2em]">04 / 08</span>
+              <Annotation>MEASURED PROOF</Annotation>
+            </div>
 
-            <SectionHeadline size="xl" className="max-w-[700px]">
+            <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]">
               Numbers that
               <br />
               speak plainly
             </SectionHeadline>
 
-            <BodyText className="mt-8 max-w-[500px]">
+            <BodyText className="mt-8 text-[1.05rem] leading-[1.7] text-[#1C1208]/70">
               Premium value is not only seen in finishes, but in fewer
               uncertainties, verified approvals, and a process buyers can trust
-              without hesitation.
+              without hesitation. Architecture built on restraint and proof.
             </BodyText>
 
-            <ButtonGhost href="#gallery" className="mt-8">
+            <Link href="#gallery" className="group mt-10 inline-flex items-center gap-4 text-[0.65rem] font-bold tracking-[0.25em] text-[#1C1208] uppercase">
               View Projects
-            </ButtonGhost>
-          </div>
-
-          <div className="mt-16 flex items-end justify-between">
-            <Annotation>RESEARCH LAB & PREMIUM RESIDENCES</Annotation>
-            <CrosshairIcon />
+              <span className="w-8 h-px bg-[#1C1208] transition-all duration-300 group-hover:w-12" />
+            </Link>
           </div>
         </div>
 
-        {/* RIGHT TOP CARD */}
-        <div className="col-span-12 lg:col-span-4 bg-[#F5F0E8] p-8 md:p-10 lg:p-12 border-l border-[#1C1208]/10 min-h-[260px] flex flex-col justify-between">
-          <div className="flex items-start justify-between">
-            <Annotation>01</Annotation>
+        {/* ROW 1 RIGHT: STAT 01 */}
+        <div className="col-span-12 lg:col-span-4 bg-[#F5F0E8] p-6 md:p-8 lg:p-10 flex flex-col justify-between border-l border-[#1C1208]/10">
+          <div className="flex justify-between items-start mb-8 md:mb-10">
+            <Annotation>01 / AVAILABILITY</Annotation>
             <CrosshairIcon />
           </div>
 
           <div>
-            <div
-              className="text-[#1C1208] leading-none"
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(2.5rem,4vw,4.5rem)",
-                fontWeight: 300,
-              }}
-            >
+            <div className="text-[#1C1208] font-light leading-none mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3rem" }}>
               24/7
             </div>
-
-            <SectionHeadline size="md" className="mt-4 !text-[2rem]">
-              After-sales support
+            <SectionHeadline size="md" className="!text-[1.6rem] leading-[1.2]">
+              After-sales
+              <br />
+              support
             </SectionHeadline>
-
-            <BodyText className="mt-4">
+            <BodyText className="mt-4 text-[#1C1208]/60 text-sm">
               A relationship that continues after possession with responsive
               assistance and clear communication.
             </BodyText>
           </div>
         </div>
 
-        {/* RIGHT BOTTOM CARD */}
-        <div className="col-span-12 lg:col-span-4 bg-[#EDE8DF] p-8 md:p-10 lg:p-12 border-l border-t border-[#1C1208]/10 min-h-[260px] flex flex-col justify-between lg:col-start-9">
-          <Annotation>FIG. 11 / DOCUMENTED TRUST</Annotation>
+        {/* ROW 2 LEFT: FEATURED IMAGE */}
+        <div className="col-span-12 lg:col-span-8 bg-[#EDE8DF] relative min-h-[360px] overflow-hidden group">
+          <div className="absolute top-8 left-8 z-20 flex items-center gap-4">
+            <Annotation className="!text-[#F5F0E8]/80">RESEARCH LAB & PREMIUM RESIDENCES</Annotation>
+            <CrosshairIcon light />
+          </div>
 
-          <div>
-            <SectionHeadline size="md" className="mt-6 !text-[2rem]">
+          <img
+            src="/images/metrics-featured.png"
+            alt="Shree Developers Premium Residences"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/40 to-transparent" />
+        </div>
+
+        {/* ROW 2 RIGHT: STAT 02 */}
+        <div className="col-span-12 lg:col-span-4 bg-[#1C1208] p-6 md:p-8 lg:p-10 flex flex-col justify-between">
+          <Annotation light>FIG. 11 / DOCUMENTED TRUST</Annotation>
+
+          <div className="mt-8 md:mt-10">
+            <SectionHeadline size="lg" light className="!text-[2.2rem] leading-[1.05]">
               Trust grows
               <br />
               through proof
             </SectionHeadline>
-
-            <BodyText className="mt-4">
+            <BodyText light className="mt-6 !text-[#F5F0E8]/70 leading-[1.7] text-sm">
               Every completed handover, every family housed, and every verified
               approval contributes to a reputation built carefully over time.
             </BodyText>
+            
+            <div className="mt-10 w-10 h-px bg-[#D43F33]" />
           </div>
         </div>
       </div>
 
-      {/* ================= BOTTOM DARK STAT STRIP ================= */}
-      <div className="grid grid-cols-12 gap-px bg-[#F5F0E8]/10 mt-px">
+      {/* ================= STATS STRIP ================= */}
+      <div className="grid grid-cols-12 gap-px bg-[#1C1208]/10 border-b border-[#1C1208]/10">
         {metrics.map((metric, index) => (
           <div
             key={metric.title}
-            className="col-span-12 lg:col-span-4 bg-[#1C1208] p-8 md:p-10 lg:p-12 group transition-all duration-500 hover:bg-[#24170D]"
+            className="col-span-12 lg:col-span-4 bg-[#F5F0E8] p-8 md:p-10 lg:p-12 group transition-colors duration-700 hover:bg-[#EDE8DF]"
           >
-            <div className="flex items-start justify-between mb-10">
-              <Annotation light>0{index + 2}</Annotation>
-              <div className="transition-transform duration-500 group-hover:rotate-45">
-                <CrosshairIcon light />
-              </div>
+            <div className="flex justify-between items-center mb-12">
+              <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.2em]">0{index + 2}</span>
+              <CrosshairIcon className="opacity-20 group-hover:rotate-90 transition-transform duration-700" />
             </div>
 
-            <div
-              className="text-[#F5F0E8] leading-none"
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(3rem,5vw,5rem)",
-                fontWeight: 300,
-              }}
-            >
+            <div className="text-[#1C1208] font-light leading-none mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem" }}>
               {metric.value}
             </div>
 
-            <SectionHeadline
-              size="md"
-              light
-              className="mt-4 !text-[clamp(1.8rem,2vw,2.5rem)]"
-            >
+            <SectionHeadline size="md" className="!text-[1.6rem] mb-3">
               {metric.title}
             </SectionHeadline>
 
-            <BodyText light className="mt-4 !text-[#F5F0E8]/72 max-w-[90%]">
+            <BodyText className="text-[#1C1208]/60 leading-[1.7] text-sm">
               {metric.body}
             </BodyText>
           </div>

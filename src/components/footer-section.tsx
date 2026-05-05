@@ -2,40 +2,40 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
-
 import { ensureGsapPlugins } from "@/lib/gsap";
+import { SectionWrapper } from "./ui/section-wrapper";
+import { SectionLabel } from "./ui/section-label";
+import { SectionHeadline } from "./ui/section-headline";
+import { BodyText } from "./ui/body-text";
+import { Annotation } from "./ui/annotation";
+import { FigMarker } from "./ui/fig-marker";
+import { CrosshairIcon } from "./ui/crosshair-icon";
 
 const footerLinks = [
-  { label: "Projects", href: "#gallery" },
-  { label: "Our Promise", href: "#team" },
-  { label: "Builder Notes", href: "#articles" },
-  { label: "Contact", href: "#footer" },
+  { label: "Signature Projects", href: "#gallery", coord: "42.3 / 71.1" },
+  { label: "The Shree Promise", href: "#team", coord: "12.8 / 33.4" },
+  { label: "Architectural Notes", href: "#articles", coord: "88.1 / 15.2" },
+  { label: "Direct Inquiries", href: "#footer", coord: "05.4 / 92.8" },
 ];
 
 export function FooterSection() {
   const footerRef = useRef<HTMLElement | null>(null);
 
   useLayoutEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
     const { gsap } = ensureGsapPlugins();
     const ctx = gsap.context(() => {
       gsap.timeline({
         scrollTrigger: {
           trigger: footerRef.current,
-          start: "top 84%",
+          start: "top 85%",
           once: true,
         },
-        defaults: {
-          ease: "power3.out",
-        },
-      }).from("[data-footer-grid] > *", {
+      }).from("[data-footer-animate]", {
         autoAlpha: 0,
-        y: 24,
-        duration: 0.82,
-        stagger: 0.08,
+        y: 20,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
       });
     }, footerRef);
 
@@ -43,129 +43,113 @@ export function FooterSection() {
   }, []);
 
   return (
-    <footer
-      id="footer"
-      ref={footerRef}
-      className="relative overflow-hidden border-t border-[rgba(183,170,152,0.35)] bg-[#FAF8F3]"
-    >
-      <div className="mx-auto max-w-[120rem] px-5 py-20 sm:px-7 lg:px-20 lg:py-24">
-        <div data-footer-grid className="space-y-14 sm:space-y-16">
-          <div className="grid gap-10 border-b border-[rgba(183,170,152,0.35)] pb-14 lg:grid-cols-[1fr_0.68fr] lg:items-end">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <span className="h-px w-10 shrink-0 bg-[var(--color-accent)]" />
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-                  Shree Developers Group
-                </p>
-              </div>
-              <h2
-                className="max-w-[46rem] text-[2.55rem] font-light leading-[1.06] tracking-normal text-[var(--text-primary)] sm:text-[3.25rem] lg:text-[4rem]"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-              >
-                Let&apos;s plan your next address with clarity and{" "}
-                <em className="text-[var(--color-accent)]" style={{ fontStyle: "italic" }}>
-                  care.
-                </em>
-              </h2>
-              <p className="max-w-[42rem] text-[0.98rem] font-light leading-[1.85] text-[var(--text-primary)]">
-                Speak with the team about active communities, available homesites, construction
-                timelines, and the details that matter before you commit.
-              </p>
-            </div>
-
-            <div className="space-y-5 lg:max-w-[25rem]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-                Start A Conversation
-              </p>
-              <a
-                href="mailto:hello@shreedevelopersgroup.com"
-                className="group inline-flex items-center gap-3 text-[1.05rem] font-medium text-[var(--text-primary)] transition-colors duration-300 hover:text-[var(--color-accent)]"
-              >
-                hello@shreedevelopersgroup.com
-                <ArrowRight className="h-4 w-4 opacity-60 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
-              </a>
+    <SectionWrapper id="footer" ref={footerRef} dark={true} className="!py-12 md:!py-16 overflow-hidden">
+      <div className="relative">
+        
+        {/* COMPACT ARCHITECTURAL GRID */}
+        <div data-footer-animate className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 border-t border-[#F5F0E8]/10 pt-12">
+          
+          {/* CTA & INDEX */}
+          <div className="space-y-8">
+            <SectionHeadline 
+              size="md" 
+              light
+              className="!text-[#F5F0E8] !text-[2rem] !leading-[1.1]"
+            >
+              Let&apos;s architect
+              <br />
+              your <em className="italic">legacy</em>
+            </SectionHeadline>
+            <div className="space-y-4">
+              <Annotation light className="!text-rust">01 / TECHNICAL INDEX</Annotation>
+              <nav className="flex flex-col gap-3">
+                {footerLinks.map((link) => (
+                  <a 
+                    key={link.label} 
+                    href={link.href}
+                    className="group flex items-center justify-between !text-[#F5F0E8] hover:!text-rust transition-colors duration-300"
+                  >
+                    <span className="font-medium text-[0.75rem] tracking-wide">{link.label}</span>
+                    <span className="font-mono text-[9px] opacity-20">[{link.coord}]</span>
+                  </a>
+                ))}
+              </nav>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.25fr] xl:gap-14">
-            <div className="space-y-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-                Office
-              </p>
-              <p className="text-[0.9rem] font-light leading-[1.85] text-[var(--text-primary)]">
-                Shree Developers Group<br />
-                Premium Residential Developments<br />
-                Gujarat, India
-              </p>
+          {/* COMMUNICATION */}
+          <div className="space-y-8">
+            <Annotation light className="!text-[#F5F0E8]/40">02 / COMMUNICATION</Annotation>
+            <div className="space-y-6">
+              <a 
+                href="mailto:hello@shreedevelopersgroup.com"
+                className="group block"
+              >
+                <span className="block font-serif italic text-lg !text-[#F5F0E8] border-b border-[#F5F0E8]/10 pb-1 group-hover:border-rust transition-colors">
+                  hello@shree<br />developersgroup.com
+                </span>
+              </a>
+              <BodyText size="sm" light className="!text-[#F5F0E8]/60 !leading-relaxed">
+                Speak with us about the details that define your next chapter.
+              </BodyText>
             </div>
+          </div>
 
-            <div className="space-y-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-                Contact
-              </p>
-              <div className="flex flex-col gap-3 text-[0.9rem] font-light text-[var(--text-primary)]">
-                <a href="mailto:hello@shreedevelopersgroup.com?subject=Request%20a%20callback" className="transition-colors duration-300 hover:text-[var(--color-accent)]">
-                  Request a callback
-                </a>
-                <a href="mailto:hello@shreedevelopersgroup.com" className="transition-colors duration-300 hover:text-[var(--color-accent)]">
-                  hello@shreedevelopersgroup.com
-                </a>
+          {/* PHYSICAL OFFICE */}
+          <div className="space-y-8">
+            <Annotation light className="!text-[#F5F0E8]/40">03 / PHYSICAL OFFICE</Annotation>
+            <div className="space-y-4">
+              <BodyText size="sm" light className="!text-[#F5F0E8]/60 !leading-relaxed">
+                Headquarters<br />
+                Premium Residential Tower<br />
+                Gujarat, India &mdash; 380001
+              </BodyText>
+              <div className="flex flex-col gap-1 text-rust/60 font-mono text-[9px]">
+                <span>LAT: 23.0225&deg; N</span>
+                <span>LNG: 72.5714&deg; E</span>
               </div>
             </div>
+          </div>
 
-            <div className="space-y-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-                Navigation
-              </p>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                {footerLinks.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-[0.9rem] font-light text-[var(--text-primary)] transition-colors duration-300 hover:text-[var(--color-accent)]"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="border-t border-[rgba(183,170,152,0.35)] pt-10 sm:border-none sm:pt-0 lg:pl-8 xl:pl-12">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-                Updates
-              </p>
-              <p className="mt-5 text-[0.9rem] font-light leading-[1.85] text-[var(--text-primary)]">
-                Receive launch notes, availability updates, and handover milestones.
-              </p>
-
-              <label className="group/footer-input mt-6 block">
-                <span className="sr-only">Enter your email</span>
-                <div className="flex items-center gap-4 border-b border-[rgba(183,170,152,0.55)] pb-3 transition-colors duration-300 hover:border-[var(--color-accent)] group-focus-within/footer-input:border-[var(--color-accent)]">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full bg-transparent text-[0.95rem] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none"
-                  />
-                  <button
-                    type="button"
-                    aria-label="Submit email"
-                    className="inline-flex h-8 w-8 items-center justify-center text-[var(--text-primary)] transition-all duration-300 hover:translate-x-1 hover:text-[var(--color-accent)]"
-                  >
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </div>
+          {/* UPDATES MODULE */}
+          <div className="space-y-8">
+            <Annotation light className="!text-[#F5F0E8]/40">04 / PROJECT UPDATES</Annotation>
+            <div className="space-y-6">
+              <BodyText size="sm" light className="!text-[#F5F0E8]/60">
+                Subscribe to receive technical bulletins and handover milestones.
+              </BodyText>
+              <label className="group/input block relative">
+                <input 
+                  type="email" 
+                  placeholder="EMAIL SPECIFICATION" 
+                  className="w-full bg-transparent border-b border-[#F5F0E8]/10 pb-2 text-[#F5F0E8] font-mono text-[10px] tracking-widest placeholder:text-[#F5F0E8]/20 focus:outline-none focus:border-rust transition-colors duration-500"
+                />
+                <button className="absolute right-0 bottom-2 text-[#F5F0E8] hover:text-rust transition-colors duration-300">
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </label>
             </div>
           </div>
-
-          <div className="flex flex-col items-center justify-between gap-4 border-t border-[rgba(183,170,152,0.35)] pt-6 sm:flex-row">
-            <p className="text-[0.78rem] text-[var(--text-secondary)]">Shree Developers Group</p>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
-              Built for modern residential trust
-            </p>
-          </div>
         </div>
+
+        {/* FINAL MARKER BAR */}
+        <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-[#F5F0E8]/5 pt-8">
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 bg-rust rounded-full animate-pulse" />
+              <span className="text-rust text-[9px] font-bold uppercase tracking-[0.2em]">Active Operations</span>
+            </div>
+            <FigMarker fig="fig. 22" label="Blueprint Conclusion" light />
+          </div>
+          
+          <Annotation light className="!text-[#F5F0E8]/20 !text-[0.55rem] text-center md:text-right">
+            &copy; SHREE DEVELOPERS GROUP &mdash; PREMIUM EDITORIAL ARCHITECTURE V1.02
+          </Annotation>
+        </div>
+
       </div>
-    </footer>
+    </SectionWrapper>
   );
 }
+
+

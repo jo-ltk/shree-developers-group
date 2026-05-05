@@ -1,59 +1,82 @@
 import { cn } from "@/lib/utils";
+import { SectionWrapper } from "./ui/section-wrapper";
+import { SectionLabel } from "./ui/section-label";
+import { CrosshairIcon } from "./ui/crosshair-icon";
+import { Annotation } from "./ui/annotation";
 
 const marqueeRows = [
   {
-    items: ["SHREE DEVELOPERS", "PREMIUM HOMES", "CLEAR DELIVERY", "FAMILY LIVING", "LASTING VALUE"],
+    items: ["Shree Developers", "Premium Homes", "Clear Delivery", "Family Living", "Lasting Value"],
     reverse: false,
-    duration: "38s",
+    duration: "50s",
   },
   {
-    items: ["TRUSTED BUILDER", "REFINED DETAILS", "PLANNED COMMUNITIES", "WARM MATERIALS", "CARE AFTER HANDOVER"],
+    items: ["Trusted Builder", "Refined Details", "Planned Communities", "Warm Materials", "Care After Handover"],
     reverse: true,
-    duration: "42s",
+    duration: "65s",
   },
   {
-    items: ["VILLAS", "APARTMENTS", "PLOTTED HOMESITES", "NEIGHBORHOOD COMFORT", "BROCHURE CLARITY"],
+    items: ["Villas", "Apartments", "Plotted Homesites", "Neighborhood Comfort", "Brochure Clarity"],
     reverse: false,
-    duration: "36s",
-  },
-  {
-    items: ["QUALITY FIRST", "TRANSPARENT PROCESS", "PREMIUM SITES", "STEADY SERVICE", "SHREE PROMISE"],
-    reverse: true,
-    duration: "40s",
+    duration: "55s",
   },
 ];
 
 export function MarqueeTextSection() {
   return (
-    <section
-      className="overflow-hidden bg-[#F2EADF] px-0 py-12 text-[var(--text-primary)] sm:py-14 lg:py-16"
-    >
-      <div className="space-y-1.5 sm:space-y-2 lg:space-y-2.5">
-        {marqueeRows.map((row, index) => {
-          const repeated = [...row.items, ...row.items, ...row.items];
-
-          return (
-            <div key={`row-${index}`} className="group overflow-hidden whitespace-nowrap">
-              <div
-                className={cn(
-                  "marquee-text-track inline-flex min-w-max items-center gap-[0.28em] text-[3rem] uppercase leading-[0.9] tracking-normal text-[rgba(58,52,46,0.34)] transition-[color,transform] duration-300 group-hover:text-[var(--color-accent)] sm:text-[4.5rem] lg:text-[6.5rem] 2xl:text-[8rem]",
-                  row.reverse ? "marquee-text-track-reverse" : "marquee-text-track-forward"
-                )}
-                style={{
-                  animationDuration: row.duration,
-                }}
-              >
-                {repeated.map((item, itemIndex) => (
-                  <span key={`${item}-${itemIndex}`} className="inline-flex items-center gap-[0.28em] font-sans font-medium">
-                    <span>{item}</span>
-                    <span className="text-[rgba(201,174,123,0.45)]">|</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+    <SectionWrapper className="overflow-hidden !py-12 md:!py-20" dark={false}>
+      <div className="flex items-center justify-between mb-8 md:mb-12">
+        <SectionLabel counter="04 / 08">Core Values</SectionLabel>
+        <Annotation className="hidden md:block">fig. 12 / moving principles</Annotation>
       </div>
-    </section>
+
+      <div className="relative">
+        {/* Vertical Blueprint Lines */}
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-[#D43F33]/10 z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-px bg-[#D43F33]/10 z-10" />
+
+        <div className="space-y-4 md:space-y-8">
+          {marqueeRows.map((row, index) => {
+            // Repeat items to ensure smooth scrolling
+            const repeated = [...row.items, ...row.items, ...row.items, ...row.items];
+
+            return (
+              <div key={`row-${index}`} className="group overflow-hidden whitespace-nowrap">
+                <div
+                  className={cn(
+                    "marquee-text-track inline-flex min-w-max items-center gap-12 text-[3.5rem] leading-[0.9] tracking-tight transition-[color,opacity] duration-700 md:text-[5.5rem] lg:text-[7.5rem] 2xl:text-[9rem]",
+                    "font-serif font-light italic",
+                    "text-[#1C120815] group-hover:text-[#1C120880]",
+                    row.reverse ? "marquee-text-track-reverse" : "marquee-text-track-forward"
+                  )}
+                  style={{
+                    animationDuration: row.duration,
+                  }}
+                >
+                  {repeated.map((item, itemIndex) => (
+                    <span key={`${item}-${itemIndex}`} className="inline-flex items-center gap-12">
+                      <span className="relative">
+                        {item}
+                        {/* Hover accent dot */}
+                        <span className="absolute -right-4 top-1/2 w-1.5 h-1.5 bg-[#D43F33] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100 hidden md:block" />
+                      </span>
+                      <CrosshairIcon className="w-6 h-6 opacity-20" />
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom Annotation */}
+        <div className="mt-12 flex items-center gap-4 justify-center opacity-30">
+          <div className="h-px w-12 bg-[#1C1208]" />
+          <Annotation>Building beyond structures</Annotation>
+          <div className="h-px w-12 bg-[#1C1208]" />
+        </div>
+      </div>
+    </SectionWrapper>
   );
 }
+

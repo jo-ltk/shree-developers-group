@@ -1,52 +1,93 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { SectionWrapper } from "./ui/section-wrapper";
+import { SectionLabel } from "./ui/section-label";
+import { SectionHeadline } from "./ui/section-headline";
+import { Annotation } from "./ui/annotation";
+import { CrosshairIcon } from "./ui/crosshair-icon";
 
 const showcaseItems = [
   {
-    title: "WARM RESIDENTIAL ARRIVALS",
+    title: "Warm Residential Arrivals",
     image:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2200&q=82",
+    fig: "fig. 17",
   },
   {
-    title: "SPACES PLANNED FOR FAMILY LIFE",
+    title: "Spaces Planned For Family Life",
     image:
       "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2200&q=82",
+    fig: "fig. 18",
   },
   {
-    title: "DETAILS THAT AGE WITH GRACE",
+    title: "Details That Age With Grace",
     image:
       "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=2200&q=82",
+    fig: "fig. 19",
   },
 ];
 
 export function MovingShowcaseSection() {
-  const repeatedItems = [...showcaseItems, ...showcaseItems];
+  const repeatedItems = [...showcaseItems, ...showcaseItems, ...showcaseItems];
 
   return (
-    <section className="overflow-hidden bg-[#F2EADF] px-0 py-12 text-[var(--text-primary)] sm:py-14 lg:py-16">
+    <SectionWrapper className="!px-0 !pb-12 md:!pb-20 !pt-0 !max-w-none overflow-hidden" dark={true} noPadding>
+      <div className="px-8 md:px-12 lg:px-20 mb-10 md:mb-12 pt-16">
+        <SectionLabel counter="08 / 08" light>Visual Study</SectionLabel>
+      </div>
+
       <div className="moving-showcase group overflow-hidden">
-        <div className="moving-showcase-track flex min-w-max items-stretch gap-5 pl-5 will-change-transform sm:gap-6 sm:pl-6 lg:gap-7 lg:pl-7">
+        <div className="moving-showcase-track flex min-w-max items-stretch gap-0 will-change-transform">
           {repeatedItems.map((item, index) => (
             <article
               key={`${item.title}-${index}`}
-              className="group/slide relative h-[20rem] w-[88vw] shrink-0 overflow-hidden rounded-[8px] border border-[rgba(183,170,152,0.35)] bg-[#FAF8F3] sm:h-[28rem] sm:w-[82vw] lg:h-[40rem] lg:w-[78vw]"
+              className="group/slide relative h-[28rem] w-[85vw] shrink-0 overflow-hidden bg-dark border-r border-[#F5F0E8]/10 sm:h-[35rem] sm:w-[80vw] lg:h-[50rem] lg:w-[75vw]"
             >
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
-                className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/slide:scale-[1.04]"
-                sizes="88vw"
+                className="object-cover object-center transition-transform duration-[3000ms] ease-out group-hover/slide:scale-[1.06]"
+                sizes="85vw"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,243,0)_0%,rgba(250,248,243,0.1)_36%,rgba(250,248,243,0.76)_74%,#FAF8F3_100%)]" />
-              <div className="absolute inset-x-0 bottom-0 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
-                <div className="moving-showcase-text max-w-[13ch] font-sans text-[2.6rem] font-medium uppercase leading-[0.96] tracking-normal text-[var(--text-primary)] transition-colors duration-300 group-hover:text-[var(--color-accent)] sm:text-[4.5rem] lg:text-[7rem]">
+              
+              {/* Overlay for legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
+              
+              {/* Blueprint Details */}
+              <div className="absolute top-8 left-8 lg:top-12 lg:left-12 z-20 flex items-center gap-4">
+                <Annotation light className="!text-[#F5F0E8]">{item.fig}</Annotation>
+                <CrosshairIcon light className="opacity-40" />
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-12 lg:px-16 lg:pb-16 z-20">
+                <Annotation light className="mb-6 !text-[#F5F0E8]/60">ARCHITECTURAL INTENTION</Annotation>
+                <SectionHeadline 
+                  size="hero" 
+                  light 
+                  noPeriod 
+                  className="max-w-[14ch] !text-[#F5F0E8] !text-[clamp(2.8rem,7vw,8.5rem)] leading-[0.92] tracking-tight group-hover/slide:!text-rust transition-colors duration-700"
+                >
                   {item.title}
-                </div>
+                </SectionHeadline>
+              </div>
+
+              {/* Decorative Corner Label */}
+              <div className="absolute top-8 right-8 lg:top-12 lg:right-12 z-20 opacity-20 hidden md:block">
+                <Annotation light className="!text-[#F5F0E8]">Shree / Premium Study</Annotation>
               </div>
             </article>
           ))}
         </div>
       </div>
-    </section>
+
+      {/* Footer Annotation */}
+      <div className="px-8 md:px-12 lg:px-20 mt-12 md:mt-16 flex justify-between items-center">
+        <Annotation light className="!text-[#F5F0E8]/40">Continuous Movement</Annotation>
+        <div className="h-px flex-grow mx-8 bg-[#F5F0E8]/10" />
+        <Annotation light className="!text-[#F5F0E8]/40">fig. 20</Annotation>
+      </div>
+    </SectionWrapper>
   );
 }
+

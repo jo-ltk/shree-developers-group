@@ -294,6 +294,18 @@ export function SectionHeadline({
 <SectionHeadline size="hero">
   Where trust <em style={{ fontStyle: "italic" }}>finds</em> always home
 </SectionHeadline>;
+
+{
+  /* The "Builder Notes" / "Numbers that speak plainly" style — compressed & authoritative */
+}
+<SectionHeadline
+  size="xl"
+  className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
+>
+  Numbers that
+  <br />
+  speak plainly
+</SectionHeadline>;
 ```
 
 ---

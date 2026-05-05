@@ -39,7 +39,7 @@ export function NavbarAnimated() {
       >
         <div className="mx-auto max-w-[96rem] px-6 pt-5 sm:px-8 lg:px-10 lg:pt-7">
           <div className={`${desktopGridClass} hidden xl:grid`}>
-            <a href="#top" className="w-fit text-[var(--text-primary)]">
+            <a href="#top" className="w-fit text-dark">
               <BrandMark
                 variant="black"
                 className="h-24 w-[16rem]"
@@ -53,12 +53,12 @@ export function NavbarAnimated() {
               <a
                 key={item.title}
                 href={item.href}
-                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-[var(--color-accent)] ${
+                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-rust ${
                   item.isTrailing ? "justify-self-end" : "justify-self-start"
                 } ${
                   (item.title === "Notes" || item.title === "Contact") && !isOpen
-                    ? "!text-[#FAF8F3]"
-                    : "text-[var(--text-primary)]"
+                    ? "!text-[#F5F0E8]"
+                    : "text-dark"
                 }`}
               >
                 <span>{item.title}</span>

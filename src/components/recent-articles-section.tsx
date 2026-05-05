@@ -1,9 +1,15 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { BookOpen } from "lucide-react";
-
 import { ensureGsapPlugins } from "@/lib/gsap";
+import { SectionWrapper } from "./ui/section-wrapper";
+import { SectionLabel } from "./ui/section-label";
+import { SectionHeadline } from "./ui/section-headline";
+import { BodyText } from "./ui/body-text";
+import { ButtonGhost } from "./ui/button-ghost";
+import { ImagePanel } from "./ui/image-panel";
+import { Annotation } from "./ui/annotation";
+import { CrosshairIcon } from "./ui/crosshair-icon";
 
 const articles = [
   {
@@ -13,6 +19,7 @@ const articles = [
     image:
       "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=82",
     date: "Oct 12, 2026",
+    fig: "fig. 09",
   },
   {
     title: "The Value Of A Clear Handover",
@@ -21,6 +28,7 @@ const articles = [
     image:
       "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=82",
     date: "Sep 28, 2026",
+    fig: "fig. 10",
   },
   {
     title: "Designing Communities With Breathing Room",
@@ -29,6 +37,7 @@ const articles = [
     image:
       "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=82",
     date: "Aug 15, 2026",
+    fig: "fig. 11",
   },
 ];
 
@@ -58,6 +67,13 @@ export function RecentArticlesSection() {
           y: 24,
           duration: 0.85,
           stagger: 0.12,
+        })
+        .from("[data-article-card]", {
+          autoAlpha: 0,
+          y: 30,
+          duration: 1,
+          stagger: 0.15,
+          delay: -0.5,
         });
     }, sectionRef);
 
@@ -65,130 +81,68 @@ export function RecentArticlesSection() {
   }, []);
 
   return (
-    <section
-      id="articles"
-      ref={sectionRef}
-      className="relative overflow-hidden bg-[#FAF8F3] py-28 text-[var(--text-primary)] lg:py-36"
-    >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(201,174,123,0.55),transparent)]" />
-      <div className="pointer-events-none absolute inset-y-0 left-[50%] hidden w-px bg-[rgba(183,170,152,0.18)] lg:block" />
-
-      <div className="relative mx-auto max-w-[120rem] px-5 sm:px-7 lg:px-20">
-        <div data-articles-heading className="mb-16 flex flex-col gap-8 md:mb-20 lg:mb-24 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-          <div className="flex flex-col gap-6 lg:w-[55%]">
-            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#1C1208]">
-              Builder Notes
-            </p>
-            <h2
-              className="font-medium leading-[1.05] tracking-tight text-[#1C1208]"
-              style={{ 
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" 
-              }}
-            >
-              A quieter journal of materials, sites, and{" "}
-              <em className="text-[var(--color-accent)]" style={{ fontStyle: "italic" }}>
-                decisions.
-              </em>
-            </h2>
-          </div>
-
-          <div className="flex flex-col items-start lg:w-[35%] lg:items-end">
-            <p 
-              className="font-light leading-[1.6] text-[#1C1208]/70 lg:mt-4 lg:text-right"
-              style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
-            >
-              Short reads for buyers who want to understand the thinking behind a Shree development,
-              from planning discipline to the details that make ownership simpler.
-            </p>
-            <a
-              href="#"
-              className="group mt-8 inline-flex h-[50px] items-center justify-center gap-3 border border-[#1C1208]/20 px-7 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1C1208] transition-all duration-200 hover:-translate-y-px hover:border-[#1C1208]/40 hover:bg-[#1C1208]/5"
-              style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))" }}
-            >
-              Read Journal
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="opacity-50 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100"
-              >
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" />
-              </svg>
-            </a>
-          </div>
+    <SectionWrapper id="articles" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
+      {/* Asymmetric Header Grid (7/5 Split) */}
+      <div data-articles-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-10 md:mb-12">
+        <div className="col-span-12 lg:col-span-7">
+          <SectionLabel counter="06 / 08">Builder Notes</SectionLabel>
+          <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]">
+            A quieter journal of materials,
+            <br />
+            sites, and <em className="italic">decisions</em>
+          </SectionHeadline>
         </div>
-
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article, index) => (
-            <article
-              key={article.title}
-              className="group relative flex h-[28rem] flex-col justify-between overflow-hidden rounded-[8px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="absolute inset-0 bg-[#1C1208]" />
-              <img
-                src={article.image}
-                alt={article.title}
-                className="absolute inset-0 h-full w-full object-cover opacity-50 transition-transform duration-1000 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05] group-hover:opacity-70"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-[#1C1208]/50 to-[#1C1208]/10" />
-
-              <div className="relative z-10 flex h-full flex-col justify-between">
-                <div>
-                  <div className="flex items-start justify-between gap-4">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9AE7B]">
-                      Note {String(index + 1).padStart(2, "0")}
-                    </p>
-                    <div className="text-[#C9AE7B] transition-transform duration-300 group-hover:scale-110">
-                      <BookOpen className="h-6 w-6" strokeWidth={1.5} />
-                    </div>
-                  </div>
-                  <h3
-                    className="mt-10 leading-[1.15] text-[#FAF8F3]"
-                    style={{ 
-                      fontFamily: "'Cormorant Garamond', Georgia, serif", 
-                      fontWeight: 400,
-                      fontSize: "clamp(1.75rem, 2.2vw, 2.25rem)"
-                    }}
-                  >
-                    {article.title}
-                  </h3>
-                </div>
-
-                <div className="mt-8">
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FAF8F3]/60">
-                    {article.date}
-                  </p>
-                  <p className="text-[0.95rem] font-light leading-[1.65] text-[#FAF8F3]/80">
-                    {article.description}
-                  </p>
-                  <div className="mt-6 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#C9AE7B] transition-colors group-hover:text-white">
-                    Read Article
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="transition-transform duration-200 group-hover:translate-x-1"
-                    >
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </article>
-          ))}
+        <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+          <BodyText size="md" className="mb-8">
+            Short reads for buyers who want to understand the thinking behind a Shree development, 
+            from planning discipline to the details that make ownership simpler.
+          </BodyText>
+          <ButtonGhost href="#">Read Full Journal</ButtonGhost>
         </div>
       </div>
-    </section>
+
+      {/* Articles Grid */}
+      <div className="grid gap-px bg-border/20 md:grid-cols-3">
+        {articles.map((article, index) => (
+          <article
+            key={article.title}
+            data-article-card
+            className="group relative bg-cream p-6 md:p-8 flex flex-col h-full"
+          >
+            <div className="flex items-start justify-between mb-8">
+              <Annotation>{article.fig}</Annotation>
+              <CrosshairIcon className="opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
+            </div>
+
+            <ImagePanel
+              src={article.image}
+              alt={article.title}
+              aspectRatio="aspect-[16/10]"
+              className="mb-10"
+            />
+
+            <div className="flex flex-col flex-grow">
+              <Annotation className="mb-4 text-rust">{article.date}</Annotation>
+              <SectionHeadline size="md" noPeriod className="mb-4">
+                {article.title}<span className="text-rust">.</span>
+              </SectionHeadline>
+              <BodyText size="sm" className="mb-8 flex-grow">
+                {article.description}
+              </BodyText>
+              
+              <div className="mt-auto">
+                <ButtonGhost href="#" className="text-[0.65rem]">
+                  Read Article
+                </ButtonGhost>
+              </div>
+            </div>
+
+            {/* Corner Decorative Accent */}
+            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-rust/10 transition-colors duration-500 group-hover:border-rust/30" />
+          </article>
+        ))}
+      </div>
+    </SectionWrapper>
   );
 }
+

@@ -21,7 +21,7 @@ export function SectionHeadline({
     lg: "text-[clamp(2.5rem,4.5vw,5rem)] leading-[1.0]",
     md: "text-[clamp(1.8rem,3vw,3.2rem)] leading-[1.05]",
   };
-  const color = light ? "text-cream" : "text-dark";
+  const color = light ? "text-[#F5F0E8]" : "text-[#1C1208]";
 
   return (
     <h2
