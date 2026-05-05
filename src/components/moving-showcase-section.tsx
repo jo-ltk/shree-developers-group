@@ -5,6 +5,7 @@ import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { Annotation } from "./ui/annotation";
 import { CrosshairIcon } from "./ui/crosshair-icon";
+import { BrandMark } from "./ui/brand-mark";
 
 const showcaseItems = [
   {
@@ -73,8 +74,13 @@ export function MovingShowcaseSection() {
               </div>
 
               {/* Decorative Corner Label */}
-              <div className="absolute top-8 right-8 lg:top-12 lg:right-12 z-20 opacity-20 hidden md:block">
-                <Annotation light className="!text-[#F5F0E8]">Shree / Premium Study</Annotation>
+              <div className="absolute top-8 right-8 lg:top-12 lg:right-12 z-20 hidden md:flex flex-col items-end gap-2 transition-opacity duration-700 group-hover/slide:opacity-100 opacity-30">
+                <BrandMark 
+                  variant="steel" 
+                  className="h-8 w-24" 
+                  imageClassName="object-right" 
+                />
+                <Annotation light className="!text-[#F5F0E8] !text-[10px] tracking-[0.2em]">Premium Study / 2026</Annotation>
               </div>
             </article>
           ))}

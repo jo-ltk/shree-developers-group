@@ -110,9 +110,9 @@ export function ProjectCard({
 
           <div className={cn("relative", styles.mark)}>
             <BrandMark
-              variant="white"
+              variant="steel"
               className="h-full w-full transition-opacity duration-500 group-hover:opacity-0"
-              alt="Shree Developers Group white logo"
+              alt="Shree Developers Group steel logo"
             />
             <BrandMark
               variant="black"

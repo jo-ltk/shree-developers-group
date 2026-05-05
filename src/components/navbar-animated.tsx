@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
 import { BrandMark } from "@/components/ui/brand-mark";
@@ -20,6 +21,32 @@ const desktopGridClass =
 export function NavbarAnimated() {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    const diff = latest - previous;
+    const threshold = 15; // Ignore tiny movements
+
+    if (mobileOpen) {
+      setIsHidden(false);
+      return;
+    }
+
+    if (latest < 80) {
+      setIsHidden(false); // Always show at the top
+    } else if (diff > threshold) {
+      setIsHidden(true); // Scrolling down: hide
+      setIsOpen(false); // Close desktop menu when hiding
+    } else if (diff < -threshold) {
+      setIsHidden(false); // Scrolling up: show
+    }
+
+    setIsAtTop(latest < 20);
+  });
 
   const columnsWithMeta = useMemo(
     () =>
@@ -32,17 +59,33 @@ export function NavbarAnimated() {
 
   return (
     <>
-      <header
-        className="absolute inset-x-0 top-0 z-50"
+      <motion.header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          isAtTop
+            ? "bg-transparent py-0"
+            : "bg-[rgba(250,248,243,0.82)] pb-4 pt-2 shadow-sm backdrop-blur-lg border-b border-[rgba(183,170,152,0.15)]"
+        }`}
+        variants={{
+          visible: { y: 0, opacity: 1 },
+          hidden: { y: "-110%", opacity: 0 },
+        }}
+        animate={isHidden ? "hidden" : "visible"}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        <div className="mx-auto max-w-[96rem] px-6 pt-5 sm:px-8 lg:px-10 lg:pt-7">
-          <div className={`${desktopGridClass} hidden xl:grid`}>
+        <div
+          className={`mx-auto max-w-[96rem] px-6 transition-all duration-500 sm:px-8 lg:px-10 ${
+            isAtTop ? "pt-5 lg:pt-7" : "pt-3 lg:pt-3"
+          }`}
+        >
+          <div className={`${desktopGridClass} hidden xl:grid items-center`}>
             <a href="#top" className="w-fit text-dark">
               <BrandMark
                 variant="black"
-                className="h-24 w-[16rem]"
+                className={`transition-all duration-500 ${
+                  isAtTop ? "h-24 w-[16rem]" : "h-12 w-[10rem]"
+                }`}
                 imageClassName="object-left"
                 alt="Shree Developers Group logo"
                 priority
@@ -56,7 +99,7 @@ export function NavbarAnimated() {
                 className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-rust ${
                   item.isTrailing ? "justify-self-end" : "justify-self-start"
                 } ${
-                  (item.title === "Notes" || item.title === "Contact") && !isOpen
+                  (item.title === "Notes" || item.title === "Contact") && !isOpen && isAtTop
                     ? "!text-[#F5F0E8]"
                     : "text-dark"
                 }`}
@@ -71,7 +114,9 @@ export function NavbarAnimated() {
             <a href="#top" className="relative z-50 text-[var(--text-primary)]">
               <BrandMark
                 variant="black"
-                className="h-14 w-[10rem]"
+                className={`transition-all duration-500 ${
+                  isAtTop ? "h-14 w-[10rem]" : "h-10 w-[7rem]"
+                }`}
                 imageClassName="object-left"
                 alt="Shree Developers Group logo"
                 priority
@@ -197,7 +242,7 @@ export function NavbarAnimated() {
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <div
         className={`fixed inset-0 z-40 xl:hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${

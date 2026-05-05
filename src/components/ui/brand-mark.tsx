@@ -7,20 +7,20 @@ import { cn } from "@/lib/utils";
 type BrandMarkProps = {
   className?: string;
   imageClassName?: string;
-  variant?: "white" | "black";
+  variant?: "steel" | "black";
   alt?: string;
   priority?: boolean;
 };
 
 const logoSrc = {
-  white: "/images/logo-white.png",
+  steel: "/images/logo-steel2.png",
   black: "/images/logo-black.png",
 } as const;
 
 export function BrandMark({
   className,
   imageClassName,
-  variant = "white",
+  variant = "steel",
   alt = "Shree Developers Group logo",
   priority = false,
 }: BrandMarkProps) {

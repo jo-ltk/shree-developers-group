@@ -10,6 +10,7 @@ import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 import { FigMarker } from "./ui/fig-marker";
 import { CrosshairIcon } from "./ui/crosshair-icon";
+import { BrandMark } from "./ui/brand-mark";
 
 const footerLinks = [
   { label: "Signature Projects", href: "#gallery", coord: "42.3 / 71.1" },
@@ -134,12 +135,20 @@ export function FooterSection() {
 
         {/* FINAL MARKER BAR */}
         <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-[#F5F0E8]/5 pt-8">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-3">
-              <span className="w-1.5 h-1.5 bg-rust rounded-full animate-pulse" />
-              <span className="text-rust text-[9px] font-bold uppercase tracking-[0.2em]">Active Operations</span>
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <BrandMark 
+              variant="steel" 
+              className="h-20 w-52" 
+              imageClassName="object-left"
+            />
+            <div className="hidden md:block h-6 w-px bg-[#F5F0E8]/10" />
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 bg-rust rounded-full animate-pulse" />
+                <span className="text-rust text-[9px] font-bold uppercase tracking-[0.2em]">Active Operations</span>
+              </div>
+              <FigMarker fig="fig. 22" label="Blueprint Conclusion" light />
             </div>
-            <FigMarker fig="fig. 22" label="Blueprint Conclusion" light />
           </div>
           
           <Annotation light className="!text-[#F5F0E8]/20 !text-[0.55rem] text-center md:text-right">
