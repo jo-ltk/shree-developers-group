@@ -15,11 +15,20 @@ export function Hero() {
     <section className="relative flex w-full flex-col overflow-hidden bg-cream lg:h-screen lg:min-h-[750px] lg:justify-center">
       {/* Full Screen Background Image - Mobile: Top, Desktop: Background */}
       <div data-hero-visual className="relative z-0 h-[40vh] w-full sm:h-[60vh] lg:absolute lg:inset-0 lg:h-full">
+        {/* Mobile specific image */}
+        <Image
+          src="/images/hero-redesign3.png"
+          alt="Premium residential community by Shree Developers Group"
+          fill
+          className="object-cover object-center lg:hidden"
+          priority
+        />
+        {/* Desktop specific image */}
         <Image
           src="/images/hero-redesign2.png"
           alt="Premium residential community by Shree Developers Group"
           fill
-          className="object-cover object-center lg:object-[center_right]"
+          className="hidden lg:block object-cover object-center lg:object-[center_right]"
           priority
         />
         
@@ -72,7 +81,7 @@ export function Hero() {
           </div>
 
           {/* Buttons - CTA Actions */}
-          <div className="flex flex-wrap items-center gap-8 lg:gap-12">
+          <div className="flex items-center gap-5 sm:gap-8 lg:gap-12">
             <ButtonPrimary href="#gallery">
               Start Exploring
             </ButtonPrimary>

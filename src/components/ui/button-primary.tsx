@@ -17,7 +17,7 @@ export function ButtonPrimary({
     <Link
       href={href}
       className={cn(
-        "group relative inline-flex h-[52px] items-center gap-4 bg-rust px-8",
+        "group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8",
         "text-white no-underline overflow-hidden",
         "transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)]",
         className,

@@ -11,6 +11,7 @@ interface ImagePanelProps {
   className?: string;
   counter?: string; // '01', '02' etc
   label?: string; // 'MODELING TASTE'
+  priority?: boolean;
 }
 
 export function ImagePanel({
@@ -21,6 +22,7 @@ export function ImagePanel({
   className,
   counter,
   label,
+  priority,
 }: ImagePanelProps) {
   return (
     <div className={cn("relative group overflow-hidden", className)}>
@@ -31,10 +33,10 @@ export function ImagePanel({
 
       {/* Counter + label */}
       {(counter || label) && (
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-3">
+        <div className="absolute top-4 left-4 z-20 flex items-center gap-3">
           {counter && (
             <span
-              className="text-[#F5F0E8]/70 font-semibold"
+              className="text-[#F5F0E8] font-semibold"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "0.55rem",
@@ -46,7 +48,7 @@ export function ImagePanel({
           )}
           {label && (
             <span
-              className="text-[#F5F0E8]/70 uppercase"
+              className="text-[#F5F0E8] uppercase"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "0.55rem",
@@ -59,11 +61,12 @@ export function ImagePanel({
         </div>
       )}
 
-      <div className={cn("relative w-full overflow-hidden", aspectRatio)}>
+      <div className={cn("relative w-full overflow-hidden bg-[#1C1208]/5", aspectRatio)}>
         <Image
           src={src}
           alt={alt}
           fill
+          priority={priority}
           className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-[1.04]"
         />
       </div>
