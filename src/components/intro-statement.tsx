@@ -1,7 +1,6 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-
 import { ensureGsapPlugins } from "@/lib/gsap";
 
 const statementLines = [
@@ -14,33 +13,37 @@ export function IntroStatement() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useLayoutEffect(() => {
-    const { gsap } = ensureGsapPlugins();
+    const { gsap, ScrollTrigger } = ensureGsapPlugins();
 
     const ctx = gsap.context(() => {
-      const fillWords = gsap.utils.toArray<HTMLElement>("[data-fill-word]");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (reducedMotion) {
-        gsap.set(fillWords, { clipPath: "inset(0% 0 0 0)" });
-        return;
-      }
+      // Each line gets its OWN ScrollTrigger — so they fire one at a time
+      statementLines.forEach((_, lineIndex) => {
+        const fillWords = gsap.utils.toArray<HTMLElement>(
+          `[data-fill-word][data-line="${lineIndex}"]`
+        );
 
-      gsap.set(fillWords, { clipPath: "inset(100% 0 0 0)" });
+        if (reducedMotion) {
+          gsap.set(fillWords, { clipPath: "inset(0% 0 0 0)" });
+          return;
+        }
 
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          end: "bottom 40%",
-          scrub: 1,
-        },
-        defaults: {
-          ease: "none",
-        },
-      }).to(fillWords, {
-        clipPath: "inset(0% 0 0 0)",
-        duration: 1,
-        stagger: 0.08,
+        gsap.set(fillWords, { clipPath: "inset(100% 0 0 0)" });
+
+        gsap.to(fillWords, {
+          clipPath: "inset(0% 0 0 0)",
+          duration: 0.6,
+          stagger: 0.07,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: `[data-line-block="${lineIndex}"]`,
+            start: "top 72%",      // line enters view at 72% from top
+            end: "top 30%",        // finishes by 30%
+            toggleActions: "play none none reverse",
+            // scrub: false — snappy, not tied to scroll position
+          },
+        });
       });
     }, sectionRef);
 
@@ -51,64 +54,107 @@ export function IntroStatement() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative overflow-hidden bg-[linear-gradient(180deg,#FAF8F3_0%,#F2EADF_100%)]"
+      className="relative w-full overflow-hidden bg-[#F5F0E8] py-20 md:py-28 lg:py-36"
     >
-      <div className="mx-auto flex min-h-[78svh] max-w-[120rem] flex-col items-center justify-center gap-10 px-5 pt-12 pb-24 text-center sm:px-7 lg:px-20 lg:py-36">
-        <div className="flex flex-col items-center">
-          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)]">
-            Built The Shree Way
-          </p>
-          <span className="h-px w-10 bg-[var(--color-accent)]" />
-        </div>
+      <div className="mx-auto w-full max-w-[1450px] px-8 md:px-12 lg:px-20">
+        <div className="flex flex-col items-center justify-center text-center">
 
-        <div className="max-w-[72rem]">
-          <div
-            className="flex flex-col items-center justify-center space-y-4 text-[2.55rem] font-light leading-[1.08] tracking-normal text-[var(--text-primary)] sm:text-[3.35rem] lg:text-[4.2rem] 2xl:text-[5rem]"
-            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-          >
-            {statementLines.map((line, lineIndex) => (
-              <div
-                key={`line-${lineIndex}`}
-                className="flex flex-wrap justify-center gap-x-[0.22em] gap-y-[0.08em]"
-              >
-                {line.map((word, wordIndex) => {
-                  const cleanWord = word.replace(/[.,]/g, "");
-                  const isGoldWord =
-                    cleanWord === "settled" ||
-                    cleanWord === "warmth" ||
-                    cleanWord === "Shree" ||
-                    cleanWord === "promise";
-
-                  return (
-                    <span key={`${word}-${lineIndex}-${wordIndex}`} className="relative inline-block overflow-hidden pb-[0.06em]">
-                      <span
-                        className={isGoldWord ? "block text-[rgba(201,174,123,0.28)]" : "block text-[rgba(58,52,46,0.22)]"}
-                        style={isGoldWord ? { fontStyle: "italic" } : undefined}
-                      >
-                        {word}
-                      </span>
-                      <span
-                        data-fill-word
-                        className={isGoldWord ? "pointer-events-none absolute inset-0 block text-[var(--color-accent)]" : "pointer-events-none absolute inset-0 block text-[var(--text-primary)]"}
-                        style={{
-                          clipPath: "inset(100% 0 0 0)",
-                          ...(isGoldWord ? { fontStyle: "italic" } : {}),
-                        }}
-                      >
-                        {word}
-                      </span>
-                    </span>
-                  );
-                })}
-              </div>
-            ))}
+          {/* Eyebrow */}
+          <div className="flex items-center gap-4 mb-16 md:mb-20">
+            <div className="h-px w-8 bg-[#D43F33]" />
+            <span
+              className="font-semibold uppercase text-[#1C1208]/50"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "0.65rem",
+                letterSpacing: "0.25em",
+              }}
+            >
+              Built The Shree Way
+            </span>
+            <div className="h-px w-8 bg-[#D43F33]" />
           </div>
-        </div>
 
-        <div className="max-w-[38rem]">
-          <p className="text-[1.05rem] font-light leading-[1.85] text-[var(--text-primary)]">
-            A home should feel considered before the first visit and dependable long after possession.
-          </p>
+          {/* Lines — each line has its own scroll trigger via data-line-block */}
+          <div className="max-w-[80rem] mx-auto w-full">
+            <div className="flex flex-col items-center justify-center space-y-3 lg:space-y-5">
+              {statementLines.map((line, lineIndex) => {
+                const isLastLine = lineIndex === statementLines.length - 1;
+
+                return (
+                  <div
+                    key={`line-${lineIndex}`}
+                    data-line-block={lineIndex}
+                    className="flex flex-wrap justify-center gap-x-[0.22em] gap-y-[0.06em]"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontSize: "clamp(2.2rem, 5vw, 5rem)",
+                      fontWeight: 300,
+                      lineHeight: 1.05,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {line.map((word, wordIndex) => {
+                      const cleanWord = word.replace(/[.,]/g, "");
+                      const isItalic =
+                        cleanWord === "settled" ||
+                        cleanWord === "warmth" ||
+                        cleanWord === "Shree" ||
+                        cleanWord === "promise";
+                      const isLastWord = isLastLine && wordIndex === line.length - 1;
+
+                      return (
+                        <span
+                          key={`${word}-${lineIndex}-${wordIndex}`}
+                          className="relative inline-block overflow-hidden pb-[0.06em]"
+                        >
+                          {/* Ghost word */}
+                          <span
+                            className="block text-[#1C1208]/15"
+                            style={isItalic ? { fontStyle: "italic" } : undefined}
+                            aria-hidden="true"
+                          >
+                            {isLastWord ? word.replace(".", "") : word}
+                            {isLastWord && <span className="text-[#D43F33]/15">.</span>}
+                          </span>
+
+                          {/* Reveal word */}
+                          <span
+                            data-fill-word
+                            data-line={lineIndex}
+                            className="pointer-events-none absolute inset-0 block text-[#1C1208]"
+                            style={{
+                              clipPath: "inset(100% 0 0 0)",
+                              ...(isItalic ? { fontStyle: "italic" } : {}),
+                            }}
+                          >
+                            {isLastWord ? word.replace(".", "") : word}
+                            {isLastWord && <span className="text-[#D43F33]">.</span>}
+                          </span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Supporting text */}
+          <div className="max-w-[40rem] mx-auto mt-16 lg:mt-20">
+            <p
+              className="text-[#1C1208]/55 italic leading-[1.75]"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(1.05rem, 1.4vw, 1.25rem)",
+              }}
+            >
+              A home should feel considered before the first visit and
+              dependable long after possession. Architecting legacies through
+              restraint and craftsmanship.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>

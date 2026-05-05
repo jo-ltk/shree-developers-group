@@ -1,104 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
+  --font-sans: "Montserrat", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
   --font-cormorant: "Cormorant Garamond", serif;
-  --font-outfit: "Outfit", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
 
-  /* Strict Color System Tokens */
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-background-light: var(--background-light);
-  --color-background-dark: var(--background-dark);
-
-  /* Hover & Active States */
-  --color-primary-hover: var(--primary-hover);
-  --color-secondary-hover: var(--secondary-hover);
-  --color-background-dark-hover: var(--background-dark-hover);
+  /* Strict Design System Tokens */
+  --color-cream: #F5F0E8;
+  --color-cream-deep: #EDE8DF;
+  --color-dark: #1C1208;
+  --color-dark-mid: #2A2118;
+  
+  --color-ink-primary: #1C1208;
+  --color-ink-muted: rgba(28, 18, 8, 0.8);
+  --color-ink-faint: rgba(28, 18, 8, 0.4);
+  
+  --color-rust: #D43F33;
+  --color-rust-light: #C94B3C;
+  
+  --color-border-hairline: rgba(28, 18, 8, 0.12);
+  --color-border-mid: rgba(28, 18, 8, 0.25);
 
   /* Standard Role Mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  --radius-sm: calc(var(--radius) - 0.25rem);
-  --radius-md: calc(var(--radius) - 0.125rem);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 0.5rem);
 }
 
 :root {
-  --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-
   /* Core Colors */
-  --color-primary: #FAF8F3;   /* Warm Ivory Base */
-  --color-secondary: #F2EADF; /* Soft Beige Section */
-  --color-accent: #C9AE7B;    /* Muted Gold Accent */
-  --color-support: #B7AA98;   /* Warm Stone Border */
-  --color-depth: #E8DFD2;     /* Premium Sand */
-
-  /* Text Colors */
-  --text-primary: #3A342E;    /* Deep Warm Text */
-  --text-secondary: #B7AA98;  /* Warm Stone Border */
-  --text-light: #3A342E;      /* Remapped to dark for light theme */
-
-  /* Backgrounds */
-  --bg-main: #FAF8F3;
-  --bg-dark: #F2EADF;
-
-  /* Borders */
-  --border-light: rgba(183, 170, 152, 0.35); /* #B7AA98 */
-  --border-dark: rgba(183, 170, 152, 0.35);
-
-  /* Strict Color System */
-  --primary: #FAF8F3;
-  --secondary: #C9AE7B;
-  --background-light: #FAF8F3;
-  --background-dark: #F2EADF;
-
-  /* Hover & Active States Derived from Palette */
-  --primary-hover: #F2EADF;
-  --secondary-hover: #C9AE7B;
-  --background-dark-hover: #E8DFD2;
-
-  /* Standard Role Mappings */
-  --background: var(--background-light);
-  --foreground: var(--text-primary);
+  --background: #F5F0E8;
+  --foreground: #1C1208;
   
-  --card: var(--color-secondary);
-  --card-foreground: var(--text-primary);
+  --primary: #D43F33;
+  --secondary: #1C1208;
   
-  --popover: var(--color-secondary);
-  --popover-foreground: var(--text-primary);
-  
-  --primary-foreground: var(--color-primary);
-  --secondary-foreground: var(--text-primary);
-  
-  --muted: #E8DFD2;
-  --muted-foreground: #B7AA98;
-  
-  --accent: var(--secondary);
-  --accent-foreground: var(--text-primary);
-  
-  --border: rgba(183, 170, 152, 0.35);
-  --input: rgba(183, 170, 152, 0.35);
-  --ring: var(--secondary);
-  
-  --radius: 0.5rem;
+  --border: rgba(28, 18, 8, 0.12);
+  --radius: 0rem; /* Editorial design uses sharp corners */
 }
 
 * {
