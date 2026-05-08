@@ -37,44 +37,34 @@ export function MovingShowcaseSection() {
         <SectionLabel counter="08 / 08" light>Visual Study</SectionLabel>
       </div>
 
-      <div className="moving-showcase group overflow-hidden">
+      {/* Full-width showcase breakout */}
+      <div className="w-screen max-w-none ml-[calc(-50vw+50%)] moving-showcase group overflow-hidden">
         <div className="moving-showcase-track flex min-w-max items-stretch gap-0 will-change-transform">
           {repeatedItems.map((item, index) => (
             <article
               key={`${item.title}-${index}`}
-              className="group/slide relative h-[28rem] w-[85vw] shrink-0 overflow-hidden bg-dark border-r border-[#F5F0E8]/10 sm:h-[35rem] sm:w-[80vw] lg:h-[50rem] lg:w-[75vw]"
+              className="group/slide relative h-screen min-h-screen min-w-full shrink-0 overflow-hidden bg-dark"
             >
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
-                className="object-cover object-center transition-transform duration-[3000ms] ease-out group-hover/slide:scale-[1.06]"
-                sizes="85vw"
+                priority={index === 0}
+                className="object-cover object-center transition-transform duration-[3000ms] ease-out group-hover/slide:scale-[1.04]"
+                sizes="100vw"
               />
               
               {/* Overlay for legibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
               
-              {/* Blueprint Details */}
-              <div className="absolute top-8 left-8 lg:top-12 lg:left-12 z-20 flex items-center gap-4">
+              {/* Top Left */}
+              <div className="absolute top-8 left-6 md:left-10 lg:left-16 z-20 flex items-center gap-4">
                 <Annotation light className="!text-[#F5F0E8]">{item.fig}</Annotation>
                 <CrosshairIcon light className="opacity-40" />
               </div>
 
-              <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-12 lg:px-16 lg:pb-16 z-20">
-                <Annotation light className="mb-6 !text-[#F5F0E8]/60">ARCHITECTURAL INTENTION</Annotation>
-                <SectionHeadline 
-                  size="hero" 
-                  light 
-                  noPeriod 
-                  className="max-w-[14ch] !text-[#F5F0E8] !text-[clamp(2.8rem,7vw,8.5rem)] leading-[0.92] tracking-tight group-hover/slide:!text-rust transition-colors duration-700"
-                >
-                  {item.title}
-                </SectionHeadline>
-              </div>
-
-              {/* Decorative Corner Label */}
-              <div className="absolute top-8 right-8 lg:top-12 lg:right-12 z-20 hidden md:flex flex-col items-end gap-2 transition-opacity duration-700 group-hover/slide:opacity-100 opacity-30">
+              {/* Top Right */}
+              <div className="absolute top-8 right-6 md:right-10 lg:right-16 z-20 hidden md:flex flex-col items-end gap-2 transition-opacity duration-700 group-hover/slide:opacity-100 opacity-40">
                 <BrandMark 
                   variant="black" 
                   className="h-8 w-24" 
@@ -82,13 +72,26 @@ export function MovingShowcaseSection() {
                 />
                 <Annotation light className="!text-[#F5F0E8] !text-[10px] tracking-[0.2em]">Premium Study / 2026</Annotation>
               </div>
+
+              {/* Bottom Content */}
+              <div className="absolute inset-x-0 bottom-0 z-20 px-6 pb-10 md:px-10 md:pb-14 lg:px-16 lg:pb-20">
+                <Annotation light className="mb-5 !text-[#F5F0E8]/60">ARCHITECTURAL INTENTION</Annotation>
+                <SectionHeadline 
+                  size="hero" 
+                  light 
+                  noPeriod 
+                  className="max-w-[12ch] !text-[#F5F0E8] !text-[clamp(3rem,8vw,9rem)] leading-[0.9] tracking-tight transition-colors duration-700 group-hover/slide:!text-rust"
+                >
+                  {item.title}
+                </SectionHeadline>
+              </div>
             </article>
           ))}
         </div>
       </div>
 
       {/* Footer Annotation */}
-      <div className="px-8 md:px-12 lg:px-20 mt-12 md:mt-16 flex justify-between items-center">
+      <div className="px-8 md:px-12 lg:px-20 py-8 md:py-10 flex items-center">
         <Annotation light className="!text-[#F5F0E8]/40">Continuous Movement</Annotation>
         <div className="h-px flex-grow mx-8 bg-[#F5F0E8]/10" />
         <Annotation light className="!text-[#F5F0E8]/40">fig. 20</Annotation>
@@ -96,4 +99,3 @@ export function MovingShowcaseSection() {
     </SectionWrapper>
   );
 }
-

@@ -4,7 +4,7 @@ import { Hero } from "@/components/hero";
 import { IntroStatement } from "@/components/intro-statement";
 import { LogoSection } from "@/components/logo-section";
 import { MarqueeTextSection } from "@/components/marquee-text-section";
-import { MetricsSection } from "@/components/metrics-section";
+import { SydneyOaksMetricsSection, ElysianGatesMetricsSection } from "@/components/metrics-section";
 import { MovingShowcaseSection } from "@/components/moving-showcase-section";
 import { NavbarAnimated } from "@/components/navbar-animated";
 import { RecentArticlesSection } from "@/components/recent-articles-section";
@@ -19,7 +19,8 @@ export default function Home() {
       <IntroStatement />
       {/* <LogoSection /> */}
       <Gallery />
-      <MetricsSection />
+      <SydneyOaksMetricsSection />
+      <ElysianGatesMetricsSection />
       <MarqueeTextSection />
       <RecentArticlesSection />
       <TeamSection />

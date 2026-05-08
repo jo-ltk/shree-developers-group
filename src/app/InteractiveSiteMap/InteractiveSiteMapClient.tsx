@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, Bath, BedDouble, Car, Home, Ruler, MessageCircle, Map, List } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, Bath, BedDouble, Car, Home, MessageCircle, Map, List } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ErrorBoundary } from "@/components/error-boundary";
@@ -294,10 +294,29 @@ const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?
   </div>
 );
 
-export function InteractiveSiteMapClient() {
+export function InteractiveSiteMapClient({
+  initialProject,
+}: {
+  initialProject?: Promise<{ project?: string }>;
+}) {
   const [activeFilter, setActiveFilter] = useState<Filter>("All");
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
   const [selectedMapId, setSelectedMapId] = useState(MAP_CONFIGS[0].id);
+  
+  // Read the `project` search param on mount and auto-select the matching map
+  useEffect(() => {
+    if (!initialProject) return;
+    initialProject.then((params) => {
+      const project = params?.project?.toLowerCase().trim();
+      if (!project) return;
+      const match = MAP_CONFIGS.find(
+        (m) => m.id === project || m.name.toLowerCase() === project
+      );
+      if (match) {
+        setSelectedMapId(match.id);
+      }
+    });
+  }, [initialProject]);
 
   const reduceMotion = useReducedMotion();
   
