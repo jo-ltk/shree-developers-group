@@ -34,31 +34,31 @@ function priceForLot(index: number, status: LotStatus) {
   return `From $${Math.round(base / 1000).toLocaleString()}k`;
 }
 
-export const lots: Lot[] = Array.from({ length: 89 }, (_, offset) => {
-  const id = offset + 1;
-  const status = statusForLot(id);
-  const beds = 3 + (id % 3);
-  const baths = id % 4 === 0 ? 3.5 : id % 3 === 0 ? 2.5 : 2;
-  const sqft = 1780 + ((id * 91) % 980);
+const generateLots = (count: number, seed: number = 1): Lot[] => {
+  return Array.from({ length: count }, (_, offset) => {
+    const id = offset + 1;
+    const status = statusForLot(id + seed);
+    const beds = 3 + ((id + seed) % 3);
+    const baths = (id + seed) % 4 === 0 ? 3.5 : (id + seed) % 3 === 0 ? 2.5 : 2;
+    const sqft = 1780 + (((id + seed) * 91) % 980);
 
-  return {
-    id,
-    lotNumber: `${id}`,
-    title: planNames[id % planNames.length],
-    price: priceForLot(id, status),
-    beds,
-    baths,
-    sqft,
-    garage: id % 6 === 0 ? 3 : 2,
-    story: id % 4 === 0 ? "Two Story" : "Single Story",
-    status,
-    image: images[id % images.length],
-    description:
-      "A thoughtfully planned homesite with refined streetscape presence, flexible living areas, and premium finishes selected for everyday comfort.",
-  };
-});
-
-export const lotById = new Map(lots.map((lot) => [lot.id, lot]));
+    return {
+      id,
+      lotNumber: `${id}`,
+      title: planNames[(id + seed) % planNames.length],
+      price: priceForLot(id + seed, status),
+      beds,
+      baths,
+      sqft,
+      garage: (id + seed) % 6 === 0 ? 3 : 2,
+      story: (id + seed) % 4 === 0 ? "Two Story" : "Single Story",
+      status,
+      image: images[(id + seed) % images.length],
+      description:
+        "A thoughtfully planned homesite with refined streetscape presence, flexible living areas, and premium finishes selected for everyday comfort.",
+    };
+  });
+};
 
 export const filters: Array<"All" | LotStatus> = [
   "All",
@@ -67,3 +67,53 @@ export const filters: Array<"All" | LotStatus> = [
   "Future",
   "Sold",
 ];
+
+export interface MapConfig {
+  id: string;
+  name: string;
+  url: string;
+  lots: Lot[];
+  hotspotSettings: {
+    padding: number;
+    radiusOffset: number;
+    cxOffsetFactor: number;
+    cyOffsetFactor: number;
+    strokeColor: string;
+    strokeWidth: number;
+  };
+}
+
+export const MAP_CONFIGS: MapConfig[] = [
+  {
+    id: 'sydney-oaks',
+    name: 'Sydney Oaks',
+    url: '/svg/siteMap-final.svg',
+    lots: generateLots(89, 0),
+    hotspotSettings: {
+      padding: 0.3,
+      radiusOffset: 5,
+      cxOffsetFactor: 1.27, // Your manual change
+      cyOffsetFactor: 2.0,  // Increase to move UP, Decrease to move DOWN
+      strokeColor: "#8B2A2A",
+      strokeWidth: 6,
+    }
+  },
+  {
+    id: 'elysian-gates',
+    name: 'Elysian Gates',
+    url: '/svg/elysian-gates.svg',
+    lots: generateLots(120, 100),
+    hotspotSettings: {
+      padding: 0.25,
+      radiusOffset: 4,
+      cxOffsetFactor: 1.05,
+      cyOffsetFactor: 2.10,  // Increase to move UP, Decrease to move DOWN
+      strokeColor: "#D43F33",
+      strokeWidth: 2,
+    }
+  }
+];
+
+// For backward compatibility during refactor
+export const lots = MAP_CONFIGS[0].lots;
+export const lotById = new Map(lots.map((lot) => [lot.id, lot]));

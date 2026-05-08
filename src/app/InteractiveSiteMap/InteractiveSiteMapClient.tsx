@@ -6,9 +6,11 @@ import { useState } from "react";
 
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ErrorBoundary } from "@/components/error-boundary";
-import { MapStage } from "./components/MapStage";
-import { filters, lots } from "./data/lots";
-import type { LotStatus } from "./types/site-map";
+import { SydneyOaksStage } from "./components/SydneyOaksStage";
+import { ElysianGatesStage } from "./components/ElysianGatesStage";
+import { MapSwitcher } from "./components/MapSwitcher";
+import { filters, MAP_CONFIGS, type MapConfig } from "./data/lots";
+import type { Lot, LotStatus } from "./types/site-map";
 
 // Premium UI Components
 import { SectionLabel } from "@/components/ui/section-label";
@@ -24,7 +26,7 @@ import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 type Filter = "All" | LotStatus;
 type MobileTab = "map" | "list";
 
-function filterCount(filter: Filter) {
+function filterCount(filter: Filter, lots: Lot[]) {
   if (filter === "All") return lots.length;
   const target = filter.toLowerCase().replace(/\s+/g, '-');
   return lots.filter((lot) => lot.status.toLowerCase().replace(/\s+/g, '-') === target).length;
@@ -51,9 +53,11 @@ function listBadgeClass(status: LotStatus) {
 const FilterBar = ({ 
   activeFilter, 
   setActiveFilter,
+  lots,
 }: { 
   activeFilter: Filter, 
   setActiveFilter: (f: Filter) => void,
+  lots: Lot[],
 }) => (
   <div className="flex items-center gap-1">
     {filters.map((f) => {
@@ -80,7 +84,7 @@ const FilterBar = ({
           <span
             className={`relative z-10 text-[0.55rem] tabular-nums ${active ? "text-[#D43F33]" : "text-[#1C1208]/30"}`}
           >
-            {filterCount(f)}
+            {filterCount(f, lots)}
           </span>
           {active && (
             <motion.div 
@@ -97,9 +101,11 @@ const FilterBar = ({
 const FilterBarCompact = ({ 
   activeFilter, 
   setActiveFilter,
+  lots,
 }: { 
   activeFilter: Filter, 
   setActiveFilter: (f: Filter) => void,
+  lots: Lot[],
 }) => (
   <div className="flex items-center gap-1 overflow-x-auto [scrollbar-width:none]">
     {filters.map((f) => {
@@ -124,7 +130,7 @@ const FilterBarCompact = ({
         >
           <span>{f}</span>
           <span className={`text-[0.5rem] tabular-nums ${active ? "text-[#D43F33]" : "text-[#1C1208]/30"}`}>
-            {filterCount(f)}
+            {filterCount(f, lots)}
           </span>
         </button>
       );
@@ -138,7 +144,7 @@ const LotRows = ({
   handleSelectLot, 
   reduceMotion 
 }: { 
-  visibleLots: typeof lots, 
+  visibleLots: Lot[], 
   selectedLotId: number, 
   handleSelectLot: (id: number) => void, 
   reduceMotion: boolean | null 
@@ -188,12 +194,14 @@ const MapPanel = ({
   className = "", 
   activeFilter, 
   selectedLotId, 
-  handleSelectLot 
+  handleSelectLot,
+  selectedMap,
 }: { 
   className?: string, 
   activeFilter: Filter, 
   selectedLotId: number, 
-  handleSelectLot: (id: number) => void 
+  handleSelectLot: (id: number) => void,
+  selectedMap: MapConfig,
 }) => (
   <section
     className={`relative overflow-hidden bg-[#F5F0E8] ${className}`}
@@ -206,11 +214,21 @@ const MapPanel = ({
         </div>
       </div>
     }>
-      <MapStage
-        activeFilter={activeFilter}
-        selectedLotId={selectedLotId}
-        onSelectLot={handleSelectLot}
-      />
+      {selectedMap.id === 'sydney-oaks' ? (
+        <SydneyOaksStage
+          activeFilter={activeFilter}
+          selectedLotId={selectedLotId}
+          onSelectLot={handleSelectLot}
+          lots={selectedMap.lots}
+        />
+      ) : (
+        <ElysianGatesStage
+          activeFilter={activeFilter}
+          selectedLotId={selectedLotId}
+          onSelectLot={handleSelectLot}
+          lots={selectedMap.lots}
+        />
+      )}
     </ErrorBoundary>
 
     {/* Legend */}
@@ -245,7 +263,7 @@ const MapPanel = ({
   </section>
 );
 
-const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: typeof lots[0], compact?: boolean }) => (
+const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?: boolean }) => (
   <div className={`grid grid-cols-4 border-t border-[#1C1208]/10`}>
     {[
       { label: "Beds",   value: selectedLot.beds,   Icon: BedDouble },
@@ -267,12 +285,24 @@ const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: typeof lots[0
 
 export function InteractiveSiteMapClient() {
   const [activeFilter, setActiveFilter] = useState<Filter>("All");
-  const [selectedLotId, setSelectedLotId] = useState(lots[0]?.id ?? 1);
   const [mobileTab, setMobileTab] = useState<MobileTab>("list");
+  const [selectedMapId, setSelectedMapId] = useState(MAP_CONFIGS[0].id);
 
   const reduceMotion = useReducedMotion();
   
+  const selectedMap = MAP_CONFIGS.find(m => m.id === selectedMapId) || MAP_CONFIGS[0];
+  const lots = selectedMap.lots;
+  
+  // Track selected lot per map
+  const [mapLotSelection, setMapLotSelection] = useState<Record<string, number>>(() => {
+    const initial: Record<string, number> = {};
+    MAP_CONFIGS.forEach(m => initial[m.id] = m.lots[0]?.id ?? 1);
+    return initial;
+  });
+
+  const selectedLotId = mapLotSelection[selectedMapId];
   const selectedLot = lots.find((lot) => lot.id === selectedLotId) ?? lots[0];
+  
   const visibleLots =
     activeFilter === "All" 
       ? lots 
@@ -281,7 +311,7 @@ export function InteractiveSiteMapClient() {
   // ── Handlers ─────────────────────────────────────────────────────────────
 
   function handleSelectLot(id: number) {
-    setSelectedLotId(id);
+    setMapLotSelection(prev => ({ ...prev, [selectedMapId]: id }));
     setMobileTab("map");
     const sb = document.getElementById("sb-scroll");
     if (sb) sb.scrollTo({ top: 0, behavior: "auto" });
@@ -295,9 +325,7 @@ export function InteractiveSiteMapClient() {
       : lots.filter((l) => l.status.toLowerCase().replace(/\s+/g, '-') === target);
     
     if (filtered.length > 0 && !filtered.some((l) => l.id === selectedLotId)) {
-      setSelectedLotId(filtered[0].id);
-      const sb = document.getElementById("sb-scroll");
-      if (sb) sb.scrollTo({ top: 0, behavior: "auto" });
+      handleSelectLot(filtered[0].id);
     }
   }
 
@@ -334,11 +362,22 @@ export function InteractiveSiteMapClient() {
            <Annotation className="opacity-100 mb-0">Interactive Site Map</Annotation>
         </div>
 
+        {/* Map Switcher Dropdown (Desktop) */}
+        <div className="ml-8 hidden lg:block">
+          <MapSwitcher 
+            selectedMapId={selectedMapId} 
+            setSelectedMapId={setSelectedMapId} 
+            configs={MAP_CONFIGS} 
+            variant="desktop"
+          />
+        </div>
+
         {/* Desktop filters */}
         <div className="ml-auto hidden items-center lg:flex">
           <FilterBar 
             activeFilter={activeFilter} 
             setActiveFilter={handleFilterChange} 
+            lots={lots}
           />
         </div>
 
@@ -377,6 +416,7 @@ export function InteractiveSiteMapClient() {
           activeFilter={activeFilter} 
           selectedLotId={selectedLotId} 
           handleSelectLot={handleSelectLot} 
+          selectedMap={selectedMap}
         />
 
         <aside className="relative flex flex-col overflow-hidden bg-[#F5F0E8]">
@@ -450,11 +490,22 @@ export function InteractiveSiteMapClient() {
       ════════════════════════════════════ */}
       <div className="flex flex-1 flex-col overflow-hidden lg:hidden">
 
-        <div className="flex shrink-0 items-center border-b border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-2">
-          <FilterBarCompact 
-            activeFilter={activeFilter} 
-            setActiveFilter={handleFilterChange} 
-          />
+        <div className="flex shrink-0 items-center justify-between border-b border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-2">
+          <div className="flex-1 min-w-0">
+            <FilterBarCompact 
+              activeFilter={activeFilter} 
+              setActiveFilter={handleFilterChange} 
+              lots={lots}
+            />
+          </div>
+          <div className="ml-4 shrink-0">
+            <MapSwitcher 
+              selectedMapId={selectedMapId} 
+              setSelectedMapId={setSelectedMapId} 
+              configs={MAP_CONFIGS} 
+              variant="mobile"
+            />
+          </div>
         </div>
 
         {/* ── MAP STACK ── */}
@@ -470,6 +521,7 @@ export function InteractiveSiteMapClient() {
             activeFilter={activeFilter} 
             selectedLotId={selectedLotId} 
             handleSelectLot={handleSelectLot} 
+            selectedMap={selectedMap}
           />
 
           {/* Bottom selected-lot strip */}
