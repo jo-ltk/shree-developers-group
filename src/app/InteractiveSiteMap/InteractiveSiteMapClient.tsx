@@ -231,20 +231,17 @@ const MapPanel = ({
       )}
     </ErrorBoundary>
 
-    {/* Legend */}
-    <div className="absolute bottom-8 left-8 z-20 bg-[#F5F0E8]/90 border border-[#1C1208]/10 p-4 backdrop-blur-md">
+    {/* Legend — desktop: bottom-left panel */}
+    <div className="absolute bottom-8 left-8 z-20 hidden lg:block bg-[#F5F0E8]/90 border border-[#1C1208]/10 p-4 backdrop-blur-md">
       <Annotation className="mb-3 opacity-100">Status Legend</Annotation>
       <div className="space-y-2">
         {[
           { label: "Available", color: "#C9AE7B" },
-          { label: "Sold",      color: "#1C1208/20" },
+          { label: "Sold",      color: "rgba(28,18,8,0.2)" },
           { label: "Reserved",  color: "#D43F33" },
         ].map(({ label, color }) => (
           <div key={label} className="flex items-center gap-3">
-            <div 
-              className="h-1.5 w-1.5 rounded-full" 
-              style={{ backgroundColor: color.includes('/') ? `rgba(${color.replace(/\//g, ',')})` : color }} 
-            />
+            <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
             <span className="text-[0.55rem] font-bold uppercase tracking-[0.2em] text-[#1C1208]/60" style={{ fontFamily: "'Montserrat', sans-serif" }}>
               {label}
             </span>
@@ -253,10 +250,24 @@ const MapPanel = ({
       </div>
     </div>
 
-    {/* Compass */}
-    <div
-      className="absolute right-8 top-8 z-20 flex flex-col items-center gap-1 opacity-40"
-    >
+    {/* Legend — mobile: floating compact pill */}
+    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex lg:hidden items-center gap-2.5 bg-[#F5F0E8]/95 border border-[#1C1208]/10 px-2.5 py-1 rounded-full shadow-lg backdrop-blur-md whitespace-nowrap">
+      {[
+        { label: "Available", color: "#C9AE7B" },
+        { label: "Sold",      color: "rgba(28,18,8,0.2)" },
+        { label: "Reserved",  color: "#D43F33" },
+      ].map(({ label, color }) => (
+        <div key={label} className="flex items-center gap-1.5">
+          <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+          <span className="text-[0.5rem] font-bold uppercase tracking-wider text-[#1C1208]/60" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            {label}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    {/* Compass — desktop only */}
+    <div className="absolute right-8 top-8 z-20 hidden lg:flex flex-col items-center gap-1 opacity-40">
       <span className="text-[0.6rem] font-bold tracking-[0.3em] text-[#1C1208]">N</span>
       <div className="h-8 w-px bg-[#1C1208]" />
     </div>
@@ -285,7 +296,7 @@ const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?
 
 export function InteractiveSiteMapClient() {
   const [activeFilter, setActiveFilter] = useState<Filter>("All");
-  const [mobileTab, setMobileTab] = useState<MobileTab>("list");
+  const [mobileTab, setMobileTab] = useState<MobileTab>("map");
   const [selectedMapId, setSelectedMapId] = useState(MAP_CONFIGS[0].id);
 
   const reduceMotion = useReducedMotion();
@@ -524,41 +535,74 @@ export function InteractiveSiteMapClient() {
             selectedMap={selectedMap}
           />
 
-          {/* Bottom selected-lot strip */}
-          <motion.div
-            key={`m-strip-${selectedLot.id}`}
-            layout={false}
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] p-4"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-24 shrink-0 overflow-hidden border border-[#1C1208]/10">
-                <ImagePanel 
-                  src={selectedLot.image} 
-                  alt={selectedLot.title} 
-                  aspectRatio="aspect-[4/3]"
-                  className="w-full"
-                  priority
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[#D43F33]">Lot {selectedLot.lotNumber}</p>
-                <p className="truncate text-lg font-light text-[#1C1208]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                  {selectedLot.title}
-                </p>
-                <p className="text-[0.65rem] font-medium text-[#1C1208]/40 uppercase tracking-widest" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                  {selectedLot.price} · {selectedLot.sqft.toLocaleString()} SQ FT
-                </p>
-              </div>
-            </div>
-            <SpecGrid selectedLot={selectedLot} compact />
-            <div className="mt-4">
-              <ButtonPrimary href={`/contact?source=InteractiveSiteMap&lot=${selectedLot.lotNumber}`} className="w-full h-11">
-                Request Details
-              </ButtonPrimary>
-            </div>
-          </motion.div>
+          {/* Bottom selected-lot strip — Extremely compact for mobile */}
+          {/* Bottom selected-lot strip — clean single row */}
+<motion.div
+  key={`m-strip-${selectedLot.id}`}
+  layout={false}
+  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] px-3 py-2.5"
+>
+  <div className="flex items-center gap-3">
+    {/* Thumbnail */}
+    <div className="w-[52px] h-[52px] shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF]" style={{ borderRadius: 3 }}>
+      <img
+        src={selectedLot.image}
+        alt={selectedLot.title}
+        className="h-full w-full object-cover"
+      />
+    </div>
+
+    {/* Info */}
+    <div className="min-w-0 flex-1">
+      {/* Lot number + price on one line */}
+      <div className="flex items-center gap-1.5 mb-0.5">
+        <span
+          className="text-[0.5rem] font-bold uppercase tracking-[0.2em] text-[#D43F33]"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          Lot {selectedLot.lotNumber}
+        </span>
+        <span className="h-1 w-1 rounded-full bg-[#1C1208]/20 shrink-0" />
+        <span
+          className="text-[0.5rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]/40"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          {selectedLot.price}
+        </span>
+      </div>
+
+      {/* Title */}
+      <p
+        className="truncate text-[1rem] font-light leading-tight text-[#1C1208] mb-0.5"
+        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+      >
+        {selectedLot.title}
+      </p>
+
+      {/* Specs inline */}
+      <div
+        className="flex items-center gap-2 text-[0.45rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]/35"
+        style={{ fontFamily: "'Montserrat', sans-serif" }}
+      >
+        <span>{selectedLot.beds} Beds</span>
+        <span className="w-px h-2 bg-[#1C1208]/12" />
+        <span>{selectedLot.baths} Baths</span>
+        <span className="w-px h-2 bg-[#1C1208]/12" />
+        <span>{selectedLot.sqft.toLocaleString()} sq ft</span>
+      </div>
+    </div>
+
+    {/* CTA */}
+    <ButtonPrimary
+      href={`/contact?source=InteractiveSiteMap&lot=${selectedLot.lotNumber}`}
+      className="shrink-0 h-9 px-3.5 !text-[0.5rem] !tracking-[0.2em]"
+    >
+      Inquire
+    </ButtonPrimary>
+  </div>
+</motion.div>
         </div>
 
         {/* ── LIST TAB ── */}

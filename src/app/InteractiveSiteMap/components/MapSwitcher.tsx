@@ -60,11 +60,11 @@ export function MapSwitcher({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.98, transformOrigin: "top" }}
+            initial={{ opacity: 0, y: 10, scale: 0.98, transformOrigin: isDesktop ? "top left" : "top right" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 5, scale: 0.98 }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className={`absolute left-0 z-[100] mt-2 min-w-[240px] overflow-hidden border border-[#1C1208]/10 bg-[#F5F0E8] shadow-[0_30px_60px_rgba(28,18,8,0.18)] backdrop-blur-md`}
+            className={`absolute ${isDesktop ? "left-0" : "right-0"} z-[100] mt-2 min-w-[220px] lg:min-w-[240px] overflow-hidden border border-[#1C1208]/10 bg-[#F5F0E8] shadow-[0_30px_60px_rgba(28,18,8,0.18)] backdrop-blur-md`}
           >
             <div className="p-1">
               {configs.map((map) => {

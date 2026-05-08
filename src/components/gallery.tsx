@@ -114,32 +114,46 @@ export function Gallery() {
 function ProjectCardLarge({ project }: { project: ProjectData }) {
   return (
     <article className="group relative overflow-hidden h-full">
-      <div className="relative aspect-[16/9] lg:aspect-auto lg:h-full w-full overflow-hidden">
+      {/* Image */}
+      <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-full w-full overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
           fill
           className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+        {/* Gradient only on lg+ where text overlays the image */}
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
       </div>
 
-      <div className="absolute top-8 left-8 flex items-center gap-4 z-10">
+      {/* Index + location badge — sits over image on all sizes */}
+      <div className="absolute top-4 left-4 flex items-center gap-3 z-10 lg:top-8 lg:left-8 lg:gap-4">
         <Annotation light className="!text-cream/90">{project.index}</Annotation>
-        <div className="h-px w-4 bg-rust/50" />
+        <div className="h-px w-3 lg:w-4 bg-rust/50" />
         <Annotation light className="!text-cream/70 uppercase">{project.location}</Annotation>
       </div>
 
-      <div className="absolute bottom-10 left-10 max-w-[80%] text-cream z-10">
-        <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[2.2rem] lg:!text-[2.8rem]">
+      {/* Mobile: text block BELOW the image, dark bg for readability */}
+      <div className="lg:hidden bg-dark px-6 py-6">
+        <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[1.6rem] leading-[1.15]">
+          {project.title}
+        </SectionHeadline>
+        <BodyText size="sm" light className="mt-3 !text-[#F5F0E8]/70">
+          {project.summary}
+        </BodyText>
+      </div>
+
+      {/* Desktop: text overlaid on image as before */}
+      <div className="hidden lg:block absolute bottom-10 left-10 max-w-[80%] text-cream z-10">
+        <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[2.8rem]">
           {project.title}
         </SectionHeadline>
         <BodyText size="sm" light className="mt-4 !text-[#F5F0E8]/70">
           {project.summary}
         </BodyText>
       </div>
-      
-      <div className="absolute top-8 right-8 z-10">
+
+      <div className="absolute top-4 right-4 lg:top-8 lg:right-8 z-10">
         <CrosshairIcon light className="opacity-30 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-700" />
       </div>
     </article>
