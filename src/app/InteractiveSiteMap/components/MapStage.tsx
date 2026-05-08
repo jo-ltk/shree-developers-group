@@ -88,23 +88,41 @@ export function MapStage({
           : Number.parseInt(group.id.replace(/[^\d]/g, ""), 10);
         if (!Number.isFinite(id)) return null;
 
+        const target = path || group;
+        const bbox = target.getBBox();
+        const svgRoot = svg;
+        const matrix = svgRoot.getScreenCTM()?.inverse().multiply(target.getScreenCTM()!);
+
         let ox, oy, ow, oh;
-        if (rect) {
-          ox = parseNumber(rect.getAttribute("x"));
-          oy = parseNumber(rect.getAttribute("y"));
-          ow = parseNumber(rect.getAttribute("width"));
-          oh = parseNumber(rect.getAttribute("height"));
+        if (matrix) {
+          const pt = svgRoot.createSVGPoint();
+          pt.x = bbox.x;
+          pt.y = bbox.y;
+          const topLeft = pt.matrixTransform(matrix);
+
+          pt.x = bbox.x + bbox.width;
+          pt.y = bbox.y + bbox.height;
+          const bottomRight = pt.matrixTransform(matrix);
+
+          ox = topLeft.x;
+          oy = topLeft.y;
+          ow = bottomRight.x - topLeft.x;
+          oh = bottomRight.y - topLeft.y;
         } else {
-          const bbox = (path || group).getBBox();
           ox = bbox.x; oy = bbox.y; ow = bbox.width; oh = bbox.height;
         }
 
+        // Force a square hotspot for a perfect circle selection
+        const size = Math.max(ow, oh);
+        const padding = 0.5; // 50% padding for a nice large ring
+        const finalSize = size * (1 + padding * 2);
+
         return {
           id,
-          x: ox - ow * 0.06,
-          y: oy - oh * 0.06,
-          width: ow * 1.12,
-          height: oh * 1.12,
+          x: ox + ow / 2 - finalSize / 2,
+          y: oy + oh / 2 - finalSize / 2,
+          width: finalSize,
+          height: finalSize,
         };
       })
       .filter((h): h is Hotspot => h !== null)
@@ -238,10 +256,11 @@ export function MapStage({
                     <g key={hotspot.id}>
                       {/* Gold glow ring — filtered lots */}
                       {activeFilter !== "All" && matchesFilter && (
-                        <rect
-                          x={hotspot.x - 2} y={hotspot.y - 2}
-                          width={hotspot.width + 4} height={hotspot.height + 4}
-                          rx={12} fill="none"
+                        <circle
+                         cx={hotspot.x + hotspot.width / 1.1}
+                          cy={hotspot.y + hotspot.height / 2}
+                          r={hotspot.width / 2 + 10}
+                          fill="none"
                           stroke="rgba(201,174,123,0.75)" strokeWidth={3}
                           pointerEvents="none"
                           style={{ filter: "drop-shadow(0 0 8px rgba(201,174,123,0.7))", transition: "opacity 350ms ease" }}
@@ -250,10 +269,11 @@ export function MapStage({
 
                       {/* Fog overlay — non-matching lots */}
                       {!matchesFilter && (
-                        <rect
-                          x={hotspot.x} y={hotspot.y}
-                          width={hotspot.width} height={hotspot.height}
-                          rx={10} fill="rgba(245,240,232,0.82)"
+                        <circle
+                         cx={hotspot.x + hotspot.width / 1.1}
+                          cy={hotspot.y + hotspot.height / 2}
+                          r={hotspot.width / 2 + 10}
+                          fill="rgba(245,240,232,0.82)"
                           pointerEvents="none"
                           style={{ transition: "fill 350ms ease" }}
                         />
@@ -261,11 +281,13 @@ export function MapStage({
 
                       {/* Selection pulse ring */}
                       {isSelected && (
-                        <rect
-                          x={hotspot.x - 4} y={hotspot.y - 4}
-                          width={hotspot.width + 8} height={hotspot.height + 8}
-                          rx={14} fill="none"
-                          stroke="#8B2A2A" strokeWidth={3}
+                        <circle
+                          cx={hotspot.x + hotspot.width / 1.1}
+                          cy={hotspot.y + hotspot.height / 2}
+                          r={hotspot.width / 2 + 10}
+                          fill="none"
+                          stroke="#8B2A2A"
+                          strokeWidth={6}
                           pointerEvents="none"
                           className="lot-pulse-ring"
                         />
