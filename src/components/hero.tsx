@@ -31,7 +31,7 @@ export function Hero() {
           className="hidden lg:block object-cover object-center lg:object-[center_right]"
           priority
         />
-        
+
         {/* Mobile Heading Overlay (Overlaying the image area) */}
         <div className="absolute top-[32%] left-8 z-20 max-w-[280px] lg:hidden">
           <SectionLabel className="mb-3 scale-90 origin-left">
@@ -47,27 +47,41 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Hero Content Overlay */}
-      <div className="relative z-10 mx-auto w-full max-w-[1450px] px-8 pt-12 pb-12 md:px-12 lg:px-20 lg:py-0">
-        <div data-hero-content className="max-w-[850px] lg:pt-20">
+      {/* Hero Content Overlay
+          — On large screens we pin to the left edge of the viewport
+            with a fixed left padding, and cap how wide the text block grows.
+          — mx-auto is intentionally removed at lg+ so the block never
+            drifts toward center on ultra-wide monitors.
+      */}
+      <div className="relative z-10 w-full px-8 pt-12 pb-12 md:px-12 lg:px-20 xl:px-24 2xl:px-32 lg:py-0">
+        <div
+          data-hero-content
+          /* Hard cap keeps text readable without letting it sprawl;
+             ml-0 overrides any inherited centering. */
+          className="w-full max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] ml-0 lg:pt-20"
+        >
           {/* Eyebrow - Desktop only */}
           <SectionLabel className="hidden lg:flex" counter="01 / 08">
             Est. 2001 · Premium Residences
           </SectionLabel>
 
           {/* Heading - Desktop only */}
-          <SectionHeadline size="xl" className="hidden lg:block !text-[clamp(2.8rem,5vw,5.5rem)] !leading-[0.98]">
+          <SectionHeadline
+            size="xl"
+            className="hidden lg:block !text-[clamp(2.8rem,4.5vw,5.5rem)] !leading-[0.98]"
+          >
             Where trust
             <br />
             <em className="italic">finds</em> always home
           </SectionHeadline>
 
           {/* Sub */}
-          <BodyText 
-            size="lg" 
+          <BodyText
+            size="lg"
             className="mt-6 lg:mt-8 max-w-[500px] italic !leading-[1.4]"
           >
-            Communities composed for daily comfort. Architecting legacies of trust across the horizon.
+            Communities composed for daily comfort. Architecting legacies of
+            trust across the horizon.
           </BodyText>
 
           {/* Ornament divider */}
@@ -82,9 +96,7 @@ export function Hero() {
 
           {/* Buttons - CTA Actions */}
           <div className="flex items-center gap-5 sm:gap-8 lg:gap-12">
-            <ButtonPrimary href="#gallery">
-              Start Exploring
-            </ButtonPrimary>
+            <ButtonPrimary href="#gallery">Start Exploring</ButtonPrimary>
             <ButtonGhost href="mailto:hello@shreedevelopersgroup.com">
               Get in touch
             </ButtonGhost>
@@ -93,10 +105,10 @@ export function Hero() {
       </div>
 
       {/* Blueprint Detail (Bottom Right) */}
-      <FigMarker 
-        fig="fig. 01" 
-        label="MASTERPLAN OVERVIEW" 
-        className="absolute bottom-12 right-12 hidden lg:flex" 
+      <FigMarker
+        fig="fig. 01"
+        label="MASTERPLAN OVERVIEW"
+        className="absolute bottom-12 right-12 hidden lg:flex"
       />
     </section>
   );
