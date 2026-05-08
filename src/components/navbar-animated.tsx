@@ -7,7 +7,7 @@ import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/ui/brand-mark";
 
 const navColumns = [
-  { title: "Projects", href: "#gallery", links: ["Villas", "Apartments", "Plotted Communities"] },
+  { title: "Projects", href: "#gallery", links: ["Sydney Oaks", "Elysian Gates"] },
   { title: "Homesites", href: "/InteractiveSiteMap", links: ["Availability", "Lot Details"] },
   { title: "Interactive Map", href: "/InteractiveSiteMap", links: [] as string[] },
   { title: "Promise", href: "#team", links: ["Process", "Handover", "Support"] },
@@ -29,7 +29,7 @@ export function NavbarAnimated() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     const diff = latest - previous;
-    const threshold = 15; // Ignore tiny movements
+    const threshold = 15;
 
     if (mobileOpen) {
       setIsHidden(false);
@@ -37,12 +37,12 @@ export function NavbarAnimated() {
     }
 
     if (latest < 80) {
-      setIsHidden(false); // Always show at the top
+      setIsHidden(false);
     } else if (diff > threshold) {
-      setIsHidden(true); // Scrolling down: hide
-      setIsOpen(false); // Close desktop menu when hiding
+      setIsHidden(true);
+      setIsOpen(false);
     } else if (diff < -threshold) {
-      setIsHidden(false); // Scrolling up: show
+      setIsHidden(false);
     }
 
     setIsAtTop(latest < 20);
@@ -75,16 +75,17 @@ export function NavbarAnimated() {
         onMouseLeave={() => setIsOpen(false)}
       >
         <div
-          className={`mx-auto max-w-[96rem] px-6 transition-all duration-500 sm:px-8 lg:px-10 ${
+          className={`w-full transition-all duration-500 px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 ${
             isAtTop ? "pt-5 lg:pt-7" : "pt-3 lg:pt-3"
           }`}
         >
+          {/* Desktop nav */}
           <div className={`${desktopGridClass} hidden xl:grid items-center`}>
             <a href="#top" className="w-fit text-dark">
               <BrandMark
                 variant="black"
                 className={`transition-all duration-500 ${
-                  isAtTop ? "h-24 w-[16rem]" : "h-12 w-[10rem]"
+                  isAtTop ? "h-28 w-[18rem]" : "h-16 w-[12rem]"
                 }`}
                 imageClassName="object-left"
                 alt="Shree Developers Group logo"
@@ -110,12 +111,13 @@ export function NavbarAnimated() {
             ))}
           </div>
 
+          {/* Mobile nav bar */}
           <div className="flex items-center justify-between xl:hidden">
             <a href="#top" className="relative z-50 text-[var(--text-primary)]">
               <BrandMark
                 variant="black"
                 className={`transition-all duration-500 ${
-                  isAtTop ? "h-14 w-[10rem]" : "h-10 w-[7rem]"
+                  isAtTop ? "h-16 w-[11rem]" : "h-12 w-[8.5rem]"
                 }`}
                 imageClassName="object-left"
                 alt="Shree Developers Group logo"
@@ -134,6 +136,7 @@ export function NavbarAnimated() {
           </div>
         </div>
 
+        {/* Desktop mega-menu dropdown */}
         <div
           className={`fixed inset-x-0 top-0 hidden origin-top overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] xl:block ${
             isOpen
@@ -244,6 +247,7 @@ export function NavbarAnimated() {
         </div>
       </motion.header>
 
+      {/* Mobile full-screen menu */}
       <div
         className={`fixed inset-0 z-40 xl:hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           mobileOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"

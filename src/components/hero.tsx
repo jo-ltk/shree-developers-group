@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { SectionLabel } from "@/components/ui/section-label";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { BodyText } from "@/components/ui/body-text";
 import { Ornament } from "@/components/ui/ornament";
@@ -14,7 +13,10 @@ export function Hero() {
   return (
     <section className="relative flex w-full flex-col overflow-hidden bg-cream lg:h-screen lg:min-h-[750px] lg:justify-center">
       {/* Full Screen Background Image - Mobile: Top, Desktop: Background */}
-      <div data-hero-visual className="relative z-0 h-[40vh] w-full sm:h-[60vh] lg:absolute lg:inset-0 lg:h-full">
+      <div
+        data-hero-visual
+        className="relative z-0 h-[40vh] w-full sm:h-[60vh] lg:absolute lg:inset-0 lg:h-full"
+      >
         {/* Mobile specific image */}
         <Image
           src="/images/hero-redesign3.png"
@@ -23,6 +25,7 @@ export function Hero() {
           className="object-cover object-center lg:hidden"
           priority
         />
+
         {/* Desktop specific image */}
         <Image
           src="/images/hero-redesign2.png"
@@ -32,11 +35,8 @@ export function Hero() {
           priority
         />
 
-        {/* Mobile Heading Overlay (Overlaying the image area) */}
-        <div className="absolute top-[32%] left-8 z-20 max-w-[280px] lg:hidden">
-          <SectionLabel className="mb-3 scale-90 origin-left">
-            Est. 2001 · Premium Residences
-          </SectionLabel>
+        {/* Mobile Heading Overlay */}
+        <div className="absolute top-[42%] left-8 z-20 max-w-[280px] lg:hidden">
           <SectionHeadline size="md" className="!text-[2.2rem]">
             Where trust
             <br />
@@ -47,24 +47,12 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Hero Content Overlay
-          — On large screens we pin to the left edge of the viewport
-            with a fixed left padding, and cap how wide the text block grows.
-          — mx-auto is intentionally removed at lg+ so the block never
-            drifts toward center on ultra-wide monitors.
-      */}
+      {/* Hero Content Overlay */}
       <div className="relative z-10 w-full px-8 pt-12 pb-12 md:px-12 lg:px-20 xl:px-24 2xl:px-32 lg:py-0">
         <div
           data-hero-content
-          /* Hard cap keeps text readable without letting it sprawl;
-             ml-0 overrides any inherited centering. */
           className="w-full max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] ml-0 lg:pt-20"
         >
-          {/* Eyebrow - Desktop only */}
-          <SectionLabel className="hidden lg:flex" counter="01 / 08">
-            Est. 2001 · Premium Residences
-          </SectionLabel>
-
           {/* Heading - Desktop only */}
           <SectionHeadline
             size="xl"
@@ -87,16 +75,17 @@ export function Hero() {
           {/* Ornament divider */}
           <Ornament className="max-w-[400px] lg:mx-0 my-8 lg:my-10" />
 
-          {/* Stats - Metric Display */}
+          {/* Stats */}
           <div className="hero-stats flex flex-nowrap items-center gap-8 sm:gap-12 lg:gap-16 mb-12">
             <StatItem value="24+" label="Projects Delivered" />
             <StatItem value="2.4k" label="Families Housed" separator />
             <StatItem value="98%" label="Satisfaction Rate" separator />
           </div>
 
-          {/* Buttons - CTA Actions */}
+          {/* Buttons */}
           <div className="flex items-center gap-5 sm:gap-8 lg:gap-12">
             <ButtonPrimary href="#gallery">Start Exploring</ButtonPrimary>
+
             <ButtonGhost href="mailto:hello@shreedevelopersgroup.com">
               Get in touch
             </ButtonGhost>
@@ -104,7 +93,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Blueprint Detail (Bottom Right) */}
+      {/* Blueprint Detail */}
       <FigMarker
         fig="fig. 01"
         label="MASTERPLAN OVERVIEW"
