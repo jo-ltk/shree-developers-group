@@ -44,16 +44,16 @@ export function FooterSection() {
   }, []);
 
   return (
-    <SectionWrapper id="footer" ref={footerRef} dark={true} className="!py-12 md:!py-16 overflow-hidden">
+    <SectionWrapper id="footer" ref={footerRef} dark={true} className="!py-8 md:!py-10 overflow-hidden">
       <div className="relative">
-        
+
         {/* COMPACT ARCHITECTURAL GRID */}
-        <div data-footer-animate className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 border-t border-[#F5F0E8]/10 pt-12">
-          
+        <div data-footer-animate className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-[#F5F0E8]/10 pt-8">
+
           {/* CTA & INDEX */}
-          <div className="space-y-8">
-            <SectionHeadline 
-              size="md" 
+          <div className="space-y-6">
+            <SectionHeadline
+              size="md"
               light
               className="!text-[#F5F0E8] !text-[2rem] !leading-[1.1]"
             >
@@ -61,12 +61,12 @@ export function FooterSection() {
               <br />
               your <em className="italic">legacy</em>
             </SectionHeadline>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <Annotation light className="!text-rust">01 / TECHNICAL INDEX</Annotation>
-              <nav className="flex flex-col gap-3">
+              <nav className="flex flex-col gap-2">
                 {footerLinks.map((link) => (
-                  <a 
-                    key={link.label} 
+                  <a
+                    key={link.label}
                     href={link.href}
                     className="group flex items-center justify-between !text-[#F5F0E8] hover:!text-rust transition-colors duration-300"
                   >
@@ -79,10 +79,10 @@ export function FooterSection() {
           </div>
 
           {/* COMMUNICATION */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <Annotation light className="!text-[#F5F0E8]/40">02 / COMMUNICATION</Annotation>
-            <div className="space-y-6">
-              <a 
+            <div className="space-y-4">
+              <a
                 href="mailto:hello@shreedevelopersgroup.com"
                 className="group block"
               >
@@ -97,9 +97,9 @@ export function FooterSection() {
           </div>
 
           {/* PHYSICAL OFFICE */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <Annotation light className="!text-[#F5F0E8]/40">03 / PHYSICAL OFFICE</Annotation>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <BodyText size="sm" light className="!text-[#F5F0E8]/60 !leading-relaxed">
                 Headquarters<br />
                 Premium Residential Tower<br />
@@ -113,16 +113,16 @@ export function FooterSection() {
           </div>
 
           {/* UPDATES MODULE */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <Annotation light className="!text-[#F5F0E8]/40">04 / PROJECT UPDATES</Annotation>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <BodyText size="sm" light className="!text-[#F5F0E8]/60">
                 Subscribe to receive technical bulletins and handover milestones.
               </BodyText>
               <label className="group/input block relative">
-                <input 
-                  type="email" 
-                  placeholder="EMAIL SPECIFICATION" 
+                <input
+                  type="email"
+                  placeholder="EMAIL SPECIFICATION"
                   className="w-full bg-transparent border-b border-[#F5F0E8]/10 pb-2 text-[#F5F0E8] font-mono text-[10px] tracking-widest placeholder:text-[#F5F0E8]/20 focus:outline-none focus:border-rust transition-colors duration-500"
                 />
                 <button className="absolute right-0 bottom-2 text-[#F5F0E8] hover:text-rust transition-colors duration-300">
@@ -134,11 +134,11 @@ export function FooterSection() {
         </div>
 
         {/* FINAL MARKER BAR */}
-        <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-[#F5F0E8]/5 pt-8">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <BrandMark 
-              variant="steel" 
-              className="h-40 w-96" 
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#F5F0E8]/5 pt-6">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <BrandMark
+              variant="steel"
+              className="h-16 w-40"
               imageClassName="object-center md:object-left"
             />
             <div className="hidden md:block h-6 w-px bg-[#F5F0E8]/10" />
@@ -150,7 +150,7 @@ export function FooterSection() {
               <FigMarker fig="fig. 22" label="Blueprint Conclusion" light />
             </div>
           </div>
-          
+
           <Annotation light className="!text-[#F5F0E8]/20 !text-[0.55rem] text-center md:text-right">
             &copy; SHREE DEVELOPERS GROUP &mdash; PREMIUM EDITORIAL ARCHITECTURE V1.02
           </Annotation>
@@ -160,5 +160,3 @@ export function FooterSection() {
     </SectionWrapper>
   );
 }
-
-

@@ -186,8 +186,13 @@ export function MetricsSection({
                 <SectionHeadline
                   size="xl"
                   className="!text-[clamp(2.8rem,4vw,4.8rem)] leading-[0.98]"
+                  noPeriod
                 >
-                  {data.headline}
+                  <span className="relative z-0 inline-block group/highlight cursor-default">
+                    <span className="relative z-10">{data.headline}</span>
+                    <span className="absolute bottom-[8%] left-[-2%] w-[104%] h-[35%] bg-[#D43F33]/20 -z-10 -rotate-1 skew-x-12 transition-all duration-500 ease-out group-hover/highlight:h-[50%] group-hover/highlight:bg-[#D43F33]/30 group-hover/highlight:-rotate-2" />
+                  </span>
+                  <span className="text-[#D43F33]">.</span>
                 </SectionHeadline>
 
                 <BodyText className="mt-8 text-[1.05rem] leading-[1.7] text-[#1C1208]/70">
@@ -244,36 +249,38 @@ export function MetricsSection({
 
             {/* LEFT IMAGE */}
 
-            <div className="col-span-12 lg:col-span-8 bg-[#EDE8DF] relative min-h-[420px] overflow-hidden group">
-              <div className="absolute top-8 left-8 z-20 flex items-center gap-4">
-                <Annotation className="!text-[#F5F0E8]/90">
-                  {data.imageLabel}
-                </Annotation>
+            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] pl-6 md:pl-10 lg:pl-12 flex flex-col">
+              <div className="relative flex-1 w-full h-full min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
+                <div className="absolute top-8 left-8 z-20 flex items-center gap-4">
+                  <Annotation className="!text-[#F5F0E8]/90">
+                    {data.imageLabel}
+                  </Annotation>
 
-                <CrosshairIcon light />
-              </div>
-
-              <img
-                src={data.imageSrc}
-                alt={data.imageLabel}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
-
-              {data.mapHref && (
-                <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-                  <Link
-                    href={data.mapHref}
-                    className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
-                  >
-                    <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
-                      Explore Interactive Map
-                    </span>
-                    <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
-                  </Link>
+                  <CrosshairIcon light />
                 </div>
-              )}
+
+                <img
+                  src={data.imageSrc}
+                  alt={data.imageLabel}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
+
+                {data.mapHref && (
+                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                    <Link
+                      href={data.mapHref}
+                      className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
+                    >
+                      <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
+                        Explore Interactive Map
+                      </span>
+                      <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* RIGHT DARK PANEL */}
@@ -356,8 +363,13 @@ export function MetricsSection({
                 <SectionHeadline
                   size="xl"
                   className="!text-[clamp(2.8rem,4vw,4.8rem)] leading-[0.98]"
+                  noPeriod
                 >
-                  {data.headline}
+                  <span className="relative z-0 inline-block group/highlight cursor-default">
+                    <span className="relative z-10">{data.headline}</span>
+                    <span className="absolute bottom-[8%] left-[-2%] w-[104%] h-[35%] bg-[#D43F33]/20 -z-10 rotate-1 -skew-x-12 transition-all duration-500 ease-out group-hover/highlight:h-[50%] group-hover/highlight:bg-[#D43F33]/30 group-hover/highlight:rotate-2" />
+                  </span>
+                  <span className="text-[#D43F33]">.</span>
                 </SectionHeadline>
 
                 <BodyText className="mt-8 text-[1.05rem] leading-[1.7] text-[#1C1208]/70">
@@ -407,36 +419,38 @@ export function MetricsSection({
 
             {/* RIGHT IMAGE */}
 
-            <div className="col-span-12 lg:col-span-8 bg-[#EDE8DF] relative min-h-[420px] overflow-hidden group">
-              <div className="absolute top-8 right-8 z-20 flex items-center gap-4">
-                <CrosshairIcon light />
+            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] pr-6 md:pr-10 lg:pr-12 flex flex-col">
+              <div className="relative flex-1 w-full h-full min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
+                <div className="absolute top-8 right-8 z-20 flex items-center gap-4">
+                  <CrosshairIcon light />
 
-                <Annotation className="!text-[#F5F0E8]/90">
-                  {data.imageLabel}
-                </Annotation>
-              </div>
-
-              <img
-                src={data.imageSrc}
-                alt={data.imageLabel}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
-
-              {data.mapHref && (
-                <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-                  <Link
-                    href={data.mapHref}
-                    className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
-                  >
-                    <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
-                      Explore Interactive Map
-                    </span>
-                    <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
-                  </Link>
+                  <Annotation className="!text-[#F5F0E8]/90">
+                    {data.imageLabel}
+                  </Annotation>
                 </div>
-              )}
+
+                <img
+                  src={data.imageSrc}
+                  alt={data.imageLabel}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
+
+                {data.mapHref && (
+                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                    <Link
+                      href={data.mapHref}
+                      className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
+                    >
+                      <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
+                        Explore Interactive Map
+                      </span>
+                      <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </>
         )}
