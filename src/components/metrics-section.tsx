@@ -7,6 +7,7 @@ import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
 import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
+import { motion } from "framer-motion";
 
 /* ───────────────── TYPES ───────────────── */
 
@@ -51,8 +52,7 @@ interface MetricsSectionProps {
 /* ───────────────── DATA : SYDNEY OAKS ───────────────── */
 
 const sydneyOaksData: MetricsSectionData = {
-  imageSrc:
-    "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=2000&auto=format&fit=crop",
+  imageSrc: "/svg/siteplan- sydneyoaks-01.svg",
 
   imageLabel: "SYDNEY OAKS",
 
@@ -105,8 +105,7 @@ const sydneyOaksData: MetricsSectionData = {
 /* ───────────────── DATA : ELYSIAN GATES ───────────────── */
 
 const elysianGatesData: MetricsSectionData = {
-  imageSrc:
-    "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=2000&auto=format&fit=crop",
+  imageSrc: "/svg/elysian-gates.svg",
 
   imageLabel: "ELYSIAN GATES",
 
@@ -204,16 +203,6 @@ export function MetricsSection({
 
                     <span className="w-8 h-px bg-[#1C1208] transition-all duration-300 group-hover:w-12" />
                   </Link>
-
-                  {data.mapHref && (
-                    <Link
-                      href={data.mapHref}
-                      className="group inline-flex items-center gap-2 px-4 py-2 border border-[#1C1208]/15 rounded-full text-[0.6rem] font-semibold tracking-[0.2em] text-[#1C1208]/60 uppercase transition-all duration-300 hover:border-[#D43F33]/40 hover:text-[#D43F33] hover:bg-[#D43F33]/5"
-                    >
-                      <span className="w-4 h-px bg-[#1C1208]/20 transition-all duration-300 group-hover:w-6 group-hover:bg-[#D43F33]" />
-                      Explore Interactive Map
-                    </Link>
-                  )}
                 </div>
               </div>
             </div>
@@ -270,7 +259,21 @@ export function MetricsSection({
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
+
+              {data.mapHref && (
+                <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                  <Link
+                    href={data.mapHref}
+                    className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
+                  >
+                    <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
+                      Explore Interactive Map
+                    </span>
+                    <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* RIGHT DARK PANEL */}
@@ -370,16 +373,6 @@ export function MetricsSection({
 
                     <span className="w-8 h-px bg-[#1C1208] transition-all duration-300 group-hover:w-12" />
                   </Link>
-
-                  {data.mapHref && (
-                    <Link
-                      href={data.mapHref}
-                      className="group inline-flex items-center gap-2 px-4 py-2 border border-[#1C1208]/15 rounded-full text-[0.6rem] font-semibold tracking-[0.2em] text-[#1C1208]/60 uppercase transition-all duration-300 hover:border-[#D43F33]/40 hover:text-[#D43F33] hover:bg-[#D43F33]/5"
-                    >
-                      Explore Interactive Map
-                      <span className="w-4 h-px bg-[#1C1208]/20 transition-all duration-300 group-hover:w-6 group-hover:bg-[#D43F33]" />
-                    </Link>
-                  )}
                 </div>
               </div>
             </div>
@@ -429,7 +422,21 @@ export function MetricsSection({
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
+
+              {data.mapHref && (
+                <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                  <Link
+                    href={data.mapHref}
+                    className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
+                  >
+                    <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
+                      Explore Interactive Map
+                    </span>
+                    <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
+                  </Link>
+                </div>
+              )}
             </div>
           </>
         )}
@@ -472,11 +479,61 @@ export function MetricsSection({
         ))}
       </div>
 
-      <FigMarker
-        fig={`fig. ${data.sectionCounter.slice(0, 2).trim()}`}
-        label={data.figLabel}
-      />
+      <div className="py-8 md:py-12">
+        <FigMarker
+          fig={`fig. ${data.sectionCounter.slice(0, 2).trim()}`}
+          label={data.figLabel}
+        />
+      </div>
     </SectionWrapper>
+  );
+}
+
+/* ───────────────── ANIMATED PARTITION DIVIDER ───────────────── */
+
+function AnimatedPartitionDivider({ title, subtitle, bgText }: { title: string; subtitle: string; bgText: string }) {
+  return (
+    <div className="w-full bg-[#F5F0E8] flex flex-col items-center justify-center py-10 md:py-16 border-t border-[#1C1208]/10 relative overflow-hidden group z-10">
+      
+      {/* Animated Background Typography */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden">
+        <motion.div 
+          initial={{ x: 50, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="whitespace-nowrap font-serif text-[12vw] leading-none tracking-tighter"
+        >
+          {bgText}
+        </motion.div>
+      </div>
+
+      {/* Animated Line drawing down */}
+      <div className="relative h-16 md:h-20 w-[1px] bg-[#1C1208]/10 mb-6 overflow-hidden">
+        <motion.div 
+          initial={{ y: "-100%" }}
+          whileInView={{ y: "100%" }}
+          transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}
+          className="absolute inset-0 bg-[#D43F33] w-[2px] left-[-0.5px]"
+        />
+      </div>
+
+      {/* Animated Text appearing */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="flex flex-col items-center relative z-10"
+      >
+        <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.4em] uppercase mb-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+          {subtitle}
+        </span>
+        <span className="text-[#1C1208] text-2xl md:text-4xl font-light tracking-widest uppercase text-center" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+          {title}
+        </span>
+        <span className="mt-6 w-8 h-[1px] bg-[#1C1208]/20 transition-all duration-700 group-hover:w-20 group-hover:bg-[#1C1208]/60" />
+      </motion.div>
+    </div>
   );
 }
 
@@ -484,19 +541,32 @@ export function MetricsSection({
 
 export function SydneyOaksMetricsSection() {
   return (
-    <MetricsSection
-      data={{ ...sydneyOaksData, mapHref: "/InteractiveSiteMap?project=sydney-oaks" }}
-      id="metrics-sydney-oaks"
-    />
+    <>
+      <AnimatedPartitionDivider 
+        title="Sydney Oaks"
+        subtitle="Featured Project"
+        bgText="SYDNEY OAKS"
+      />
+      <MetricsSection
+        data={{ ...sydneyOaksData, mapHref: "/InteractiveSiteMap?project=sydney-oaks" }}
+        id="metrics-sydney-oaks"
+      />
+    </>
   );
 }
 
 export function ElysianGatesMetricsSection() {
   return (
-    <MetricsSection
-      data={{ ...elysianGatesData, mapHref: "/InteractiveSiteMap?project=elysian-gates" }}
-      id="metrics-elysian-gates"
-      reverse
-    />
+    <>
+      <AnimatedPartitionDivider 
+        title="Elysian Gates"
+        subtitle="Next Chapter"
+        bgText="ELYSIAN GATES"
+      />
+      <MetricsSection
+        data={{ ...elysianGatesData, mapHref: "/InteractiveSiteMap?project=elysian-gates" }}
+        id="metrics-elysian-gates"
+      />
+    </>
   );
 }

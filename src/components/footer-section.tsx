@@ -139,13 +139,13 @@ export function FooterSection() {
             <BrandMark 
               variant="steel" 
               className="h-40 w-96" 
-              imageClassName="object-left"
+              imageClassName="object-center md:object-left"
             />
             <div className="hidden md:block h-6 w-px bg-[#F5F0E8]/10" />
-            <div className="flex items-center gap-8">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
               <div className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-rust rounded-full animate-pulse" />
-                <span className="text-rust text-[9px] font-bold uppercase tracking-[0.2em]">Active Operations</span>
+                <span className="w-1.5 h-1.5 bg-rust rounded-full animate-pulse shrink-0" />
+                <span className="text-rust text-[9px] font-bold uppercase tracking-[0.2em] text-center">Active Operations</span>
               </div>
               <FigMarker fig="fig. 22" label="Blueprint Conclusion" light />
             </div>
