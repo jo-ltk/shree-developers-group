@@ -12,6 +12,7 @@ import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 import { FigMarker } from "./ui/fig-marker";
+import { SectionLabel } from "./ui/section-label";
 
 export function Gallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -44,19 +45,27 @@ export function Gallery() {
   const featured = allProjects.slice(0, 4);
 
   return (
-    <SectionWrapper id="gallery" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
-      <div data-gallery-reveal className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-8">
-        <h2 className="text-[clamp(3rem,6vw,5.5rem)] leading-[1.05] font-bold text-dark uppercase tracking-tight">
-          THESE AREN&apos;T
-          <br />
-          JUST <span className="font-serif italic font-light text-dark/90 tracking-normal lowercase">Projects</span>
-        </h2>
-        <Link 
-          href="/gallery" 
-          className="inline-flex items-center gap-3 rounded-full border border-dark/20 px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-dark hover:text-cream transition-colors duration-300 mb-2"
-        >
-          VIEW ALL <ArrowRight className="w-4 h-4" />
-        </Link>
+   <SectionWrapper id="gallery" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
+      <div data-gallery-reveal className="grid grid-cols-12 gap-6 items-end mb-10 md:mb-12">
+        <div className="col-span-12 lg:col-span-7">
+          <SectionLabel counter="03 / 08">Signature Communities</SectionLabel>
+          <SectionHeadline 
+            size="xl" 
+            className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
+          >
+            Communities planned
+            <br />
+            for lasting comfort
+          </SectionHeadline>
+        </div>
+
+        <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+          <BodyText size="md">
+            Thoughtful planning, verified approvals, and disciplined
+            construction come together to create addresses that remain
+            dependable long after possession day.
+          </BodyText>
+        </div>
       </div>
 
       {/* Editorial Mosaic Grid */}

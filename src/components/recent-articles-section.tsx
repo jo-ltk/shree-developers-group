@@ -108,14 +108,14 @@ export function RecentArticlesSection() {
           <article
             key={article.title}
             data-article-card
-            className="group relative bg-cream p-6 md:p-8 flex flex-col h-full cursor-pointer"
+            className="group relative bg-cream flex flex-col h-full cursor-pointer"
           >
-            <div className="flex items-start justify-between mb-8">
+            <div className="flex items-start justify-between p-6 md:p-8">
               <Annotation>{article.fig}</Annotation>
               <CrosshairIcon className="opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
 
-            <div className="relative aspect-[16/10] w-full overflow-hidden mb-10">
+            <div className="relative aspect-[16/10] w-full overflow-hidden">
               <Image
                 src={article.image}
                 alt={article.title}
@@ -131,7 +131,7 @@ export function RecentArticlesSection() {
               </div>
             </div>
 
-            <div className="flex flex-col flex-grow">
+            <div className="flex flex-col flex-grow p-6 md:p-8 pt-8 md:pt-10">
               <Annotation className="mb-4 text-rust">{article.date}</Annotation>
               <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
                 {article.title}<span className="text-rust">.</span>

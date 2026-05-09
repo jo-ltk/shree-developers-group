@@ -28,7 +28,7 @@ export function Hero() {
 
         {/* Desktop specific image */}
         <Image
-          src="/images/hero-redesign2.png"
+          src="/images/hero-new.png"
           alt="Premium residential community by Shree Developers Group"
           fill
           className="hidden lg:block object-cover object-center lg:object-[center_right]"

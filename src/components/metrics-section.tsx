@@ -249,9 +249,9 @@ export function MetricsSection({
 
             {/* LEFT IMAGE */}
 
-            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] pl-6 md:pl-10 lg:pl-12 flex flex-col">
-              <div className="relative flex-1 w-full h-full min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
-                <div className="absolute top-8 left-8 z-20 flex items-center gap-4">
+            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] py-6 px-0 md:p-10 lg:p-0 lg:pl-12 flex flex-col">
+              <div className="relative flex-1 w-full h-full min-h-[350px] md:min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
+                <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex items-center gap-4">
                   <Annotation className="!text-[#F5F0E8]/90">
                     {data.imageLabel}
                   </Annotation>
@@ -268,15 +268,15 @@ export function MetricsSection({
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
 
                 {data.mapHref && (
-                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none p-4">
                     <Link
                       href={data.mapHref}
-                      className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
+                      className="pointer-events-auto group relative flex flex-row items-center justify-center gap-3 md:gap-4 px-6 py-3 md:px-8 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
                     >
-                      <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
+                      <span className="relative z-10 text-white text-[0.6rem] md:text-[0.75rem] font-semibold tracking-[0.15em] md:tracking-[0.2em] uppercase text-center drop-shadow-md whitespace-nowrap">
                         Explore Interactive Map
                       </span>
-                      <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
+                      <span className="relative z-10 hidden sm:block w-6 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-10 md:group-hover:w-16 group-hover:bg-white" />
                     </Link>
                   </div>
                 )}
@@ -419,9 +419,9 @@ export function MetricsSection({
 
             {/* RIGHT IMAGE */}
 
-            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] pr-6 md:pr-10 lg:pr-12 flex flex-col">
-              <div className="relative flex-1 w-full h-full min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
-                <div className="absolute top-8 right-8 z-20 flex items-center gap-4">
+            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] py-6 px-0 md:p-10 lg:p-0 lg:pr-12 flex flex-col">
+              <div className="relative flex-1 w-full h-full min-h-[350px] md:min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
+                <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 flex items-center gap-4">
                   <CrosshairIcon light />
 
                   <Annotation className="!text-[#F5F0E8]/90">
@@ -438,15 +438,15 @@ export function MetricsSection({
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
 
                 {data.mapHref && (
-                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none p-4">
                     <Link
                       href={data.mapHref}
-                      className="pointer-events-auto group relative flex flex-col md:flex-row items-center gap-4 px-8 py-4 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
+                      className="pointer-events-auto group relative flex flex-row items-center justify-center gap-3 md:gap-4 px-6 py-3 md:px-8 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
                     >
-                      <span className="relative z-10 text-white text-[0.7rem] md:text-[0.75rem] font-semibold tracking-[0.2em] uppercase text-center drop-shadow-md">
+                      <span className="relative z-10 text-white text-[0.6rem] md:text-[0.75rem] font-semibold tracking-[0.15em] md:tracking-[0.2em] uppercase text-center drop-shadow-md whitespace-nowrap">
                         Explore Interactive Map
                       </span>
-                      <span className="relative z-10 w-8 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-12 md:group-hover:w-16 group-hover:bg-white" />
+                      <span className="relative z-10 hidden sm:block w-6 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-10 md:group-hover:w-16 group-hover:bg-white" />
                     </Link>
                   </div>
                 )}
