@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { ButtonGhost } from "./ui/button-ghost";
-import { ImagePanel } from "./ui/image-panel";
 import { Annotation } from "./ui/annotation";
 import { CrosshairIcon } from "./ui/crosshair-icon";
 
@@ -107,23 +108,32 @@ export function TeamSection() {
           <article
             key={item.title}
             data-commitment-card
-            className="group relative bg-cream p-6 md:p-8 flex flex-col h-full transition-colors duration-700 hover:bg-creamDeep"
+            className="group relative bg-cream p-6 md:p-8 flex flex-col h-full transition-colors duration-700 hover:bg-creamDeep cursor-pointer"
           >
             <div className="flex items-start justify-between mb-8">
               <Annotation>{item.fig}</Annotation>
               <CrosshairIcon className="opacity-30 group-hover:rotate-90 transition-all duration-700" />
             </div>
 
-            <ImagePanel
-              src={item.image}
-              alt={item.title}
-              aspectRatio="aspect-square"
-              className="mb-10"
-            />
+            <div className="relative aspect-square w-full overflow-hidden mb-10">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-[1.04]"
+              />
+              
+              {/* Hover Overlay Button */}
+              <div className="absolute inset-0 bg-dark/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-20">
+                <div className="w-20 h-20 bg-cream rounded-full flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
+                  <ArrowUpRight className="w-8 h-8 text-dark" />
+                </div>
+              </div>
+            </div>
 
             <div className="flex flex-col flex-grow">
               <Annotation className="mb-4 text-rust">Pillar 0{index + 1}</Annotation>
-              <SectionHeadline size="md" noPeriod className="mb-4">
+              <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
                 {item.title}<span className="text-rust">.</span>
               </SectionHeadline>
               <BodyText size="sm" className="mb-8 flex-grow">

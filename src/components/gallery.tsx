@@ -3,17 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { allProjects } from "@/lib/projects-data";
 import type { ProjectData } from "@/lib/projects-data";
 import { SectionWrapper } from "./ui/section-wrapper";
-import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 import { FigMarker } from "./ui/fig-marker";
-import { CrosshairIcon } from "./ui/crosshair-icon";
 
 export function Gallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -47,30 +45,22 @@ export function Gallery() {
 
   return (
     <SectionWrapper id="gallery" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
-      <div data-gallery-reveal className="grid grid-cols-12 gap-6 items-end mb-10 md:mb-12">
-        <div className="col-span-12 lg:col-span-7">
-          <SectionLabel counter="03 / 08">Signature Communities</SectionLabel>
-          <SectionHeadline 
-            size="xl" 
-            className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
-          >
-            Communities planned
-            <br />
-            for lasting comfort
-          </SectionHeadline>
-        </div>
-
-        <div className="col-span-12 lg:col-span-4 lg:col-start-9">
-          <BodyText size="md">
-            Thoughtful planning, verified approvals, and disciplined
-            construction come together to create addresses that remain
-            dependable long after possession day.
-          </BodyText>
-        </div>
+      <div data-gallery-reveal className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-8">
+        <h2 className="text-[clamp(3rem,6vw,5.5rem)] leading-[1.05] font-bold text-dark uppercase tracking-tight">
+          THESE AREN&apos;T
+          <br />
+          JUST <span className="font-serif italic font-light text-dark/90 tracking-normal lowercase">Projects</span>
+        </h2>
+        <Link 
+          href="/gallery" 
+          className="inline-flex items-center gap-3 rounded-full border border-dark/20 px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-dark hover:text-cream transition-colors duration-300 mb-2"
+        >
+          VIEW ALL <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
 
       {/* Editorial Mosaic Grid */}
-      <div className="grid grid-cols-12 gap-px bg-dark/10 border border-dark/10">
+      <div data-gallery-reveal className="grid grid-cols-12 gap-px bg-dark/10 border border-dark/10">
         <div className="col-span-12 lg:col-span-8 bg-cream">
           <ProjectCardLarge project={featured[0]} />
         </div>
@@ -106,64 +96,69 @@ export function Gallery() {
         </div>
       </div>
 
-      <FigMarker fig="fig. 08" label="Project Catalog" />
+      <FigMarker fig="fig. 08" label="Project Catalog" className="mt-20" />
     </SectionWrapper>
   );
 }
 
 function ProjectCardLarge({ project }: { project: ProjectData }) {
   return (
-    <article className="group relative overflow-hidden h-full">
-      {/* Image */}
-      <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-full w-full overflow-hidden">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-105"
-        />
-        {/* Gradient only on lg+ where text overlays the image */}
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
-      </div>
+    <Link href={`/projects/${project.slug}`} className="group block h-full">
+      <article className="relative overflow-hidden h-full cursor-pointer">
+        {/* Image */}
+        <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-full w-full overflow-hidden">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-105"
+          />
+          {/* Gradient only on lg+ where text overlays the image */}
+          <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />
+          
+          {/* Hover Overlay Button */}
+          <div className="absolute inset-0 bg-dark/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-20">
+            <div className="w-20 h-20 bg-cream rounded-full flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
+              <ArrowUpRight className="w-8 h-8 text-dark" />
+            </div>
+          </div>
+        </div>
 
-      {/* Index + location badge — sits over image on all sizes */}
-      <div className="absolute top-4 left-4 flex items-center gap-3 z-10 lg:top-8 lg:left-8 lg:gap-4">
-        <Annotation light className="!text-cream/90">{project.index}</Annotation>
-        <div className="h-px w-3 lg:w-4 bg-rust/50" />
-        <Annotation light className="!text-cream/70 uppercase">{project.location}</Annotation>
-      </div>
+        {/* Index + location badge — sits over image on all sizes */}
+        <div className="absolute top-4 left-4 flex items-center gap-3 z-30 lg:top-8 lg:left-8 lg:gap-4 pointer-events-none">
+          <Annotation light className="!text-cream/90">{project.index}</Annotation>
+          <div className="h-px w-3 lg:w-4 bg-rust/50" />
+          <Annotation light className="!text-cream/70 uppercase">{project.location}</Annotation>
+        </div>
 
-      {/* Mobile: text block BELOW the image, dark bg for readability */}
-      <div className="lg:hidden bg-dark px-6 py-6">
-        <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[1.6rem] leading-[1.15]">
-          {project.title}
-        </SectionHeadline>
-        <BodyText size="sm" light className="mt-3 !text-[#F5F0E8]/70">
-          {project.summary}
-        </BodyText>
-      </div>
+        {/* Mobile: text block BELOW the image, dark bg for readability */}
+        <div className="lg:hidden bg-dark px-6 py-6 relative z-30 pointer-events-none">
+          <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[1.6rem] leading-[1.15]">
+            {project.title}
+          </SectionHeadline>
+          <BodyText size="sm" light className="mt-3 !text-[#F5F0E8]/70">
+            {project.summary}
+          </BodyText>
+        </div>
 
-      {/* Desktop: text overlaid on image as before */}
-      <div className="hidden lg:block absolute bottom-10 left-10 max-w-[80%] text-cream z-10">
-        <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[2.8rem]">
-          {project.title}
-        </SectionHeadline>
-        <BodyText size="sm" light className="mt-4 !text-[#F5F0E8]/70">
-          {project.summary}
-        </BodyText>
-      </div>
-
-      <div className="absolute top-4 right-4 lg:top-8 lg:right-8 z-10">
-        <CrosshairIcon light className="opacity-30 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-700" />
-      </div>
-    </article>
+        {/* Desktop: text overlaid on image as before */}
+        <div className="hidden lg:block absolute bottom-10 left-10 max-w-[80%] text-cream z-30 pointer-events-none">
+          <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[2.8rem]">
+            {project.title}
+          </SectionHeadline>
+          <BodyText size="sm" light className="mt-4 !text-[#F5F0E8]/70">
+            {project.summary}
+          </BodyText>
+        </div>
+      </article>
+    </Link>
   );
 }
 
 function ProjectCardSmall({ project }: { project: ProjectData }) {
   return (
     <Link href={`/projects/${project.slug}`} className="group block h-full">
-      <article className="relative overflow-hidden h-full">
+      <article className="relative overflow-hidden h-full cursor-pointer">
         <div className="relative aspect-[4/5] w-full overflow-hidden">
           <Image
             src={project.image}
@@ -172,13 +167,20 @@ function ProjectCardSmall({ project }: { project: ProjectData }) {
             className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />
+          
+          {/* Hover Overlay Button */}
+          <div className="absolute inset-0 bg-dark/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center z-20">
+            <div className="w-20 h-20 bg-cream rounded-full flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
+              <ArrowUpRight className="w-8 h-8 text-dark" />
+            </div>
+          </div>
         </div>
 
-        <div className="absolute top-6 left-6 z-10">
+        <div className="absolute top-6 left-6 z-30 pointer-events-none">
           <Annotation light className="!text-[#F5F0E8]/60">{project.index}</Annotation>
         </div>
 
-        <div className="absolute bottom-8 left-8 right-8 text-cream z-10">
+        <div className="absolute bottom-8 left-8 right-8 text-cream z-30 pointer-events-none">
           <SectionHeadline size="md" light className="!text-[#F5F0E8] !text-[1.8rem] mb-4">
             {project.title}
           </SectionHeadline>
@@ -186,10 +188,6 @@ function ProjectCardSmall({ project }: { project: ProjectData }) {
             EXPLORE STUDY
             <ArrowRight className="w-3 h-3 transition-transform duration-500 group-hover:translate-x-1" />
           </div>
-        </div>
-
-        <div className="absolute top-6 right-6 z-10">
-          <CrosshairIcon light className="opacity-10 group-hover:opacity-40 transition-opacity" />
         </div>
       </article>
     </Link>
