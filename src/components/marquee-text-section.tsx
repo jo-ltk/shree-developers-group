@@ -30,7 +30,7 @@ export function MarqueeTextSection() {
         <Annotation className="hidden md:block">fig. 12 / moving principles</Annotation>
       </div>
 
-      <div className="relative">
+      <div className="relative w-screen max-w-none ml-[calc(-50vw+50%)] overflow-hidden">
         {/* Vertical Blueprint Lines */}
         <div className="absolute left-0 top-0 bottom-0 w-px bg-[#D43F33]/10 z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-px bg-[#D43F33]/10 z-10" />

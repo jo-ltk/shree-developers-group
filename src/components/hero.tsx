@@ -48,7 +48,7 @@ export function Hero() {
       </div>
 
       {/* Hero Content Overlay */}
-      <div className="relative z-10 w-full px-8 pt-12 pb-12 md:px-12 lg:px-20 xl:px-24 2xl:px-32 lg:py-0">
+      <div className="relative z-10 w-full px-6 sm:px-8 pt-12 pb-12 md:px-12 lg:px-20 xl:px-24 2xl:px-32 lg:py-0">
         <div
           data-hero-content
           className="w-full max-w-[620px] xl:max-w-[680px] 2xl:max-w-[720px] ml-0 lg:pt-20"

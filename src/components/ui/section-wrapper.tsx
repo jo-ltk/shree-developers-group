@@ -22,7 +22,7 @@ export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
           className,
         )}
       >
-        <div className="mx-auto w-full max-w-[1450px] px-8 md:px-12 lg:px-20">
+        <div className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
           {children}
         </div>
       </section>

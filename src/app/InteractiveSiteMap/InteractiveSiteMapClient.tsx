@@ -360,7 +360,7 @@ export function InteractiveSiteMapClient({
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-[#F5F0E8] text-[#1C1208]">
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-[#F5F0E8] text-[#1C1208]">
 
       {/* ════════════════════════════════════
           HEADER
@@ -561,11 +561,11 @@ export function InteractiveSiteMapClient({
   layout={false}
   initial={reduceMotion ? false : { opacity: 0, y: 10 }}
   animate={{ opacity: 1, y: 0 }}
-  className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] px-3 py-2.5"
+  className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] lg:pb-4"
 >
-  <div className="flex items-center gap-3">
+  <div className="flex items-center gap-4">
     {/* Thumbnail */}
-    <div className="w-[52px] h-[52px] shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF]" style={{ borderRadius: 3 }}>
+    <div className="w-[64px] h-[64px] shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF]" style={{ borderRadius: 3 }}>
       <img
         src={selectedLot.image}
         alt={selectedLot.title}
@@ -594,7 +594,7 @@ export function InteractiveSiteMapClient({
 
       {/* Title */}
       <p
-        className="truncate text-[1rem] font-light leading-tight text-[#1C1208] mb-0.5"
+        className="truncate text-[1.15rem] font-light leading-tight text-[#1C1208] mb-1"
         style={{ fontFamily: "'Cormorant Garamond', serif" }}
       >
         {selectedLot.title}
@@ -602,7 +602,7 @@ export function InteractiveSiteMapClient({
 
       {/* Specs inline */}
       <div
-        className="flex items-center gap-2 text-[0.45rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]/35"
+        className="flex items-center gap-2 text-[0.5rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]/35"
         style={{ fontFamily: "'Montserrat', sans-serif" }}
       >
         <span>{selectedLot.beds} Beds</span>
@@ -616,7 +616,7 @@ export function InteractiveSiteMapClient({
     {/* CTA */}
     <ButtonPrimary
       href={`/contact?source=InteractiveSiteMap&lot=${selectedLot.lotNumber}`}
-      className="shrink-0 h-9 px-3.5 !text-[0.5rem] !tracking-[0.2em]"
+      className="shrink-0 h-10 px-4 !text-[0.55rem] !tracking-[0.2em]"
     >
       Inquire
     </ButtonPrimary>
