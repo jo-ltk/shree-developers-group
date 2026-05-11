@@ -99,11 +99,7 @@ export function NavbarAnimated() {
                 href={item.href}
                 className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-rust ${
                   item.isTrailing ? "justify-self-end" : "justify-self-start"
-                } ${
-                  (item.title === "Notes" || item.title === "Contact") && !isOpen && isAtTop
-                    ? "!text-[#F5F0E8]"
-                    : "text-dark"
-                }`}
+                } text-dark`}
               >
                 <span>{item.title}</span>
                 {item.links.length > 0 ? <ChevronDown className="h-3.5 w-3.5 opacity-60" /> : null}

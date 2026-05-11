@@ -7,10 +7,11 @@ interface SectionWrapperProps {
   className?: string;
   id?: string;
   noPadding?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
-  ({ children, dark, className, id, noPadding }, ref) => {
+  ({ children, dark, className, id, noPadding, style }, ref) => {
     return (
       <section
         id={id}
@@ -21,6 +22,7 @@ export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
           !noPadding && "py-12 md:py-16 lg:py-20",
           className,
         )}
+        style={style}
       >
         <div className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
           {children}

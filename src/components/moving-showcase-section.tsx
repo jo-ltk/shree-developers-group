@@ -58,12 +58,12 @@ export function MovingShowcaseSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
               
               {/* Top Left */}
-              <div className="absolute top-8 left-6 md:left-10 lg:left-16 z-20 flex items-center gap-4">
+              <div className="absolute top-5 sm:top-8 left-5 sm:left-6 md:left-10 lg:left-16 z-20 flex items-center gap-3 sm:gap-4">
                 <Annotation light className="!text-[#F5F0E8]">{item.fig}</Annotation>
                 <CrosshairIcon light className="opacity-40" />
               </div>
 
-              {/* Top Right */}
+              {/* Top Right — desktop only, unchanged */}
               <div className="absolute top-8 right-6 md:right-10 lg:right-16 z-20 hidden md:flex flex-col items-end gap-2 transition-opacity duration-700 group-hover/slide:opacity-100 opacity-40">
                 <BrandMark 
                   variant="black" 
@@ -74,13 +74,13 @@ export function MovingShowcaseSection() {
               </div>
 
               {/* Bottom Content */}
-              <div className="absolute inset-x-0 bottom-0 z-20 px-6 pb-10 md:px-10 md:pb-14 lg:px-16 lg:pb-20">
-                <Annotation light className="mb-5 !text-[#F5F0E8]/60">ARCHITECTURAL INTENTION</Annotation>
+              <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-8 sm:px-6 sm:pb-10 md:px-10 md:pb-14 lg:px-16 lg:pb-20">
+                <Annotation light className="mb-3 sm:mb-5 !text-[#F5F0E8]/60">ARCHITECTURAL INTENTION</Annotation>
                 <SectionHeadline 
                   size="hero" 
                   light 
                   noPeriod 
-                  className="max-w-[12ch] !text-[#F5F0E8] !text-[clamp(3rem,8vw,9rem)] leading-[0.9] tracking-tight transition-colors duration-700 group-hover/slide:!text-rust"
+                  className="max-w-[12ch] !text-[#F5F0E8] !text-[clamp(2rem,8vw,9rem)] leading-[0.9] tracking-tight transition-colors duration-700 group-hover/slide:!text-rust"
                 >
                   {item.title}
                 </SectionHeadline>
@@ -91,9 +91,9 @@ export function MovingShowcaseSection() {
       </div>
 
       {/* Footer Annotation */}
-      <div className="px-8 md:px-12 lg:px-20 py-8 md:py-10 flex items-center">
+      <div className="px-5 sm:px-8 md:px-12 lg:px-20 py-6 sm:py-8 md:py-10 flex items-center">
         <Annotation light className="!text-[#F5F0E8]/40">Continuous Movement</Annotation>
-        <div className="h-px flex-grow mx-8 bg-[#F5F0E8]/10" />
+        <div className="h-px flex-grow mx-4 sm:mx-8 bg-[#F5F0E8]/10" />
         <Annotation light className="!text-[#F5F0E8]/40">fig. 20</Annotation>
       </div>
     </SectionWrapper>

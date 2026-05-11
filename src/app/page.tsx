@@ -10,12 +10,17 @@ import { NavbarAnimated } from "@/components/navbar-animated";
 import { RecentArticlesSection } from "@/components/recent-articles-section";
 import { TeamSection } from "@/components/team-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
+import { CredibilityMetrics } from "@/components/credibility-metrics";
+import { AboutSnippet } from "@/components/about-snippet";
+import { CtaBanner } from "@/components/cta-banner";
 
 export default function Home() {
   return (
     <main className="overflow-x-hidden bg-background">
       <NavbarAnimated />
       <Hero />
+      <CredibilityMetrics />
+      <AboutSnippet />
       <IntroStatement />
       {/* <LogoSection /> */}
       <Gallery />
@@ -26,6 +31,7 @@ export default function Home() {
       <TeamSection />
       <MovingShowcaseSection />
       <TestimonialsSection />
+      <CtaBanner />
       <FooterSection />
     </main>
   );

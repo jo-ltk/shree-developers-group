@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Instagram, Facebook, Linkedin } from "lucide-react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
@@ -90,9 +90,17 @@ export function FooterSection() {
                   hello@shree<br />developersgroup.com
                 </span>
               </a>
+              <a href="tel:+14045550123" className="block font-mono text-[0.8rem] tracking-widest !text-[#F5F0E8]/80 hover:!text-rust transition-colors mt-2 mb-4">
+                +1 (404) 555-0123
+              </a>
               <BodyText size="sm" light className="!text-[#F5F0E8]/60 !leading-relaxed">
                 Speak with us about the details that define your next chapter.
               </BodyText>
+              <div className="flex items-center gap-5 pt-2">
+                <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors"><Instagram className="w-5 h-5" /></a>
+                <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors"><Facebook className="w-5 h-5" /></a>
+                <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors"><Linkedin className="w-5 h-5" /></a>
+              </div>
             </div>
           </div>
 
@@ -103,11 +111,11 @@ export function FooterSection() {
               <BodyText size="sm" light className="!text-[#F5F0E8]/60 !leading-relaxed">
                 Headquarters<br />
                 Premium Residential Tower<br />
-                Gujarat, India &mdash; 380001
+                Georgia, USA &mdash; 30301
               </BodyText>
               <div className="flex flex-col gap-1 text-rust/60 font-mono text-[9px]">
-                <span>LAT: 23.0225&deg; N</span>
-                <span>LNG: 72.5714&deg; E</span>
+                <span>LAT: 33.7490&deg; N</span>
+                <span>LNG: 84.3880&deg; W</span>
               </div>
             </div>
           </div>
@@ -119,22 +127,23 @@ export function FooterSection() {
               <BodyText size="sm" light className="!text-[#F5F0E8]/60">
                 Subscribe to receive technical bulletins and handover milestones.
               </BodyText>
-              <label className="group/input block relative">
+              <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed to updates'); }} className="group/input block relative">
                 <input
                   type="email"
+                  required
                   placeholder="EMAIL SPECIFICATION"
                   className="w-full bg-transparent border-b border-[#F5F0E8]/10 pb-2 text-[#F5F0E8] font-mono text-[10px] tracking-widest placeholder:text-[#F5F0E8]/20 focus:outline-none focus:border-rust transition-colors duration-500"
                 />
-                <button className="absolute right-0 bottom-2 text-[#F5F0E8] hover:text-rust transition-colors duration-300">
+                <button type="submit" className="absolute right-0 bottom-2 text-[#F5F0E8] hover:text-rust transition-colors duration-300">
                   <ArrowRight className="w-4 h-4" />
                 </button>
-              </label>
+              </form>
             </div>
           </div>
         </div>
 
         {/* FINAL MARKER BAR */}
-        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#F5F0E8]/5 pt-6">
+        <div className="mt-8 flex flex-col lg:flex-row items-center justify-between gap-6 border-t border-[#F5F0E8]/5 pt-6">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <BrandMark
               variant="steel"
@@ -151,9 +160,22 @@ export function FooterSection() {
             </div>
           </div>
 
-          <Annotation light className="!text-[#F5F0E8]/20 !text-[0.55rem] text-center md:text-right">
-            &copy; SHREE DEVELOPERS GROUP &mdash; PREMIUM EDITORIAL ARCHITECTURE V1.02
-          </Annotation>
+          <div className="flex flex-col items-center lg:items-end gap-3">
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors text-[0.6rem] uppercase tracking-widest font-mono">Privacy Policy</a>
+              <span className="text-[#F5F0E8]/20 text-[0.6rem]">|</span>
+              <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors text-[0.6rem] uppercase tracking-widest font-mono">Terms of Service</a>
+            </div>
+            <Annotation light className="!text-[#F5F0E8]/40 !text-[0.55rem] text-center lg:text-right flex items-center justify-center lg:justify-end gap-2">
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+              </svg>
+              EQUAL HOUSING OPPORTUNITY
+            </Annotation>
+            <Annotation light className="!text-[#F5F0E8]/20 !text-[0.55rem] text-center lg:text-right">
+              &copy; SHREE DEVELOPERS GROUP &mdash; PREMIUM EDITORIAL ARCHITECTURE V1.02
+            </Annotation>
+          </div>
         </div>
 
       </div>
