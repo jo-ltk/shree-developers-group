@@ -6,7 +6,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
 import { ensureGsapPlugins } from "@/lib/gsap";
-import { NavbarAnimated } from "@/components/navbar-animated";
+import { NavbarEditorial } from "@/components/navbar-editorial";
 import { FooterSection } from "@/components/footer-section";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionLabel } from "@/components/ui/section-label";
@@ -37,7 +37,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
 
   return (
     <div ref={pageRef} className="overflow-x-hidden bg-cream">
-      <NavbarAnimated />
+      <NavbarEditorial />
 
       {/* 1. HERO SECTION */}
       <HeroSection project={project} />
@@ -48,8 +48,17 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       {/* 3. VISUAL GALLERY */}
       <RendersSection renders={project.renders} />
 
-      {/* 4. PROGRESS LOG */}
+      {/* 4. AMENITIES */}
+      <AmenitiesSection amenities={project.amenities} />
+
+      {/* 5. LOCATION MAP */}
+      <LocationSection locationMap={project.locationMap} locationName={project.location} />
+
+      {/* 6. PROGRESS LOG */}
       <ProgressSection progress={project.progress} title={project.title} />
+
+      {/* 7. ENQUIRY FORM */}
+      <EnquirySection projectTitle={project.title} />
 
       {/* BACK TO PORTFOLIO */}
       <section className="bg-dark py-20 overflow-hidden relative">
@@ -326,6 +335,150 @@ function ProgressSection({ progress, title }: { progress: ProjectData["progress"
         </div>
       </div>
       <FigMarker fig="fig. 26" label="Project Milestones" className="mt-24" />
+    </SectionWrapper>
+  );
+}
+
+function AmenitiesSection({ amenities }: { amenities: string[] }) {
+  return (
+    <SectionWrapper dark={true} className="!py-16 md:!py-24">
+      <div data-reveal className="grid grid-cols-12 gap-8 items-start">
+        <div className="col-span-12 lg:col-span-4">
+          <SectionLabel counter="05 / 07" light>Infrastructure</SectionLabel>
+          <SectionHeadline size="lg" light className="!text-[#F5F0E8] leading-none">
+            Curated<br /><em className="italic">amenities</em>
+          </SectionHeadline>
+          <BodyText size="md" light className="mt-8 !text-[#F5F0E8]/50">
+            Every facility is designed to enhance the daily ritual of living, ensuring comfort, security, and community.
+          </BodyText>
+        </div>
+        <div className="col-span-12 lg:col-span-7 lg:col-start-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#F5F0E8]/10 border border-[#F5F0E8]/10">
+            {amenities.map((amenity, i) => (
+              <div key={i} className="bg-dark p-8 flex items-center gap-6 group">
+                <div className="w-10 h-10 border border-[#F5F0E8]/20 flex items-center justify-center transition-colors group-hover:border-rust">
+                  <CrosshairIcon light className="opacity-40" />
+                </div>
+                <Annotation light className="!text-[#F5F0E8]/80 font-bold">{amenity.toUpperCase()}</Annotation>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <FigMarker fig="fig. 27" label="Facility Audit" light className="mt-16" />
+    </SectionWrapper>
+  );
+}
+
+function LocationSection({ locationMap, locationName }: { locationMap: string; locationName: string }) {
+  return (
+    <SectionWrapper className="!py-16 md:!py-24">
+      <div data-reveal className="grid grid-cols-12 gap-8 items-end mb-12">
+        <div className="col-span-12 lg:col-span-6">
+          <SectionLabel counter="06 / 07">Connectivity</SectionLabel>
+          <SectionHeadline size="xl" className="!text-[clamp(2rem,4vw,4rem)] leading-none">
+            Location &<br /><em className="italic">surroundings</em>
+          </SectionHeadline>
+        </div>
+        <div className="col-span-12 lg:col-span-5 lg:col-start-8 text-right">
+          <Annotation className="!text-rust mb-2">PRIMARY ADDRESS</Annotation>
+          <BodyText size="lg">{locationName}</BodyText>
+        </div>
+      </div>
+
+      <div data-reveal className="relative h-[500px] md:h-[650px] w-full overflow-hidden rounded-xl border border-dark/5 shadow-2xl">
+        <Image
+          src={locationMap}
+          alt={`Location Map for ${locationName}`}
+          fill
+          className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+        />
+        <div className="absolute inset-0 pointer-events-none border-[20px] border-cream/10" />
+        
+        <div className="absolute bottom-8 right-8 bg-dark p-6 text-white max-w-xs">
+          <Annotation light className="!text-rust mb-2">MAP LEGEND</Annotation>
+          <BodyText light size="sm">
+            Strategically positioned near major transit corridors, educational hubs, and healthcare facilities.
+          </BodyText>
+        </div>
+      </div>
+      <FigMarker fig="fig. 28" label="Geospatial Context" className="mt-16" />
+    </SectionWrapper>
+  );
+}
+
+function EnquirySection({ projectTitle }: { projectTitle: string }) {
+  return (
+    <SectionWrapper id="enquiry" dark={true} className="!py-24 md:!py-36 bg-[#1A2C1E]">
+      <div className="grid grid-cols-12 gap-12 items-start">
+        <div className="col-span-12 lg:col-span-5">
+          <SectionLabel counter="07 / 07" light>Consultation</SectionLabel>
+          <SectionHeadline size="xl" light className="!text-[#F5F0E8] leading-tight">
+            Secure your<br />interest in<br />{projectTitle}
+          </SectionHeadline>
+          <BodyText light size="lg" className="mt-8 !text-[#F5F0E8]/60">
+            Speak with our advisory team to receive the complete dossier, pricing tiers, and availability schedule for this address.
+          </BodyText>
+          
+          <div className="mt-12 space-y-6">
+             <div className="flex items-center gap-6">
+                <div className="w-12 h-12 rounded-full border border-[#F5F0E8]/20 flex items-center justify-center text-rust">
+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div>
+                   <Annotation light className="!text-[#F5F0E8]/40">ADVISORY LINE</Annotation>
+                   <BodyText light className="font-bold">+1 (404) 555-0123</BodyText>
+                </div>
+             </div>
+             <div className="flex items-center gap-6">
+                <div className="w-12 h-12 rounded-full border border-[#F5F0E8]/20 flex items-center justify-center text-rust">
+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                   <Annotation light className="!text-[#F5F0E8]/40">GENERAL INQUIRIES</Annotation>
+                   <BodyText light className="font-bold">hello@shreedev.com</BodyText>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        <div className="col-span-12 lg:col-span-6 lg:col-start-7 bg-[#F5F0E8] p-8 md:p-12 shadow-2xl relative">
+           <div className="absolute top-0 right-0 p-8 opacity-10"><CrosshairIcon /></div>
+           <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <div className="space-y-2">
+                    <Annotation className="!text-rust">FULL NAME</Annotation>
+                    <input type="text" className="w-full bg-transparent border-b border-dark/20 py-2 focus:border-rust outline-none transition-colors" placeholder="Enter your name" />
+                 </div>
+                 <div className="space-y-2">
+                    <Annotation className="!text-rust">EMAIL ADDRESS</Annotation>
+                    <input type="email" className="w-full bg-transparent border-b border-dark/20 py-2 focus:border-rust outline-none transition-colors" placeholder="email@example.com" />
+                 </div>
+              </div>
+              <div className="space-y-2">
+                 <Annotation className="!text-rust">PHONE NUMBER</Annotation>
+                 <input type="tel" className="w-full bg-transparent border-b border-dark/20 py-2 focus:border-rust outline-none transition-colors" placeholder="+1 (000) 000-0000" />
+              </div>
+              <div className="space-y-2">
+                 <Annotation className="!text-rust">PREFERED UNIT TYPE</Annotation>
+                 <select className="w-full bg-transparent border-b border-dark/20 py-4 focus:border-rust outline-none transition-colors appearance-none cursor-pointer">
+                    <option>Select Option</option>
+                    <option>2BHK Apartment</option>
+                    <option>3BHK Premium</option>
+                    <option>Penthouse / Duplex</option>
+                    <option>Villa Plot</option>
+                 </select>
+              </div>
+              <div className="space-y-2">
+                 <Annotation className="!text-rust">MESSAGE</Annotation>
+                 <textarea rows={3} className="w-full bg-transparent border-b border-dark/20 py-2 focus:border-rust outline-none transition-colors resize-none" placeholder="How can we help?"></textarea>
+              </div>
+              <button className="w-full h-[54px] bg-dark text-white uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-rust transition-colors duration-500">
+                 Send Inquiry
+              </button>
+           </form>
+        </div>
+      </div>
     </SectionWrapper>
   );
 }

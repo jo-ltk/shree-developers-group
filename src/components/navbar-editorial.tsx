@@ -16,7 +16,7 @@ const navColumns = [
 const desktopGridClass =
   "grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] items-start gap-x-8";
 
-export function NavbarAnimated() {
+export function NavbarEditorial() {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -81,9 +81,9 @@ export function NavbarAnimated() {
           <div className={`${desktopGridClass} hidden xl:grid items-center`}>
             <a href="/" className="w-fit text-dark">
               <BrandMark
-                variant="black"
+                variant={isAtTop ? "steel" : "black"}
                 className={`transition-all duration-500 ${
-                  isAtTop ? "h-28 w-[18rem]" : "h-16 w-[12rem]"
+                  isAtTop ? "h-20 w-[14rem]" : "h-14 w-[10rem]"
                 }`}
                 imageClassName="object-left"
                 alt="Shree Developers Group logo"
@@ -108,9 +108,9 @@ export function NavbarAnimated() {
           <div className="flex items-center justify-between xl:hidden">
             <a href="/" className="relative z-50 text-[var(--text-primary)]">
               <BrandMark
-                variant="black"
+                variant={isAtTop ? "steel" : "black"}
                 className={`transition-all duration-500 ${
-                  isAtTop ? "h-16 w-[11rem]" : "h-12 w-[8.5rem]"
+                  isAtTop ? "h-14 w-[10rem]" : "h-11 w-[8rem]"
                 }`}
                 imageClassName="object-left"
                 alt="Shree Developers Group logo"

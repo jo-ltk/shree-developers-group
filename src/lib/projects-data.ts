@@ -19,6 +19,8 @@ export type ProjectData = {
   plans: { label: string; image: string }[];
   renders: { label: string; image: string; isVideo?: boolean }[];
   progress: ProgressEntry[];
+  amenities: string[];
+  locationMap: string;
 };
 
 export const allProjects: ProjectData[] = [
@@ -53,6 +55,8 @@ export const allProjects: ProjectData[] = [
       { date: "Jan 2026", note: "Earth-leveling and soil testing completed" },
       { date: "Nov 2025", note: "RERA registration approved — sales opened" },
     ],
+    amenities: ["Gated Community", "Clubhouse", "Children's Play Area", "Landscaped Gardens", "24/7 Security", "Vastu Compliant"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "02",
@@ -83,6 +87,8 @@ export const allProjects: ProjectData[] = [
       { date: "Feb 2026", note: "Water supply and drainage network laid" },
       { date: "Dec 2025", note: "Plot demarcation and boundary stones placed" },
     ],
+    amenities: ["Underground Utilities", "Tree-lined Avenues", "Central Park", "Storm Water Drainage", "Street Lighting"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "03",
@@ -115,6 +121,8 @@ export const allProjects: ProjectData[] = [
       { date: "Jan 2026", note: "RERA registration approved" },
       { date: "Oct 2025", note: "Pile foundation and basement slab complete" },
     ],
+    amenities: ["Sky Lounge", "EV-Ready Parking", "Rainwater Harvesting", "Landscaped Podium", "24/7 Security", "High-speed Elevators"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "04",
@@ -145,6 +153,8 @@ export const allProjects: ProjectData[] = [
       { date: "Sep 2024", note: "Landscaping and common areas finished" },
       { date: "Jun 2024", note: "Interior finishing and quality audit completed" },
     ],
+    amenities: ["Shared Green Spaces", "Dedicated Parking", "24/7 Water Supply", "Street Lighting", "Gated Entry"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "05",
@@ -175,6 +185,8 @@ export const allProjects: ProjectData[] = [
       { date: "Mar 2023", note: "Community hall inauguration" },
       { date: "Dec 2022", note: "Final handover of Phase 1 units" },
     ],
+    amenities: ["Central Courtyard", "Community Hall", "Jogging Track", "Senior Citizen Garden", "Vastu Orientation"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "06",
@@ -205,6 +217,8 @@ export const allProjects: ProjectData[] = [
       { date: "Aug 2022", note: "Final coat painting and handover prep" },
       { date: "May 2022", note: "Pool and gym facility commissioning" },
     ],
+    amenities: ["Swimming Pool", "Rooftop Terrace", "Gymnasium", "Double-height Lobby", "Landscaped Courtyard"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "07",
@@ -235,6 +249,8 @@ export const allProjects: ProjectData[] = [
       { date: "Jan 2021", note: "Club and pool facility opened" },
       { date: "Oct 2020", note: "Landscaping and common area handover" },
     ],
+    amenities: ["Clubhouse", "Swimming Pool", "Multi-purpose Court", "Manned Security", "Mature Landscaping"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
   {
     index: "08",
@@ -265,6 +281,62 @@ export const allProjects: ProjectData[] = [
       { date: "Jun 2020", note: "Completion certificate received" },
       { date: "Mar 2020", note: "Residential floors handed over" },
     ],
+    amenities: ["Retail Podium", "Food Court", "Sky Terrace", "Separate Residential Entry", "Elevated Living"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    index: "09",
+    slug: "elysian-gates",
+    title: "Elysian Gates",
+    location: "Forsyth County, GA",
+    type: "Gated Enclave",
+    year: "Ongoing",
+    status: "active",
+    highlight: "Exclusive gated living featuring high-performance homes and private wooded backyards",
+    summary: "A private, high-performance enclave where architectural precision meets the quiet seclusion of North Georgia's wooded landscape.",
+    brief: "Elysian Gates is a premiere gated enclave in Forsyth County, designed for those who seek both architectural performance and natural seclusion. Each home is built with high-efficiency systems and features expansive wooded backyards, offering a level of privacy rarely found in modern developments. The community is defined by its commitment to quiet luxury and structural excellence.",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82",
+    plans: [
+      { label: "Master Site Plan", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
+      { label: "5BHK Estate Plan", image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80" },
+    ],
+    renders: [
+      { label: "Entrance Gate Render", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80" },
+      { label: "Aerial Woods View", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80", isVideo: true },
+    ],
+    progress: [
+      { date: "May 2026", note: "Final landscaping for Phase 1 completed", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80" },
+      { date: "Feb 2026", note: "Model home interiors finalized" },
+    ],
+    amenities: ["Gated Perimeter", "High-Performance Homes", "Private Wooded Lots", "Underground Utilities", "24/7 Security"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    index: "10",
+    slug: "sydney-oaks",
+    title: "Sydney Oaks",
+    location: "Gwinnett County, GA",
+    type: "Estate Collection",
+    year: "Ongoing",
+    status: "active",
+    highlight: "Thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture",
+    summary: "Spacious estate lots and modern farmhouse architecture blending seamlessly into the natural Gwinnett landscape.",
+    brief: "Sydney Oaks brings modern farmhouse architecture to a thoughtfully planned neighborhood in Gwinnett County. With spacious estate lots and a focus on blending the built environment with the natural landscape, Sydney Oaks offers a balanced lifestyle. The homes feature open-concept floor plans, premium materials, and a design language that feels both current and timeless.",
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
+    plans: [
+      { label: "Community Layout", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
+      { label: "4BHK Farmhouse Plan", image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80" },
+    ],
+    renders: [
+      { label: "Street View Render", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" },
+      { label: "Park & Trail Visualization", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80", isVideo: true },
+    ],
+    progress: [
+      { date: "Apr 2026", note: "Paving of Oak Ridge Trail completed", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" },
+      { date: "Jan 2026", note: "Underground utility lines installed" },
+    ],
+    amenities: ["Estate-Sized Lots", "Modern Farmhouse Design", "Landscaped Avenues", "Natural Trail Access", "Family-Focused Planning"],
+    locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 

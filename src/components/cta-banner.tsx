@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { SectionWrapper } from "./ui/section-wrapper";
@@ -27,13 +27,16 @@ const headlineLines = [
 export function CtaBanner() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!sectionRef.current) return;
     const { gsap } = ensureGsapPlugins();
 
     const ctx = gsap.context(() => {
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const fillWords = gsap.utils.toArray<HTMLElement>("[data-fill-word]");
+      // Scope the selector to the current section to avoid conflicts with other components
+      const fillWords = gsap.utils.toArray<HTMLElement>("[data-fill-word]", sectionRef.current);
+
+      if (fillWords.length === 0) return;
 
       if (reducedMotion) {
         gsap.set(fillWords, { clipPath: "inset(0% 0 0 0)" });
@@ -55,7 +58,7 @@ export function CtaBanner() {
           toggleActions: "play none none reverse",
         },
       });
-    }, sectionRef);
+    }, sectionRef.current || undefined);
 
     return () => ctx.revert();
   }, []);

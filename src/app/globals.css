@@ -351,3 +351,50 @@ a {
     perspective: none !important;
   }
 }
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #F5F0E8;
+  color: #1C1208;
+}
+
+::selection {
+  background: #D43F33;
+  color: #F5F0E8;
+}
+
+.parallax-grid {
+  background-image:
+    linear-gradient(to right, rgba(212,63,51,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212,63,51,0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.editorial-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(0,0,0,.3) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.section-fade {
+  animation: fadeUp 1s ease forwards;
+}
+
+.hover-lift {
+  transition:
+    transform 500ms ease,
+    border-color 500ms ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+}

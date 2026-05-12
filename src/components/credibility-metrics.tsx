@@ -16,7 +16,7 @@ export function CredibilityMetrics() {
     <SectionWrapper dark className="!py-10 md:!py-14">
 
       {/* Blueprint grid lines */}
-      <div className="pointer-events-none absolute inset-0 flex justify-between px-8 md:px-12 lg:px-20 z-0">
+      <div className="pointer-events-none absolute inset-0 flex justify-between px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 z-0">
         {[0, 1, 2, 3, 4].map((i) => (
           <div key={i} className="w-px h-full bg-[#D43F33]/[0.06]" />
         ))}
@@ -24,16 +24,16 @@ export function CredibilityMetrics() {
 
       <div className="relative z-10 flex flex-col gap-6">
 
-        {/* Top row — headline left, annotation right */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        {/* Top row — headline left */}
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <SectionLabel light counter="01 / 04">Credibility</SectionLabel>
             <SectionHeadline light size="lg" className="!text-[clamp(2rem,6vw,4.2rem)] !leading-[0.95]">
               Why homeowners <em className="italic">trust</em> us
             </SectionHeadline>
           </div>
-          <Annotation light className="sm:text-right !leading-[2] sm:shrink-0 sm:pl-4">
-            Shree Developers Group{"\n"}Est. 2009 · Kerala, IN
+          <Annotation light className="!leading-[2] opacity-60">
+            Shree Developers Group · Est. 2009 · Kerala, IN
           </Annotation>
         </div>
 
@@ -43,7 +43,7 @@ export function CredibilityMetrics() {
             <div
               key={i}
               className={[
-                "group relative flex flex-col gap-2 p-4 sm:p-5",
+                "group relative flex flex-col items-center text-center gap-2 p-4 sm:p-5",
                 "hover:bg-[#F5F0E8]/[0.03] transition-colors duration-300 cursor-default",
                 // Right border: cols 0 and 1 on mobile (2-col grid), all except last on sm+
                 "border-r border-[#F5F0E8]/[0.08]",

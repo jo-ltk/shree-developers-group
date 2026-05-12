@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
@@ -15,7 +15,7 @@ const statementLines = [
 export function IntroStatement() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const { gsap } = ensureGsapPlugins();
 
     const ctx = gsap.context(() => {
@@ -23,8 +23,11 @@ export function IntroStatement() {
 
       statementLines.forEach((_, lineIndex) => {
         const fillWords = gsap.utils.toArray<HTMLElement>(
-          `[data-fill-word][data-line="${lineIndex}"]`
+          `[data-fill-word][data-line="${lineIndex}"]`,
+          sectionRef.current
         );
+
+        if (fillWords.length === 0) return;
 
         if (reducedMotion) {
           gsap.set(fillWords, { clipPath: "inset(0% 0 0 0)" });
@@ -46,7 +49,7 @@ export function IntroStatement() {
           },
         });
       });
-    }, sectionRef);
+    }, sectionRef.current || undefined);
 
     return () => ctx.revert();
   }, []);

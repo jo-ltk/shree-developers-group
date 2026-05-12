@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Bed, Bath, Maximize2, MapPin, ArrowUpRight, Clock } from "lucide-react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
@@ -457,7 +457,7 @@ function ContactCard() {
 export function Gallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const { gsap } = ensureGsapPlugins();
 
@@ -477,7 +477,7 @@ export function Gallery() {
           duration: 1,
           stagger: 0.14,
         });
-    }, sectionRef);
+    }, sectionRef.current || undefined);
 
     return () => ctx.revert();
   }, []);
