@@ -9,36 +9,42 @@ import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 import { RustLine } from "./ui/rust-line";
 import { FigMarker } from "./ui/fig-marker";
+import { Play } from "lucide-react";
 
 const testimonials = [
   {
-    quote:
-      "The difference was clarity. Every step, from payment schedule to handover checklist, was explained in a way that made the purchase feel calm.",
+    type: "video",
+    quote: "Moving to Sydney Oaks was the best decision for our family. The sense of community is unmatched.",
+    name: "The Carter Family",
+    location: "Sydney Oaks, Suwanee",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    type: "text",
+    quote: "The difference was clarity. Every step, from payment schedule to handover checklist, was explained in a way that made the purchase feel calm.",
     name: "Rohan Mehta",
-    role: "Homeowner",
+    location: "Elysian Gates",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400",
   },
   {
-    quote:
-      "We were comparing several investments, and Shree helped us understand the site, timeline, and long-term value without rushing the decision.",
-    name: "Neha Shah",
-    role: "Investor",
+    type: "text",
+    quote: "We were comparing several investments, and Shree helped us understand the site, timeline, and long-term value without rushing the decision.",
+    name: "Sarah Jenkins",
+    location: "North Georgia",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
   },
   {
-    quote:
-      "The planning felt practical for our family. The rooms, parking, and community spaces were thought through for everyday life, not just the brochure.",
-    name: "Karan Patel",
-    role: "Resident",
-  },
-  {
-    quote:
-      "After possession, the team stayed responsive. That gave us confidence that the relationship did not end at the sale.",
-    name: "Aarav Desai",
-    role: "Homeowner",
+    type: "text",
+    quote: "The planning felt practical for our family. The rooms, parking, and community spaces were thought through for everyday life.",
+    name: "Michael Chen",
+    location: "Sydney Oaks",
+    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=400",
   },
 ];
 
 export function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -64,12 +70,12 @@ export function TestimonialsSection() {
           duration: 0.85,
           stagger: 0.12,
         })
-        .from("[data-testimonial-item]", {
+        .from("[data-testimonial-card]", {
           autoAlpha: 0,
-          x: -20,
+          x: 40,
           duration: 1,
-          stagger: 0.2,
-          delay: -0.5,
+          stagger: 0.15,
+          delay: -0.4,
         });
     }, sectionRef);
 
@@ -77,11 +83,11 @@ export function TestimonialsSection() {
   }, []);
 
   return (
-    <SectionWrapper id="testimonials" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
-      {/* Asymmetric Header (7/5 Split) */}
-      <div data-testimonial-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-10 md:mb-12">
-        <div className="col-span-12 lg:col-span-7">
-          <SectionLabel counter="05 / 08">Client Voices</SectionLabel>
+    <SectionWrapper id="testimonials" ref={sectionRef} dark={false} className="!py-24 md:!py-36 overflow-hidden bg-[#EDE8DF]">
+      {/* Asymmetric Header */}
+      <div data-testimonial-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-16 md:mb-24 px-8 md:px-12 lg:px-20">
+        <div className="col-span-12 lg:col-span-8">
+          <SectionLabel counter="11 / 11">Homeowner Experiences</SectionLabel>
           <SectionHeadline 
             size="xl" 
             className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
@@ -92,48 +98,94 @@ export function TestimonialsSection() {
           </SectionHeadline>
         </div>
         <div className="col-span-12 lg:col-span-4 lg:col-start-9">
-          <BodyText size="md" className="mb-8">
-            A premium builder experience should feel steady, human, and easy to understand. These 
-            stories reflect the kind of reassurance Shree wants every buyer to feel.
+          <BodyText size="md" className="mb-4 text-[#1C1208]/70">
+            A premium builder experience should feel steady, human, and easy to understand. Hear from the families who call our communities home.
           </BodyText>
         </div>
       </div>
 
-      {/* Testimonials Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24 border-t border-dark/10 pt-16 md:pt-24">
-        {testimonials.map((item, index) => (
-          <div 
-            key={index} 
-            data-testimonial-item 
-            className="group cursor-default"
-          >
-            <div className="border-l-2 border-rust pl-8 md:pl-12 transition-all duration-700 group-hover:border-l-4 group-hover:pl-10 md:group-hover:pl-14">
-              <p
-                className="text-dark leading-[1.4] mb-8 font-serif font-light italic transition-all duration-700 group-hover:-translate-y-1"
-                style={{
-                  fontSize: "clamp(1.5rem, 2.2vw, 2.2rem)",
-                }}
-              >
-                &ldquo;{item.quote}&rdquo;
-              </p>
-              <div className="flex items-center gap-6 transition-all duration-700 group-hover:translate-x-2">
-                <RustLine className="mb-0 w-8 transition-all duration-700 group-hover:w-12" />
+      {/* Slider Container */}
+      <div className="relative w-full pl-8 md:pl-12 lg:pl-20">
+        <div 
+          ref={sliderRef}
+          className="flex gap-6 md:gap-8 overflow-x-auto pb-12 pr-8 md:pr-12 lg:pr-20 snap-x snap-mandatory hide-scrollbar cursor-grab active:cursor-grabbing"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {testimonials.map((item, index) => (
+            <div 
+              key={index} 
+              data-testimonial-card
+              className="snap-start shrink-0 w-[85vw] md:w-[600px] lg:w-[700px] bg-[#F5F0E8] border border-[#1C1208]/10 group flex flex-col justify-between"
+            >
+              {item.type === "video" ? (
+                <div className="relative w-full aspect-video overflow-hidden bg-[#1C1208]">
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-[#1C1208]/20 group-hover:bg-[#1C1208]/40 transition-colors duration-500" />
+                  
+                  {/* Play Button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button className="w-16 h-16 rounded-full bg-[#F5F0E8]/90 backdrop-blur-sm flex items-center justify-center text-rust transition-transform duration-300 group-hover:scale-110 shadow-xl">
+                      <Play className="w-6 h-6 ml-1" fill="currentColor" />
+                    </button>
+                  </div>
+                  
+                  <div className="absolute top-6 left-6">
+                    <Annotation light className="bg-[#1C1208]/60 backdrop-blur-md px-3 py-1.5 rounded-sm">Featured Story</Annotation>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-8 md:p-12 border-b border-[#1C1208]/10 flex-grow flex flex-col justify-center">
+                  <p
+                    className="text-[#1C1208] leading-[1.4] font-serif font-light italic"
+                    style={{
+                      fontSize: "clamp(1.5rem, 2vw, 2.2rem)",
+                    }}
+                  >
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
+                </div>
+              )}
+              
+              <div className="p-6 md:p-8 flex items-center gap-6 bg-white/50">
+                {item.type === "text" && (
+                  <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#1C1208]/10">
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                    />
+                  </div>
+                )}
                 <div>
-                  <Annotation className="text-[0.65rem] font-bold">
+                  <h4 className="uppercase font-bold tracking-[0.2em] text-[0.7rem] text-[#1C1208] mb-1" style={{ fontFamily: "'Montserrat', sans-serif" }}>
                     {item.name}
-                  </Annotation>
-                  <Annotation className="text-[0.55rem] mt-1 opacity-60">
-                    {item.role}
-                  </Annotation>
+                  </h4>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-rust rounded-full" />
+                    <Annotation className="!text-[#1C1208]/50">
+                      {item.location}
+                    </Annotation>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      <FigMarker fig="fig. 21" label="Resident Narratives" />
+      <div className="px-8 md:px-12 lg:px-20 mt-8">
+        <FigMarker fig="fig. 52" label="Homeowner Feedback" />
+      </div>
+
+      <style jsx global>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </SectionWrapper>
   );
 }
-

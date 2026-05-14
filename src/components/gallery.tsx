@@ -37,19 +37,6 @@ interface CommunityData {
 
 const communities: CommunityData[] = [
   {
-    slug: "elysian-gates",
-    name: "Elysian Gates",
-    type: "Gated Enclave",
-    location: "Forsyth County, GA",
-    status: "Ongoing",
-    startingPrice: "From mid $500s",
-    availability: "Available",
-    concept: "Exclusive gated living featuring high-performance homes and private wooded backyards for ultimate seclusion.",
-    specs: { beds: 5, baths: 4, area: "From mid $500s" },
-    image: "/svg/elysian-gates.svg",
-    index: "01",
-  },
-  {
     slug: "sydney-oaks",
     name: "Sydney Oaks",
     type: "Estate Collection",
@@ -58,8 +45,21 @@ const communities: CommunityData[] = [
     startingPrice: "From low $400s",
     availability: "Available",
     concept: "A thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture blending into the natural landscape.",
-    specs: { beds: 4, baths: 3, area: "From low $400s" },
+    specs: { beds: 4, baths: 3, area: "4,200 SQ. FT." },
     image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
+    index: "01",
+  },
+  {
+    slug: "elysian-gates",
+    name: "Elysian Gates",
+    type: "Gated Enclave",
+    location: "Forsyth County, GA",
+    status: "Ongoing",
+    startingPrice: "From mid $500s",
+    availability: "Available",
+    concept: "Exclusive gated living featuring high-performance homes and private wooded backyards for ultimate seclusion.",
+    specs: { beds: 5, baths: 4, area: "5,800 SQ. FT." },
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82",
     index: "02",
   },
   {
@@ -72,7 +72,7 @@ const communities: CommunityData[] = [
     availability: "Coming Soon",
     concept: "New signatures in residential comfort are being drafted. Register for early access to our upcoming developments.",
     specs: { beds: 0, baths: 0, area: "" },
-    image: "/svg/siteMap-final.svg",
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef21?auto=format&fit=crop&w=1800&q=82",
     index: "03",
   },
 ];

@@ -3,10 +3,12 @@ import { Gallery } from "@/components/gallery";
 import { Hero } from "@/components/hero";
 import { QuickActions } from "@/components/quick-actions";
 import { CredibilityMetrics } from "@/components/credibility-metrics";
-import { AboutSnippet } from "@/components/about-snippet";
 import { IntroStatement } from "@/components/intro-statement";
 import { LogoSection } from "@/components/logo-section";
 import { MarqueeTextSection } from "@/components/marquee-text-section";
+import { CommunityDetails } from "@/components/community-details";
+import { AboutShree } from "@/components/about-shree";
+import { ProcessTimeline } from "@/components/process-timeline";
 import { SydneyOaksMetricsSection, ElysianGatesMetricsSection } from "@/components/metrics-section";
 import { MovingShowcaseSection } from "@/components/moving-showcase-section";
 import { NavbarAnimated } from "@/components/navbar-animated";
@@ -22,18 +24,20 @@ export default function Home() {
       <Hero />
       <QuickActions />
       <CredibilityMetrics />
-      <AboutSnippet />
       <IntroStatement />
       {/* <LogoSection /> */}
       <Gallery />
       <SydneyOaksMetricsSection />
       <ElysianGatesMetricsSection />
       <MarqueeTextSection />
+      <CommunityDetails />
+      <AboutShree />
+      <ProcessTimeline />
       <RecentArticlesSection />
-      <TeamSection />
-      <MovingShowcaseSection />
       <TestimonialsSection />
       <CtaBanner />
+      {/* <TeamSection /> */}
+      {/* <MovingShowcaseSection /> */}
       <FooterSection />
     </main>
   );

@@ -162,17 +162,20 @@ export function FooterSection() {
 
           <div className="flex flex-col items-center lg:items-end gap-3">
             <div className="flex items-center gap-4">
-              <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors text-[0.6rem] uppercase tracking-widest font-mono">Privacy Policy</a>
+              <a href="#privacy" className="text-[#F5F0E8]/60 hover:text-rust transition-colors text-[0.6rem] uppercase tracking-widest font-mono">Privacy Policy</a>
               <span className="text-[#F5F0E8]/20 text-[0.6rem]">|</span>
-              <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors text-[0.6rem] uppercase tracking-widest font-mono">Terms of Service</a>
+              <a href="#terms" className="text-[#F5F0E8]/60 hover:text-rust transition-colors text-[0.6rem] uppercase tracking-widest font-mono">Terms of Service</a>
             </div>
-            <Annotation light className="!text-[#F5F0E8]/40 !text-[0.55rem] text-center lg:text-right flex items-center justify-center lg:justify-end gap-2">
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+            <Annotation light className="!text-[#F5F0E8]/60 !text-[0.6rem] text-center lg:text-right flex items-center justify-center lg:justify-end gap-2 mt-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <path d="M3 10L12 3l9 7" />
+                <path d="M4 10v11h16V10" />
+                <path d="M10 13h4" />
+                <path d="M10 17h4" />
               </svg>
               EQUAL HOUSING OPPORTUNITY
             </Annotation>
-            <Annotation light className="!text-[#F5F0E8]/20 !text-[0.55rem] text-center lg:text-right">
+            <Annotation light className="!text-[#F5F0E8]/30 !text-[0.55rem] text-center lg:text-right mt-2">
               &copy; SHREE DEVELOPERS GROUP &mdash; PREMIUM EDITORIAL ARCHITECTURE V1.02
             </Annotation>
           </div>

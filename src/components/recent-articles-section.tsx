@@ -14,30 +14,30 @@ import { CrosshairIcon } from "./ui/crosshair-icon";
 
 const articles = [
   {
-    title: "How We Choose A Residential Site",
+    title: "Home Buyer Tips: Navigating the North Georgia Market",
     description:
-      "A closer look at frontage, approach roads, service access, and the quieter details that make a project feel dependable for years.",
+      "Essential insights for families looking to secure their future in Georgia's fastest-growing residential corridors.",
     image:
-      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=82",
-    date: "Oct 12, 2026",
+      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=82",
+    date: "May 12, 2026",
     fig: "fig. 09",
   },
   {
-    title: "The Value Of A Clear Handover",
+    title: "The Craft of Construction: A Site Update",
     description:
-      "Premium ownership is shaped by documentation, finishing checks, and simple communication during the weeks before possession.",
+      "A deep dive into the materials and structural integrity currently being implemented across our latest project sites.",
     image:
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=82",
-    date: "Sep 28, 2026",
+      "https://images.unsplash.com/photo-1503387762-592dea58ef21?auto=format&fit=crop&w=1400&q=82",
+    date: "Apr 28, 2026",
     fig: "fig. 10",
   },
   {
-    title: "Designing Communities With Breathing Room",
+    title: "Design Stories: The Philosophy of Restraint",
     description:
-      "Why internal roads, landscape edges, and shared open areas matter as much as individual plans and specifications.",
+      "How we use natural limestone, aged paper textures, and terracotta to create homes that feel timeless and tactile.",
     image:
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=82",
-    date: "Aug 15, 2026",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=82",
+    date: "Apr 15, 2026",
     fig: "fig. 11",
   },
 ];
@@ -86,11 +86,11 @@ export function RecentArticlesSection() {
       {/* Asymmetric Header Grid (7/5 Split) */}
       <div data-articles-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-10 md:mb-12">
         <div className="col-span-12 lg:col-span-7">
-          <SectionLabel counter="06 / 08">Builder Notes</SectionLabel>
+          <SectionLabel counter="10 / 10">Media & Blog</SectionLabel>
           <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]">
-            A quieter journal of materials,
+            Insights, <em className="italic">updates</em>,
             <br />
-            sites, and <em className="italic">decisions</em>
+            and design stories
           </SectionHeadline>
         </div>
         <div className="col-span-12 lg:col-span-4 lg:col-start-9">

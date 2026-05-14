@@ -33,7 +33,6 @@ export function CtaBanner() {
 
     const ctx = gsap.context(() => {
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      // Scope the selector to the current section to avoid conflicts with other components
       const fillWords = gsap.utils.toArray<HTMLElement>("[data-fill-word]", sectionRef.current);
 
       if (fillWords.length === 0) return;
@@ -67,26 +66,32 @@ export function CtaBanner() {
     <SectionWrapper
       ref={sectionRef}
       dark
-      className="relative !py-8 md:!py-10 grid"
-      style={{ gridTemplateRows: "auto 1fr auto" } as React.CSSProperties}
+      className="relative !py-36 md:!py-48 flex flex-col justify-center min-h-[80vh]"
     >
-      {/* Inset frame - bottom line only */}
-      <div className="pointer-events-none absolute inset-7 z-0">
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-[#F5F0E8]/[0.08]" />
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=2000" 
+          alt="Cinematic Exterior Visual"
+          className="w-full h-full object-cover grayscale opacity-60"
+        />
+        {/* Dark Gradient Overlay for text readability */}
+        <div className="absolute inset-0 bg-[#1C1208]/80 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-transparent" />
       </div>
 
       {/* Top bar */}
-      <div className="relative z-10 flex items-center justify-between">
-        <Annotation light>04 / 04</Annotation>
+      <div className="relative z-10 flex items-center justify-between mb-16">
+        <Annotation light>FINAL STEP</Annotation>
         <Annotation light>Georgia's Premier Developer</Annotation>
       </div>
 
       {/* Center */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center gap-8 py-4">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center gap-12">
         <SectionHeadline
           light
           size="xl"
-          className="!text-[clamp(2.6rem,5vw,5rem)] !leading-[1.02] max-w-7xl"
+          className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98] max-w-5xl"
           noPeriod
         >
           {headlineLines.map((line, lIndex) => (
@@ -105,7 +110,7 @@ export function CtaBanner() {
                   >
                     {/* Ghost word */}
                     <span
-                      className="block text-[#F5F0E8]/10"
+                      className="block text-white/10"
                       style={isItalic ? { fontStyle: "italic" } : undefined}
                       aria-hidden="true"
                     >
@@ -118,7 +123,7 @@ export function CtaBanner() {
                       data-fill-word
                       className={cn(
                         "pointer-events-none absolute inset-0 block",
-                        word === "Georgia's" ? "text-rust" : "text-[#F5F0E8]"
+                        word === "Georgia's" ? "text-rust" : "text-white"
                       )}
                       style={{
                         clipPath: "inset(100% 0 0 0)",
@@ -136,16 +141,12 @@ export function CtaBanner() {
           ))}
         </SectionHeadline>
 
-        <div className="flex flex-wrap items-center justify-center gap-8">
+        <div className="flex flex-wrap items-center justify-center gap-8 mt-8">
           <ButtonPrimary href="#contact">Schedule a Tour</ButtonPrimary>
-          <ButtonGhost href="mailto:sales@shreedevelopersgroup.com" className="!text-rust">
+          <ButtonGhost href="mailto:sales@shreedevelopersgroup.com" light>
             Contact Sales
           </ButtonGhost>
         </div>
-      </div>
-
-      <div className="relative z-10 flex items-end justify-end h-4">
-        {/* Removed bottom text for height reduction */}
       </div>
     </SectionWrapper>
   );
