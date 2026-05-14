@@ -91,12 +91,12 @@ export default function AboutPage() {
             <div className="col-span-12 lg:col-span-5">
               <SectionLabel counter="01 / 04">Our Intent</SectionLabel>
               <SectionHeadline size="md" className="mt-8 !text-[2.2rem] md:!text-[2.8rem] leading-[1.1]">
-                We don't just build structures; we compose environments for living.
+                We don&apos;t just build structures; we compose environments for living.
               </SectionHeadline>
             </div>
             <div className="col-span-12 lg:col-span-6 lg:col-start-7">
               <BodyText size="lg" className="mb-8 md:mb-12">
-                At Shree Developers Group, we believe that a home is more than a structure—it's a legacy of trust, built with architectural discipline and personal integrity. Our commitment to Georgia's landscape is reflected in every joint, every stone, and every signature community.
+                At Shree Developers Group, we believe that a home is more than a structure—it&apos;s a legacy of trust, built with architectural discipline and personal integrity. Our commitment to Georgia&apos;s landscape is reflected in every joint, every stone, and every signature community.
               </BodyText>
               <div className="grid grid-cols-2 gap-8 border-t border-[#1C1208]/10 pt-8 md:pt-12">
                 <div>

@@ -9,7 +9,7 @@ import { MarqueeTextSection } from "@/components/marquee-text-section";
 import { CommunityDetails } from "@/components/community-details";
 import { AboutShree } from "@/components/about-shree";
 import { ProcessTimeline } from "@/components/process-timeline";
-import { SydneyOaksMetricsSection, ElysianGatesMetricsSection } from "@/components/metrics-section";
+import CommunityDetailsPage from "@/components/metrics-section";
 import { MovingShowcaseSection } from "@/components/moving-showcase-section";
 import { NavbarAnimated } from "@/components/navbar-animated";
 import { RecentArticlesSection } from "@/components/recent-articles-section";
@@ -21,23 +21,38 @@ export default function Home() {
   return (
     <main className="overflow-x-hidden bg-background">
       <NavbarAnimated />
+
       <Hero />
+
       <QuickActions />
+
       <CredibilityMetrics />
+
       <IntroStatement />
+
       {/* <LogoSection /> */}
+
       <Gallery />
-      <SydneyOaksMetricsSection />
-      <ElysianGatesMetricsSection />
+
+      <CommunityDetailsPage />
+
       <MarqueeTextSection />
-      <CommunityDetails />
+
+
       <AboutShree />
+
       <ProcessTimeline />
+
       <RecentArticlesSection />
-      <TestimonialsSection />
+
+      {/* <TestimonialsSection /> */}
+
       <CtaBanner />
+
       {/* <TeamSection /> */}
+
       {/* <MovingShowcaseSection /> */}
+
       <FooterSection />
     </main>
   );

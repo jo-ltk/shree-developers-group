@@ -15,8 +15,8 @@ export function ButtonGhost({
   light,
   className,
 }: ButtonGhostProps) {
-  const textColor = light ? "text-cream" : "text-dark";
-  const lineColor = light ? "bg-cream" : "bg-rust";
+  const textColor = light ? "text-[#F5F0E8]" : "text-[#1C1208]";
+  const lineColor = light ? "bg-[#F5F0E8]" : "bg-[#D43F33]";
 
   return (
     <Link

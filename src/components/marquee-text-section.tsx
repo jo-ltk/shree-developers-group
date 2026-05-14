@@ -26,7 +26,7 @@ export function MarqueeTextSection() {
   return (
     <SectionWrapper className="overflow-hidden !py-12 md:!py-20" dark={false}>
       <div className="flex items-center justify-between mb-8 md:mb-12">
-        <SectionLabel counter="06 / 08">Core Values</SectionLabel>
+        <SectionLabel >Core Values</SectionLabel>
         <Annotation className="hidden md:block">fig. 12 / moving principles</Annotation>
       </div>
 

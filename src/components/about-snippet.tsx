@@ -77,7 +77,7 @@ export function AboutSnippet() {
                 fontWeight: 300,
               }}
             >
-              "We don't build houses. We build the places families return to."
+              &quot;We don&apos;t build houses. We build the places families return to.&quot;
             </p>
             <Annotation>— Shree Developers Group · Est. 2009</Annotation>
           </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X, Instagram, Facebook, Linkedin } from "lucide-react";
+import Link from "next/link";
 import { BrandMark } from "@/components/ui/brand-mark";
 
 const navLinks = [
@@ -76,7 +77,7 @@ export function NavbarAnimated() {
             </button>
 
             {/* Right: Premium Logo */}
-            <a 
+            <Link 
               href="/" 
               className="relative transition-all duration-700 hover:opacity-80 active:scale-95"
             >
@@ -89,7 +90,7 @@ export function NavbarAnimated() {
                 alt="Shree Developers Group logo"
                 priority
               />
-            </a>
+            </Link>
           </div>
         </div>
       </motion.header>
@@ -122,23 +123,23 @@ export function NavbarAnimated() {
             <div className="mx-auto flex w-full flex-1 flex-col justify-center px-6 py-12 sm:px-10 lg:px-16 lg:py-20 xl:px-20">
               <nav className="flex flex-col gap-4 md:gap-8 lg:gap-10">
                 {navLinks.map((link, i) => (
-                  <motion.a
+                  <Link
                     key={link.title}
                     href={link.href}
-                    initial={{ x: -40, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     onClick={() => setMobileOpen(false)}
                     className="group relative w-fit overflow-hidden py-1 lg:py-2"
                   >
-                    <span 
+                    <motion.span
+                      initial={{ x: -40, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       className="block text-[clamp(2rem,6vw,5rem)] font-light leading-none tracking-tight transition-transform duration-500 group-hover:-translate-y-2"
                       style={{ fontFamily: "'Cormorant Garamond', serif" }}
                     >
                       {link.title}
-                    </span>
+                    </motion.span>
                     <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-rust transition-all duration-500 group-hover:w-full" />
-                  </motion.a>
+                  </Link>
                 ))}
               </nav>
 

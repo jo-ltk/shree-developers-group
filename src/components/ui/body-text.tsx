@@ -18,7 +18,7 @@ export function BodyText({
     md: "text-[clamp(0.95rem,1.1vw,1.1rem)] leading-[1.65]",
     sm: "text-[clamp(0.85rem,1vw,0.95rem)] leading-[1.6]",
   };
-  const color = light ? "text-[#F5F0E8]/65" : "text-[#1C1208]/55";
+  const color = light ? "text-cream/80" : "text-dark/70";
 
   return (
     <p

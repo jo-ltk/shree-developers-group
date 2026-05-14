@@ -13,8 +13,8 @@ export function SectionLabel({
   className,
   light,
 }: SectionLabelProps) {
-  const color = light ? "text-[#F5F0E8]/60" : "text-rust";
-  const textColor = light ? "text-[#F5F0E8]/50" : "text-[#1C1208]/50";
+  const color = light ? "text-cream/70" : "text-rust";
+  const textColor = light ? "text-cream/60" : "text-dark/60";
 
   return (
     <div className={cn("flex items-start gap-4 mb-6 md:mb-8", className)}>

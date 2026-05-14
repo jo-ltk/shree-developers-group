@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
@@ -14,36 +15,71 @@ import { CrosshairIcon } from "./ui/crosshair-icon";
 
 const articles = [
   {
-    title: "Home Buyer Tips: Navigating the North Georgia Market",
+    title: "Home Buyers Tips in Georgia",
     description:
-      "Essential insights for families looking to secure their future in Georgia's fastest-growing residential corridors.",
+      "Practical guidance for families navigating Georgia’s fast-growing luxury residential market, from financing to selecting the right community.",
     image:
       "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=82",
-    date: "May 12, 2026",
-    fig: "fig. 09",
+    date: "May 14, 2026",
+    fig: "01",
   },
+
   {
-    title: "The Craft of Construction: A Site Update",
+    title: "Community Development News",
     description:
-      "A deep dive into the materials and structural integrity currently being implemented across our latest project sites.",
+      "Updates on evolving residential corridors, infrastructure expansion, and the future vision shaping connected communities in Georgia.",
     image:
-      "https://images.unsplash.com/photo-1503387762-592dea58ef21?auto=format&fit=crop&w=1400&q=82",
-    date: "Apr 28, 2026",
-    fig: "fig. 10",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=82",
+    date: "May 08, 2026",
+    fig: "02",
   },
+
   {
-    title: "Design Stories: The Philosophy of Restraint",
+    title: "Construction Updates",
     description:
-      "How we use natural limestone, aged paper textures, and terracotta to create homes that feel timeless and tactile.",
+      "A closer look at active construction milestones, site progress, material selections, and structural execution across our developments.",
+    image:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=82",
+    date: "Apr 28, 2026",
+    fig: "03",
+  },
+
+  {
+    title: "Design Stories",
+    description:
+      "How restrained architecture, tactile materials, warm palettes, and thoughtful spatial planning shape timeless residential experiences.",
     image:
       "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=82",
-    date: "Apr 15, 2026",
-    fig: "fig. 11",
+    date: "Apr 18, 2026",
+    fig: "04",
+  },
+
+  {
+    title: "Real Estate Insights",
+    description:
+      "Market observations, buyer behavior trends, appreciation potential, and investment perspectives within Georgia’s premium housing sector.",
+    image:
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=82",
+    date: "Apr 10, 2026",
+    fig: "05",
+  },
+
+  {
+    title: "Project Launches",
+    description:
+      "Introducing newly planned residential communities, curated amenities, architectural concepts, and future-ready living environments.",
+    image:
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=82",
+    date: "Apr 04, 2026",
+    fig: "06",
   },
 ];
 
 export function RecentArticlesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleArticles = showAll ? articles : articles.slice(0, 3);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -103,13 +139,17 @@ export function RecentArticlesSection() {
       </div>
 
       {/* Articles Grid */}
-      <div className="grid gap-px bg-border/20 md:grid-cols-3">
-        {articles.map((article, index) => (
-          <article
-            key={article.title}
-            data-article-card
-            className="group relative bg-cream flex flex-col h-full cursor-pointer"
-          >
+      <div className="grid gap-px bg-border/20 md:grid-cols-3 mb-10">
+        <AnimatePresence mode="popLayout">
+          {visibleArticles.map((article, index) => (
+            <motion.article
+              key={article.title}
+              initial={index >= 3 ? { opacity: 0, y: 20 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: (index - 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              data-article-card
+              className="group relative bg-cream flex flex-col h-full cursor-pointer"
+            >
             <div className="flex items-start justify-between p-6 md:p-8">
               <Annotation>{article.fig}</Annotation>
               <CrosshairIcon className="opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
@@ -148,10 +188,28 @@ export function RecentArticlesSection() {
             </div>
 
             {/* Corner Decorative Accent */}
-            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-rust/10 transition-colors duration-500 group-hover:border-rust/30" />
-          </article>
-        ))}
+              <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-rust/10 transition-colors duration-500 group-hover:border-rust/30" />
+            </motion.article>
+          ))}
+        </AnimatePresence>
       </div>
+
+      {!showAll && articles.length > 3 && (
+        <div className="flex justify-center mt-12 md:mt-16">
+          <button
+            onClick={() => setShowAll(true)}
+            className="group relative flex items-center gap-3 px-8 py-4 bg-dark text-cream rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl active:scale-95"
+          >
+            <span className="relative z-10 text-[0.65rem] uppercase font-bold tracking-[0.25em]">Show More Stories</span>
+            <div className="relative z-10 w-6 h-6 rounded-full bg-cream/10 flex items-center justify-center transition-transform duration-500 group-hover:rotate-45">
+              <ArrowUpRight className="w-3.5 h-3.5 text-cream" />
+            </div>
+            
+            {/* Hover Background Animation */}
+            <div className="absolute inset-0 bg-rust translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0" />
+          </button>
+        </div>
+      )}
     </SectionWrapper>
   );
 }

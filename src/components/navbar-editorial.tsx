@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
+import Link from "next/link";
 import { BrandMark } from "@/components/ui/brand-mark";
 
 const navColumns = [
@@ -79,7 +80,7 @@ export function NavbarEditorial() {
         >
           {/* Desktop nav */}
           <div className={`${desktopGridClass} hidden xl:grid items-center`}>
-            <a href="/" className="w-fit text-dark">
+            <Link href="/" className="w-fit text-dark">
               <BrandMark
                 variant={isAtTop ? "steel" : "black"}
                 className={`transition-all duration-500 ${
@@ -89,10 +90,10 @@ export function NavbarEditorial() {
                 alt="Shree Developers Group logo"
                 priority
               />
-            </a>
+            </Link>
 
             {columnsWithMeta.map((item) => (
-              <a
+              <Link
                 key={item.title}
                 href={item.href}
                 className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-rust ${
@@ -100,13 +101,13 @@ export function NavbarEditorial() {
                 } text-dark`}
               >
                 <span>{item.title}</span>
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Mobile nav bar */}
           <div className="flex items-center justify-between xl:hidden">
-            <a href="/" className="relative z-50 text-[var(--text-primary)]">
+            <Link href="/" className="relative z-50 text-[var(--text-primary)]">
               <BrandMark
                 variant={isAtTop ? "steel" : "black"}
                 className={`transition-all duration-500 ${
@@ -116,7 +117,7 @@ export function NavbarEditorial() {
                 alt="Shree Developers Group logo"
                 priority
               />
-            </a>
+            </Link>
 
             <button
               type="button"
@@ -157,13 +158,13 @@ export function NavbarEditorial() {
                     <p className="mt-3 text-[0.82rem] font-light leading-[1.7] text-[var(--text-primary)]">
                       Explore Shree projects, available homesites, and the promise behind each handover.
                     </p>
-                    <a
+                    <Link
                       href="/InteractiveSiteMap"
                       className="mt-5 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)] transition-opacity duration-200 hover:opacity-75"
                     >
                       Explore homesites
                       <ArrowRight className="h-3 w-3" />
-                    </a>
+                    </Link>
                   </div>
                   <span className="absolute inset-y-0 right-0 w-px bg-[rgba(183,170,152,0.35)]" />
                 </div>
@@ -176,13 +177,13 @@ export function NavbarEditorial() {
                     } ${column.isTrailing ? "justify-self-end" : "justify-self-start"}`}
                     style={{ transitionDelay: `${60 + index * 30}ms` }}
                   >
-                    <a
+                    <Link
                       href={column.href}
                       className="flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
                     >
                       <span>{column.title}</span>
                       {column.links.length > 0 ? <ChevronDown className="h-3.5 w-3.5 rotate-180 opacity-50" /> : null}
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -201,13 +202,13 @@ export function NavbarEditorial() {
                     {column.links.length > 0 ? (
                       <div className="space-y-2.5 text-[0.82rem] font-light leading-[1.5] text-[var(--text-primary)]">
                         {column.links.map((item) => (
-                          <a
+                          <Link
                             key={item}
                             href={column.href}
                             className="block transition-all duration-200 hover:translate-x-0.5 hover:text-[var(--color-accent)]"
                           >
                             {item}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     ) : null}
@@ -273,7 +274,7 @@ export function NavbarEditorial() {
             <nav className="space-y-0">
               {navColumns.map((column) => (
                 <div key={column.title}>
-                  <a
+                  <Link
                     href={column.href}
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center justify-between border-b border-[rgba(183,170,152,0.35)] py-4 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
@@ -284,18 +285,18 @@ export function NavbarEditorial() {
                     ) : (
                       <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
                     )}
-                  </a>
+                  </Link>
                   {column.links.length > 0 && (
                     <div className="space-y-3 border-b border-[rgba(183,170,152,0.35)] py-3 pl-5">
                       {column.links.map((link) => (
-                        <a
+                        <Link
                           key={link}
                           href={column.href}
                           onClick={() => setMobileOpen(false)}
                           className="block text-[0.82rem] font-light tracking-[0.04em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
                         >
                           {link}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -309,7 +310,7 @@ export function NavbarEditorial() {
             </div>
 
             <div className="mt-10">
-              <a
+              <Link
                 href="#footer"
                 onClick={() => setMobileOpen(false)}
                 className="inline-flex h-[48px] items-center gap-3 bg-[var(--color-accent)] px-7 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3A342E] transition-all duration-200 hover:brightness-105"
@@ -320,7 +321,7 @@ export function NavbarEditorial() {
               >
                 Get in Touch
                 <ArrowRight className="h-3.5 w-3.5" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

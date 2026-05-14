@@ -87,7 +87,7 @@ export function TestimonialsSection() {
       {/* Asymmetric Header */}
       <div data-testimonial-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-16 md:mb-24 px-8 md:px-12 lg:px-20">
         <div className="col-span-12 lg:col-span-8">
-          <SectionLabel counter="11 / 11">Homeowner Experiences</SectionLabel>
+          <SectionLabel>Homeowner Experiences</SectionLabel>
           <SectionHeadline 
             size="xl" 
             className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"

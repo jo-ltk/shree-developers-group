@@ -13,7 +13,7 @@ export function Annotation({
   className?: string;
   light?: boolean;
 }) {
-  const color = light ? "text-[#F5F0E8]/30" : "text-[#1C1208]/30";
+  const color = light ? "text-cream/60" : "text-dark/50";
 
   return (
     <span

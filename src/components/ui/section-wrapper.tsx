@@ -18,7 +18,7 @@ export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
         ref={ref}
         className={cn(
           "relative w-full overflow-hidden",
-          dark ? "bg-dark" : "bg-cream",
+          dark ? "bg-[#1C1208]" : "bg-[#F5F0E8]",
           !noPadding && "py-12 md:py-16 lg:py-20",
           className,
         )}

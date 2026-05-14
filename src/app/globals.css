@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@400;600;700&display=swap');
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 @theme inline {
   --font-sans: "Montserrat", sans-serif;
@@ -397,4 +398,16 @@ html {
 
 .hover-lift:hover {
   transform: translateY(-8px);
+}
+
+@media (min-width: 640px) {
+  .credibility-stat {
+    border-bottom: none !important;
+  }
+  .credibility-stat:nth-child(2) {
+    border-right: 1px solid rgba(245, 240, 232, 0.08) !important;
+  }
+  .credibility-stat:nth-child(4) {
+    border-right: none !important;
+  }
 }

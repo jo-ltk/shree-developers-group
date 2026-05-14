@@ -103,7 +103,9 @@ export function ElysianGatesStage({
     }).filter((h): h is Hotspot => h !== null);
 
     document.body.removeChild(container);
-    setHotspots(parsed);
+    requestAnimationFrame(() => {
+      setHotspots(parsed);
+    });
   }, [svgMarkup]);
 
   const renderedHotspots = useMemo(() => {

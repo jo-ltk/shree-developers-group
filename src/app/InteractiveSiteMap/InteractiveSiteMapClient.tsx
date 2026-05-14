@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, Bath, BedDouble, Car, Home, MessageCircle, Map, List } from "lucide-react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ErrorBoundary } from "@/components/error-boundary";
@@ -366,7 +367,7 @@ export function InteractiveSiteMapClient({
           HEADER
       ════════════════════════════════════ */}
       <header className="flex h-16 shrink-0 items-center border-b border-[#1C1208]/10 bg-[#F5F0E8] px-6 lg:px-10">
-        <a
+        <Link
           href="/"
           aria-label="Back to homepage"
           className="flex items-center gap-2 group mr-8"
@@ -377,7 +378,7 @@ export function InteractiveSiteMapClient({
           <span className="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[#1C1208]/40 group-hover:text-[#1C1208] transition-colors hidden sm:block" style={{ fontFamily: "'Montserrat', sans-serif" }}>
             Back
           </span>
-        </a>
+        </Link>
 
         <BrandMark
           variant="black"

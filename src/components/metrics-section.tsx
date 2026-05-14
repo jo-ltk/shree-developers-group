@@ -1,586 +1,546 @@
 "use client";
 
 import Link from "next/link";
+import {
+  MapPin,
+  Phone,
+  Dumbbell,
+  ShieldCheck,
+  Waves,
+  Baby,
+  ArrowRight,
+  ArrowDown,
+  Coffee,
+  MessageCircle,
+  Instagram,
+  Trees,
+} from "lucide-react";
+
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
-import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
-import { motion } from "framer-motion";
+import { ButtonPrimary } from "@/components/ui/button-primary";
+import { BrandMark } from "@/components/ui/brand-mark";
+import { SectionLabel } from "./ui/section-label";
+import { GridLines } from "@/components/ui/grid-lines";
 
-/* ───────────────── TYPES ───────────────── */
-
-export interface MetricItem {
-  value: string;
-  title: string;
-  body: string;
-}
-
-export interface MetricsSectionData {
-  imageSrc: string;
-  imageLabel: string;
-  sectionCounter: string;
-  headline: string;
-  bodyText: string;
-
-  stat01: {
-    number: string;
-    label: string;
-    value: string;
-    title: string;
-    body: string;
-  };
-
-  stat02: {
-    headline: string;
-    body: string;
-  };
-
-  metrics: MetricItem[];
-
-  figLabel: string;
-  mapHref?: string;
-}
-
-interface MetricsSectionProps {
-  data: MetricsSectionData;
-  id?: string;
-  reverse?: boolean;
-}
-
-/* ───────────────── DATA : SYDNEY OAKS ───────────────── */
-
-const sydneyOaksData: MetricsSectionData = {
-  imageSrc: "/svg/siteplan- sydneyoaks-01.svg",
-
-  imageLabel: "SYDNEY OAKS",
-
-  sectionCounter: "04 / 08",
-
-  headline: "Sydney Oaks",
-
-  bodyText:
-    "A strategically planned mixed-use community designed to combine residential living, connectivity, and long-term growth within North Georgia's emerging development corridor.",
-
-  stat01: {
-    number: "01",
-    label: "MASTERPLAN",
-    value: "89",
-
-    title: "Mixed-use\ncommunity",
-
-    body: "Designed to integrate residential living, accessibility, and future-focused commercial opportunities into one connected environment.",
+const amenities = [
+  {
+    icon: Trees,
+    title: "Landscaped Parks",
+    body: "Nature-focused outdoor spaces designed for peaceful community living.",
   },
-
-  stat02: {
-    headline: "Live.\nWork.\nGrow.",
-
-    body: "Sydney Oaks is positioned to support long-term value through connected planning, visibility, and community-focused development.",
+  {
+    icon: Waves,
+    title: "Swimming Pool",
+    body: "Resort-inspired leisure amenities with refined detailing.",
   },
-
-  metrics: [
-    {
-      value: "89+",
-      title: "Planned residences",
-      body: "A master-planned residential layout focused on accessibility, comfort, and community living.",
-    },
-
-    {
-      value: "Mixed",
-      title: "Integrated development",
-      body: "A carefully planned balance between residential spaces and future commercial opportunities.",
-    },
-
-    {
-      value: "North GA",
-      title: "Growth corridor location",
-      body: "Positioned within one of North Georgia's expanding development regions.",
-    },
-  ],
-
-  figLabel: "Sydney Oaks",
-};
-
-/* ───────────────── DATA : ELYSIAN GATES ───────────────── */
-
-const elysianGatesData: MetricsSectionData = {
-  imageSrc: "/svg/elysian-gates.svg",
-
-  imageLabel: "ELYSIAN GATES",
-
-  sectionCounter: "05 / 08",
-
-  headline: "Elysian Gates",
-
-  bodyText:
-    "A boutique gated residential enclave surrounded by greenery, designed to deliver privacy, refined living, and a calm estate atmosphere through intentional low-density planning.",
-
-  stat01: {
-    number: "02",
-    label: "PRIVATE ESTATE",
-    value: "27",
-
-    title: "Exclusive\ngated homes",
-
-    body: "A private residential environment designed around greenery, security, and a slower refined pace of living.",
+  {
+    icon: Dumbbell,
+    title: "Fitness Center",
+    body: "Modern wellness facilities crafted for everyday routines.",
   },
-
-  stat02: {
-    headline: "Private.\nCalm.\nRefined.",
-
-    body: "Curved internal roads, landscape integration, and low-density placement create a boutique luxury estate experience.",
+  {
+    icon: ShieldCheck,
+    title: "24/7 Security",
+    body: "Secure gated access with integrated safety infrastructure.",
   },
+  {
+    icon: Baby,
+    title: "Children’s Play Area",
+    body: "Safe and engaging recreational spaces for families.",
+  },
+  {
+    icon: Coffee,
+    title: "Clubhouse",
+    body: "Elegant social spaces for gatherings and relaxation.",
+  },
+];
 
-  metrics: [
-    {
-      value: "27",
-      title: "Private residences",
-      body: "An intentionally limited collection of homes designed for exclusivity and comfort.",
-    },
-
-    {
-      value: "Gated",
-      title: "Secure estate planning",
-      body: "A controlled residential environment focused on privacy and peaceful community living.",
-    },
-
-    {
-      value: "Nature",
-      title: "Landscape integration",
-      body: "A masterplan designed to preserve greenery and create a nature-connected lifestyle.",
-    },
-  ],
-
-  figLabel: "Elysian Gates",
-};
-
-/* ───────────────── COMPONENT ───────────────── */
-
-export function MetricsSection({
-  data,
-  id = "metrics",
-  reverse = false,
-}: MetricsSectionProps) {
+export default function CommunityDetailsPage() {
   return (
-    <SectionWrapper id={id} className="!bg-[#F5F0E8]" noPadding>
-      {/* ───────────────── TOP GRID ───────────────── */}
+    <main className="bg-[#F5F0E8] overflow-hidden">
+      {/* HERO */}
 
-      <div className="grid grid-cols-12 gap-px bg-[#1C1208]/10 border-y border-[#1C1208]/10">
-        {/* ───────────────── FIRST ROW ───────────────── */}
+      <section className="relative bg-[#160E0A] overflow-hidden min-h-[100svh] lg:min-h-[95vh] flex items-center">
+        {/* BG */}
 
-        {!reverse ? (
-          <>
-            {/* LEFT CONTENT */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=2200&auto=format&fit=crop"
+            alt="Sydney Oaks"
+            className="w-full h-full object-cover opacity-30 scale-[1.04]"
+          />
 
-            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] p-6 md:p-10 lg:p-12 flex flex-col justify-center">
-              <div className="max-w-[640px]">
-                <div className="flex items-center gap-4 mb-4 md:mb-6">
-                  <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.2em]">
-                    {data.sectionCounter}
-                  </span>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#160E0A]/90 via-[#160E0A]/70 to-[#160E0A]/95" />
+        </div>
 
-                  <Annotation>{data.imageLabel}</Annotation>
-                </div>
+        {/* TEXTURE */}
 
-                <SectionHeadline
-                  size="xl"
-                  className="!text-[clamp(2.8rem,4vw,4.8rem)] leading-[0.98]"
-                  noPeriod
-                >
-                  <span className="relative z-0 inline-block group/highlight cursor-default">
-                    <span className="relative z-10">{data.headline}</span>
-                    <span className="absolute bottom-[8%] left-[-2%] w-[104%] h-[35%] bg-[#D43F33]/20 -z-10 -rotate-1 skew-x-12 transition-all duration-500 ease-out group-hover/highlight:h-[50%] group-hover/highlight:bg-[#D43F33]/30 group-hover/highlight:-rotate-2" />
-                  </span>
-                  <span className="text-[#D43F33]">.</span>
-                </SectionHeadline>
+        <div
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(212,63,51,0.015) 3px, rgba(212,63,51,0.015) 4px)",
+          }}
+        />
 
-                <BodyText className="mt-8 text-[1.05rem] leading-[1.7] text-[#1C1208]/70">
-                  {data.bodyText}
-                </BodyText>
+        <GridLines />
 
-                <div className="mt-10 flex flex-wrap items-center gap-6">
-                  <Link
-                    href="#gallery"
-                    className="group inline-flex items-center gap-4 text-[0.65rem] font-bold tracking-[0.25em] text-[#1C1208] uppercase"
-                  >
-                    View Project
+        {/* CONTENT */}
 
-                    <span className="w-8 h-px bg-[#1C1208] transition-all duration-300 group-hover:w-12" />
-                  </Link>
-                </div>
-              </div>
-            </div>
+        <div className="relative z-[2] w-full max-w-[1450px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20 py-20 md:py-24">
+          <div className="grid grid-cols-12 gap-14 lg:gap-10 items-center">
+            {/* LEFT */}
 
-            {/* RIGHT STAT */}
+            <div className="col-span-12 lg:col-span-6 text-center lg:text-left">
+              {/* TOP */}
 
-            <div className="col-span-12 lg:col-span-4 bg-[#F5F0E8] p-6 md:p-8 lg:p-10 flex flex-col justify-between border-l border-[#1C1208]/10">
-              <div className="flex justify-between items-start mb-8 md:mb-10">
-                <Annotation>
-                  {data.stat01.number} / {data.stat01.label}
-                </Annotation>
-
-                <CrosshairIcon />
-              </div>
-
-              <div>
-                <div
-                  className="text-[#1C1208] font-light leading-none mb-4"
+              <div className="flex items-center justify-center lg:justify-start gap-4 mb-8 flex-wrap">
+                <span
+                  className="text-[#D43F33] font-semibold uppercase"
                   style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "3rem",
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.25em",
                   }}
                 >
-                  {data.stat01.value}
+                  Community Details
+                </span>
+
+                <div className="w-4 h-4 relative opacity-50 hidden sm:block">
+                  <div className="absolute top-1/2 left-0 w-full h-[1px] bg-[#F5F0E8] -translate-y-1/2"></div>
+                  <div className="absolute left-1/2 top-0 w-[1px] h-full bg-[#F5F0E8] -translate-x-1/2"></div>
                 </div>
 
-                <SectionHeadline
-                  size="md"
-                  className="!text-[1.6rem] leading-[1.2]"
-                >
-                  {data.stat01.title}
-                </SectionHeadline>
-
-                <BodyText className="mt-4 text-[#1C1208]/60 text-sm">
-                  {data.stat01.body}
-                </BodyText>
-              </div>
-            </div>
-
-            {/* LEFT IMAGE */}
-
-            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] py-6 px-0 md:p-10 lg:p-0 lg:pl-12 flex flex-col">
-              <div className="relative flex-1 w-full h-full min-h-[350px] md:min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
-                <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20 flex items-center gap-4">
-                  <Annotation className="!text-[#F5F0E8]/90">
-                    {data.imageLabel}
-                  </Annotation>
-
-                  <CrosshairIcon light />
-                </div>
-
-                <img
-                  src={data.imageSrc}
-                  alt={data.imageLabel}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
-
-                {data.mapHref && (
-                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none p-4">
-                    <Link
-                      href={data.mapHref}
-                      className="pointer-events-auto group relative flex flex-row items-center justify-center gap-3 md:gap-4 px-6 py-3 md:px-8 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
-                    >
-                      <span className="relative z-10 text-white text-[0.6rem] md:text-[0.75rem] font-semibold tracking-[0.15em] md:tracking-[0.2em] uppercase text-center drop-shadow-md whitespace-nowrap">
-                        Explore Interactive Map
-                      </span>
-                      <span className="relative z-10 hidden sm:block w-6 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-10 md:group-hover:w-16 group-hover:bg-white" />
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* RIGHT DARK PANEL */}
-
-            <div className="col-span-12 lg:col-span-4 bg-[#1C1208] p-6 md:p-8 lg:p-10 flex flex-col justify-between">
-              <Annotation light>
-                FIG. {data.sectionCounter.slice(0, 2).trim()} /
-                DEVELOPMENT
-              </Annotation>
-
-              <div className="mt-8 md:mt-10">
-                <SectionHeadline
-                  size="lg"
-                  light
-                  className="!text-[2.2rem] leading-[1.05]"
-                >
-                  {data.stat02.headline}
-                </SectionHeadline>
-
-                <BodyText
-                  light
-                  className="mt-6 !text-[#F5F0E8]/70 leading-[1.7] text-sm"
-                >
-                  {data.stat02.body}
-                </BodyText>
-
-                <div className="mt-10 w-10 h-px bg-[#D43F33]" />
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* LEFT STAT */}
-
-            <div className="col-span-12 lg:col-span-4 bg-[#F5F0E8] p-6 md:p-8 lg:p-10 flex flex-col justify-between border-r border-[#1C1208]/10">
-              <div className="flex justify-between items-start mb-8 md:mb-10">
-                <Annotation>
-                  {data.stat01.number} / {data.stat01.label}
-                </Annotation>
-
-                <CrosshairIcon />
-              </div>
-
-              <div>
-                <div
-                  className="text-[#1C1208] font-light leading-none mb-4"
+                <span
+                  className="text-[#F5F0E8]/40 uppercase font-medium"
                   style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "3rem",
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.25em",
                   }}
                 >
-                  {data.stat01.value}
-                </div>
-
-                <SectionHeadline
-                  size="md"
-                  className="!text-[1.6rem] leading-[1.2]"
-                >
-                  {data.stat01.title}
-                </SectionHeadline>
-
-                <BodyText className="mt-4 text-[#1C1208]/60 text-sm">
-                  {data.stat01.body}
-                </BodyText>
+                  01 / 06
+                </span>
               </div>
-            </div>
 
-            {/* RIGHT CONTENT */}
+              {/* TITLE */}
 
-            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] p-6 md:p-10 lg:p-12 flex flex-col justify-center items-end text-right">
-              <div className="max-w-[640px]">
-                <div className="flex items-center justify-end gap-4 mb-4 md:mb-6">
-                  <Annotation>{data.imageLabel}</Annotation>
+              <h1
+                className="text-[#F5F0E8] leading-[0.92] mb-10"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "clamp(4rem,14vw,8.5rem)",
+                  fontWeight: 400,
+                }}
+              >
+                Sydney
+                <br />
+                Oaks<span className="text-[#D43F33]">.</span>
+              </h1>
 
-                  <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.2em]">
-                    {data.sectionCounter}
-                  </span>
-                </div>
+              {/* LOCATION */}
 
-                <SectionHeadline
-                  size="xl"
-                  className="!text-[clamp(2.8rem,4vw,4.8rem)] leading-[0.98]"
-                  noPeriod
-                >
-                  <span className="relative z-0 inline-block group/highlight cursor-default">
-                    <span className="relative z-10">{data.headline}</span>
-                    <span className="absolute bottom-[8%] left-[-2%] w-[104%] h-[35%] bg-[#D43F33]/20 -z-10 rotate-1 -skew-x-12 transition-all duration-500 ease-out group-hover/highlight:h-[50%] group-hover/highlight:bg-[#D43F33]/30 group-hover/highlight:rotate-2" />
-                  </span>
-                  <span className="text-[#D43F33]">.</span>
-                </SectionHeadline>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 mb-12">
+                <div className="flex items-center gap-3">
+                  <MapPin
+                    className="text-[#D43F33] w-[18px] h-[18px]"
+                    strokeWidth={1.5}
+                  />
 
-                <BodyText className="mt-8 text-[1.05rem] leading-[1.7] text-[#1C1208]/70">
-                  {data.bodyText}
-                </BodyText>
-
-                <div className="mt-10 flex flex-wrap items-center justify-end gap-6">
-                  <Link
-                    href="#gallery"
-                    className="group inline-flex items-center gap-4 text-[0.65rem] font-bold tracking-[0.25em] text-[#1C1208] uppercase"
+                  <span
+                    className="text-[#F5F0E8]/60 uppercase leading-[1.6] font-medium text-left"
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.25em",
+                    }}
                   >
-                    View Project
-
-                    <span className="w-8 h-px bg-[#1C1208] transition-all duration-300 group-hover:w-12" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* LEFT DARK PANEL */}
-
-            <div className="col-span-12 lg:col-span-4 bg-[#1C1208] p-6 md:p-8 lg:p-10 flex flex-col justify-between">
-              <Annotation light>
-                FIG. {data.sectionCounter.slice(0, 2).trim()} /
-                DEVELOPMENT
-              </Annotation>
-
-              <div className="mt-8 md:mt-10">
-                <SectionHeadline
-                  size="lg"
-                  light
-                  className="!text-[2.2rem] leading-[1.05]"
-                >
-                  {data.stat02.headline}
-                </SectionHeadline>
-
-                <BodyText
-                  light
-                  className="mt-6 !text-[#F5F0E8]/70 leading-[1.7] text-sm"
-                >
-                  {data.stat02.body}
-                </BodyText>
-
-                <div className="mt-10 w-10 h-px bg-[#D43F33]" />
-              </div>
-            </div>
-
-            {/* RIGHT IMAGE */}
-
-            <div className="col-span-12 lg:col-span-8 bg-[#F5F0E8] py-6 px-0 md:p-10 lg:p-0 lg:pr-12 flex flex-col">
-              <div className="relative flex-1 w-full h-full min-h-[350px] md:min-h-[420px] overflow-hidden group bg-[#EDE8DF]">
-                <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 flex items-center gap-4">
-                  <CrosshairIcon light />
-
-                  <Annotation className="!text-[#F5F0E8]/90">
-                    {data.imageLabel}
-                  </Annotation>
+                    Suwanee,
+                    <br />
+                    Georgia
+                  </span>
                 </div>
 
-                <img
-                  src={data.imageSrc}
-                  alt={data.imageLabel}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[4000ms] ease-out group-hover:scale-105"
-                />
+                <div className="hidden sm:block w-10 h-px bg-[#D43F33]/40"></div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-[#1C1208]/20 to-transparent" />
+                <span
+                  className="text-[#F5F0E8]/60 uppercase leading-[1.6] font-medium"
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.25em",
+                  }}
+                >
+                  34.0523° N · 84.0657° W
+                </span>
+              </div>
 
-                {data.mapHref && (
-                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none p-4">
-                    <Link
-                      href={data.mapHref}
-                      className="pointer-events-auto group relative flex flex-row items-center justify-center gap-3 md:gap-4 px-6 py-3 md:px-8 md:py-5 bg-[#1C1208]/40 backdrop-blur-xl rounded-full border border-white/20 overflow-hidden transition-all duration-500 hover:bg-[#D43F33]/80 hover:border-[#D43F33] hover:scale-105 hover:shadow-2xl hover:shadow-[#D43F33]/20"
-                    >
-                      <span className="relative z-10 text-white text-[0.6rem] md:text-[0.75rem] font-semibold tracking-[0.15em] md:tracking-[0.2em] uppercase text-center drop-shadow-md whitespace-nowrap">
-                        Explore Interactive Map
-                      </span>
-                      <span className="relative z-10 hidden sm:block w-6 md:w-12 h-px bg-white/60 transition-all duration-500 group-hover:w-10 md:group-hover:w-16 group-hover:bg-white" />
-                    </Link>
+              {/* DESCRIPTION */}
+
+              <p
+                className="text-[#F5F0E8]/60 text-[1.2rem] md:text-[1.45rem] leading-[1.6] max-w-xl mx-auto lg:mx-0 mb-14"
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                }}
+              >
+                Luxury residences thoughtfully designed around community living,
+                connectivity, architecture, and long-term value.
+              </p>
+
+              {/* BUTTONS */}
+
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
+                {/* PRIMARY */}
+
+                <button className="bg-[#D43F33] text-white py-5 px-6 w-full sm:w-64 relative group flex items-center justify-between hover:bg-[#b03228] transition-colors">
+                  <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/40" />
+
+                  <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/40" />
+
+                  <span
+                    className="uppercase font-bold text-left leading-[1.3]"
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.2em",
+                    }}
+                  >
+                    Request
+                    <br />
+                    Information
+                  </span>
+
+                  <div className="w-8 h-8 border border-white/30 flex items-center justify-center rounded-sm">
+                    <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
                   </div>
-                )}
+                </button>
+
+                {/* SECONDARY */}
+
+                <div className="flex items-center gap-5">
+                  <button className="group flex items-center gap-3">
+                    <span
+                      className="text-[#F5F0E8] uppercase font-bold leading-[1.3] text-left"
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                      }}
+                    >
+                      Schedule
+                      <br />
+                      A Visit
+                    </span>
+
+                    <ArrowRight
+                      className="w-[14px] h-[14px] text-[#F5F0E8]"
+                      strokeWidth={2.5}
+                    />
+                  </button>
+
+                  <div className="w-[48px] h-[48px] rounded-full border border-[#F5F0E8]/20 flex items-center justify-center">
+                    <ArrowDown
+                      className="w-5 h-5 text-[#F5F0E8]/80"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </>
-        )}
-      </div>
 
-      {/* ───────────────── METRICS ───────────────── */}
+            {/* RIGHT */}
 
-      <div className="grid grid-cols-12 gap-px bg-[#1C1208]/10 border-b border-[#1C1208]/10">
-        {data.metrics.map((metric, index) => (
-          <div
-            key={metric.title}
-            className="col-span-12 lg:col-span-4 bg-[#F5F0E8] p-8 md:p-10 lg:p-12 group transition-colors duration-700 hover:bg-[#EDE8DF]"
-          >
-            <div className="flex justify-between items-center mb-12">
-              <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.2em]">
-                0{index + 2}
-              </span>
+            <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-20 lg:mt-0">
+              <div className="grid grid-cols-2 lg:grid-cols-1 border-t border-[#F5F0E8]/10 lg:border-t-0 lg:border-l lg:pl-14">
+                {[
+                  { num: "01", title: "Luxury\nResidences" },
+                  { num: "02", title: "Family\nCommunity" },
+                  { num: "03", title: "Prime\nConnectivity" },
+                  { num: "04", title: "Premium\nAmenities" },
+                ].map((item, idx) => (
+                  <div
+                    key={item.num}
+                    className={`flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-10 py-10 border-b border-[#F5F0E8]/10 text-center lg:text-left ${
+                      idx % 2 === 0 ? "border-r lg:border-r-0" : ""
+                    }`}
+                  >
+                    <span
+                      className="text-[#F5F0E8]/30 lg:pt-3 font-medium"
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                      }}
+                    >
+                      {item.num}
+                    </span>
 
-              <CrosshairIcon className="opacity-20 group-hover:rotate-90 transition-transform duration-700" />
+                    <h3
+                      className="text-[#F5F0E8]/80 whitespace-pre-line leading-[1.1]"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "clamp(1.75rem, 7vw, 2.5rem)",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div
-              className="text-[#1C1208] font-light leading-none mb-4"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "3.5rem",
-              }}
-            >
-              {metric.value}
-            </div>
+      {/* OVERVIEW */}
 
-            <SectionHeadline size="md" className="!text-[1.6rem] mb-3">
-              {metric.title}
+      <SectionWrapper className="py-20 md:py-24">
+        <div className="grid grid-cols-12 gap-10 items-center text-center lg:text-left">
+          <div className="col-span-12 lg:col-span-5">
+            <Annotation>COMMUNITY OVERVIEW</Annotation>
+
+            <SectionHeadline size="xl" className="mt-5">
+              Built around
+              <br />
+              family living
             </SectionHeadline>
+          </div>
 
-            <BodyText className="text-[#1C1208]/60 leading-[1.7] text-sm">
-              {metric.body}
+          <div className="col-span-12 lg:col-span-7">
+            <BodyText size="lg" className="max-w-3xl mx-auto lg:mx-0">
+              Sydney Oaks combines premium planning, nearby schools, connected
+              commute access, landscaped spaces, and a refined residential
+              atmosphere designed for modern families.
             </BodyText>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="py-8 md:py-12">
-        <FigMarker
-          fig={`fig. ${data.sectionCounter.slice(0, 2).trim()}`}
-          label={data.figLabel}
-        />
-      </div>
-    </SectionWrapper>
-  );
-}
+        {/* CARDS */}
 
-/* ───────────────── ANIMATED PARTITION DIVIDER ───────────────── */
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16">
+          {[
+            "Neighborhood Feel",
+            "Top School Access",
+            "Safe Community",
+            "Connected Lifestyle",
+            "Walkable Planning",
+            "Premium Architecture",
+          ].map((item, index) => (
+            <div
+              key={item}
+              className="bg-[#F5F0E8] p-8 md:p-10 text-center md:text-left hover:bg-[#EDE8DF] transition-all duration-700"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <Annotation>0{index + 1}</Annotation>
 
-function AnimatedPartitionDivider({ title, subtitle, bgText }: { title: string; subtitle: string; bgText: string }) {
-  return (
-    <div className="w-full bg-[#F5F0E8] flex flex-col items-center justify-center py-10 md:py-16 border-t border-[#1C1208]/10 relative overflow-hidden group z-10">
-      
-      {/* Animated Background Typography */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden">
-        <motion.div 
-          initial={{ x: 50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="whitespace-nowrap font-serif text-[12vw] leading-none tracking-tighter"
-        >
-          {bgText}
-        </motion.div>
-      </div>
+                <CrosshairIcon />
+              </div>
 
-      {/* Animated Line drawing down */}
-      <div className="relative h-16 md:h-20 w-[1px] bg-[#1C1208]/10 mb-6 overflow-hidden">
-        <motion.div 
-          initial={{ y: "-100%" }}
-          whileInView={{ y: "100%" }}
-          transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}
-          className="absolute inset-0 bg-[#D43F33] w-[2px] left-[-0.5px]"
-        />
-      </div>
+              <SectionHeadline size="md">
+                {item}
+              </SectionHeadline>
+            </div>
+          ))}
+        </div>
+      </SectionWrapper>
 
-      {/* Animated Text appearing */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-10%" }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="flex flex-col items-center relative z-10"
+      {/* AMENITIES */}
+
+      <SectionWrapper className="py-20 md:py-24">
+        <div className="text-center mb-16">
+          <Annotation>AMENITIES</Annotation>
+
+          <SectionHeadline size="xl" className="mt-5">
+            Spaces designed
+            <br />
+            for everyday life
+          </SectionHeadline>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10">
+          {amenities.map((item, index) => (
+            <div
+              key={item.title}
+              className="bg-[#F5F0E8] p-8 md:p-12 hover:bg-[#EDE8DF] transition-all duration-700 text-center md:text-left"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <Annotation>0{index + 1}</Annotation>
+
+                <item.icon
+                  size={26}
+                  className="text-[#D43F33]"
+                />
+              </div>
+
+              <SectionHeadline size="md">
+                {item.title}
+              </SectionHeadline>
+
+              <BodyText className="mt-4">
+                {item.body}
+              </BodyText>
+            </div>
+          ))}
+        </div>
+      </SectionWrapper>
+
+      {/* ENQUIRY */}
+
+      <section
+        id="enquiry"
+        className="py-20 md:py-32 bg-[#F5F0E8]"
       >
-        <span className="text-[#D43F33] font-semibold text-[0.6rem] tracking-[0.4em] uppercase mb-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-          {subtitle}
-        </span>
-        <span className="text-[#1C1208] text-2xl md:text-4xl font-light tracking-widest uppercase text-center" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-          {title}
-        </span>
-        <span className="mt-6 w-8 h-[1px] bg-[#1C1208]/20 transition-all duration-700 group-hover:w-20 group-hover:bg-[#1C1208]/60" />
-      </motion.div>
-    </div>
-  );
-}
+        <div className="px-6 sm:px-8 md:px-12 lg:px-20">
+          <div className="grid grid-cols-12 gap-14 lg:gap-24">
+            {/* LEFT */}
 
-/* ───────────────── EXPORTS ───────────────── */
+            <div className="col-span-12 lg:col-span-5 text-center lg:text-left">
+              <SectionLabel>Contact Us</SectionLabel>
 
-export function SydneyOaksMetricsSection() {
-  return (
-    <>
-      <AnimatedPartitionDivider 
-        title="Sydney Oaks"
-        subtitle="Featured Project"
-        bgText="SYDNEY OAKS"
-      />
-      <MetricsSection
-        data={{ ...sydneyOaksData, mapHref: "/InteractiveSiteMap?project=sydney-oaks" }}
-        id="metrics-sydney-oaks"
-      />
-    </>
-  );
-}
+              <SectionHeadline
+                size="xl"
+                className="leading-[0.98] mt-5 mb-8"
+              >
+                Start the
+                <br />
+                conversation
+              </SectionHeadline>
 
-export function ElysianGatesMetricsSection() {
-  return (
-    <>
-      <AnimatedPartitionDivider 
-        title="Elysian Gates"
-        subtitle="Next Chapter"
-        bgText="ELYSIAN GATES"
-      />
-      <MetricsSection
-        data={{ ...elysianGatesData, mapHref: "/InteractiveSiteMap?project=elysian-gates" }}
-        id="metrics-elysian-gates"
-      />
-    </>
+              <BodyText className="mb-12 max-w-lg mx-auto lg:mx-0">
+                Our advisors are available to provide detailed project
+                briefings, pricing schedules, and site visit coordination.
+              </BodyText>
+
+              <div className="space-y-4">
+                <a
+                  href="tel:#"
+                  className="flex items-center gap-4 p-5 bg-white border border-[#1C1208]/5 hover:border-rust transition-all"
+                >
+                  <div className="w-10 h-10 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208]">
+                    <Phone className="w-4 h-4" />
+                  </div>
+
+                  <div className="text-left">
+                    <Annotation className="!text-[#1C1208]/30 mb-1">
+                      Call Now
+                    </Annotation>
+
+                    <span
+                      className="font-bold tracking-widest text-[#1C1208]"
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    >
+                      +1 (770) 555-0123
+                    </span>
+                  </div>
+                </a>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <a
+                    href="#"
+                    className="flex items-center justify-center gap-3 p-5 bg-white border border-[#1C1208]/5"
+                  >
+                    <MessageCircle className="w-4 h-4 text-[#25D366]" />
+
+                    <span
+                      className="uppercase font-bold tracking-[0.2em] text-[0.6rem]"
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    >
+                      WhatsApp
+                    </span>
+                  </a>
+
+                  <a
+                    href="#"
+                    className="flex items-center justify-center gap-3 p-5 bg-white border border-[#1C1208]/5"
+                  >
+                    <Instagram className="w-4 h-4 text-[#E4405F]" />
+
+                    <span
+                      className="uppercase font-bold tracking-[0.2em] text-[0.6rem]"
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    >
+                      Instagram
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT */}
+
+            <div className="col-span-12 lg:col-span-7">
+              <form className="bg-white p-6 md:p-12 border border-[#1C1208]/5 space-y-6 shadow-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
+                      Full Name
+                    </label>
+
+                    <input
+                      type="text"
+                      className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none"
+                      placeholder="John Doe"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
+                      Phone Number
+                    </label>
+
+                    <input
+                      type="tel"
+                      className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none"
+                      placeholder="+1 (000) 000-0000"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
+                    Email Address
+                  </label>
+
+                  <input
+                    type="email"
+                    className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none"
+                    placeholder="john@example.com"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
+                    Preferred Callback
+                  </label>
+
+                  <select className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none appearance-none">
+                    <option>Morning (9AM - 12PM)</option>
+                    <option>Afternoon (12PM - 4PM)</option>
+                    <option>Evening (4PM - 7PM)</option>
+                  </select>
+                </div>
+
+                <div className="pt-4">
+                  <ButtonPrimary href="#" className="w-full">
+                    Submit Enquiry
+                  </ButtonPrimary>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
