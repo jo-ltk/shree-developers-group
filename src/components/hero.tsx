@@ -27,11 +27,10 @@ export function Hero() {
         loop
         playsInline
         preload="metadata"
-        poster="https://res.cloudinary.com/dduy8wigb/video/upload/v1778742536/hero_videos/hero_bg.jpg"
         className="block md:hidden absolute inset-0 w-full h-full object-contain bg-black"
       >
         <source
-          src="https://res.cloudinary.com/dduy8wigb/video/upload/v1778742536/hero_videos/hero_bg.mp4"
+          src="https://res.cloudinary.com/dduy8wigb/video/upload/v1778781058/hero_videos/ijlynjlwix9mee4zq8pu.mp4"
           type="video/mp4"
         />
       </video>
