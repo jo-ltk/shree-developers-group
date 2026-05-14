@@ -1,8 +1,11 @@
+"use client";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { Annotation } from "./ui/annotation";
 import { CrosshairIcon } from "./ui/crosshair-icon";
+
+import { motion } from "framer-motion";
 
 const stats = [
   { value: "15", suffix: "+", label: "Years Experience" },
@@ -25,16 +28,32 @@ export function CredibilityMetrics() {
       <div className="relative z-10 flex flex-col gap-6">
 
         {/* Top row — headline left */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <SectionLabel light counter="01 / 04">Credibility</SectionLabel>
-            <SectionHeadline light size="lg" className="!text-[clamp(2rem,6vw,4.2rem)] !leading-[0.95]">
-              Why homeowners <em className="italic">trust</em> us
-            </SectionHeadline>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <SectionLabel light counter="01 / 04">Credibility</SectionLabel>
+              <SectionHeadline light size="lg" className="!text-[clamp(2rem,6vw,4.2rem)] !leading-[0.95]">
+                Why homeowners <em className="italic">trust</em> us
+              </SectionHeadline>
+            </div>
+            <Annotation light className="!leading-[2] opacity-60">
+              Shree Developers Group · Est. 2009 · Kerala, IN
+            </Annotation>
           </div>
-          <Annotation light className="!leading-[2] opacity-60">
-            Shree Developers Group · Est. 2009 · Kerala, IN
-          </Annotation>
+
+          {/* 15+ Years Logo */}
+          <div className="relative shrink-0 mb-2">
+            <img 
+              src="/15-years-logo.png" 
+              alt="15+ Years of Excellence" 
+              className="h-24 w-auto md:h-32 object-contain opacity-100 relative z-10"
+            />
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute -inset-4 border border-rust/20 rounded-full pointer-events-none" 
+            />
+          </div>
         </div>
 
         {/* Stats strip */}

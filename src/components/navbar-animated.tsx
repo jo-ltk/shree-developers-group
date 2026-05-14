@@ -1,23 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
-
+import { useState } from "react";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { ArrowRight, Menu, X, Instagram, Facebook, Linkedin } from "lucide-react";
 import { BrandMark } from "@/components/ui/brand-mark";
 
-const navColumns = [
-  { title: "About", href: "/about", links: [] as string[] },
-  { title: "Projects", href: "/#gallery", links: ["Sydney Oaks", "Elysian Gates"] },
-  { title: "Interactive Map", href: "/InteractiveSiteMap", links: [] as string[] },
-  { title: "Contact", href: "/#footer", links: [] as string[] },
+const navLinks = [
+  { title: "About", href: "/about" },
+  { title: "Projects", href: "/#gallery" },
+  { title: "Interactive Map", href: "/InteractiveSiteMap" },
+  { title: "Contact", href: "/#footer" },
 ];
 
-const desktopGridClass =
-  "grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] items-start gap-x-8";
-
 export function NavbarAnimated() {
-  const [isOpen, setIsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
@@ -27,8 +22,7 @@ export function NavbarAnimated() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     const diff = latest - previous;
-    const threshold = 15;
-
+    
     if (mobileOpen) {
       setIsHidden(false);
       return;
@@ -36,295 +30,148 @@ export function NavbarAnimated() {
 
     if (latest < 80) {
       setIsHidden(false);
-    } else if (diff > threshold) {
+    } else if (diff > 20) {
       setIsHidden(true);
-      setIsOpen(false);
-    } else if (diff < -threshold) {
+    } else if (diff < -20) {
       setIsHidden(false);
     }
 
-    setIsAtTop(latest < 20);
+    setIsAtTop(latest < 50);
   });
-
-  const columnsWithMeta = useMemo(
-    () =>
-      navColumns.map((column) => ({
-        ...column,
-        isTrailing: column.title === "Contact",
-      })),
-    []
-  );
 
   return (
     <>
       <motion.header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${
           isAtTop
-            ? "bg-transparent py-0"
-            : "bg-[rgba(250,248,243,0.82)] pb-4 pt-2 shadow-sm backdrop-blur-lg border-b border-[rgba(183,170,152,0.15)]"
+            ? "bg-transparent py-6 lg:py-8"
+            : "bg-white/80 pb-4 pt-3 shadow-lg backdrop-blur-xl border-b border-dark/5"
         }`}
         variants={{
           visible: { y: 0, opacity: 1 },
           hidden: { y: "-110%", opacity: 0 },
         }}
         animate={isHidden ? "hidden" : "visible"}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div
-          className={`w-full transition-all duration-500 px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 ${
-            isAtTop ? "pt-5 lg:pt-7" : "pt-3 lg:pt-3"
-          }`}
-        >
-          {/* Desktop nav */}
-          <div className={`${desktopGridClass} hidden xl:grid items-center`}>
-            <a href="/" className="w-fit text-dark">
-              <BrandMark
-                variant="black"
-                className={`transition-all duration-500 ${
-                  isAtTop ? "h-28 w-[18rem]" : "h-16 w-[12rem]"
-                }`}
-                imageClassName="object-left"
-                alt="Shree Developers Group logo"
-                priority
-              />
-            </a>
-
-            {columnsWithMeta.map((item) => (
-              <a
-                key={item.title}
-                href={item.href}
-                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-rust ${
-                  item.isTrailing ? "justify-self-end" : "justify-self-start"
-                } text-dark`}
-              >
-                <span>{item.title}</span>
-              </a>
-            ))}
-          </div>
-
-          {/* Mobile nav bar */}
-          <div className="flex items-center justify-between xl:hidden">
-            <a href="/" className="relative z-50 text-[var(--text-primary)]">
-              <BrandMark
-                variant="black"
-                className={`transition-all duration-500 ${
-                  isAtTop ? "h-16 w-[11rem]" : "h-12 w-[8.5rem]"
-                }`}
-                imageClassName="object-left"
-                alt="Shree Developers Group logo"
-                priority
-              />
-            </a>
-
+        <div className="w-full px-6 sm:px-10 lg:px-20 xl:px-24">
+          <div className="flex items-center justify-between">
+            {/* Left: Interactive Menu Trigger */}
             <button
               type="button"
-              onClick={() => setMobileOpen((v) => !v)}
-              className="relative z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(183,170,152,0.45)] bg-[rgba(250,248,243,0.72)] text-[var(--text-primary)] backdrop-blur-md transition-colors duration-200 hover:border-[var(--color-accent)]"
-              aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+              onClick={() => setMobileOpen(true)}
+              className={`group flex items-center gap-4 transition-colors duration-500 ${
+                isAtTop ? "text-white" : "text-dark"
+              }`}
             >
-              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-current/20 bg-current/5 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-active:scale-95">
+                <Menu className="h-5 w-5 transition-transform duration-500 group-hover:rotate-180" />
+              </div>
+              <div className="flex flex-col items-start leading-none">
+                <span className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100">
+                  Menu
+                </span>
+                <span className={`mt-1.5 h-[1px] w-0 transition-all duration-500 group-hover:w-full ${isAtTop ? 'bg-white' : 'bg-rust'}`} />
+              </div>
             </button>
-          </div>
-        </div>
 
-        {/* Desktop mega-menu dropdown */}
-        <div
-          className={`fixed inset-x-0 top-0 hidden origin-top overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] xl:block ${
-            isOpen
-              ? "pointer-events-auto translate-y-0 opacity-100"
-              : "pointer-events-none -translate-y-5 opacity-0"
-          }`}
-        >
-          <div className="border-b border-[rgba(183,170,152,0.35)] bg-[rgba(250,248,243,0.96)] text-[var(--text-primary)] shadow-[0_24px_80px_rgba(183,170,152,0.15)] backdrop-blur-md">
-            <div className="mx-auto max-w-[96rem] px-6 pb-9 pt-8 sm:px-8 lg:px-10">
-              <div className={desktopGridClass}>
-                <div
-                  className={`relative transition-all duration-500 ${
-                    isOpen ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"
-                  }`}
-                  style={{ transitionDelay: "60ms" }}
-                >
-                  <div className="flex flex-col pr-10">
-                    <span className="mb-4 block h-px w-9 bg-[var(--color-accent)]" />
-                    <p
-                      className="text-[1.35rem] font-light leading-[1.25] tracking-normal text-[var(--text-primary)]"
-                      style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-                    >
-                      Warm communities,<br />delivered with clarity.
-                    </p>
-                    <p className="mt-3 text-[0.82rem] font-light leading-[1.7] text-[var(--text-primary)]">
-                      Explore Shree projects, available homesites, and the promise behind each handover.
-                    </p>
-                    <a
-                      href="/InteractiveSiteMap"
-                      className="mt-5 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)] transition-opacity duration-200 hover:opacity-75"
-                    >
-                      Explore homesites
-                      <ArrowRight className="h-3 w-3" />
-                    </a>
-                  </div>
-                  <span className="absolute inset-y-0 right-0 w-px bg-[rgba(183,170,152,0.35)]" />
-                </div>
-
-                {columnsWithMeta.map((column, index) => (
-                  <div
-                    key={column.title}
-                    className={`transition-all duration-500 ${
-                      isOpen ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"
-                    } ${column.isTrailing ? "justify-self-end" : "justify-self-start"}`}
-                    style={{ transitionDelay: `${60 + index * 30}ms` }}
-                  >
-                    <a
-                      href={column.href}
-                      className="flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
-                    >
-                      <span>{column.title}</span>
-                      {column.links.length > 0 ? <ChevronDown className="h-3.5 w-3.5 rotate-180 opacity-50" /> : null}
-                    </a>
-                  </div>
-                ))}
-              </div>
-
-              <div className={`${desktopGridClass} mt-3`}>
-                <div aria-hidden="true" />
-
-                {columnsWithMeta.map((column, index) => (
-                  <div
-                    key={`${column.title}-links`}
-                    className={`transition-all duration-500 ${
-                      isOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-                    } ${column.isTrailing ? "justify-self-end text-right" : "justify-self-start"}`}
-                    style={{ transitionDelay: `${120 + index * 35}ms` }}
-                  >
-                    {column.links.length > 0 ? (
-                      <div className="space-y-2.5 text-[0.82rem] font-light leading-[1.5] text-[var(--text-primary)]">
-                        {column.links.map((item) => (
-                          <a
-                            key={item}
-                            href={column.href}
-                            className="block transition-all duration-200 hover:translate-x-0.5 hover:text-[var(--color-accent)]"
-                          >
-                            {item}
-                          </a>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-
-              <div
-                className={`mt-8 transition-all duration-500 ${
-                  isOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            {/* Right: Premium Logo */}
+            <a 
+              href="/" 
+              className="relative transition-all duration-700 hover:opacity-80 active:scale-95"
+            >
+              <BrandMark
+                variant={isAtTop ? "steel" : "black"}
+                className={`transition-all duration-500 ${
+                  isAtTop ? "h-20 w-[14rem]" : "h-14 w-[11rem]"
                 }`}
-                style={{ transitionDelay: "240ms" }}
-              >
-                <div className="mb-6 h-px w-full bg-[rgba(183,170,152,0.35)]" />
-                <div className="grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] gap-x-8">
-                  <div aria-hidden="true" />
-                  <div className="col-span-4 flex justify-end">
-                    <a
-                      href="#footer"
-                      className="group flex w-full max-w-[36rem] items-center border-b border-[rgba(183,170,152,0.55)] pb-2 text-[0.82rem] tracking-[0.05em] text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--color-accent)]"
-                    >
-                      <span className="flex-1">Private appointments and project inquiries</span>
-                      <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] transition-colors duration-200 group-hover:text-[var(--color-accent)]" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+                imageClassName="object-right"
+                alt="Shree Developers Group logo"
+                priority
+              />
+            </a>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile full-screen menu */}
-      <div
-        className={`fixed inset-0 z-40 xl:hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          mobileOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      >
-        <div
-          className="absolute inset-0 bg-[rgba(250,248,243,0.98)] backdrop-blur-md"
-          onClick={() => setMobileOpen(false)}
-        />
-
-        <div
-          className={`relative h-full overflow-y-auto transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            mobileOpen ? "translate-y-0" : "-translate-y-4"
-          }`}
-        >
-          <div className="mx-auto max-w-[96rem] px-6 pb-16 pt-24 sm:px-8">
-            <div className="mb-8 border-b border-[rgba(183,170,152,0.4)] pb-8">
-              <span className="mb-4 block h-px w-8 bg-[var(--color-accent)]" />
-              <p
-                className="text-[1.5rem] font-light leading-[1.25] tracking-normal text-[var(--text-primary)]"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-              >
-                Warm communities,<br />delivered with clarity.
-              </p>
-              <p className="mt-3 text-[0.82rem] font-light leading-[1.65] text-[var(--text-primary)]">
-                Projects, homesites, and support shaped around confident residential decisions.
-              </p>
-            </div>
-
-            <nav className="space-y-0">
-              {navColumns.map((column) => (
-                <div key={column.title}>
-                  <a
-                    href={column.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-between border-b border-[rgba(183,170,152,0.35)] py-4 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
-                  >
-                    <span>{column.title}</span>
-                    {column.links.length > 0 ? (
-                      <ChevronDown className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
-                    ) : (
-                      <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
-                    )}
-                  </a>
-                  {column.links.length > 0 && (
-                    <div className="space-y-3 border-b border-[rgba(183,170,152,0.35)] py-3 pl-5">
-                      {column.links.map((link) => (
-                        <a
-                          key={link}
-                          href={column.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="block text-[0.82rem] font-light tracking-[0.04em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
-                        >
-                          {link}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
-
-            <div className="mt-10 flex items-center border-b border-[rgba(183,170,152,0.45)] pb-3 text-[0.82rem] tracking-[0.05em] text-[var(--text-primary)]">
-              <span className="flex-1">Private appointments and project inquiries</span>
-              <ArrowRight className="h-4 w-4 text-[var(--text-secondary)]" />
-            </div>
-
-            <div className="mt-10">
-              <a
-                href="#footer"
+      {/* Full-Screen Immersive Menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "circOut" }}
+            className="fixed inset-0 z-[60] flex flex-col bg-[#F5F0E8] text-[#1C1208]"
+          >
+            {/* Menu Header */}
+            <div className="flex items-center justify-between px-6 pt-12 sm:px-10 lg:px-16 lg:pt-20 xl:px-20">
+              <span className="text-[11px] font-bold uppercase tracking-[0.4em] opacity-40">Navigation</span>
+              <button
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex h-[48px] items-center gap-3 bg-[var(--color-accent)] px-7 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3A342E] transition-all duration-200 hover:brightness-105"
-                style={{
-                  clipPath:
-                    "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))",
-                }}
+                className="group flex items-center gap-3 text-dark transition-opacity hover:opacity-70"
               >
-                Get in Touch
-                <ArrowRight className="h-3.5 w-3.5" />
-              </a>
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Close</span>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-dark/10">
+                  <X className="h-5 w-5" />
+                </div>
+              </button>
             </div>
-          </div>
-        </div>
-      </div>
+
+            {/* Main Menu Content */}
+            <div className="mx-auto flex w-full flex-1 flex-col justify-center px-6 py-12 sm:px-10 lg:px-16 lg:py-20 xl:px-20">
+              <nav className="flex flex-col gap-4 md:gap-8 lg:gap-10">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.title}
+                    href={link.href}
+                    initial={{ x: -40, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.1 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    onClick={() => setMobileOpen(false)}
+                    className="group relative w-fit overflow-hidden py-1 lg:py-2"
+                  >
+                    <span 
+                      className="block text-[clamp(2rem,6vw,5rem)] font-light leading-none tracking-tight transition-transform duration-500 group-hover:-translate-y-2"
+                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    >
+                      {link.title}
+                    </span>
+                    <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-rust transition-all duration-500 group-hover:w-full" />
+                  </motion.a>
+                ))}
+              </nav>
+
+              {/* Bottom Details */}
+              <motion.div 
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="mt-12 grid grid-cols-1 gap-10 border-t border-dark/10 pt-10 md:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:pt-12"
+              >
+                <div>
+                  <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Inquiries</h4>
+                  <a href="mailto:info@shreedevelopers.com" className="text-base font-light lg:text-lg hover:text-rust transition-colors">info@shreedevelopers.com</a>
+                </div>
+                <div className="lg:text-center">
+                  <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Follow Us</h4>
+                  <div className="flex gap-6 lg:justify-center">
+                    <a href="#" className="hover:text-rust transition-colors"><Instagram className="h-5 w-5" /></a>
+                    <a href="#" className="hover:text-rust transition-colors"><Facebook className="h-5 w-5" /></a>
+                    <a href="#" className="hover:text-rust transition-colors"><Linkedin className="h-5 w-5" /></a>
+                  </div>
+                </div>
+                <div className="lg:text-right">
+                  <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Shree Experience</h4>
+                  <p className="ml-auto max-w-[280px] text-xs font-light leading-relaxed opacity-60 italic lg:text-sm">
+                    Architecting legacies of trust across the horizon since 1998.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

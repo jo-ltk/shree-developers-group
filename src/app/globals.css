@@ -49,23 +49,26 @@ html {
   font-size: 16px; /* standard base */
 }
 
-body {
-  min-height: 100vh;
-  font-family: 'Outfit', sans-serif;
-  background: var(--bg-main);
-  color: var(--text-primary);
-  line-height: 1.6;
-  font-size: 1rem; /* 16px */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-
-  /* Hide scrollbar */
+/* Hide scrollbar for all browsers */
+html, body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
 
+html::-webkit-scrollbar, 
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  background: #F5F0E8;
+  color: #1C1208;
+  line-height: 1.6;
+  font-size: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1 {
@@ -357,10 +360,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  background: #F5F0E8;
-  color: #1C1208;
-}
+/* Consolidated into top body definition */
 
 ::selection {
   background: #D43F33;

@@ -9,26 +9,32 @@ import { CrosshairIcon } from "./ui/crosshair-icon";
 const pillars = [
   {
     num: "01",
-    label: "Mission-Driven",
-    desc: "Every decision traces back to one purpose — lasting homes for lasting families.",
+    label: "Mission",
+    desc: "To architect legacies that stand the test of time, creating homes where trust always finds its place.",
     tag: "Our Purpose",
   },
   {
     num: "02",
-    label: "Master Craftsmanship",
-    desc: "Built by hand, finished with precision and pride in every detail.",
+    label: "Craftsmanship",
+    desc: "An obsessive commitment to detail. Built by hand, finished with architectural precision.",
     tag: "Quality First",
   },
   {
     num: "03",
-    label: "Decades of Experience",
-    desc: "15 years of delivering trust and quality across Georgia.",
+    label: "Experience",
+    desc: "Over 15 years of delivering premium residential projects across Georgia and beyond.",
     tag: "Since 2009",
   },
   {
     num: "04",
+    label: "Philosophy",
+    desc: "We believe in restraint, craft, and the enduring beauty of natural materials and honest construction.",
+    tag: "Our Ethos",
+  },
+  {
+    num: "05",
     label: "Licensed & Insured",
-    desc: "Full compliance. Zero compromise. Every project, every time.",
+    desc: "Total compliance and peace of mind. Fully certified for premium residential developments.",
     tag: "Fully Certified",
   },
 ];
@@ -84,7 +90,7 @@ export function AboutSnippet() {
         {/* Right column */}
         <div className="flex flex-col justify-start gap-0 pl-0 lg:pl-14 pt-10 sm:pt-12 lg:pt-0">
 
-          {/* 2×2 pillar grid */}
+          {/* 5-item pillar grid */}
           <div className="grid grid-cols-2 gap-0 border border-[#1C1208]/10 flex-1">
             {pillars.map((p, i) => (
               <div
@@ -93,10 +99,13 @@ export function AboutSnippet() {
                   "group relative flex flex-col gap-1.5 sm:gap-2 p-4 sm:p-5 md:p-6",
                   "border-r border-b border-[#1C1208]/10",
                   "hover:bg-[#1C1208]/[0.025] transition-colors duration-300 cursor-default",
-                  // Remove right border on even items (right column)
+                  // Remove right border on the right column (even indices)
                   i % 2 === 1 ? "border-r-0" : "",
-                  // Remove bottom border on last two items (bottom row)
-                  i >= 2 ? "border-b-0" : "",
+                  // Make the last item (Philosophy or Licensed) span full width if it's the 5th item
+                  i === 4 ? "col-span-2 border-r-0" : "",
+                  // Remove bottom border on the last row
+                  i === 4 ? "border-b-0" : "",
+                  (i === 3 && i === pillars.length - 2) ? "" : "", // cleanup logic
                 ].join(" ")}
               >
                 <Annotation>{p.num}</Annotation>
