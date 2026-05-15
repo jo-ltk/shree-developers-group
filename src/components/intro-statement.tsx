@@ -14,17 +14,17 @@ const pillars = [
   {
     icon: Compass,
     label: "Mission",
-    body: "To create intentional communities that foster connection, safety, and a refined lifestyle for modern families.",
+    body: "To create intentional communities that foster connection, safety, and a refined lifestyle for families.",
   },
   {
     icon: Award,
     label: "Experience",
-    body: "Over 15 years of deep expertise delivering 200+ homes with obsessive attention to detail across Kerala.",
+    body: "Over 15 years of deep expertise delivering 200+ homes with obsessive attention to detail.",
   },
   {
     icon: Ruler,
     label: "Craftsman",
-    body: "We believe in the details — from structural integrity to the tactile quality of natural limestone and terracotta.",
+    body: "We believe in the details — from structural integrity to the tactile quality of natural materials.",
   },
   {
     icon: Lightbulb,
@@ -33,8 +33,8 @@ const pillars = [
   },
   {
     icon: ShieldCheck,
-    label: "Licensed & Insured",
-    body: "Full state certification and comprehensive insurance coverage, providing a secure foundation for your investment.",
+    label: "Licensed",
+    body: "Full state certification and insurance coverage, providing a secure foundation for your investment.",
   },
 ];
 
@@ -62,23 +62,23 @@ export function IntroStatement() {
   }, []);
 
   return (
-    <SectionWrapper id="about-brief" ref={sectionRef} dark={false} className="!py-20 md:!py-32">
+    <SectionWrapper id="about-brief" ref={sectionRef} dark={false} className="!pt-16 !pb-0 md:!pt-24 md:!pb-0">
       <div className="flex flex-col items-center text-center gap-10 md:gap-14">
 
         {/* Heading block */}
         <div className="flex flex-col items-center gap-5 max-w-2xl" data-intro-reveal>
           <SectionLabel className="justify-center">About Shree</SectionLabel>
-          <SectionHeadline size="xl">
+          <SectionHeadline size="xl" className="responsive-headline-xl">
             Where trust always finds its home
           </SectionHeadline>
-          <p
-            className="text-[clamp(0.9rem,1.6vw,1.05rem)] text-[#1C1208]/55 leading-relaxed"
+          <BodyText
+            className="responsive-body-sm text-[#1C1208]/55 leading-relaxed"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 400 }}
           >
             A home should feel considered before the first visit and dependable
             long after possession. Architecting legacies through restraint and
             craftsmanship.
-          </p>
+          </BodyText>
         </div>
 
         {/* Ornament */}
@@ -97,7 +97,7 @@ export function IntroStatement() {
 
         {/* Pillars grid */}
         <div
-          className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#1C1208]/10 border border-[#1C1208]/10 overflow-hidden"
+          className="w-full grid grid-cols-2 lg:grid-cols-5 gap-px bg-[#1C1208]/10 border border-[#1C1208]/10 overflow-hidden"
           data-intro-reveal
         >
           {pillars.map((p, i) => {
@@ -105,20 +105,20 @@ export function IntroStatement() {
             return (
               <div
                 key={i}
-                className={`group flex flex-col items-center text-center gap-4 p-7 md:p-8 bg-[#F5F0E8] transition-colors duration-300 hover:bg-[#1C1208]/[0.02] cursor-default ${
-                  i === 4 ? "sm:col-span-2 lg:col-span-1" : ""
-                }`}
+                className={`group flex flex-col items-center text-center gap-4 p-5 sm:p-8 bg-[#F5F0E8] transition-colors duration-300 hover:bg-[#1C1208]/[0.02] cursor-default ${i === 3 ? "hidden lg:flex" : "flex"}`}
               >
                 {/* Icon */}
-                <div className="flex items-center justify-center w-10 h-10 border border-rust/20 text-rust transition-colors duration-300 group-hover:bg-rust/5">
-                  <Icon className="w-4 h-4" />
+                <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 border border-rust/20 text-rust transition-colors duration-300 group-hover:bg-rust/5">
+                  <Icon className="w-6 h-6 sm:w-8 sm:h-8" />
                 </div>
 
                 {/* Label */}
-                <Annotation className="!text-rust font-bold">{p.label}</Annotation>
+                <Annotation className="!text-rust font-bold responsive-stat-label">
+                  {p.label}
+                </Annotation>
 
                 {/* Body */}
-                <BodyText size="sm" className="leading-relaxed">
+                <BodyText size="sm" className="responsive-body-sm leading-relaxed opacity-70">
                   {p.body}
                 </BodyText>
               </div>
@@ -128,7 +128,7 @@ export function IntroStatement() {
 
         {/* CTA */}
         <div data-intro-reveal>
-          <ButtonGhost href="/about" className="text-[9px] tracking-[0.22em]">
+          <ButtonGhost href="/about" className="responsive-btn-text">
             Learn More About Us
           </ButtonGhost>
         </div>

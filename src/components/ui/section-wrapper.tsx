@@ -7,11 +7,12 @@ interface SectionWrapperProps {
   className?: string;
   id?: string;
   noPadding?: boolean;
+  fullWidth?: boolean;
   style?: React.CSSProperties;
 }
 
 export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
-  ({ children, dark, className, id, noPadding, style }, ref) => {
+  ({ children, dark, className, id, noPadding, fullWidth, style }, ref) => {
     return (
       <section
         id={id}
@@ -19,12 +20,15 @@ export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
         className={cn(
           "relative w-full overflow-hidden",
           dark ? "bg-[#1C1208]" : "bg-[#F5F0E8]",
-          !noPadding && "py-12 md:py-16 lg:py-20",
+          !noPadding && "py-16 md:py-24 lg:py-32",
           className,
         )}
         style={style}
       >
-        <div className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
+        <div className={cn(
+          "w-full",
+          !fullWidth && "px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32"
+        )}>
           {children}
         </div>
       </section>

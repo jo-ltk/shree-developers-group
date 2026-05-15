@@ -14,7 +14,7 @@ const stats = [
 
 export function CredibilityMetrics() {
   return (
-    <SectionWrapper dark className="!py-8 md:!py-12">
+    <SectionWrapper dark className="!py-12 md:!py-16">
 
       {/* Blueprint grid lines */}
       <div className="pointer-events-none absolute inset-0 flex justify-between px-6 md:px-12 lg:px-20 z-0">
@@ -36,38 +36,56 @@ export function CredibilityMetrics() {
             />
           </div>
 
-          <SectionHeadline light size="xl">
+          <SectionHeadline 
+            light 
+            size="xl" 
+            className="whitespace-nowrap responsive-headline-xl"
+          >
             Why homeowners trust us
           </SectionHeadline>
         </div>
 
         {/* Stats grid */}
         <div
-          className="grid grid-cols-2 sm:grid-cols-4 credibility-grid"
+          className="grid grid-cols-4 credibility-grid"
           style={{ border: "1px solid rgba(245,240,232,0.08)" }}
         >
           {stats.map((s, i) => (
             <div
               key={i}
-              className="credibility-stat group relative flex flex-col items-center text-center gap-2 p-5 sm:p-6 md:p-8 transition-colors duration-300 cursor-default"
+              className="credibility-stat group relative flex flex-col items-center justify-center text-center p-3 sm:p-6 md:p-8 transition-colors duration-300 cursor-default"
               style={{
-                borderRight: i === 1 || i === 3 ? "none" : "1px solid rgba(245,240,232,0.08)",
-                borderBottom: i < 2 ? "1px solid rgba(245,240,232,0.08)" : "none",
+                borderRight: i === 3 ? "none" : "1px solid rgba(245,240,232,0.08)",
+                borderBottom: "none",
               }}
             >
-              <div
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: s.word ? "clamp(1.5rem,3.5vw,2.6rem)" : "clamp(2.2rem,5vw,3.8rem)",
-                  fontWeight: 300,
-                  color: "#F5F0E8",
-                  lineHeight: 1,
-                }}
-              >
-                {s.value}
-                <span style={{ color: "#D43F33" }}>{s.suffix}</span>
+              <div className="flex flex-col items-center justify-center w-full">
+                {/* Value Container - Fixed height to ensure alignment */}
+                <div 
+                  className="h-8 sm:h-12 flex items-center justify-center responsive-stat-value"
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontWeight: 300,
+                    color: "#F5F0E8",
+                    lineHeight: 1,
+                  }}
+                >
+                  <span>
+                    {s.value}
+                    <span style={{ color: "#D43F33" }}>{s.suffix}</span>
+                  </span>
+                </div>
+
+                {/* Label Container - Fixed height to ensure alignment */}
+                <div className="h-8 sm:h-10 mt-1.5 sm:mt-3 flex items-start justify-center">
+                  <Annotation 
+                    light 
+                    className="responsive-stat-label opacity-70 leading-[1.4]"
+                  >
+                    {s.label}
+                  </Annotation>
+                </div>
               </div>
-              <Annotation light>{s.label}</Annotation>
               <CrosshairIcon
                 light
                 className="absolute bottom-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"

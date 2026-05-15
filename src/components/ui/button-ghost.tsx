@@ -23,6 +23,7 @@ export function ButtonGhost({
       href={href}
       className={cn(
         "group relative inline-flex items-center gap-2 pb-1 no-underline",
+        "responsive-btn-text",
         textColor,
         className,
       )}

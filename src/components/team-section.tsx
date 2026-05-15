@@ -86,7 +86,7 @@ export function TeamSection() {
           <SectionLabel counter="07 / 08" className="justify-center md:justify-start">Our Promise</SectionLabel>
           <SectionHeadline 
             size="xl" 
-            className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
+            className="responsive-headline-xl"
           >
             Premium is not loud.
             <br />
@@ -94,11 +94,11 @@ export function TeamSection() {
           </SectionHeadline>
         </div>
         <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
-          <BodyText size="md" className="mb-8">
+          <BodyText size="md" className="mb-8 responsive-body-sm">
             Shree Developers Group works with a simple belief: real estate feels luxurious when 
             buyers understand what is being built, why it matters, and who stands behind it.
           </BodyText>
-          <ButtonGhost href="#footer">Start A Conversation</ButtonGhost>
+          <ButtonGhost href="#footer" className="responsive-btn-text">Start A Conversation</ButtonGhost>
         </div>
       </div>
 
@@ -132,11 +132,11 @@ export function TeamSection() {
             </div>
 
             <div className="flex flex-col flex-grow items-center md:items-start text-center md:text-left p-6 md:p-8 pt-8 md:pt-10">
-              <Annotation className="mb-4 text-rust">Pillar 0{index + 1}</Annotation>
+              <Annotation className="mb-4 text-rust responsive-stat-label">Pillar 0{index + 1}</Annotation>
               <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
                 {item.title}<span className="text-rust">.</span>
               </SectionHeadline>
-              <BodyText size="sm" className="mb-8 flex-grow">
+              <BodyText size="sm" className="mb-8 flex-grow responsive-body-sm">
                 {item.description}
               </BodyText>
             </div>

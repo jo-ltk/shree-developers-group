@@ -316,7 +316,7 @@ export const allProjects: ProjectData[] = [
     slug: "sydney-oaks",
     title: "Sydney Oaks",
     location: "Gwinnett County, GA",
-    type: "Estate Collection",
+    type: "89 Town Homes",
     year: "Ongoing",
     status: "active",
     highlight: "Thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture",

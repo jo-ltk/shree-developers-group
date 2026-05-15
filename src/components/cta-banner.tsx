@@ -130,7 +130,7 @@ export function CtaBanner() {
 
       {/* CONTENT */}
 
-      <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 py-12 md:py-16 max-w-[1550px] mx-auto w-full">
+      <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 py-16 md:py-24 max-w-[1550px] mx-auto w-full">
         {/* TOP BAR */}
 
         <div className="flex items-center justify-between mb-10">
@@ -139,7 +139,7 @@ export function CtaBanner() {
 
             <Annotation
               light
-              className="!tracking-[0.4em]"
+              className="!tracking-[0.4em] responsive-stat-label"
             >
               THE FINAL SELECTION
             </Annotation>
@@ -160,7 +160,7 @@ export function CtaBanner() {
           <SectionHeadline
             light
             size="xl"
-            className="max-w-5xl"
+            className="max-w-5xl responsive-headline-xl"
             noPeriod
           >
             {headlineLines.map((line, lIndex) => (
@@ -216,7 +216,7 @@ export function CtaBanner() {
             <BodyText
               light
               size="lg"
-              className="!text-white/75"
+              className="!text-white/75 responsive-body-sm"
             >
               Architecting legacies through restraint and craftsmanship.
               Your future home is a conversation away.
@@ -228,7 +228,7 @@ export function CtaBanner() {
           <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-5 mt-12">
             <ButtonPrimary
               href="#contact"
-              className="!h-14 !px-10 text-sm whitespace-nowrap"
+              className="!h-14 !px-10 whitespace-nowrap responsive-btn-text"
             >
               Schedule Your Tour
             </ButtonPrimary>
@@ -236,7 +236,7 @@ export function CtaBanner() {
             <ButtonGhost
               href="mailto:sales@shreedevelopersgroup.com"
               light
-              className="!h-14 !px-10 border-white/30 hover:border-white text-sm whitespace-nowrap !text-white/90"
+              className="!h-14 !px-10 border-white/30 hover:border-white whitespace-nowrap !text-white/90 responsive-btn-text"
             >
               Contact Sales Advisor
             </ButtonGhost>
@@ -247,25 +247,23 @@ export function CtaBanner() {
 
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-5">
-            <Annotation light className="opacity-40">
+            <Annotation light className="opacity-40 responsive-stat-label">
               ESTABLISHED 2009
             </Annotation>
 
             <div className="w-1 h-1 bg-rust rotate-45" />
 
-            <Annotation light className="opacity-40">
+            <Annotation light className="opacity-40 responsive-stat-label">
               SUWANEE, GEORGIA
             </Annotation>
           </div>
 
-          <span
-            className="text-[0.55rem] uppercase tracking-[0.2em] text-white/30 font-bold"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-            }}
+          <Annotation
+            light
+            className="!text-white/30 responsive-stat-label !font-bold"
           >
             SHREE DEVELOPERS GROUP © 2026
-          </span>
+          </Annotation>
         </div>
       </div>
 

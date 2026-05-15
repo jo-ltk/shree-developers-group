@@ -31,7 +31,7 @@ export function SectionLabel({
         </span>
       )}
       <span
-        className={cn("font-semibold uppercase block", textColor)}
+        className={cn("font-semibold uppercase block responsive-stat-label", textColor)}
         style={{
           fontFamily: "'Montserrat', sans-serif",
           fontSize: "0.65rem",

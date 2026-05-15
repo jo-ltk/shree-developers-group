@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
+@import "./responsive-typography.css";
 @config "../../tailwind.config.ts";
 
 @theme inline {
@@ -400,14 +401,11 @@ html {
   transform: translateY(-8px);
 }
 
-@media (min-width: 640px) {
-  .credibility-stat {
-    border-bottom: none !important;
-  }
-  .credibility-stat:nth-child(2) {
-    border-right: 1px solid rgba(245, 240, 232, 0.08) !important;
-  }
-  .credibility-stat:nth-child(4) {
-    border-right: none !important;
-  }
+.credibility-stat {
+  border-bottom: none !important;
+  border-right: 1px solid rgba(245, 240, 232, 0.08) !important;
+}
+
+.credibility-stat:last-child {
+  border-right: none !important;
 }

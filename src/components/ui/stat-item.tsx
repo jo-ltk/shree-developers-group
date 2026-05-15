@@ -19,10 +19,9 @@ export function StatItem({ value, label, separator, light }: StatItemProps) {
       )}
       <div>
         <div
-          className={cn("leading-none", numColor)}
+          className={cn("leading-none responsive-stat-value", numColor)}
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
             fontWeight: 300,
           }}
         >
@@ -30,12 +29,11 @@ export function StatItem({ value, label, separator, light }: StatItemProps) {
         </div>
         <div
           className={cn(
-            "uppercase tracking-[0.15em] mt-1 font-semibold",
+            "uppercase mt-1 font-semibold responsive-stat-label",
             labelColor,
           )}
           style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.55rem",
           }}
         >
           {label}

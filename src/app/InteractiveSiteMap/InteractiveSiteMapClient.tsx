@@ -68,17 +68,13 @@ const FilterBar = ({
           key={f}
           type="button"
           onClick={() => setActiveFilter(f)}
-          className={`relative flex items-center gap-2 overflow-hidden px-4 h-9 transition-all duration-300 ${
+          className={`relative flex items-center gap-2 overflow-hidden px-4 h-9 transition-all duration-300 responsive-stat-label ${
             active
-              ? "text-[#1C1208]"
-              : "text-[#1C1208]/40 hover:text-[#1C1208]"
+              ? "!text-[#1C1208]"
+              : "!text-[#1C1208]/40 hover:!text-[#1C1208]"
           }`}
           style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.65rem",
             fontWeight: 600,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase"
           }}
         >
           <span className="relative z-10">{f}</span>
@@ -116,17 +112,13 @@ const FilterBarCompact = ({
           key={f}
           type="button"
           onClick={() => setActiveFilter(f)}
-          className={`relative flex items-center gap-2 whitespace-nowrap px-3 h-8 transition-all duration-300 ${
+          className={`relative flex items-center gap-2 whitespace-nowrap px-3 h-8 transition-all duration-300 responsive-stat-label ${
             active
-              ? "text-[#1C1208]"
-              : "text-[#1C1208]/40"
+              ? "!text-[#1C1208]"
+              : "!text-[#1C1208]/40"
           }`}
           style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.6rem",
             fontWeight: 600,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase"
           }}
         >
           <span>{f}</span>
@@ -163,29 +155,29 @@ const LotRows = ({
             : "bg-transparent hover:bg-[#EDE8DF]/50"
         }`}
       >
-        <span
-          className="min-w-[40px] text-3xl font-light leading-none text-[#1C1208]"
-          style={{ fontFamily: "'Cormorant Garamond', serif" }}
+        <Annotation
+          className="min-w-[40px] !text-3xl leading-none !text-[#1C1208]"
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
         >
           {lot.lotNumber.toString().padStart(2, '0')}
-        </span>
+        </Annotation>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[0.7rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+          <Annotation className="truncate !text-[#1C1208] responsive-stat-label !font-bold">
             {lot.title}
-          </p>
+          </Annotation>
           <div className="mt-1 flex items-center gap-2">
-            <span className="text-[0.6rem] font-medium text-[#1C1208]/40 uppercase tracking-widest" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            <Annotation className="!text-[#1C1208]/40 responsive-stat-label !font-medium">
               {lot.sqft.toLocaleString()} SQ FT
-            </span>
+            </Annotation>
             <span className="h-0.5 w-0.5 rounded-full bg-[#1C1208]/20" />
-            <span className="text-[0.6rem] font-medium text-[#1C1208]/40 uppercase tracking-widest" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            <Annotation className="!text-[#1C1208]/40 responsive-stat-label !font-medium">
               {lot.price}
-            </span>
+            </Annotation>
           </div>
         </div>
-        <span className={`shrink-0 border px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-[0.2em] ${listBadgeClass(lot.status)}`} style={{ fontFamily: "'Montserrat', sans-serif" }}>
+        <Annotation className={`shrink-0 border px-2 py-0.5 !font-bold responsive-stat-label ${listBadgeClass(lot.status)}`}>
           {lot.status}
-        </span>
+        </Annotation>
       </motion.button>
     ))}
   </div>
@@ -243,9 +235,9 @@ const MapPanel = ({
         ].map(({ label, color }) => (
           <div key={label} className="flex items-center gap-3">
             <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
-            <span className="text-[0.55rem] font-bold uppercase tracking-[0.2em] text-[#1C1208]/60" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/60">
               {label}
-            </span>
+            </Annotation>
           </div>
         ))}
       </div>
@@ -260,16 +252,16 @@ const MapPanel = ({
       ].map(({ label, color }) => (
         <div key={label} className="flex items-center gap-1.5">
           <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
-          <span className="text-[0.5rem] font-bold uppercase tracking-wider text-[#1C1208]/60" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+          <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/60">
             {label}
-          </span>
+          </Annotation>
         </div>
       ))}
     </div>
 
     {/* Compass — desktop only */}
     <div className="absolute right-8 top-8 z-20 hidden lg:flex flex-col items-center gap-1 opacity-40">
-      <span className="text-[0.6rem] font-bold tracking-[0.3em] text-[#1C1208]">N</span>
+      <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]">N</Annotation>
       <div className="h-8 w-px bg-[#1C1208]" />
     </div>
   </section>
@@ -284,12 +276,12 @@ const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?
       { label: "Story",  value: selectedLot.story === "Two Story" ? "2" : "1", Icon: Home },
     ].map(({ label, value, Icon }) => (
       <div key={label} className={`flex flex-col items-center gap-1 border-r border-[#1C1208]/10 last:border-r-0 ${compact ? "py-3" : "py-6"}`}>
-        <span className={`${compact ? "text-xl" : "text-2xl"} font-light leading-none text-[#1C1208]`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+        <BodyText className={`${compact ? "text-xl" : "text-2xl"} !font-light leading-none !text-[#1C1208]`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>
           {value}
-        </span>
-        <span className="text-[0.5rem] font-bold uppercase tracking-[0.2em] text-[#1C1208]/40" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+        </BodyText>
+        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40">
           {label}
-        </span>
+        </Annotation>
       </div>
     ))}
   </div>
@@ -375,9 +367,9 @@ export function InteractiveSiteMapClient({
           <div className="grid h-8 w-8 place-items-center border border-[#1C1208]/10 transition-colors group-hover:border-[#D43F33] group-hover:bg-[#D43F33]">
              <ArrowLeft className="h-3 w-3 text-[#1C1208] group-hover:text-white transition-colors" />
           </div>
-          <span className="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[#1C1208]/40 group-hover:text-[#1C1208] transition-colors hidden sm:block" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+          <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 group-hover:!text-[#1C1208] transition-colors hidden sm:block">
             Back
-          </span>
+          </Annotation>
         </Link>
 
         <BrandMark
@@ -431,7 +423,7 @@ export function InteractiveSiteMapClient({
                 }`}
               >
                 <Icon className="h-3 w-3" />
-                <span className="text-[0.6rem] font-bold uppercase tracking-[0.15em]" style={{ fontFamily: "'Montserrat', sans-serif" }}>{label}</span>
+                <Annotation className="!font-bold responsive-stat-label">{label}</Annotation>
               </button>
             );
           })}
@@ -578,39 +570,30 @@ export function InteractiveSiteMapClient({
     <div className="min-w-0 flex-1">
       {/* Lot number + price on one line */}
       <div className="flex items-center gap-1.5 mb-0.5">
-        <span
-          className="text-[0.5rem] font-bold uppercase tracking-[0.2em] text-[#D43F33]"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
-        >
+        <Annotation className="!font-bold responsive-stat-label !text-[#D43F33]">
           Lot {selectedLot.lotNumber}
-        </span>
+        </Annotation>
         <span className="h-1 w-1 rounded-full bg-[#1C1208]/20 shrink-0" />
-        <span
-          className="text-[0.5rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]/40"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
-        >
+        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40">
           {selectedLot.price}
-        </span>
+        </Annotation>
       </div>
 
       {/* Title */}
-      <p
-        className="truncate text-[1.15rem] font-light leading-tight text-[#1C1208] mb-1"
+      <h3
+        className="truncate !font-light leading-tight !text-[#1C1208] mb-1 responsive-headline-xl"
         style={{ fontFamily: "'Cormorant Garamond', serif" }}
       >
         {selectedLot.title}
-      </p>
+      </h3>
 
       {/* Specs inline */}
-      <div
-        className="flex items-center gap-2 text-[0.5rem] font-bold uppercase tracking-[0.15em] text-[#1C1208]/35"
-        style={{ fontFamily: "'Montserrat', sans-serif" }}
-      >
-        <span>{selectedLot.beds} Beds</span>
+      <div className="flex items-center gap-2">
+        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35">{selectedLot.beds} Beds</Annotation>
         <span className="w-px h-2 bg-[#1C1208]/12" />
-        <span>{selectedLot.baths} Baths</span>
+        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35">{selectedLot.baths} Baths</Annotation>
         <span className="w-px h-2 bg-[#1C1208]/12" />
-        <span>{selectedLot.sqft.toLocaleString()} sq ft</span>
+        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35">{selectedLot.sqft.toLocaleString()} sq ft</Annotation>
       </div>
     </div>
 

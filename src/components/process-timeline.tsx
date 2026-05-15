@@ -7,6 +7,7 @@ import { SectionHeadline } from "@/components/ui/section-headline";
 import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
 
+import { motion, AnimatePresence } from "framer-motion";
 import {
   MessageSquare,
   Map as MapIcon,
@@ -24,24 +25,18 @@ const steps = [
   },
   {
     num: "02",
-    label: "Floor Plan Selection",
-    icon: MapIcon,
-    desc: "Choosing from our curated architectural layouts optimized for flow and light.",
+    label: "Design & Craft",
+    icon: Settings2,
+    desc: "Refining architectural details, finishes, and materials to match your aesthetic.",
   },
   {
     num: "03",
-    label: "Customization",
-    icon: Settings2,
-    desc: "Refining materials, finishes, and interior details to match your personal aesthetic.",
-  },
-  {
-    num: "04",
     label: "Construction",
     icon: HardHat,
     desc: "Our master craftsmen begin the build, managed with obsessive attention to detail.",
   },
   {
-    num: "05",
+    num: "04",
     label: "Handover",
     icon: Key,
     desc: "The final walkthrough and keys to your new legacy. Welcome home.",
@@ -49,15 +44,32 @@ const steps = [
 ];
 
 export function ProcessTimeline() {
-  const [active, setActive] = useState<number | null>(0);
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [active, setActive] = React.useState<number | null>(0);
+  const [hovered, setHovered] = React.useState<number | null>(null);
+  const [isAutoPlaying, setIsAutoPlaying] = React.useState(true);
 
   const highlighted = hovered !== null ? hovered : active;
+
+  // Auto-play logic
+  React.useEffect(() => {
+    if (!isAutoPlaying || hovered !== null) return;
+    
+    const interval = setInterval(() => {
+      setActive((prev) => (prev === null || prev === 3 ? 0 : prev + 1));
+    }, 2000); // 2 seconds (Fastest)    
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, hovered]);
+
+  const handleInteraction = (index: number) => {
+    setActive(index);
+    // Only stop auto-play permanently if they click a specific step
+    setIsAutoPlaying(false); 
+  };
 
   return (
     <SectionWrapper
       id="process"
-      className="!py-10 sm:!py-14 md:!py-20 bg-[#F5F0E8] overflow-hidden"
+      className="!pt-16 !pb-0 md:!pt-24 md:!pb-0 bg-[#F5F0E8] overflow-hidden"
     >
 
       {/* HEADER */}
@@ -70,7 +82,7 @@ export function ProcessTimeline() {
 
         <SectionHeadline
           size="xl"
-          className="mt-4 px-2"
+          className="mt-4 px-2 responsive-headline-xl"
         >
           How we build legacies
         </SectionHeadline>
@@ -82,19 +94,18 @@ export function ProcessTimeline() {
 
         {/* CONNECTOR */}
 
-        <div className="absolute top-[52px] left-0 right-0 h-px bg-[#1C1208]/10 z-0 overflow-hidden">
-
-          <div
-            className="h-full bg-[#D43F33]/30"
-            style={{
-              animation: "growLine 1.8s ease 0.3s both",
-            }}
+        <div className="absolute top-[40px] lg:top-[52px] left-[12.5%] right-[12.5%] h-[2px] bg-[#1C1208]/5 z-0">
+          <motion.div
+            className="h-full bg-rust"
+            initial={{ width: "0%" }}
+            animate={{ width: `${(active !== null ? active / (steps.length - 1) : 0) * 100}%` }}
+            transition={{ duration: 0.4, ease: "circOut" }}
           />
         </div>
 
         {/* GRID */}
 
-        <div className="grid grid-cols-5 gap-3 lg:gap-4 relative z-10">
+        <div className="grid grid-cols-4 gap-3 lg:gap-4 relative z-10">
 
           {steps.map((step, i) => {
 
@@ -112,13 +123,13 @@ export function ProcessTimeline() {
                 key={step.num}
                 className="flex flex-col items-center cursor-pointer relative group"
                 style={{
-                  animation: `fadeUp 0.7s ease ${0.2 + i * 0.12}s both`,
+                  animation: `fadeUp 0.5s ease ${0.1 + i * 0.08}s both`,
                 }}
-                onMouseEnter={() => setHovered(i)}
+                onMouseEnter={() => {
+                  setHovered(i);
+                }}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() =>
-                  setActive(active === i ? null : i)
-                }
+                onClick={() => handleInteraction(i)}
               >
 
                 {/* WRAPPER */}
@@ -178,7 +189,6 @@ export function ProcessTimeline() {
                     />
 
                     {/* ACTIVE RING */}
-
                     {isClicked && (
                       <div
                         className="absolute inset-0 border border-[#D43F33]/40"
@@ -231,86 +241,52 @@ export function ProcessTimeline() {
 
                   {/* NUMBER */}
 
-                  <span
-                    className="block mb-2"
+                  <Annotation
+                    className="block mb-2 responsive-stat-label"
                     style={{
-                      fontFamily:
-                        "'Montserrat', sans-serif",
-
-                      fontSize: "0.55rem",
-
-                      letterSpacing: "0.25em",
-
-                      fontWeight: 600,
-
                       color: isLit
                         ? "#D43F33"
                         : "rgba(28,18,8,0.4)",
-
                       transition: "color 0.35s ease",
                     }}
                   >
                     {step.num}
-                  </span>
+                  </Annotation>
 
                   {/* LABEL */}
 
-                  <h4
-                    className="uppercase text-center px-2"
+                  <Annotation
+                    className="text-center px-2 responsive-stat-label !font-bold"
                     style={{
-                      fontFamily:
-                        "'Montserrat', sans-serif",
-
-                      fontSize: "0.65rem",
-
-                      letterSpacing: "0.15em",
-
-                      fontWeight: 700,
-
                       color: isLit
                         ? "#1C1208"
                         : "rgba(28,18,8,0.7)",
-
                       transition: "color 0.35s ease",
-
                       lineHeight: "1.4",
                     }}
                   >
                     {step.label}
-                  </h4>
+                  </Annotation>
 
                   {/* DESC */}
-
-                  <div
-                    style={{
-                      maxHeight: isLit
-                        ? "150px"
-                        : "0px",
-
-                      opacity: isLit ? 1 : 0,
-
-                      overflow: "hidden",
-
-                      marginTop: isLit
-                        ? "16px"
-                        : "0px",
-
-                      transition:
-                        "all 0.45s cubic-bezier(0.23, 1, 0.32, 1)",
-
-                      textAlign: "center",
-
-                      padding: "0 12px",
-                    }}
-                  >
-
-                    <BodyText
-                      size="sm"
-                      className="!text-[#1C1208]/60 !leading-relaxed"
-                    >
-                      {step.desc}
-                    </BodyText>
-                  </div>
+                  <AnimatePresence>
+                    {isLit && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "circOut" }}
+                        className="overflow-hidden text-center px-3 mt-4"
+                      >
+                        <BodyText
+                          size="sm"
+                          className="!text-[#1C1208]/60 !leading-relaxed responsive-body-sm"
+                        >
+                          {step.desc}
+                        </BodyText>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             );
@@ -319,172 +295,75 @@ export function ProcessTimeline() {
       </div>
 
       {/* MOBILE */}
-
-      <div className="md:hidden relative max-w-[340px] mx-auto">
-
+      <div className="md:hidden max-w-[340px] mx-auto px-2">
+        <div className="relative flex flex-col gap-5">
         {/* CENTER LINE */}
-
-        <div className="absolute left-[31px] top-0 bottom-0 w-px bg-[#1C1208]/10 overflow-hidden">
-
-          <div
-            className="w-full bg-[#D43F33]/30"
-            style={{
-              height: "100%",
-              animation: "growLineV 1.8s ease forwards",
-              transformOrigin: "top",
-            }}
+        <div className="absolute left-[20px] top-[20px] bottom-[20px] w-[2px] bg-[#1C1208]/5 overflow-hidden">
+          <motion.div
+            className="w-full bg-rust origin-top"
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: active !== null ? active / (steps.length - 1) : 0 }}
+            transition={{ duration: 0.4, ease: "circOut" }}
           />
         </div>
 
-        {/* STEPS */}
-
-        <div className="flex flex-col gap-6">
-
           {steps.map((step, i) => {
-
             const Icon = step.icon;
-
             const isActive = active === i;
 
             return (
               <div
                 key={step.num}
-                className="relative flex items-start gap-5"
+                className="flex items-start gap-4 relative"
                 style={{
-                  animation: `fadeUp 0.7s ease ${0.15 + i * 0.1}s both`,
+                  animation: `fadeUp 0.5s ease ${0.1 + i * 0.08}s both`,
                 }}
               >
-
-                {/* ICON */}
-
+                {/* ICON BOX */}
                 <button
-                  onClick={() =>
-                    setActive(active === i ? null : i)
-                  }
-                  className="relative z-10 w-[64px] h-[64px] shrink-0 flex items-center justify-center bg-[#F5F0E8]"
+                  onClick={() => handleInteraction(i)}
+                  className="relative z-10 w-10 h-10 shrink-0 flex items-center justify-center bg-[#F5F0E8] border transition-all duration-300"
                   style={{
-                    border: `1px solid ${
-                      isActive
-                        ? "#1C1208"
-                        : "rgba(28,18,8,0.12)"
-                    }`,
-
-                    boxShadow: isActive
-                      ? "0 12px 24px rgba(28,18,8,0.12)"
-                      : "none",
-
-                    transition:
-                      "all 0.35s cubic-bezier(0.23,1,0.32,1)",
+                    borderColor: isActive ? "#1C1208" : "rgba(28,18,8,0.12)",
+                    boxShadow: isActive ? "0 8px 16px rgba(28,18,8,0.1)" : "none"
                   }}
                 >
-
-                  {/* CORNERS */}
-
-                  <div
-                    className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#D43F33]/70"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                    }}
-                  />
-
-                  <div
-                    className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-[#D43F33]/70"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                    }}
-                  />
-
-                  {/* ICON */}
-
-                  <Icon
-                    size={20}
-                    style={{
-                      color: isActive
-                        ? "#D43F33"
-                        : "rgba(28,18,8,0.45)",
-
-                      transition: "all 0.3s ease",
-                    }}
-                  />
+                  <Icon size={16} className={isActive ? "text-rust" : "text-[#1C1208]/40"} />
+                  
+                  {isActive && (
+                    <>
+                      <div className="absolute top-1 left-1 w-1.5 h-1.5 border-t border-l border-rust" />
+                      <div className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b border-r border-rust" />
+                    </>
+                  )}
                 </button>
 
                 {/* CONTENT */}
-
-                <div
-                  className="flex-1 pt-2 cursor-pointer"
-                  onClick={() =>
-                    setActive(active === i ? null : i)
-                  }
-                >
-
-                  {/* NUMBER */}
-
-                  <span
-                    className="block mb-1"
-                    style={{
-                      fontFamily:
-                        "'Montserrat', sans-serif",
-
-                      fontSize: "0.52rem",
-
-                      letterSpacing: "0.28em",
-
-                      fontWeight: 700,
-
-                      color: isActive
-                        ? "#D43F33"
-                        : "rgba(28,18,8,0.35)",
-                    }}
-                  >
-                    {step.num}
-                  </span>
-
-                  {/* TITLE */}
-
-                  <h4
-                    className="uppercase"
-                    style={{
-                      fontFamily:
-                        "'Montserrat', sans-serif",
-
-                      fontSize: "0.72rem",
-
-                      letterSpacing: "0.15em",
-
-                      fontWeight: 700,
-
-                      color: "#1C1208",
-
-                      lineHeight: "1.5",
-                    }}
-                  >
-                    {step.label}
-                  </h4>
-
-                  {/* DESC */}
-
-                  <div
-                    className="overflow-hidden transition-all duration-500"
-                    style={{
-                      maxHeight: isActive
-                        ? "140px"
-                        : "0px",
-
-                      opacity: isActive ? 1 : 0,
-
-                      marginTop: isActive
-                        ? "12px"
-                        : "0px",
-                    }}
-                  >
-
-                    <BodyText
-                      size="sm"
-                      className="!text-[#1C1208]/60 !leading-relaxed pr-2 text-[13px]"
-                    >
-                      {step.desc}
-                    </BodyText>
+                <div className="flex-1 pt-1 cursor-pointer" onClick={() => handleInteraction(i)}>
+                  <div className="flex flex-col mb-1">
+                    <Annotation className={`!font-bold responsive-stat-label ${isActive ? "text-rust" : "text-[#1C1208]/30"}`}>
+                      {step.num}
+                    </Annotation>
+                    <Annotation className="responsive-stat-label !text-[#1C1208] !font-bold leading-tight">
+                      {step.label}
+                    </Annotation>
                   </div>
+                  
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "circOut" }}
+                        className="overflow-hidden mt-2"
+                      >
+                        <BodyText size="sm" className="responsive-body-sm !text-[#1C1208]/60 leading-relaxed pr-2">
+                          {step.desc}
+                        </BodyText>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             );
@@ -494,16 +373,6 @@ export function ProcessTimeline() {
 
       {/* FOOTER */}
 
-      <div className="mt-10 sm:mt-12 md:mt-16 flex items-center justify-center gap-3">
-
-        <div className="h-px w-8 md:w-12 bg-[#1C1208]/10" />
-
-        <Annotation className="!opacity-30 !text-[10px] md:!text-xs">
-          From blueprint to reality
-        </Annotation>
-
-        <div className="h-px w-8 md:w-12 bg-[#1C1208]/10" />
-      </div>
 
       <style>{`
         @keyframes growLine {

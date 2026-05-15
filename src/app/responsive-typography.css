@@ -1,0 +1,77 @@
+/* 
+  SHREE DEVELOPERS GROUP - RESPONSIVE TYPOGRAPHY SYSTEM
+  This file explicitly separates mobile and desktop scales to prevent overlap mistakes.
+*/
+
+:root {
+  /* --- Metric/Stat Values (e.g. 15+, 200+) --- */
+  --mob-stat-size: 1.5rem;
+  --web-stat-size: clamp(2.2rem, 5vw, 3.8rem);
+  
+  /* --- Stat Labels (e.g. YEARS EXPERIENCE) --- */
+  --mob-stat-label: 8px;
+  --web-stat-label: 0.55rem;
+  
+  /* --- Headlines (Hero/XL Tiers) --- */
+  --mob-headline-xl: clamp(0.95rem, 4.8vw, 1.8rem);
+  --web-headline-xl: clamp(2.5rem, 6vw, 4.5rem);
+  
+  /* --- Body Text (Pillars/Descriptions) --- */
+  --mob-body-sm: 0.72rem;
+  --web-body-sm: 0.85rem;
+}
+
+/* --- UTILITY CLASSES --- */
+
+.responsive-stat-value {
+  font-size: var(--mob-stat-size) !important;
+}
+@media (min-width: 640px) {
+  .responsive-stat-value {
+    font-size: var(--web-stat-size) !important;
+  }
+}
+
+.responsive-stat-label {
+  font-size: var(--mob-stat-label) !important;
+  letter-spacing: 0.1em !important;
+}
+@media (min-width: 640px) {
+  .responsive-stat-label {
+    font-size: var(--web-stat-label) !important;
+    letter-spacing: 0.25em !important;
+  }
+}
+
+.responsive-headline-xl {
+  font-size: var(--mob-headline-xl) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+}
+@media (min-width: 640px) {
+  .responsive-headline-xl {
+    font-size: var(--web-headline-xl) !important;
+    line-height: 1.05 !important;
+  }
+}
+
+.responsive-body-sm {
+  font-size: var(--mob-body-sm) !important;
+}
+@media (min-width: 640px) {
+  .responsive-body-sm {
+    font-size: var(--web-body-sm) !important;
+  }
+}
+
+/* --- Button Overrides --- */
+.responsive-btn-text {
+  font-size: 9px !important;
+  letter-spacing: 0.1em !important;
+}
+@media (min-width: 640px) {
+  .responsive-btn-text {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.25em !important;
+  }
+}

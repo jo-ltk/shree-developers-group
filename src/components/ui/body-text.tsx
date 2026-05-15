@@ -24,7 +24,7 @@ export function BodyText({
 
   return (
     <p
-      className={cn(sizes[size], color, className)}
+      className={cn(sizes[size], color, "responsive-body-sm", className)}
       style={{ 
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         ...style 

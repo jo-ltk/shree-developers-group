@@ -90,6 +90,7 @@ export function TestimonialsSection() {
           <SectionLabel className="justify-center md:justify-start">Homeowner Experiences</SectionLabel>
           <SectionHeadline 
             size="xl"
+            className="responsive-headline-xl"
           >
             Trust is built in quiet
             <br />
@@ -97,7 +98,7 @@ export function TestimonialsSection() {
           </SectionHeadline>
         </div>
         <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
-          <BodyText size="md" className="mb-4 text-[#1C1208]/70">
+          <BodyText size="md" className="mb-4 text-[#1C1208]/70 responsive-body-sm">
             A premium builder experience should feel steady, human, and easy to understand. Hear from the families who call our communities home.
           </BodyText>
         </div>
@@ -133,16 +134,13 @@ export function TestimonialsSection() {
                   </div>
                   
                   <div className="absolute top-6 left-6">
-                    <Annotation light className="bg-[#1C1208]/60 backdrop-blur-md px-3 py-1.5 rounded-sm">Featured Story</Annotation>
+                    <Annotation light className="bg-[#1C1208]/60 backdrop-blur-md px-3 py-1.5 rounded-sm responsive-stat-label">Featured Story</Annotation>
                   </div>
                 </div>
               ) : (
                 <div className="p-8 md:p-12 border-b border-[#1C1208]/10 flex-grow flex flex-col justify-center">
                   <p
-                    className="text-[#1C1208] leading-[1.4] font-serif font-light italic"
-                    style={{
-                      fontSize: "clamp(1.5rem, 2vw, 2.2rem)",
-                    }}
+                    className="text-[#1C1208] leading-[1.4] font-serif font-light italic responsive-headline-xl"
                   >
                     &ldquo;{item.quote}&rdquo;
                   </p>
@@ -160,12 +158,12 @@ export function TestimonialsSection() {
                   </div>
                 )}
                 <div>
-                  <h4 className="uppercase font-bold tracking-[0.2em] text-[0.7rem] text-[#1C1208] mb-1" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                  <Annotation className="!text-[#1C1208] !font-bold responsive-stat-label mb-1">
                     {item.name}
-                  </h4>
+                  </Annotation>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-rust rounded-full" />
-                    <Annotation className="!text-[#1C1208]/50">
+                    <Annotation className="!text-[#1C1208]/50 responsive-stat-label">
                       {item.location}
                     </Annotation>
                   </div>

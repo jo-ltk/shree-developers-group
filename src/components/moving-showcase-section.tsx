@@ -59,7 +59,7 @@ export function MovingShowcaseSection() {
               
               {/* Top Left */}
               <div className="absolute top-5 sm:top-8 left-5 sm:left-6 md:left-10 lg:left-16 z-20 flex items-center gap-3 sm:gap-4">
-                <Annotation light className="!text-[#F5F0E8]">{item.fig}</Annotation>
+                <Annotation light className="!text-[#F5F0E8] responsive-stat-label">{item.fig}</Annotation>
                 <CrosshairIcon light className="opacity-40" />
               </div>
 
@@ -70,17 +70,17 @@ export function MovingShowcaseSection() {
                   className="h-8 w-24" 
                   imageClassName="object-right" 
                 />
-                <Annotation light className="!text-[#F5F0E8] !text-[10px] tracking-[0.2em]">Premium Study / 2026</Annotation>
+                <Annotation light className="!text-[#F5F0E8] responsive-stat-label">Premium Study / 2026</Annotation>
               </div>
 
               {/* Bottom Content */}
               <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-8 sm:px-6 sm:pb-10 md:px-10 md:pb-14 lg:px-16 lg:pb-20">
-                <Annotation light className="mb-3 sm:mb-5 !text-[#F5F0E8]/60">ARCHITECTURAL INTENTION</Annotation>
+                <Annotation light className="mb-3 sm:mb-5 !text-[#F5F0E8]/60 responsive-stat-label">ARCHITECTURAL INTENTION</Annotation>
                 <SectionHeadline 
                   size="hero" 
                   light 
                   noPeriod 
-                  className="max-w-[12ch] !text-[#F5F0E8] !text-[clamp(2rem,8vw,9rem)] leading-[0.9] tracking-tight transition-colors duration-700 group-hover/slide:!text-rust"
+                  className="max-w-[12ch] !text-[#F5F0E8] responsive-headline-xl leading-[0.9] tracking-tight transition-colors duration-700 group-hover/slide:!text-rust"
                 >
                   {item.title}
                 </SectionHeadline>
@@ -92,9 +92,9 @@ export function MovingShowcaseSection() {
 
       {/* Footer Annotation */}
       <div className="px-5 sm:px-8 md:px-12 lg:px-20 py-6 sm:py-8 md:py-10 flex items-center">
-        <Annotation light className="!text-[#F5F0E8]/40">Continuous Movement</Annotation>
+        <Annotation light className="!text-[#F5F0E8]/40 responsive-stat-label">Continuous Movement</Annotation>
         <div className="h-px flex-grow mx-4 sm:mx-8 bg-[#F5F0E8]/10" />
-        <Annotation light className="!text-[#F5F0E8]/40">fig. 20</Annotation>
+        <Annotation light className="!text-[#F5F0E8]/40 responsive-stat-label">fig. 20</Annotation>
       </div>
     </SectionWrapper>
   );

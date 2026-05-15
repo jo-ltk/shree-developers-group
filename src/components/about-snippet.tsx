@@ -69,17 +69,16 @@ export function AboutSnippet() {
 
           {/* Pull quote */}
           <div className="border-l-2 border-[#D43F33] pl-4 sm:pl-5 flex flex-col gap-2 sm:gap-3">
-            <p
-              className="text-[#1C1208]/60 leading-[1.6]"
+            <BodyText
+              className="text-[#1C1208]/60 responsive-body-sm"
               style={{
                 fontFamily: "'Poppins', sans-serif",
-                fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
                 fontWeight: 400,
               }}
             >
               &quot;We don&apos;t build houses. We build the places families return to.&quot;
-            </p>
-            <Annotation>— Shree Developers Group · Est. 2009</Annotation>
+            </BodyText>
+            <Annotation className="responsive-stat-label">— Shree Developers Group · Est. 2009</Annotation>
           </div>
 
           <div className="pt-2 sm:pt-4">
@@ -108,40 +107,30 @@ export function AboutSnippet() {
                   (i === 3 && i === pillars.length - 2) ? "" : "", // cleanup logic
                 ].join(" ")}
               >
-                <Annotation>{p.num}</Annotation>
-                <span
-                  className="uppercase font-semibold text-[#1C1208]/55"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "0.52rem",
-                    letterSpacing: "0.16em",
-                  }}
+                <Annotation className="responsive-stat-label">{p.num}</Annotation>
+                <Annotation
+                  className="!text-[#1C1208]/55 !font-semibold responsive-stat-label"
                 >
                   {p.label}
-                </span>
-                <p
-                  className="text-[#1C1208]/60 leading-[1.6]"
+                </Annotation>
+                <BodyText
+                  className="text-[#1C1208]/60 responsive-body-sm"
                   style={{
                     fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "clamp(0.85rem, 1.5vw, 1.05rem)",
                     fontWeight: 300,
                   }}
                 >
                   {p.desc}
-                </p>
+                </BodyText>
 
                 {/* Bottom tag */}
                 <div className="mt-auto pt-4 sm:pt-6 md:pt-8 flex items-center gap-2 sm:gap-3">
                   <div className="h-px w-5 sm:w-6 bg-[#D43F33]/20" />
-                  <span
-                    className="uppercase font-medium text-[#1C1208]/30 tracking-[0.2em]"
-                    style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "0.48rem",
-                    }}
+                  <Annotation
+                    className="!text-[#1C1208]/30 !font-medium responsive-stat-label"
                   >
                     {p.tag}
-                  </span>
+                  </Annotation>
                 </div>
 
                 {/* Large background number */}

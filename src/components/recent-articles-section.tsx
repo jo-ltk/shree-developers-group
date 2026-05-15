@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ensureGsapPlugins } from "@/lib/gsap";
@@ -78,8 +78,17 @@ const articles = [
 export function RecentArticlesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const visibleArticles = showAll ? articles : articles.slice(0, 3);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const initialLimit = isMobile ? 2 : 3;
+  const visibleArticles = showAll ? articles : articles.slice(0, initialLimit);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -118,23 +127,23 @@ export function RecentArticlesSection() {
   }, []);
 
   return (
-    <SectionWrapper id="articles" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
+    <SectionWrapper id="articles" ref={sectionRef} dark={false} className="!py-16 md:!py-24">
       {/* Asymmetric Header Grid (7/5 Split) */}
       <div data-articles-heading className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-12 items-center md:items-end mb-10 md:mb-12 text-center md:text-left">
         <div className="col-span-12 lg:col-span-7 flex flex-col items-center md:items-start">
           <SectionLabel className="justify-center md:justify-start">Media & Blog</SectionLabel>
-          <SectionHeadline size="xl" >
+          <SectionHeadline size="xl" className="responsive-headline-xl">
             Insights, updates,
             <br />
             and design stories
           </SectionHeadline>
         </div>
         <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
-          <BodyText size="md" className="mb-8">
+          <BodyText size="md" className="mb-8 responsive-body-sm">
             Short reads for buyers who want to understand the thinking behind a Shree development, 
             from planning discipline to the details that make ownership simpler.
           </BodyText>
-          <ButtonGhost href="#">Read Full Journal</ButtonGhost>
+          <ButtonGhost href="#" className="responsive-btn-text">Read Full Journal</ButtonGhost>
         </div>
       </div>
 
@@ -150,12 +159,12 @@ export function RecentArticlesSection() {
               data-article-card
               className="group relative bg-cream flex flex-col h-full cursor-pointer"
             >
-            <div className="flex items-start justify-between p-6 md:p-8">
-              <Annotation>{article.fig}</Annotation>
+            <div className="flex items-start justify-between p-4 md:p-8">
+              <Annotation className="responsive-stat-label">{article.fig}</Annotation>
               <CrosshairIcon className="opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
 
-            <div className="relative aspect-[16/10] w-full overflow-hidden">
+            <div className="relative aspect-[2/1] md:aspect-[16/10] w-full overflow-hidden">
               <Image
                 src={article.image}
                 alt={article.title}
@@ -171,17 +180,17 @@ export function RecentArticlesSection() {
               </div>
             </div>
 
-            <div className="flex flex-col flex-grow items-center md:items-start text-center md:text-left p-6 md:p-8 pt-8 md:pt-10">
-              <Annotation className="mb-4 text-rust">{article.date}</Annotation>
+            <div className="flex flex-col flex-grow items-center md:items-start text-center md:text-left p-5 md:p-8 pt-6 md:pt-10">
+              <Annotation className="mb-4 text-rust responsive-stat-label">{article.date}</Annotation>
               <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
                 {article.title}<span className="text-rust">.</span>
               </SectionHeadline>
-              <BodyText size="sm" className="mb-8 flex-grow">
+              <BodyText size="sm" className="responsive-body-sm mb-8 flex-grow">
                 {article.description}
               </BodyText>
               
               <div className="mt-auto">
-                <ButtonGhost href="#" className="text-[0.65rem]">
+                <ButtonGhost href="#" className="responsive-btn-text">
                   Read Article
                 </ButtonGhost>
               </div>
@@ -194,13 +203,16 @@ export function RecentArticlesSection() {
         </AnimatePresence>
       </div>
 
-      {!showAll && articles.length > 3 && (
+      {/* Show More Button */}
+      {!showAll && articles.length > initialLimit && (
         <div className="flex justify-center mt-12 md:mt-16">
           <button
             onClick={() => setShowAll(true)}
             className="group relative flex items-center gap-3 px-8 py-4 bg-dark text-cream rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl active:scale-95"
           >
-            <span className="relative z-10 text-[0.65rem] uppercase font-bold tracking-[0.25em]">Show More Stories</span>
+            <Annotation className="relative z-10 !text-cream responsive-btn-text !font-bold">
+              View All Insights
+            </Annotation>
             <div className="relative z-10 w-6 h-6 rounded-full bg-cream/10 flex items-center justify-center transition-transform duration-500 group-hover:rotate-45">
               <ArrowUpRight className="w-3.5 h-3.5 text-cream" />
             </div>

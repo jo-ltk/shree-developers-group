@@ -34,7 +34,8 @@ export default function Home() {
 
       <Gallery />
 
-       <CommunityDetailsPage /> 
+      <CommunityDetails />
+      <CommunityDetailsPage /> 
 
       <MarqueeTextSection />
 

@@ -6,6 +6,9 @@ import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
 import Link from "next/link";
 import { BrandMark } from "@/components/ui/brand-mark";
+import { SectionHeadline } from "./ui/section-headline";
+import { BodyText } from "./ui/body-text";
+import { Annotation } from "./ui/annotation";
 
 const navColumns = [
   { title: "About", href: "/about", links: [] as string[] },
@@ -92,18 +95,19 @@ export function NavbarEditorial() {
               />
             </Link>
 
-            {columnsWithMeta.map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className={`flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 hover:text-rust ${
-                  item.isTrailing ? "justify-self-end" : "justify-self-start"
-                } text-dark`}
-              >
-                <span>{item.title}</span>
-              </Link>
-            ))}
-          </div>
+          {columnsWithMeta.map((item) => (
+  <Link
+    key={item.title}
+    href={item.href}
+    className={`flex min-h-[2.5rem] items-center gap-1.5 transition-colors duration-300 hover:text-rust ${
+      item.isTrailing ? "justify-self-end" : "justify-self-start"
+    } text-dark`}
+  >
+    <Annotation className="!font-semibold responsive-stat-label">
+      {item.title}
+    </Annotation>
+  </Link>
+))}          </div>
 
           {/* Mobile nav bar */}
           <div className="flex items-center justify-between xl:hidden">
@@ -149,20 +153,22 @@ export function NavbarEditorial() {
                 >
                   <div className="flex flex-col pr-10">
                     <span className="mb-4 block h-px w-9 bg-[var(--color-accent)]" />
-                    <p
-                      className="text-[1.35rem] font-light leading-[1.25] tracking-normal text-[var(--text-primary)]"
+                    <SectionHeadline
+                      size="md"
+                      className="!text-[1.35rem] !font-light leading-[1.25] tracking-normal !text-[var(--text-primary)] responsive-headline-xl"
                       style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+                      noPeriod
                     >
                       Warm communities,<br />delivered with clarity.
-                    </p>
-                    <p className="mt-3 text-[0.82rem] font-light leading-[1.7] text-[var(--text-primary)]">
+                    </SectionHeadline>
+                    <BodyText className="mt-3 !text-[0.82rem] !font-light leading-[1.7] !text-[var(--text-primary)] responsive-body-sm">
                       Explore Shree projects, available homesites, and the promise behind each handover.
-                    </p>
+                    </BodyText>
                     <Link
                       href="/InteractiveSiteMap"
-                      className="mt-5 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)] transition-opacity duration-200 hover:opacity-75"
+                      className="mt-5 inline-flex items-center gap-2 text-[var(--color-accent)] transition-opacity duration-200 hover:opacity-75"
                     >
-                      Explore homesites
+                      <Annotation className="!text-[var(--color-accent)] responsive-stat-label">Explore homesites</Annotation>
                       <ArrowRight className="h-3 w-3" />
                     </Link>
                   </div>
@@ -179,9 +185,9 @@ export function NavbarEditorial() {
                   >
                     <Link
                       href={column.href}
-                      className="flex min-h-[2.5rem] items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
+                      className="flex min-h-[2.5rem] items-center gap-1.5 text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
                     >
-                      <span>{column.title}</span>
+                      <Annotation className="!font-semibold responsive-stat-label">{column.title}</Annotation>
                       {column.links.length > 0 ? <ChevronDown className="h-3.5 w-3.5 rotate-180 opacity-50" /> : null}
                     </Link>
                   </div>
@@ -200,14 +206,14 @@ export function NavbarEditorial() {
                     style={{ transitionDelay: `${120 + index * 35}ms` }}
                   >
                     {column.links.length > 0 ? (
-                      <div className="space-y-2.5 text-[0.82rem] font-light leading-[1.5] text-[var(--text-primary)]">
+                      <div className="space-y-2.5 !text-[var(--text-primary)]">
                         {column.links.map((item) => (
                           <Link
                             key={item}
                             href={column.href}
                             className="block transition-all duration-200 hover:translate-x-0.5 hover:text-[var(--color-accent)]"
                           >
-                            {item}
+                            <BodyText className="responsive-body-sm">{item}</BodyText>
                           </Link>
                         ))}
                       </div>
@@ -228,9 +234,9 @@ export function NavbarEditorial() {
                   <div className="col-span-4 flex justify-end">
                     <a
                       href="#footer"
-                      className="group flex w-full max-w-[36rem] items-center border-b border-[rgba(183,170,152,0.55)] pb-2 text-[0.82rem] tracking-[0.05em] text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--color-accent)]"
+                      className="group flex w-full max-w-[36rem] items-center border-b border-[rgba(183,170,152,0.55)] pb-2 !text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--color-accent)]"
                     >
-                      <span className="flex-1">Private appointments and project inquiries</span>
+                      <BodyText className="flex-1 responsive-body-sm">Private appointments and project inquiries</BodyText>
                       <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] transition-colors duration-200 group-hover:text-[var(--color-accent)]" />
                     </a>
                   </div>
@@ -266,7 +272,9 @@ export function NavbarEditorial() {
               >
                 Warm communities,<br />delivered with clarity.
               </p>
-              <p className="mt-3 text-[0.82rem] font-light leading-[1.65] text-[var(--text-primary)]">
+              <p
+                className="mt-3 !text-[0.82rem] !font-light leading-[1.65] !text-[var(--text-primary)] responsive-body-sm"
+              >
                 Projects, homesites, and support shaped around confident residential decisions.
               </p>
             </div>
@@ -277,9 +285,9 @@ export function NavbarEditorial() {
                   <Link
                     href={column.href}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-between border-b border-[rgba(183,170,152,0.35)] py-4 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
+                    className="flex items-center justify-between border-b border-[rgba(183,170,152,0.35)] py-4 text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
                   >
-                    <span>{column.title}</span>
+                    <Annotation className="!font-semibold responsive-stat-label">{column.title}</Annotation>
                     {column.links.length > 0 ? (
                       <ChevronDown className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
                     ) : (
@@ -293,9 +301,9 @@ export function NavbarEditorial() {
                           key={link}
                           href={column.href}
                           onClick={() => setMobileOpen(false)}
-                          className="block text-[0.82rem] font-light tracking-[0.04em] text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
+                          className="block !text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
                         >
-                          {link}
+                          <BodyText className="responsive-body-sm">{link}</BodyText>
                         </Link>
                       ))}
                     </div>
@@ -304,8 +312,8 @@ export function NavbarEditorial() {
               ))}
             </nav>
 
-            <div className="mt-10 flex items-center border-b border-[rgba(183,170,152,0.45)] pb-3 text-[0.82rem] tracking-[0.05em] text-[var(--text-primary)]">
-              <span className="flex-1">Private appointments and project inquiries</span>
+            <div className="mt-10 flex items-center border-b border-[rgba(183,170,152,0.45)] pb-3 !text-[var(--text-primary)]">
+              <BodyText className="flex-1 responsive-body-sm">Private appointments and project inquiries</BodyText>
               <ArrowRight className="h-4 w-4 text-[var(--text-secondary)]" />
             </div>
 
@@ -313,13 +321,13 @@ export function NavbarEditorial() {
               <Link
                 href="#footer"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex h-[48px] items-center gap-3 bg-[var(--color-accent)] px-7 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3A342E] transition-all duration-200 hover:brightness-105"
+                className="inline-flex h-[48px] items-center gap-3 bg-[var(--color-accent)] px-7 text-[#3A342E] transition-all duration-200 hover:brightness-105"
                 style={{
                   clipPath:
                     "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))",
                 }}
               >
-                Get in Touch
+                <Annotation className="!text-[#3A342E] !font-bold responsive-btn-text">Get in Touch</Annotation>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
