@@ -19,7 +19,7 @@ export function SectionHeadline({
 }: SectionHeadlineProps) {
   const sizes = {
     hero: "text-[clamp(3.5rem,8vw,8rem)] leading-[0.95]",
-    xl:   "!text-6xl md:text-7xl leading-[1.05]",
+    xl:   "!text-4xl sm:!text-5xl md:!text-6xl leading-[1.05]",
     lg:   "text-[clamp(1.9rem,3.5vw,3rem)]   leading-[1.12]",
     md:   "text-[clamp(1.4rem,2.5vw,2.2rem)] leading-[1.18]",
     sm:   "text-[clamp(1.1rem,1.8vw,1.5rem)] leading-[1.25]",

@@ -286,22 +286,22 @@ const features = [
 
       {/* COMMUNITY OVERVIEW */}
       <SectionWrapper className="py-20 md:py-24">
-        <div className="grid grid-cols-12 gap-10 items-center text-center lg:text-left">
-          <div className="col-span-12 lg:col-span-5">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 md:gap-10 items-center justify-items-center text-center lg:text-left w-full">
+          <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start">
             <span
-              className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8"
+              className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8 mx-auto lg:mx-0"
               style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem" }}
             >Community Overview</span>
 
-            <SectionHeadline size="xl" className="mt-0">
-              Built around
-              <br />
+            <SectionHeadline size="xl" className="mt-0 text-center lg:text-left mx-auto lg:mx-0">
+              Built around{" "}
+              <br className="hidden sm:block" />
               family living
             </SectionHeadline>
           </div>
 
-          <div className="col-span-12 lg:col-span-7">
-            <BodyText size="lg" className="max-w-3xl mx-auto lg:mx-0">
+          <div className="w-full lg:col-span-7 flex flex-col items-center lg:items-start">
+            <BodyText size="lg" className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
               Sydney Oaks combines premium planning, nearby schools, connected
               commute access, landscaped spaces, and a refined residential
               atmosphere designed for modern families.
@@ -358,11 +358,11 @@ const features = [
       </SectionWrapper>
 
       {/* AMENITIES */}
-      <SectionWrapper className="py-20 md:py-24">
-        <div className="grid grid-cols-12 gap-10 items-end mb-16 text-center lg:text-left">
+      <SectionWrapper className="pb-20 md:pb-24 pt-0">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 md:gap-10 items-center lg:items-end mb-16 text-center lg:text-left">
           {/* LEFT SIDE: DESCRIPTION */}
-          <div className="col-span-12 lg:col-span-7 order-2 lg:order-1">
-            <BodyText size="lg" className="max-w-2xl mx-auto lg:mx-0">
+          <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col items-center lg:items-start w-full">
+            <BodyText size="lg" className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
               Thoughtfully curated facilities designed to elevate your daily routine. 
               From serene wellness spaces to active community hubs, every amenity 
               reflects a commitment to refined living and personal well-being.
@@ -370,17 +370,16 @@ const features = [
           </div>
 
           {/* RIGHT SIDE: HEADLINE */}
-          <div className="col-span-12 lg:col-span-5 order-1 lg:order-2 text-center lg:text-right">
+          <div className="lg:col-span-5 order-1 lg:order-2 flex flex-col items-center lg:items-end w-full text-center lg:text-right">
             <span
-              className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8"
+              className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8 mx-auto lg:mx-0"
               style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem" }}
             >Amenities</span>
 
-            <SectionHeadline size="xl" className="mt-0 leading-[1.1]">
-              Spaces designed
-              <br />
+            <SectionHeadline size="xl" className="mt-0 leading-[1.1] text-center lg:text-right mx-auto lg:mx-0">
+              Spaces designed{" "}
+              <br className="hidden sm:block" />
               for everyday life
-              <span className="text-[#D43F33]">.</span>
             </SectionHeadline>
           </div>
         </div>
@@ -433,33 +432,33 @@ const features = [
       {/* ENQUIRY */}
       <section id="request-info" className="py-20 md:py-32 bg-[#F5F0E8]">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20">
-          <div className="grid grid-cols-12 gap-14 lg:gap-24">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-14 lg:gap-24 items-center justify-items-center w-full">
             {/* LEFT */}
-            <div className="col-span-12 lg:col-span-5 text-center lg:text-left">
+            <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
               <span
-                className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8"
+                className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8 mx-auto lg:mx-0"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem" }}
               >Contact Us</span>
               <SectionHeadline
                 size="xl"
-                className="leading-[1.05] mt-0 mb-8"
+                className="leading-[1.05] mt-0 mb-8 text-center lg:text-left mx-auto lg:mx-0"
               >
-                Start the
-                <br />
+                Start the{" "}
+                <br className="hidden sm:block" />
                 conversation
               </SectionHeadline>
 
-              <BodyText className="mb-12 max-w-lg mx-auto lg:mx-0">
+              <BodyText className="mb-12 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
                 Our advisors are available to provide detailed project
                 briefings, pricing schedules, and site visit coordination.
               </BodyText>
 
-              <div className="space-y-4">
+              <div className="space-y-4 w-full max-w-md mx-auto lg:mx-0">
                 <motion.a
                   href="tel:+17705550123"
                   whileHover={{ backgroundColor: "#1C1208" }}
                   transition={{ duration: 0.4, ease: "circOut" }}
-                  className="flex items-center gap-4 p-6 bg-white border border-[#1C1208]/5 group transition-all"
+                  className="flex items-center justify-center lg:justify-start gap-4 p-6 bg-white border border-[#1C1208]/5 group transition-all"
                 >
                   <div className="w-12 h-12 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208] group-hover:bg-[#D43F33] group-hover:text-white transition-all duration-500">
                     <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -519,7 +518,7 @@ const features = [
             </div>
 
             {/* RIGHT */}
-            <div className="col-span-12 lg:col-span-7">
+            <div className="w-full lg:col-span-7">
               <form className="bg-white p-6 md:p-12 border border-[#1C1208]/5 space-y-6 shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">

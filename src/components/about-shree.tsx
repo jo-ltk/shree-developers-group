@@ -18,14 +18,14 @@ export function AboutShree() {
     <SectionWrapper id="about-shree" noPadding>
 
       {/* ── INTRO HEADER ── */}
-      <div className="pl-0 pr-8 md:pl-1 md:pr-12 lg:pl-2 lg:pr-20 py-16 border-b border-[#1C1208]/10 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between gap-8 md:gap-6 text-center md:text-left">
-        <div className="flex flex-col items-center md:items-start">
+      <div className="px-6 md:px-12 lg:px-20 py-16 border-b border-[#1C1208]/10 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between gap-8 md:gap-6 text-center md:text-left">
+        <div className="flex flex-col items-center md:items-start w-full md:w-auto">
           <SectionLabel className="justify-center md:justify-start">About Shree</SectionLabel>
-          <SectionHeadline size="xl">
+          <SectionHeadline size="xl" className="text-center md:text-left">
             Rooted in Georgia, built for the future
           </SectionHeadline>
         </div>
-        <div className="flex items-center gap-3 pb-1">
+        <div className="flex items-center gap-3 pb-1 shrink-0">
           <RustLine className="mb-0" />
           <Annotation>Est. 2009</Annotation>
         </div>
@@ -56,11 +56,11 @@ export function AboutShree() {
         </div>
 
         {/* Text — col-span-6, same height, flex justify-center */}
-        <div className="col-span-12 lg:col-span-6 flex flex-col justify-center text-center lg:text-left px-8 md:px-12 lg:px-16 py-16 bg-[#F5F0E8]">
+        <div className="col-span-12 lg:col-span-6 flex flex-col justify-center items-center lg:items-start text-center lg:text-left px-6 md:px-12 lg:px-16 py-16 bg-[#F5F0E8]">
           <div className="flex justify-center lg:justify-start">
             <SectionLabel className="mb-4">Founder Story</SectionLabel>
           </div>
-          <SectionHeadline size="md" className="mb-8">
+          <SectionHeadline size="md" className="mb-8 text-center lg:text-left">
             A journey of integrity
           </SectionHeadline>
           <BodyText size="lg" className="mb-6 mx-auto lg:mx-0 max-w-lg">
@@ -93,24 +93,24 @@ export function AboutShree() {
       </div>
 
       {/* ── B. BRAND PHILOSOPHY — dark, equal 6/6 ── */}
-      <div className="bg-[#1C1208] px-8 md:px-12 lg:px-20 py-16 md:py-20 relative overflow-hidden">
+      <div className="bg-[#1C1208] px-6 md:px-12 lg:px-20 py-16 md:py-20 relative overflow-hidden w-full">
         <div className="flex justify-center lg:justify-start">
           <SectionLabel light className="mb-6 !text-white">Brand Philosophy</SectionLabel>
         </div>
 
-        <div className="grid grid-cols-12 gap-8 lg:gap-16 items-start">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-16 items-center lg:items-start w-full">
           {/* Left col */}
-          <div className="col-span-12 lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <SectionHeadline size="lg" light className="mb-6 !text-white">
+          <div className="w-full lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <SectionHeadline size="lg" light className="mb-6 !text-white text-center lg:text-left mx-auto lg:mx-0">
               The Shree Way
             </SectionHeadline>
-            <BodyText light size="lg" className="mb-8 max-w-xl !text-white/90 !font-light" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <BodyText light size="lg" className="mb-8 max-w-xl !text-white/90 !font-light text-center lg:text-left mx-auto lg:mx-0" style={{ fontFamily: "'Poppins', sans-serif" }}>
               We believe the finest homes are built on four pillars — Restraint,
               Craft, Tension, and Texture. Our materials speak for themselves:
               limestone, aged paper, terracotta, concrete. Timeless, never trendy.
             </BodyText>
             
-            <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10 w-full">
+            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-8 pt-8 border-t border-white/10 w-full">
               <div>
                 <span className="uppercase text-rust font-bold tracking-widest text-[0.6rem] block mb-2" style={{ fontFamily: "'Montserrat', sans-serif" }}>Vision</span>
                 <BodyText light size="sm" className="!text-white/70">
@@ -127,7 +127,7 @@ export function AboutShree() {
           </div>
 
           {/* Right col */}
-          <div className="col-span-12 lg:col-span-5 flex flex-col gap-4">
+          <div className="w-full lg:col-span-5 flex flex-col gap-4">
             {[
               {
                 Icon: ShieldCheck,
@@ -160,7 +160,7 @@ export function AboutShree() {
       </div>
 
       {/* ── C. STATS — mosaic tile row ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 bg-[#1C1208]/8">
+      <div className="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-4 bg-[#1C1208]/8 w-full overflow-hidden">
         {[
           { value: "15+",  label: "Years of Experience", muted: false },
           { value: "24+",  label: "Projects Completed",  muted: false },
