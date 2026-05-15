@@ -4,21 +4,27 @@
 */
 
 :root {
+  /* --- Custom Editorial Scale --- */
+  --text-small: 11px;
+  --text-body: 13px;
+  --text-heading: 24px;
+  --text-hero: clamp(40px, 8vw, 72px);
+
   /* --- Metric/Stat Values (e.g. 15+, 200+) --- */
-  --mob-stat-size: 1.5rem;
+  --mob-stat-size: var(--text-heading);
   --web-stat-size: clamp(2.2rem, 5vw, 3.8rem);
   
   /* --- Stat Labels (e.g. YEARS EXPERIENCE) --- */
-  --mob-stat-label: 8px;
-  --web-stat-label: 0.55rem;
+  --mob-stat-label: var(--text-small);
+  --web-stat-label: 12px;
   
   /* --- Headlines (Hero/XL Tiers) --- */
-  --mob-headline-xl: clamp(0.95rem, 4.8vw, 1.8rem);
-  --web-headline-xl: clamp(2.5rem, 6vw, 4.5rem);
+  --mob-headline-xl: var(--text-hero);
+  --web-headline-xl: clamp(40px, 6vw, 72px);
   
   /* --- Body Text (Pillars/Descriptions) --- */
-  --mob-body-sm: 0.72rem;
-  --web-body-sm: 0.85rem;
+  --mob-body-sm: var(--text-body);
+  --web-body-sm: 15px;
 }
 
 /* --- UTILITY CLASSES --- */
@@ -66,12 +72,12 @@
 
 /* --- Button Overrides --- */
 .responsive-btn-text {
-  font-size: 9px !important;
+  font-size: var(--text-small) !important;
   letter-spacing: 0.1em !important;
 }
 @media (min-width: 640px) {
   .responsive-btn-text {
-    font-size: 0.6rem !important;
-    letter-spacing: 0.25em !important;
+    font-size: 12px !important;
+    letter-spacing: 0.15em !important;
   }
 }

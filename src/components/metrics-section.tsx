@@ -165,7 +165,7 @@ export default function CommunityDetailsPage() {
         {/* CARDS */}
 
         {/* SHORT CARDS WITH COLOR TRANSITION */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
+        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
           {overviewFeatures.map((item, index) => (
             <motion.div
               key={item.title}
@@ -177,18 +177,18 @@ export default function CommunityDetailsPage() {
                 duration: 0.5, 
                 backgroundColor: { duration: 0.4, ease: "circOut" } 
               }}
-              className="relative bg-[#F5F0E8] p-5 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[180px] sm:min-h-[240px] group cursor-pointer"
+              className="relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer"
             >
               {/* LARGE DECORATIVE NUMBER */}
               <span 
-                className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 text-black/[0.03] font-serif text-[5rem] sm:text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.05] group-hover:-translate-y-2"
+                className="absolute -bottom-2 -right-2 sm:-bottom-6 sm:-right-6 text-black/[0.03] font-serif text-[4rem] sm:text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.05] group-hover:-translate-y-2"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
                 {item.num}
               </span>
 
               <div className="relative z-10">
-                <div className="flex items-center justify-between mb-4 sm:mb-8">
+                <div className="flex items-center justify-between mb-2 sm:mb-8">
                   <Annotation className="!text-dark/40 group-hover:!text-white/40 transition-colors responsive-stat-label">0{index + 1}</Annotation>
                   <div className="group-hover:rotate-90 group-hover:scale-125 transition-all duration-500">
                     <CrosshairIcon className="group-hover:text-white w-4 h-4 sm:w-6 sm:h-6" />
@@ -200,7 +200,7 @@ export default function CommunityDetailsPage() {
                 </SectionHeadline>
               </div>
 
-              <div className="relative z-10 mt-2 sm:mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
+              <div className="relative z-10 mt-1.5 sm:mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
                 <BodyText size="sm" className="text-dark/60 group-hover:!text-white leading-snug max-w-[240px] responsive-body-sm">
                   {item.description}
                 </BodyText>
@@ -235,7 +235,7 @@ export default function CommunityDetailsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
+        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
           {amenities.map((item, index) => (
             <motion.div
               key={item.title}
@@ -247,21 +247,21 @@ export default function CommunityDetailsPage() {
                 duration: 0.5, 
                 backgroundColor: { duration: 0.4, ease: "circOut" } 
               }}
-              className="relative bg-[#F5F0E8] p-5 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[180px] sm:min-h-[240px] group cursor-pointer"
+              className="relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer"
             >
               {/* LARGE DECORATIVE NUMBER */}
               <span 
-                className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 text-black/[0.03] font-serif text-[5rem] sm:text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.1] group-hover:-translate-y-2"
+                className="absolute -bottom-2 -right-2 sm:-bottom-6 sm:-right-6 text-black/[0.03] font-serif text-[4rem] sm:text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.1] group-hover:-translate-y-2"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
                 {item.num}
               </span>
 
               <div className="relative z-10">
-                <div className="flex items-center justify-between mb-4 sm:mb-8">
+                <div className="flex items-center justify-between mb-2 sm:mb-8">
                   <Annotation className="!text-dark/40 group-hover:!text-white/60 transition-colors responsive-stat-label">{item.num}</Annotation>
                   <div className="group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                    <item.icon size={22} className="text-rust group-hover:text-white transition-colors" />
+                    <item.icon className="w-5 h-5 sm:w-[22px] sm:h-[22px] text-rust group-hover:text-white transition-colors" />
                   </div>
                 </div>
 
@@ -270,7 +270,7 @@ export default function CommunityDetailsPage() {
                 </SectionHeadline>
               </div>
 
-              <div className="relative z-10 mt-2 sm:mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
+              <div className="relative z-10 mt-1.5 sm:mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
                 <BodyText size="sm" className="text-dark/60 group-hover:text-white/80 leading-snug max-w-[240px] responsive-body-sm">
                   {item.body}
                 </BodyText>

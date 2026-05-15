@@ -344,7 +344,7 @@ export function MapStage({
             </span>
             <div className="h-px w-12 bg-[#1C1208]/30" />
             <span
-              className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#1C1208]/60"
+              className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#1C1208]/60"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Masterplan v2.4

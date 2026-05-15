@@ -25,8 +25,8 @@ const marqueeRows = [
 export function MarqueeTextSection() {
   return (
     <SectionWrapper className="overflow-hidden !pt-12 !pb-12 md:!pt-16 md:!pb-16" dark={false}>
-      <div className="flex items-center justify-between mb-8 md:mb-12">
-        <SectionLabel >Core Values</SectionLabel>
+      <div className="flex items-center justify-center md:justify-between mb-8 md:mb-12">
+        <SectionLabel className="mx-auto md:mx-0 text-center">Core Values</SectionLabel>
         <Annotation className="hidden md:block">fig. 12 / moving principles</Annotation>
       </div>
 

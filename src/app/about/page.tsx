@@ -253,11 +253,11 @@ export default function AboutPage() {
             {/* TECHNICAL DATA TO FILL SPACE */}
             <div className="mt-12 grid grid-cols-2 gap-8 border-t border-[#F5F0E808] pt-8">
               <div className="space-y-1">
-                <Annotation light className="!text-[#F5F0E8]/30 text-[9px] uppercase tracking-widest">Materiality</Annotation>
+                <Annotation light className="!text-[#F5F0E8]/30 text-[10px] uppercase tracking-widest">Materiality</Annotation>
                 <BodyText light size="sm" className="!text-[#F5F0E8]/60 italic !text-[11px]">Natural Stone, Timber, Bronze</BodyText>
               </div>
               <div className="space-y-1">
-                <Annotation light className="!text-[#F5F0E8]/30 text-[9px] uppercase tracking-widest">Philosophy Code</Annotation>
+                <Annotation light className="!text-[#F5F0E8]/30 text-[10px] uppercase tracking-widest">Philosophy Code</Annotation>
                 <BodyText light size="sm" className="!text-[#F5F0E8]/60 font-mono !text-[11px]">SDG.ARCH_03.INTENTION</BodyText>
               </div>
             </div>

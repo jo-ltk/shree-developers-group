@@ -114,7 +114,7 @@ export function CommunityDetails() {
 
           {/* RIGHT */}
           <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-6 lg:mt-0">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="-mx-6 sm:mx-0 grid grid-cols-2 gap-[1px] sm:gap-4 bg-white/10 sm:bg-transparent border-y sm:border-y-0 border-white/10">
               {features.map((item) => (
                 <div
                   key={item.title}

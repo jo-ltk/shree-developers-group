@@ -7,12 +7,13 @@ interface SectionWrapperProps {
   className?: string;
   id?: string;
   noPadding?: boolean;
+  mobileNoPadding?: boolean;
   fullWidth?: boolean;
   style?: React.CSSProperties;
 }
 
 export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
-  ({ children, dark, className, id, noPadding, fullWidth, style }, ref) => {
+  ({ children, dark, className, id, noPadding, mobileNoPadding, fullWidth, style }, ref) => {
     return (
       <section
         id={id}
@@ -27,7 +28,7 @@ export const SectionWrapper = forwardRef<HTMLElement, SectionWrapperProps>(
       >
         <div className={cn(
           "w-full",
-          !fullWidth && "px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32"
+          !fullWidth && (mobileNoPadding ? "px-0 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32" : "px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32")
         )}>
           {children}
         </div>

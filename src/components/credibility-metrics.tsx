@@ -53,7 +53,7 @@ export function CredibilityMetrics() {
           {stats.map((s, i) => (
             <div
               key={i}
-              className="credibility-stat group relative flex flex-col items-center justify-center text-center p-3 sm:p-6 md:p-8 transition-colors duration-300 cursor-default"
+              className="credibility-stat group relative flex flex-col items-center justify-center text-center px-1 py-4 sm:p-6 md:p-8 transition-colors duration-300 cursor-default"
               style={{
                 borderRight: i === 3 ? "none" : "1px solid rgba(245,240,232,0.08)",
                 borderBottom: "none",
@@ -77,13 +77,17 @@ export function CredibilityMetrics() {
                 </div>
 
                 {/* Label Container - Fixed height to ensure alignment */}
-                <div className="h-8 sm:h-10 mt-1.5 sm:mt-3 flex items-start justify-center">
-                  <Annotation 
-                    light 
-                    className="responsive-stat-label opacity-70 leading-[1.4]"
+                <div className="h-8 sm:h-10 mt-1.5 sm:mt-3 flex items-start justify-center w-full">
+                  <span 
+                    className="opacity-70 leading-[1.2] uppercase text-cream/60 text-center"
+                    style={{ 
+                      fontFamily: "'Montserrat', sans-serif", 
+                      fontSize: "8px", 
+                      letterSpacing: "0.05em" 
+                    }}
                   >
                     {s.label}
-                  </Annotation>
+                  </span>
                 </div>
               </div>
               <CrosshairIcon

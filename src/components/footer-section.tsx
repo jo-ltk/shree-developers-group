@@ -71,7 +71,7 @@ export function FooterSection() {
                     className="group flex items-center justify-between !text-[#F5F0E8] hover:!text-rust transition-colors duration-300"
                   >
                     <Annotation className="!font-medium responsive-stat-label !text-[#F5F0E8]">{link.label}</Annotation>
-                    <Annotation className="!font-mono !text-[9px] !opacity-20 !text-[#F5F0E8]">[{link.coord}]</Annotation>
+                    <Annotation className="!font-mono !text-[10px] !opacity-20 !text-[#F5F0E8]">[{link.coord}]</Annotation>
                   </a>
                 ))}
               </nav>
@@ -119,8 +119,8 @@ export function FooterSection() {
                 Georgia, USA &mdash; 30301
               </BodyText>
               <div className="flex flex-col gap-1 text-rust/60 font-mono">
-                <Annotation className="!text-[9px] !text-rust/60">LAT: 33.7490&deg; N</Annotation>
-                <Annotation className="!text-[9px] !text-rust/60">LNG: 84.3880&deg; W</Annotation>
+                <Annotation className="!text-[10px] !text-rust/60">LAT: 33.7490&deg; N</Annotation>
+                <Annotation className="!text-[10px] !text-rust/60">LNG: 84.3880&deg; W</Annotation>
               </div>
             </div>
           </div>

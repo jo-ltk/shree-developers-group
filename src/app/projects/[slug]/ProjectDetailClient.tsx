@@ -187,7 +187,7 @@ function PlansSection({ plans }: { plans: ProjectData["plans"] }) {
               }`}
             >
               <div className="flex flex-col">
-                <span className={`text-[9px] font-bold tracking-widest uppercase mb-1 transition-colors ${activeIdx === i ? "text-rust" : "text-[#F5F0E8]/40"}`}>
+                <span className={`text-[10px] font-bold tracking-widest uppercase mb-1 transition-colors ${activeIdx === i ? "text-rust" : "text-[#F5F0E8]/40"}`}>
                   Plan {i + 1}
                 </span>
                 <span className={`text-sm font-medium transition-colors ${activeIdx === i ? "text-[#F5F0E8]" : "text-[#F5F0E8]/60"}`}>
