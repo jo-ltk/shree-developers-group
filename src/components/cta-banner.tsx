@@ -15,7 +15,7 @@ import { CrosshairIcon } from "./ui/crosshair-icon";
 const headlineLines = [
   {
     words: ["Find", "your", "place", "in", "Georgia's"],
-    italic: ["Georgia's"],
+    italic: [],
   },
   {
     words: ["most", "thoughtfully", "designed"],
@@ -23,7 +23,7 @@ const headlineLines = [
   },
   {
     words: ["communities"],
-    italic: ["communities"],
+    italic: [],
   },
 ];
 
@@ -160,7 +160,7 @@ export function CtaBanner() {
           <SectionHeadline
             light
             size="xl"
-            className="!text-[clamp(2.6rem,4vw,4.8rem)] leading-[1.02] max-w-5xl"
+            className="max-w-5xl"
             noPeriod
           >
             {headlineLines.map((line, lIndex) => (
@@ -169,8 +169,6 @@ export function CtaBanner() {
                 className="flex flex-wrap justify-center gap-x-[0.22em]"
               >
                 {line.words.map((word, wIndex) => {
-                  const isItalic = line.italic.includes(word);
-
                   const isLastWord =
                     lIndex === headlineLines.length - 1 &&
                     wIndex === line.words.length - 1;
@@ -184,11 +182,6 @@ export function CtaBanner() {
 
                       <span
                         className="block text-white/20"
-                        style={
-                          isItalic
-                            ? { fontStyle: "italic" }
-                            : undefined
-                        }
                         aria-hidden="true"
                       >
                         {word}
@@ -202,10 +195,7 @@ export function CtaBanner() {
 
                       <span
                         data-fill-word
-                        className={cn(
-                          "absolute inset-0 block",
-                          isItalic ? "text-rust italic" : "text-white"
-                        )}
+                        className="absolute inset-0 block text-white"
                       >
                         {word}
 
@@ -226,10 +216,10 @@ export function CtaBanner() {
             <BodyText
               light
               size="lg"
-              className="italic !text-white/75"
+              className="!text-white/75"
             >
-              &ldquo;Architecting legacies through restraint and craftsmanship.
-              Your future home is a conversation away.&rdquo;
+              Architecting legacies through restraint and craftsmanship.
+              Your future home is a conversation away.
             </BodyText>
           </div>
 

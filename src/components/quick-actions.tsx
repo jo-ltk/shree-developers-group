@@ -7,31 +7,23 @@ import { Instagram } from "lucide-react";
 
 export function QuickActions() {
   return (
-    <section className="w-full border-b border-dark/5 bg-cream py-16 md:py-24 lg:py-32">
+    <section className="w-full border-b border-dark/5 bg-cream py-10 md:py-16 lg:py-20">
       <div className="mx-auto flex max-w-[1450px] flex-col items-center gap-0 px-6 sm:px-10 md:px-14 lg:px-20 text-center">
-
-        {/* Tagline */}
-        <span
-          className="mb-5 text-[14px] font-normal uppercase tracking-[0.65em] text-rust/50"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
-        >
-          Building Futures, One Community At A Time
-        </span>
 
         {/* Brand Name */}
         <SectionHeadline
-          size="lg"
-          className="mb-7 !text-[clamp(2.2rem,7vw,4.8rem)] !leading-[0.95]"
+          size="xl"
+          className="mb-7"
         >
           Shree Developers Group
         </SectionHeadline>
 
         {/* Emotional statement */}
         <p
-          className="text-[clamp(1.05rem,2.8vw,1.7rem)] font-light italic text-dark/60 leading-[1.15] mb-4"
-          style={{ fontFamily: "'Cormorant Garamond', serif" }}
+          className="text-[clamp(0.9rem,1.6vw,1.1rem)] text-dark/60 leading-[1.6] mb-4"
+          style={{ fontFamily: "'Poppins', sans-serif" }}
         >
-          Where trust <em>always</em> finds its home
+         Building Futures, One Community At A Time
         </p>
 
         {/* Rule */}

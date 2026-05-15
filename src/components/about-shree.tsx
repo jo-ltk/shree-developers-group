@@ -18,12 +18,11 @@ export function AboutShree() {
     <SectionWrapper id="about-shree" noPadding>
 
       {/* ── INTRO HEADER ── */}
-      <div className="px-8 md:px-12 lg:px-20 py-16 border-b border-[#1C1208]/10 flex items-end justify-between flex-wrap gap-6">
-        <div>
-          <SectionLabel counter="04 / 08">About Shree</SectionLabel>
-          <SectionHeadline size="xl" className="!text-[clamp(2.8rem,5vw,4.5rem)]">
-            Rooted in <em className="italic">Georgia</em>,<br />
-            built for the future
+      <div className="pl-0 pr-8 md:pl-1 md:pr-12 lg:pl-2 lg:pr-20 py-16 border-b border-[#1C1208]/10 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between gap-8 md:gap-6 text-center md:text-left">
+        <div className="flex flex-col items-center md:items-start">
+          <SectionLabel className="justify-center md:justify-start">About Shree</SectionLabel>
+          <SectionHeadline size="xl">
+            Rooted in Georgia, built for the future
           </SectionHeadline>
         </div>
         <div className="flex items-center gap-3 pb-1">
@@ -62,7 +61,7 @@ export function AboutShree() {
             <SectionLabel className="mb-4">Founder Story</SectionLabel>
           </div>
           <SectionHeadline size="md" className="mb-8">
-            A journey of <em className="italic">integrity</em>
+            A journey of integrity
           </SectionHeadline>
           <BodyText size="lg" className="mb-6 mx-auto lg:mx-0 max-w-lg">
             Shree Developers Group began with a simple observation: the market
@@ -72,13 +71,16 @@ export function AboutShree() {
             obsessive craftsmanship.
           </BodyText>
           <p
-            className="border-l-2 border-[#D43F33] pl-5 mb-10 italic text-[#1C1208]/50 mx-auto lg:mx-0 max-w-lg text-left"
+            className="relative border-l border-rust/40 pl-8 mb-10 text-[#1C1208]/80 mx-auto lg:mx-0 max-w-lg text-left"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
-              lineHeight: 1.7,
+              fontSize: "clamp(1.05rem, 1.3vw, 1.2rem)",
+              lineHeight: 1.65,
             }}
           >
+            {/* Accent mark */}
+            <span className="absolute top-0 left-0 w-1 h-5 bg-rust" />
+            
             &quot;We don&apos;t just clear land; we curate environments. Every nail, every
             stone, and every blueprint is a promise of quality we&apos;ve kept for
             over a decade.&quot;
@@ -98,17 +100,17 @@ export function AboutShree() {
 
         <div className="grid grid-cols-12 gap-8 lg:gap-16 items-start">
           {/* Left col */}
-          <div className="col-span-12 lg:col-span-7">
+          <div className="col-span-12 lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
             <SectionHeadline size="lg" light className="mb-6 !text-white">
-              The Shree <em className="italic !text-white">Way</em>
+              The Shree Way
             </SectionHeadline>
-            <BodyText light size="lg" className="mb-8 max-w-xl !text-white/90">
+            <BodyText light size="lg" className="mb-8 max-w-xl !text-white/90 !font-light" style={{ fontFamily: "'Poppins', sans-serif" }}>
               We believe the finest homes are built on four pillars — Restraint,
               Craft, Tension, and Texture. Our materials speak for themselves:
               limestone, aged paper, terracotta, concrete. Timeless, never trendy.
             </BodyText>
             
-            <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
+            <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10 w-full">
               <div>
                 <span className="uppercase text-rust font-bold tracking-widest text-[0.6rem] block mb-2" style={{ fontFamily: "'Montserrat', sans-serif" }}>Vision</span>
                 <BodyText light size="sm" className="!text-white/70">
@@ -177,13 +179,7 @@ export function AboutShree() {
       </div>
 
       {/* ── CLOSING STAMP ── */}
-      <div className="px-8 md:px-12 lg:px-20 py-20 text-center border-t border-[#1C1208]/10 relative">
-        <SectionHeadline size="lg">
-          Building trust, <em className="italic">one</em> brick at a time
-        </SectionHeadline>
-        <div className="w-16 h-px bg-[#D43F33]/20 mx-auto mt-5" />
-        <FigMarker fig="fig. 04" label="Shree Brand Standards" />
-      </div>
+    
 
     </SectionWrapper>
   );

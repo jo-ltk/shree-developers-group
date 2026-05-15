@@ -81,19 +81,19 @@ export function TeamSection() {
   return (
     <SectionWrapper id="team" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
       {/* Asymmetric Header Grid */}
-      <div data-team-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-10 md:mb-12">
-        <div className="col-span-12 lg:col-span-7">
-          <SectionLabel counter="07 / 08">Our Promise</SectionLabel>
+      <div data-team-heading className="flex flex-col items-center md:grid md:grid-cols-12 gap-8 md:gap-12 items-center md:items-end mb-10 md:mb-12 text-center md:text-left">
+        <div className="col-span-12 lg:col-span-7 flex flex-col items-center md:items-start">
+          <SectionLabel counter="07 / 08" className="justify-center md:justify-start">Our Promise</SectionLabel>
           <SectionHeadline 
             size="xl" 
             className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
           >
             Premium is not loud.
             <br />
-            It is <em className="italic">consistently cared for</em>
+            It is consistently cared for
           </SectionHeadline>
         </div>
-        <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+        <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
           <BodyText size="md" className="mb-8">
             Shree Developers Group works with a simple belief: real estate feels luxurious when 
             buyers understand what is being built, why it matters, and who stands behind it.
@@ -131,7 +131,7 @@ export function TeamSection() {
               </div>
             </div>
 
-            <div className="flex flex-col flex-grow p-6 md:p-8 pt-8 md:pt-10">
+            <div className="flex flex-col flex-grow items-center md:items-start text-center md:text-left p-6 md:p-8 pt-8 md:pt-10">
               <Annotation className="mb-4 text-rust">Pillar 0{index + 1}</Annotation>
               <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
                 {item.title}<span className="text-rust">.</span>

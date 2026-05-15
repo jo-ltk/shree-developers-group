@@ -120,16 +120,16 @@ export function RecentArticlesSection() {
   return (
     <SectionWrapper id="articles" ref={sectionRef} dark={false} className="!py-16 md:!py-20">
       {/* Asymmetric Header Grid (7/5 Split) */}
-      <div data-articles-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-10 md:mb-12">
-        <div className="col-span-12 lg:col-span-7">
-          <SectionLabel counter="10 / 10">Media & Blog</SectionLabel>
-          <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]">
-            Insights, <em className="italic">updates</em>,
+      <div data-articles-heading className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-12 items-center md:items-end mb-10 md:mb-12 text-center md:text-left">
+        <div className="col-span-12 lg:col-span-7 flex flex-col items-center md:items-start">
+          <SectionLabel className="justify-center md:justify-start">Media & Blog</SectionLabel>
+          <SectionHeadline size="xl" >
+            Insights, updates,
             <br />
             and design stories
           </SectionHeadline>
         </div>
-        <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+        <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
           <BodyText size="md" className="mb-8">
             Short reads for buyers who want to understand the thinking behind a Shree development, 
             from planning discipline to the details that make ownership simpler.
@@ -171,7 +171,7 @@ export function RecentArticlesSection() {
               </div>
             </div>
 
-            <div className="flex flex-col flex-grow p-6 md:p-8 pt-8 md:pt-10">
+            <div className="flex flex-col flex-grow items-center md:items-start text-center md:text-left p-6 md:p-8 pt-8 md:pt-10">
               <Annotation className="mb-4 text-rust">{article.date}</Annotation>
               <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
                 {article.title}<span className="text-rust">.</span>

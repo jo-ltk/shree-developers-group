@@ -5,6 +5,7 @@ interface BodyTextProps {
   size?: "lg" | "md" | "sm";
   light?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export function BodyText({
@@ -12,6 +13,7 @@ export function BodyText({
   size = "md",
   light,
   className,
+  style,
 }: BodyTextProps) {
   const sizes = {
     lg: "text-[clamp(1.05rem,1.4vw,1.25rem)] leading-[1.75]",
@@ -23,7 +25,10 @@ export function BodyText({
   return (
     <p
       className={cn(sizes[size], color, className)}
-      style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+      style={{ 
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        ...style 
+      }}
     >
       {children}
     </p>

@@ -157,10 +157,10 @@ export function CommunityDetails() {
             <div data-detail-reveal>
               <SectionHeadline
                 size="hero"
-                className="!text-[clamp(3.5rem,8vw,9rem)] leading-[0.85] tracking-tight mt-4"
+                className="tracking-tight mt-4"
               >
                 Each project gets a <br />
-                <em className="italic text-rust font-normal">dedicated</em> description
+                dedicated description
               </SectionHeadline>
             </div>
           </div>
@@ -191,12 +191,7 @@ export function CommunityDetails() {
         {/* Editorial Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
         
-        {/* Grid lines overlay */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="h-full w-px bg-white/20 absolute left-1/4" />
-          <div className="h-full w-px bg-white/20 absolute left-1/2" />
-          <div className="h-full w-px bg-white/20 absolute left-3/4" />
-        </div>
+
 
         <div className="absolute inset-0 flex flex-col justify-end pb-20 md:pb-32">
           <div className="max-w-[1450px] w-full px-8 md:px-12 lg:px-20 mx-auto">
@@ -274,7 +269,7 @@ export function CommunityDetails() {
       <section className="grid grid-cols-12 gap-px bg-[#1C1208]/10 border-b border-[#1C1208]/10">
         <div className="col-span-12 lg:col-span-7 bg-[#F5F0E8] p-8 md:p-20 lg:p-32" data-detail-reveal>
           <SectionLabel>Architecture of Life</SectionLabel>
-          <SectionHeadline size="xl" className="!text-[clamp(3rem,5vw,6rem)] leading-[0.9] mb-12 max-w-[600px]">
+          <SectionHeadline size="xl" className="leading-[1.05] mb-12 max-w-[600px]">
             {projectData.overview.title}
           </SectionHeadline>
           <BodyText size="lg" className="mb-16 text-balance text-[#1C1208]/80 leading-relaxed italic">
@@ -318,7 +313,7 @@ export function CommunityDetails() {
           <div className="grid grid-cols-12 gap-8 items-end">
             <div className="col-span-12 lg:col-span-6" data-detail-reveal>
               <SectionLabel>Visual Narrative</SectionLabel>
-              <SectionHeadline size="xl" className="!text-[clamp(3.5rem,6vw,7rem)] leading-[0.85]">The <br />Gallery</SectionHeadline>
+              <SectionHeadline size="xl">The <br />Gallery</SectionHeadline>
             </div>
             <div className="col-span-12 lg:col-span-6 lg:pb-6" data-detail-reveal>
               <div className="flex items-start gap-8">
@@ -374,9 +369,9 @@ export function CommunityDetails() {
           <div className="grid grid-cols-12 gap-12 lg:gap-24 items-start">
             <div className="col-span-12 lg:col-span-5" data-detail-reveal>
               <SectionLabel light>Site Intelligence</SectionLabel>
-              <SectionHeadline size="xl" light className="!text-[clamp(3rem,5vw,6rem)] leading-[0.9] mb-12">
+              <SectionHeadline size="xl" light className="mb-12">
                 Master Plan <br />
-                <em className="italic text-rust font-normal">& Layout Logic</em>
+                & Layout Logic
               </SectionHeadline>
               <BodyText light className="mb-16 opacity-60 leading-relaxed max-w-[480px]">
                 Every plot, every road, and every green space is placed with intentionality. 
@@ -437,9 +432,7 @@ export function CommunityDetails() {
           <div className="grid grid-cols-12 gap-8 items-end">
             <div className="col-span-12 lg:col-span-6" data-detail-reveal>
               <SectionLabel>Structural Integrity</SectionLabel>
-              <SectionHeadline size="xl" className="!text-[clamp(3.5rem,6vw,7rem)] leading-[0.85]">
-                Floor <br />Plans
-              </SectionHeadline>
+              <SectionHeadline size="xl">Floor <br />Plans</SectionHeadline>
             </div>
             <div className="col-span-12 lg:col-span-6 lg:pb-6" data-detail-reveal>
               <BodyText className="max-w-[420px] opacity-60">
@@ -568,7 +561,7 @@ export function CommunityDetails() {
       <section className="bg-[#EDE8DF] py-24 md:py-36">
         <div className="px-8 md:px-12 lg:px-20 mb-16">
           <SectionLabel>The Experience</SectionLabel>
-          <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]">Curated Amenities</SectionHeadline>
+          <SectionHeadline size="xl">Curated Amenities</SectionHeadline>
         </div>
         
         <div className="px-8 md:px-12 lg:px-20">
@@ -627,7 +620,7 @@ export function CommunityDetails() {
             
             <div className="col-span-12 lg:col-span-4 flex flex-col justify-center">
               <SectionLabel>Connectivity</SectionLabel>
-              <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98] mb-8">Location Advantages</SectionHeadline>
+              <SectionHeadline size="xl" className="mb-8">Location Advantages</SectionHeadline>
               
               <div className="space-y-6">
                 {projectData.location.landmarks.map((mark, i) => (
@@ -657,7 +650,7 @@ export function CommunityDetails() {
         <div className="px-8 md:px-12 lg:px-20 relative z-10">
           <div className="max-w-[800px]">
             <SectionLabel light>Investment Thesis</SectionLabel>
-            <SectionHeadline size="xl" light className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98] mb-16">Why choose <em className="italic">{projectData.name}</em></SectionHeadline>
+            <SectionHeadline size="xl" light className="mb-16">Why choose {projectData.name}</SectionHeadline>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
               {projectData.whyChoose.map((item, i) => (
@@ -684,7 +677,7 @@ export function CommunityDetails() {
           <div className="grid grid-cols-12 gap-12 lg:gap-24">
             <div className="col-span-12 lg:col-span-5">
               <SectionLabel>Contact Us</SectionLabel>
-              <SectionHeadline size="xl" className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98] mb-8">Start the conversation</SectionHeadline>
+              <SectionHeadline size="xl" className="mb-8">Start the conversation</SectionHeadline>
               <BodyText className="mb-12">
                 Our advisors are available to provide detailed project briefings, pricing schedules, and site visit coordination.
               </BodyText>

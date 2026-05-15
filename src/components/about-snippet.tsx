@@ -56,7 +56,7 @@ export function AboutSnippet() {
 
           <div className="flex flex-col gap-0">
             <SectionLabel counter="02 / 04">About Shree</SectionLabel>
-            <SectionHeadline size="lg" className="!text-[clamp(2rem,6vw,4.2rem)] !leading-[0.95] mb-4 sm:mb-6">
+            <SectionHeadline size="lg" className="mb-4 sm:mb-6">
               Crafting<br />legacies
             </SectionHeadline>
             <BodyText size="lg">
@@ -70,11 +70,11 @@ export function AboutSnippet() {
           {/* Pull quote */}
           <div className="border-l-2 border-[#D43F33] pl-4 sm:pl-5 flex flex-col gap-2 sm:gap-3">
             <p
-              className="italic text-[#1C1208]/60 leading-[1.5]"
+              className="text-[#1C1208]/60 leading-[1.6]"
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(1rem, 1.4vw, 1.35rem)",
-                fontWeight: 300,
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "clamp(0.85rem, 1.3vw, 1rem)",
+                fontWeight: 400,
               }}
             >
               &quot;We don&apos;t build houses. We build the places families return to.&quot;

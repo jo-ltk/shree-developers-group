@@ -55,11 +55,11 @@ export function FooterSection() {
             <SectionHeadline
               size="md"
               light
-              className="!text-[#F5F0E8] !text-[2rem] !leading-[1.1]"
+              className="!text-[#F5F0E8] !text-[2rem]"
             >
               Let&apos;s architect
               <br />
-              your <em className="italic">legacy</em>
+              your legacy
             </SectionHeadline>
             <div className="space-y-3">
               <Annotation light className="!text-rust">01 / TECHNICAL INDEX</Annotation>

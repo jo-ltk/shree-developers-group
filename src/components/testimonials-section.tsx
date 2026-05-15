@@ -85,19 +85,18 @@ export function TestimonialsSection() {
   return (
     <SectionWrapper id="testimonials" ref={sectionRef} dark={false} className="!py-24 md:!py-36 overflow-hidden bg-[#EDE8DF]">
       {/* Asymmetric Header */}
-      <div data-testimonial-heading className="grid grid-cols-12 gap-8 md:gap-12 items-end mb-16 md:mb-24 px-8 md:px-12 lg:px-20">
-        <div className="col-span-12 lg:col-span-8">
-          <SectionLabel>Homeowner Experiences</SectionLabel>
+      <div data-testimonial-heading className="flex flex-col items-center md:grid md:grid-cols-12 gap-8 md:gap-12 items-center md:items-end mb-16 md:mb-24 px-8 md:px-12 lg:px-20 text-center md:text-left">
+        <div className="col-span-12 lg:col-span-8 flex flex-col items-center md:items-start">
+          <SectionLabel className="justify-center md:justify-start">Homeowner Experiences</SectionLabel>
           <SectionHeadline 
-            size="xl" 
-            className="!text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.98]"
+            size="xl"
           >
             Trust is built in quiet
             <br />
-            moments of <em className="italic">follow-through</em>
+            moments of follow-through
           </SectionHeadline>
         </div>
-        <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+        <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
           <BodyText size="md" className="mb-4 text-[#1C1208]/70">
             A premium builder experience should feel steady, human, and easy to understand. Hear from the families who call our communities home.
           </BodyText>

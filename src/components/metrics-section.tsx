@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   MapPin,
   Phone,
@@ -9,62 +8,125 @@ import {
   Waves,
   Baby,
   ArrowRight,
-  ArrowDown,
   Coffee,
   MessageCircle,
   Instagram,
   Trees,
+  Building2,
+  Users,
+  Navigation,
+  Shield,
 } from "lucide-react";
 
+import { motion } from "framer-motion";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionHeadline } from "@/components/ui/section-headline";
 import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 import { ButtonPrimary } from "@/components/ui/button-primary";
-import { BrandMark } from "@/components/ui/brand-mark";
 import { SectionLabel } from "./ui/section-label";
-import { GridLines } from "@/components/ui/grid-lines";
+
 
 const amenities = [
   {
     icon: Trees,
     title: "Landscaped Parks",
     body: "Nature-focused outdoor spaces designed for peaceful community living.",
+    num: "01"
   },
   {
     icon: Waves,
     title: "Swimming Pool",
     body: "Resort-inspired leisure amenities with refined detailing.",
+    num: "02"
   },
   {
     icon: Dumbbell,
     title: "Fitness Center",
     body: "Modern wellness facilities crafted for everyday routines.",
+    num: "03"
   },
   {
     icon: ShieldCheck,
     title: "24/7 Security",
     body: "Secure gated access with integrated safety infrastructure.",
+    num: "04"
   },
   {
     icon: Baby,
     title: "Children’s Play Area",
     body: "Safe and engaging recreational spaces for families.",
+    num: "05"
   },
   {
     icon: Coffee,
     title: "Clubhouse",
     body: "Elegant social spaces for gatherings and relaxation.",
+    num: "06"
   },
 ];
 
-export default function CommunityDetailsPage() {
+const overviewFeatures = [
+  { 
+    num: "01", 
+    title: "Neighborhood Feel.",
+    description: "A close-knit community atmosphere where neighbors connect and thrive together."
+  },
+  { 
+    num: "02", 
+    title: "Top School Access.",
+    description: "Proximity to the region's most prestigious educational institutions and private schools."
+  },
+  { 
+    num: "03", 
+    title: "Safe Community.",
+    description: "24/7 monitored security and gated access ensuring total peace of mind for families."
+  },
+  { 
+    num: "04", 
+    title: "Connected Lifestyle.",
+    description: "Effortless access to major highways, business districts, and urban conveniences."
+  },
+  { 
+    num: "05", 
+    title: "Walkable Planning.",
+    description: "Thoughtfully designed pathways connecting green spaces, amenities, and residences."
+  },
+  { 
+    num: "06", 
+    title: "Premium Architecture.",
+    description: "Timeless design language blending modern luxury with functional residential comfort."
+  },
+];
+
+const features = [
+  {
+    num: "01",
+    title: "Luxury Residences",
+    icon: Building2,
+  },
+  {
+    num: "02",
+    title: "Family Community",
+    icon: Users,
+  },
+  {
+    num: "03",
+    title: "Prime Connectivity",
+    icon: Navigation,
+  },
+  {
+    num: "04",
+    title: "Premium Amenities",
+    icon: Shield,
+  },
+];export default function CommunityDetailsPage() {
   return (
     <main className="bg-[#F5F0E8] overflow-hidden">
       {/* HERO */}
 
-      <section className="relative bg-[#160E0A] overflow-hidden min-h-[100svh] lg:min-h-[95vh] flex items-center">
+      <section className="relative bg-[#160E0A] overflow-hidden min-h-0 md:min-h-[85svh] flex items-center py-12 md:py-0">
         {/* BG */}
 
         <div className="absolute inset-0">
@@ -74,7 +136,7 @@ export default function CommunityDetailsPage() {
             className="w-full h-full object-cover opacity-30 scale-[1.04]"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-b from-[#160E0A]/90 via-[#160E0A]/70 to-[#160E0A]/95" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#160E0A]/88 via-[#160E0A]/72 to-[#160E0A]/96" />
         </div>
 
         {/* TEXTURE */}
@@ -87,102 +149,71 @@ export default function CommunityDetailsPage() {
           }}
         />
 
-        <GridLines />
+
 
         {/* CONTENT */}
 
-        <div className="relative z-[2] w-full max-w-[1450px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20 py-20 md:py-24">
-          <div className="grid grid-cols-12 gap-14 lg:gap-10 items-center">
+        <div className="relative z-[2] w-full max-w-[1450px] mx-auto px-5 sm:px-8 md:px-12 lg:px-20 py-6 sm:py-10 md:py-14">
+          <div className="grid grid-cols-12 gap-8 md:gap-12 items-center">
+
             {/* LEFT */}
 
             <div className="col-span-12 lg:col-span-6 text-center lg:text-left">
+
               {/* TOP */}
 
-              <div className="flex items-center justify-center lg:justify-start gap-4 mb-8 flex-wrap">
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-5 flex-wrap">
+
                 <span
                   className="text-[#D43F33] font-semibold uppercase"
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.25em",
+                    fontSize: "0.58rem",
+                    letterSpacing: "0.22em",
                   }}
                 >
                   Community Details
                 </span>
 
-                <div className="w-4 h-4 relative opacity-50 hidden sm:block">
-                  <div className="absolute top-1/2 left-0 w-full h-[1px] bg-[#F5F0E8] -translate-y-1/2"></div>
-                  <div className="absolute left-1/2 top-0 w-[1px] h-full bg-[#F5F0E8] -translate-x-1/2"></div>
-                </div>
-
-                <span
-                  className="text-[#F5F0E8]/40 uppercase font-medium"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "0.6rem",
-                    letterSpacing: "0.25em",
-                  }}
-                >
-                  01 / 06
-                </span>
+               
               </div>
 
               {/* TITLE */}
-
-              <h1
-                className="text-[#F5F0E8] leading-[0.92] mb-10"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "clamp(4rem,14vw,8.5rem)",
-                  fontWeight: 400,
-                }}
-              >
-                Sydney
-                <br />
-                Oaks<span className="text-[#D43F33]">.</span>
-              </h1>
-
+<SectionHeadline
+          size="xl"
+          className="mb-7 text-white" 
+        >
+            Sydney Oaks<span className="text-[#D43F33]">.</span>
+        </SectionHeadline>
+              
               {/* LOCATION */}
 
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 mb-12">
+              <div className="flex flex-col items-center lg:items-start gap-3 mb-8">
+
                 <div className="flex items-center gap-3">
+
                   <MapPin
-                    className="text-[#D43F33] w-[18px] h-[18px]"
+                    className="text-[#D43F33] w-[16px] h-[16px]"
                     strokeWidth={1.5}
                   />
 
                   <span
-                    className="text-[#F5F0E8]/60 uppercase leading-[1.6] font-medium text-left"
+                    className="text-[#F5F0E8]/65 uppercase leading-[1.6] font-medium"
                     style={{
                       fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "0.65rem",
-                      letterSpacing: "0.25em",
+                      fontSize: "0.58rem",
+                      letterSpacing: "0.22em",
                     }}
                   >
-                    Suwanee,
-                    <br />
-                    Georgia
+                    Suwanee, Georgia
                   </span>
                 </div>
-
-                <div className="hidden sm:block w-10 h-px bg-[#D43F33]/40"></div>
-
-                <span
-                  className="text-[#F5F0E8]/60 uppercase leading-[1.6] font-medium"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.25em",
-                  }}
-                >
-                  34.0523° N · 84.0657° W
-                </span>
               </div>
 
               {/* DESCRIPTION */}
 
               <p
-                className="text-[#F5F0E8]/60 text-[1.2rem] md:text-[1.45rem] leading-[1.6] max-w-xl mx-auto lg:mx-0 mb-14"
+                className="!text-white text-[1rem] sm:text-[1.1rem] md:text-[1.35rem] leading-[1.7] max-w-xl mx-auto lg:mx-0 mb-8"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                 }}
@@ -193,98 +224,54 @@ export default function CommunityDetailsPage() {
 
               {/* BUTTONS */}
 
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-                {/* PRIMARY */}
+              <div className="flex flex-col gap-4 w-full max-w-[340px] mx-auto lg:mx-0">
+                <ButtonPrimary 
+                  href="#request-info"
+                  className="w-full justify-between !h-[60px] !text-white"
+                >
+                  Request Information
+                </ButtonPrimary>
 
-                <button className="bg-[#D43F33] text-white py-5 px-6 w-full sm:w-64 relative group flex items-center justify-between hover:bg-[#b03228] transition-colors">
-                  <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/40" />
-
-                  <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/40" />
-
-                  <span
-                    className="uppercase font-bold text-left leading-[1.3]"
-                    style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "0.65rem",
-                      letterSpacing: "0.2em",
-                    }}
-                  >
-                    Request
-                    <br />
-                    Information
-                  </span>
-
-                  <div className="w-8 h-8 border border-white/30 flex items-center justify-center rounded-sm">
-                    <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
-                  </div>
-                </button>
-
-                {/* SECONDARY */}
-
-                <div className="flex items-center gap-5">
-                  <button className="group flex items-center gap-3">
-                    <span
-                      className="text-[#F5F0E8] uppercase font-bold leading-[1.3] text-left"
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                      }}
-                    >
-                      Schedule
-                      <br />
-                      A Visit
-                    </span>
-
-                    <ArrowRight
-                      className="w-[14px] h-[14px] text-[#F5F0E8]"
-                      strokeWidth={2.5}
-                    />
-                  </button>
-
-                  <div className="w-[48px] h-[48px] rounded-full border border-[#F5F0E8]/20 flex items-center justify-center">
-                    <ArrowDown
-                      className="w-5 h-5 text-[#F5F0E8]/80"
-                      strokeWidth={1.5}
-                    />
-                  </div>
-                </div>
+                <ButtonPrimary 
+                  href="#visit"
+                  className="w-full justify-between !h-[60px] !bg-white/5 border border-white/30 hover:!bg-white/10 !text-white"
+                >
+                  Schedule A Visit
+                </ButtonPrimary>
               </div>
             </div>
 
             {/* RIGHT */}
 
-            <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-20 lg:mt-0">
-              <div className="grid grid-cols-2 lg:grid-cols-1 border-t border-[#F5F0E8]/10 lg:border-t-0 lg:border-l lg:pl-14">
-                {[
-                  { num: "01", title: "Luxury\nResidences" },
-                  { num: "02", title: "Family\nCommunity" },
-                  { num: "03", title: "Prime\nConnectivity" },
-                  { num: "04", title: "Premium\nAmenities" },
-                ].map((item, idx) => (
+            <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-6 lg:mt-0">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {features.map((item) => (
                   <div
-                    key={item.num}
-                    className={`flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-10 py-10 border-b border-[#F5F0E8]/10 text-center lg:text-left ${
-                      idx % 2 === 0 ? "border-r lg:border-r-0" : ""
-                    }`}
+                    key={item.title}
+                    className="relative group bg-white/[0.02] border border-white/5 backdrop-blur-md p-5 sm:p-6 text-center hover:bg-white/[0.04] transition-all duration-500"
                   >
-                    <span
-                      className="text-[#F5F0E8]/30 lg:pt-3 font-medium"
+                    {/* CARD CORNERS */}
+                    <span className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/10 group-hover:border-[#D43F33]/40 transition-colors" />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/10 group-hover:border-[#D43F33]/40 transition-colors" />
+
+                    {/* ICON BOX */}
+                    <div className="relative w-14 h-14 border border-[#D43F33]/20 flex items-center justify-center mx-auto mb-4 group-hover:border-[#D43F33]/50 transition-all duration-500">
+                      <span className="absolute top-1.5 left-1.5 w-1.5 h-1.5 border-t border-l border-[#D43F33]/40" />
+                      <span className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 border-b border-r border-[#D43F33]/40" />
+                      <item.icon
+                        className="text-[#D43F33] transition-transform duration-500 group-hover:scale-110"
+                        size={22}
+                      />
+                    </div>
+
+                    {/* TITLE */}
+                    <h3
+                      className="text-[#F5F0E8] leading-[1.35] uppercase"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                      }}
-                    >
-                      {item.num}
-                    </span>
-
-                    <h3
-                      className="text-[#F5F0E8]/80 whitespace-pre-line leading-[1.1]"
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: "clamp(1.75rem, 7vw, 2.5rem)",
-                        fontWeight: 400,
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.14em",
                       }}
                     >
                       {item.title}
@@ -297,14 +284,16 @@ export default function CommunityDetailsPage() {
         </div>
       </section>
 
-      {/* OVERVIEW */}
-
+      {/* COMMUNITY OVERVIEW */}
       <SectionWrapper className="py-20 md:py-24">
         <div className="grid grid-cols-12 gap-10 items-center text-center lg:text-left">
           <div className="col-span-12 lg:col-span-5">
-            <Annotation>COMMUNITY OVERVIEW</Annotation>
+            <span
+              className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8"
+              style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem" }}
+            >Community Overview</span>
 
-            <SectionHeadline size="xl" className="mt-5">
+            <SectionHeadline size="xl" className="mt-0">
               Built around
               <br />
               family living
@@ -322,89 +311,138 @@ export default function CommunityDetailsPage() {
 
         {/* CARDS */}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16">
-          {[
-            "Neighborhood Feel",
-            "Top School Access",
-            "Safe Community",
-            "Connected Lifestyle",
-            "Walkable Planning",
-            "Premium Architecture",
-          ].map((item, index) => (
-            <div
-              key={item}
-              className="bg-[#F5F0E8] p-8 md:p-10 text-center md:text-left hover:bg-[#EDE8DF] transition-all duration-700"
+        {/* SHORT CARDS WITH COLOR TRANSITION */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
+          {overviewFeatures.map((item, index) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ backgroundColor: "#1C1208" }}
+              transition={{ 
+                duration: 0.5, 
+                backgroundColor: { duration: 0.4, ease: "circOut" } 
+              }}
+              className="relative bg-[#F5F0E8] p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[240px] group cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-10">
-                <Annotation>0{index + 1}</Annotation>
+              {/* LARGE DECORATIVE NUMBER */}
+              <span 
+                className="absolute -bottom-6 -right-6 text-black/[0.03] font-serif text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.05] group-hover:-translate-y-2"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                {item.num}
+              </span>
 
-                <CrosshairIcon />
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-8">
+                  <Annotation className="!text-[#1C1208]/40 group-hover:!text-white/40 transition-colors">0{index + 1}</Annotation>
+                  <div className="group-hover:rotate-90 group-hover:scale-125 transition-all duration-500">
+                    <CrosshairIcon className="group-hover:text-white" />
+                  </div>
+                </div>
+
+                <SectionHeadline size="md" className="leading-tight group-hover:text-white transition-colors duration-500">
+                  {item.title}
+                </SectionHeadline>
               </div>
 
-              <SectionHeadline size="md">
-                {item}
-              </SectionHeadline>
-            </div>
+              <div className="relative z-10 mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
+                <BodyText size="sm" className="text-[#1C1208]/60 group-hover:!text-white leading-snug max-w-[240px]">
+                  {item.description}
+                </BodyText>
+              </div>
+            </motion.div>
           ))}
         </div>
       </SectionWrapper>
 
       {/* AMENITIES */}
-
       <SectionWrapper className="py-20 md:py-24">
-        <div className="text-center mb-16">
-          <Annotation>AMENITIES</Annotation>
+        <div className="grid grid-cols-12 gap-10 items-end mb-16 text-center lg:text-left">
+          {/* LEFT SIDE: DESCRIPTION */}
+          <div className="col-span-12 lg:col-span-7 order-2 lg:order-1">
+            <BodyText size="lg" className="max-w-2xl mx-auto lg:mx-0">
+              Thoughtfully curated facilities designed to elevate your daily routine. 
+              From serene wellness spaces to active community hubs, every amenity 
+              reflects a commitment to refined living and personal well-being.
+            </BodyText>
+          </div>
 
-          <SectionHeadline size="xl" className="mt-5">
-            Spaces designed
-            <br />
-            for everyday life
-          </SectionHeadline>
+          {/* RIGHT SIDE: HEADLINE */}
+          <div className="col-span-12 lg:col-span-5 order-1 lg:order-2 text-center lg:text-right">
+            <span
+              className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8"
+              style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem" }}
+            >Amenities</span>
+
+            <SectionHeadline size="xl" className="mt-0 leading-[1.1]">
+              Spaces designed
+              <br />
+              for everyday life
+              <span className="text-[#D43F33]">.</span>
+            </SectionHeadline>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
           {amenities.map((item, index) => (
-            <div
+            <motion.div
               key={item.title}
-              className="bg-[#F5F0E8] p-8 md:p-12 hover:bg-[#EDE8DF] transition-all duration-700 text-center md:text-left"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ backgroundColor: "#D43F33" }}
+              transition={{ 
+                duration: 0.5, 
+                backgroundColor: { duration: 0.4, ease: "circOut" } 
+              }}
+              className="relative bg-[#F5F0E8] p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[240px] group cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-10">
-                <Annotation>0{index + 1}</Annotation>
+              {/* LARGE DECORATIVE NUMBER */}
+              <span 
+                className="absolute -bottom-6 -right-6 text-black/[0.03] font-serif text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.1] group-hover:-translate-y-2"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                {item.num}
+              </span>
 
-                <item.icon
-                  size={26}
-                  className="text-[#D43F33]"
-                />
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-8">
+                  <Annotation className="!text-[#1C1208]/40 group-hover:!text-white/60 transition-colors">{item.num}</Annotation>
+                  <div className="group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
+                    <item.icon size={26} className="text-[#D43F33] group-hover:text-white transition-colors" />
+                  </div>
+                </div>
+
+                <SectionHeadline size="md" className="leading-tight group-hover:text-white transition-colors duration-500">
+                  {item.title}
+                </SectionHeadline>
               </div>
 
-              <SectionHeadline size="md">
-                {item.title}
-              </SectionHeadline>
-
-              <BodyText className="mt-4">
-                {item.body}
-              </BodyText>
-            </div>
+              <div className="relative z-10 mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
+                <BodyText size="sm" className="text-[#1C1208]/60 group-hover:text-white/80 leading-snug max-w-[240px]">
+                  {item.body}
+                </BodyText>
+              </div>
+            </motion.div>
           ))}
         </div>
       </SectionWrapper>
 
       {/* ENQUIRY */}
-
-      <section
-        id="enquiry"
-        className="py-20 md:py-32 bg-[#F5F0E8]"
-      >
+      <section id="request-info" className="py-20 md:py-32 bg-[#F5F0E8]">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20">
           <div className="grid grid-cols-12 gap-14 lg:gap-24">
             {/* LEFT */}
-
             <div className="col-span-12 lg:col-span-5 text-center lg:text-left">
-              <SectionLabel>Contact Us</SectionLabel>
-
+              <span
+                className="inline-block uppercase font-semibold tracking-[0.25em] text-dark/60 mb-6 md:mb-8"
+                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem" }}
+              >Contact Us</span>
               <SectionHeadline
                 size="xl"
-                className="leading-[0.98] mt-5 mb-8"
+                className="leading-[1.05] mt-0 mb-8"
               >
                 Start the
                 <br />
@@ -417,21 +455,22 @@ export default function CommunityDetailsPage() {
               </BodyText>
 
               <div className="space-y-4">
-                <a
-                  href="tel:#"
-                  className="flex items-center gap-4 p-5 bg-white border border-[#1C1208]/5 hover:border-rust transition-all"
+                <motion.a
+                  href="tel:+17705550123"
+                  whileHover={{ backgroundColor: "#1C1208" }}
+                  transition={{ duration: 0.4, ease: "circOut" }}
+                  className="flex items-center gap-4 p-6 bg-white border border-[#1C1208]/5 group transition-all"
                 >
-                  <div className="w-10 h-10 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208]">
-                    <Phone className="w-4 h-4" />
+                  <div className="w-12 h-12 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208] group-hover:bg-[#D43F33] group-hover:text-white transition-all duration-500">
+                    <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   </div>
 
                   <div className="text-left">
-                    <Annotation className="!text-[#1C1208]/30 mb-1">
+                    <Annotation className="!text-[#1C1208]/30 group-hover:!text-white/40 mb-1 transition-colors">
                       Call Now
                     </Annotation>
-
                     <span
-                      className="font-bold tracking-widest text-[#1C1208]"
+                      className="font-bold tracking-widest text-[#1C1208] group-hover:text-white transition-colors"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                       }}
@@ -439,46 +478,47 @@ export default function CommunityDetailsPage() {
                       +1 (770) 555-0123
                     </span>
                   </div>
-                </a>
+                </motion.a>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <a
+                  <motion.a
                     href="#"
-                    className="flex items-center justify-center gap-3 p-5 bg-white border border-[#1C1208]/5"
+                    whileHover={{ backgroundColor: "#1C1208" }}
+                    transition={{ duration: 0.4, ease: "circOut" }}
+                    className="flex items-center justify-center gap-3 p-6 bg-white border border-[#1C1208]/5 group"
                   >
-                    <MessageCircle className="w-4 h-4 text-[#25D366]" />
-
+                    <MessageCircle className="w-5 h-5 text-[#25D366] group-hover:text-white group-hover:scale-110 transition-all" />
                     <span
-                      className="uppercase font-bold tracking-[0.2em] text-[0.6rem]"
+                      className="uppercase font-bold tracking-[0.2em] text-[0.65rem] text-[#1C1208] group-hover:text-white transition-colors"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                       }}
                     >
                       WhatsApp
                     </span>
-                  </a>
+                  </motion.a>
 
-                  <a
+                  <motion.a
                     href="#"
-                    className="flex items-center justify-center gap-3 p-5 bg-white border border-[#1C1208]/5"
+                    whileHover={{ backgroundColor: "#1C1208" }}
+                    transition={{ duration: 0.4, ease: "circOut" }}
+                    className="flex items-center justify-center gap-3 p-6 bg-white border border-[#1C1208]/5 group"
                   >
-                    <Instagram className="w-4 h-4 text-[#E4405F]" />
-
+                    <Instagram className="w-5 h-5 text-[#E4405F] group-hover:text-white group-hover:rotate-12 group-hover:scale-110 transition-all" />
                     <span
-                      className="uppercase font-bold tracking-[0.2em] text-[0.6rem]"
+                      className="uppercase font-bold tracking-[0.2em] text-[0.65rem] text-[#1C1208] group-hover:text-white transition-colors"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                       }}
                     >
                       Instagram
                     </span>
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>
 
             {/* RIGHT */}
-
             <div className="col-span-12 lg:col-span-7">
               <form className="bg-white p-6 md:p-12 border border-[#1C1208]/5 space-y-6 shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -486,7 +526,6 @@ export default function CommunityDetailsPage() {
                     <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
                       Full Name
                     </label>
-
                     <input
                       type="text"
                       className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none"
@@ -498,7 +537,6 @@ export default function CommunityDetailsPage() {
                     <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
                       Phone Number
                     </label>
-
                     <input
                       type="tel"
                       className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none"
@@ -511,7 +549,6 @@ export default function CommunityDetailsPage() {
                   <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
                     Email Address
                   </label>
-
                   <input
                     type="email"
                     className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none"
@@ -523,8 +560,7 @@ export default function CommunityDetailsPage() {
                   <label className="uppercase tracking-[0.2em] text-[0.55rem] font-bold text-[#1C1208]/40">
                     Preferred Callback
                   </label>
-
-                  <select className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none appearance-none">
+                  <select className="w-full bg-[#F5F0E8]/50 border-b border-[#1C1208]/10 p-4 focus:outline-none appearance-none cursor-pointer">
                     <option>Morning (9AM - 12PM)</option>
                     <option>Afternoon (12PM - 4PM)</option>
                     <option>Evening (4PM - 7PM)</option>
@@ -541,6 +577,7 @@ export default function CommunityDetailsPage() {
           </div>
         </div>
       </section>
+
     </main>
   );
 }

@@ -14,7 +14,7 @@ const stats = [
 
 export function CredibilityMetrics() {
   return (
-    <SectionWrapper dark className="!py-10 md:!py-14">
+    <SectionWrapper dark className="!py-8 md:!py-12">
 
       {/* Blueprint grid lines */}
       <div className="pointer-events-none absolute inset-0 flex justify-between px-6 md:px-12 lg:px-20 z-0">
@@ -23,32 +23,22 @@ export function CredibilityMetrics() {
         ))}
       </div>
 
-      <div className="relative z-10 flex flex-col gap-8 md:gap-10">
+      <div className="relative z-10 flex flex-col gap-4 md:gap-6">
 
         {/* Headline + logo centered */}
-        <div className="flex flex-col items-center text-center gap-6">
-          <SectionHeadline light size="lg" className="!text-[clamp(1.6rem,4.5vw,3rem)] !leading-[1.0]">
-            Why homeowners <em className="italic">trust</em> us
-          </SectionHeadline>
-
-          {/* Logo — centered, bigger */}
-          <div className="relative flex items-center justify-center w-[140px] h-[140px] md:w-[180px] md:h-[180px]">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-[-10px] border border-rust/20 rounded-full pointer-events-none"
-            />
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-[-20px] border border-dashed border-rust/[0.08] rounded-full pointer-events-none"
-            />
+        <div className="flex flex-col items-center text-center gap-2 md:gap-3">
+          {/* Logo — tighter horizontal layout */}
+          <div className="relative flex items-center justify-center h-16 md:h-24 w-auto mb-2">
             <img
               src="/15-years-logo.png"
               alt="15+ Years of Excellence"
-              className="relative z-10 h-full w-full object-contain"
+              className="h-full w-auto object-contain"
             />
           </div>
+
+          <SectionHeadline light size="xl">
+            Why homeowners trust us
+          </SectionHeadline>
         </div>
 
         {/* Stats grid */}

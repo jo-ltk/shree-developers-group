@@ -67,21 +67,17 @@ export function IntroStatement() {
 
         {/* Heading block */}
         <div className="flex flex-col items-center gap-5 max-w-2xl" data-intro-reveal>
-          <SectionLabel>About Shree</SectionLabel>
-          <SectionHeadline
-            size="xl"
-            className="!text-[clamp(2rem,5vw,4.5rem)] !leading-[0.95]"
-          >
-            Where trust always{" "}
-            <em className="italic text-rust">finds</em> its home
+          <SectionLabel className="justify-center">About Shree</SectionLabel>
+          <SectionHeadline size="xl">
+            Where trust always finds its home
           </SectionHeadline>
           <p
-            className="text-[clamp(1rem,1.8vw,1.25rem)] text-[#1C1208]/55 italic leading-relaxed"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
+            className="text-[clamp(0.9rem,1.6vw,1.05rem)] text-[#1C1208]/55 leading-relaxed"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 400 }}
           >
-            &quot;A home should feel considered before the first visit and dependable
+            A home should feel considered before the first visit and dependable
             long after possession. Architecting legacies through restraint and
-            craftsmanship.&quot;
+            craftsmanship.
           </p>
         </div>
 
