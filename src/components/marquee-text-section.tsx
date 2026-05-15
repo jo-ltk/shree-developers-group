@@ -69,12 +69,7 @@ export function MarqueeTextSection() {
           })}
         </div>
 
-        {/* Bottom Annotation */}
-        <div className="mt-12 flex items-center gap-4 justify-center opacity-30">
-          <div className="h-px w-12 bg-[#1C1208]" />
-          <Annotation>Building beyond structures</Annotation>
-          <div className="h-px w-12 bg-[#1C1208]" />
-        </div>
+    
       </div>
     </SectionWrapper>
   );
