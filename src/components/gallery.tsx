@@ -90,7 +90,7 @@ function CommunityCard({ c }: { c: Community }) {
       className="group relative flex flex-col gap-4 md:gap-5 w-full cursor-pointer no-underline"
     >
       {/* Image */}
-      <div className="relative w-full overflow-hidden rounded-[22px] bg-[#E8E3DB] aspect-[4/3] sm:aspect-[4/4.5] md:aspect-[4/5]">
+      <div className="relative w-full overflow-hidden bg-[#E8E3DB] aspect-[4/3] sm:aspect-[4/4.5] md:aspect-[4/5]">
         <Image
           src={c.image}
           alt={c.name}
