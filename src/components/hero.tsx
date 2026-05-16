@@ -32,7 +32,7 @@ export function Hero() {
           className="w-full h-full object-cover"
         >
           <source
-            src="https://res.cloudinary.com/dduy8wigb/video/upload/v1778821193/hero_videos/hero_mobile_1778821182858.mp4"
+            src="https://res.cloudinary.com/dduy8wigb/video/upload/v1778938424/hero_videos/hero_mobile_1778938404986.mp4"
             type="video/mp4"
           />
         </video>
