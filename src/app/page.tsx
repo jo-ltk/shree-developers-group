@@ -1,5 +1,6 @@
 import { FooterSection } from "@/components/footer-section";
 import { Gallery } from "@/components/gallery";
+import { ImageGallery } from "@/components/image-gallery";
 import { Hero } from "@/components/hero";
 import { QuickActions } from "@/components/quick-actions";
 import { CredibilityMetrics } from "@/components/credibility-metrics";
@@ -33,6 +34,8 @@ export default function Home() {
       {/* <LogoSection /> */}
 
       <Gallery />
+
+      <ImageGallery />
 
       <CommunityDetails />
       <CommunityDetailsPage /> 

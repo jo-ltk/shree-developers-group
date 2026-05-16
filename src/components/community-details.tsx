@@ -115,17 +115,17 @@ export function CommunityDetails() {
               {features.map((item) => (
                 <div
                   key={item.title}
-                  className="relative group bg-white/[0.02] border border-white/5 backdrop-blur-md py-5 px-2 sm:p-6 text-center hover:bg-white/[0.04] transition-all duration-500"
+                  className="relative group bg-white/[0.02] border border-white/5 backdrop-blur-md py-3 px-2 sm:p-6 text-center hover:bg-white/[0.04] transition-all duration-500"
                 >
                   <span className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/10 group-hover:border-[#D43F33]/40 transition-colors" />
                   <span className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/10 group-hover:border-[#D43F33]/40 transition-colors" />
 
-                  <div className="relative w-10 h-10 sm:w-14 sm:h-14 border border-[#D43F33]/20 flex items-center justify-center mx-auto mb-1 sm:mb-4 group-hover:border-[#D43F33]/50 transition-all duration-500">
+                  <div className="relative w-8 h-8 sm:w-14 sm:h-14 border border-[#D43F33]/20 flex items-center justify-center mx-auto mb-1 sm:mb-4 group-hover:border-[#D43F33]/50 transition-all duration-500">
                     <span className="absolute top-1.5 left-1.5 w-1.5 h-1.5 border-t border-l border-[#D43F33]/40" />
                     <span className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 border-b border-r border-[#D43F33]/40" />
                     <item.icon
                       className="text-[#D43F33] transition-transform duration-500 group-hover:scale-110"
-                      size={22}
+                      size={18}
                     />
                   </div>
 

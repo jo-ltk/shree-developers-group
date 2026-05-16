@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
+import { motion, Variants } from "framer-motion";
 
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionHeadline } from "./ui/section-headline";
@@ -27,9 +28,27 @@ const headlineLines = [
   },
 ];
 
+const containerVariants: Variants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const wordVariants: Variants = {
+  hidden: { clipPath: "inset(100% 0 0 0)" },
+  visible: {
+    clipPath: "inset(0% 0 0 0)",
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export function CtaBanner() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -37,46 +56,7 @@ export function CtaBanner() {
     const { gsap } = ensureGsapPlugins();
 
     const ctx = gsap.context(() => {
-      const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-      const fillWords = gsap.utils.toArray<HTMLElement>(
-        "[data-fill-word]",
-        sectionRef.current
-      );
-
-      if (fillWords.length === 0) return;
-
-      if (reducedMotion) {
-        gsap.set(fillWords, {
-          clipPath: "inset(0% 0 0 0)",
-          opacity: 1,
-        });
-
-        return;
-      }
-
-      // Initial state: hidden by clip-path from bottom
-      gsap.set(fillWords, {
-        clipPath: "inset(100% 0 0 0)",
-      });
-
-      // Scrubbed reveal - trigger on the headline container for precision
-      gsap.to(fillWords, {
-        clipPath: "inset(0% 0 0 0)",
-        opacity: 1,
-        ease: "none",
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 85%",
-          end: "bottom 30%",
-          scrub: 0.4,
-        },
-      });
-
-      // Parallax for background
+      // Parallax for background remains in GSAP for smooth scroll-linked effect
       gsap.to("[data-cta-bg]", {
         yPercent: 12,
         ease: "none",
@@ -100,7 +80,6 @@ export function CtaBanner() {
       className="relative min-h-[45vh] md:min-h-[50vh] flex flex-col overflow-hidden"
     >
       {/* BACKGROUND */}
-
       <div className="absolute inset-0 z-0">
         <div
           data-cta-bg
@@ -114,13 +93,10 @@ export function CtaBanner() {
         </div>
 
         {/* OVERLAYS */}
-
         <div className="absolute inset-0 bg-[#1C1208]/65 mix-blend-multiply" />
-
         <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-[#1C1208]/40" />
 
         {/* GRID */}
-
         <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
           <div className="h-full w-px bg-white absolute left-1/4" />
           <div className="h-full w-px bg-white absolute left-1/2" />
@@ -129,14 +105,11 @@ export function CtaBanner() {
       </div>
 
       {/* CONTENT */}
-
       <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 pt-12 pb-4 md:pt-20 md:pb-6 max-w-[1550px] mx-auto w-full">
         {/* TOP BAR */}
-
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             <div className="w-10 h-px bg-rust" />
-
             <Annotation
               light
               className="!tracking-[0.4em] responsive-stat-label"
@@ -152,66 +125,61 @@ export function CtaBanner() {
         </div>
 
         {/* CENTER */}
-
-        <div
-          ref={containerRef}
-          className="flex-1 flex flex-col items-center justify-center text-center responsive-minimum-gap"
-        >
+        <div className="flex-1 flex flex-col items-center justify-center text-center responsive-minimum-gap">
           <SectionHeadline
             light
             size="xl"
             className="max-w-5xl responsive-headline-xl m-0"
             noPeriod
           >
-            {headlineLines.map((line, lIndex) => (
-              <div
-                key={lIndex}
-                className="flex flex-wrap justify-center gap-x-[0.22em]"
-              >
-                {line.words.map((word, wIndex) => {
-                  const isLastWord =
-                    lIndex === headlineLines.length - 1 &&
-                    wIndex === line.words.length - 1;
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="flex flex-col items-center"
+            >
+              {headlineLines.map((line, lIndex) => (
+                <div
+                  key={lIndex}
+                  className="flex flex-wrap justify-center gap-x-[0.22em] gap-y-[0.06em]"
+                >
+                  {line.words.map((word, wIndex) => {
+                    const isLastWord =
+                      lIndex === headlineLines.length - 1 &&
+                      wIndex === line.words.length - 1;
 
-                  return (
-                    <span
-                      key={`${word}-${lIndex}-${wIndex}`}
-                      className="relative inline-block overflow-hidden pb-[0.05em]"
-                    >
-                      {/* GHOST */}
-
+                    return (
                       <span
-                        className="block text-white/20"
-                        aria-hidden="true"
+                        key={`${word}-${lIndex}-${wIndex}`}
+                        className="relative inline-block overflow-hidden pb-[0.05em]"
                       >
-                        {word}
+                        {/* GHOST LAYER */}
+                        <span
+                          className="block text-white/10"
+                          aria-hidden="true"
+                        >
+                          {word}
+                          {isLastWord && <span className="text-rust/10">.</span>}
+                        </span>
 
-                        {isLastWord && (
-                          <span className="text-rust/20">.</span>
-                        )}
+                        {/* REVEAL LAYER */}
+                        <motion.span
+                          variants={wordVariants}
+                          className="absolute inset-0 block text-white"
+                        >
+                          {word}
+                          {isLastWord && <span className="text-rust">.</span>}
+                        </motion.span>
                       </span>
-
-                      {/* REVEAL */}
-
-                      <span
-                        data-fill-word
-                        className="absolute inset-0 block text-white"
-                      >
-                        {word}
-
-                        {isLastWord && (
-                          <span className="text-rust">.</span>
-                        )}
-                      </span>
-                    </span>
-                  );
-                })}
-              </div>
-            ))}
+                    );
+                  })}
+                </div>
+              ))}
+            </motion.div>
           </SectionHeadline>
 
           {/* SUBTEXT */}
-
           <div className="max-w-2xl mx-auto">
             <BodyText
               light
@@ -224,7 +192,6 @@ export function CtaBanner() {
           </div>
 
           {/* BUTTONS */}
-
           <div className="flex items-center justify-center gap-2 sm:gap-5 mt-8">
             <ButtonPrimary
               href="#contact"
@@ -244,10 +211,7 @@ export function CtaBanner() {
         </div>
 
         {/* BOTTOM BAR */}
-
         <div className="mt-6 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
-         
-
           <Annotation
             light
             className="!text-white/30 responsive-stat-label !font-bold"
@@ -258,9 +222,7 @@ export function CtaBanner() {
       </div>
 
       {/* CORNERS */}
-
       <div className="absolute top-8 left-8 w-5 h-5 border-t border-l border-white/20 pointer-events-none" />
-
       <div className="absolute bottom-8 right-8 w-5 h-5 border-b border-r border-white/20 pointer-events-none" />
     </SectionWrapper>
   );

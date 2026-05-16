@@ -437,6 +437,15 @@ html {
   }
 }
 
+.responsive-section-mb {
+  margin-bottom: 2rem; /* mb-8 */
+}
+@media (min-width: 768px) {
+  .responsive-section-mb {
+    margin-bottom: 3rem; /* mb-12 */
+  }
+}
+
 .responsive-section-gap {
   gap: 2rem; /* gap-8 */
 }

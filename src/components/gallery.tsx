@@ -39,8 +39,7 @@ const communities: Community[] = [
     location: "Gwinnett County",
     status: "Ongoing",
     price: "From low $400s",
-    image:
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
+    image: "/svg/sydney-oaks.svg",
     index: "01",
     concept:
       "A thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture blending into the natural landscape.",
@@ -54,8 +53,7 @@ const communities: Community[] = [
     location: "Forsyth County",
     status: "Ongoing",
     price: "From mid $500s",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82",
+    image: "/svg/elysian-gates.svg",
     index: "02",
     concept:
       "Exclusive gated living featuring high-performance homes and private wooded backyards for ultimate seclusion.",
@@ -193,7 +191,7 @@ export function Gallery() {
   }, [isAutoPlaying]);
 
   return (
-    <SectionWrapper id="gallery" dark={false} className="!pt-8 !pb-8 md:!py-24 overflow-hidden">
+    <SectionWrapper id="gallery" dark={false} className="!pt-8 !pb-4 md:!pt-24 md:!pb-4 overflow-hidden">
       {/* Desktop Version */}
       <div className="hidden md:block">
         <div className="flex flex-col items-center md:items-start text-center md:text-left responsive-minimum-gap mb-8 md:mb-12">

@@ -47,7 +47,7 @@ export function FooterSection() {
           {/* CTA */}
           <div className="space-y-6">
             <SectionHeadline
-              size="md"
+              size="xl"
               light
               className="!text-[#F5F0E8] responsive-headline-xl"
             >

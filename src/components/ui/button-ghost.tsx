@@ -22,7 +22,7 @@ export function ButtonGhost({
     <Link
       href={href}
       className={cn(
-        "group relative inline-flex items-center gap-2 pb-1 no-underline",
+        "group relative inline-flex items-center gap-2 px-4 py-1.5 no-underline transition-all duration-300 rounded-full hover:bg-[#1C1208]/5",
         "responsive-btn-text",
         textColor,
         className,
@@ -33,9 +33,9 @@ export function ButtonGhost({
         letterSpacing: "0.25em",
       }}
     >
-      <span className="uppercase font-bold whitespace-nowrap">{children}</span>
+      <span className="uppercase font-bold whitespace-nowrap relative z-10">{children}</span>
       <svg
-        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+        className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 relative z-10"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -43,10 +43,10 @@ export function ButtonGhost({
       >
         <path d="M5 12h14M12 5l7 7-7 7" />
       </svg>
-      {/* Underline */}
+      {/* Subtle underline that fits the new rounded shape */}
       <span
         className={cn(
-          "absolute bottom-0 left-0 h-px w-0 transition-all duration-500 group-hover:w-full",
+          "absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 transition-all duration-500 group-hover:w-[60%]",
           lineColor,
         )}
       />

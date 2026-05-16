@@ -15,7 +15,7 @@ export function AboutShree() {
       {/* ── B. BRAND PHILOSOPHY — dark, equal 6/6 ── */}
       <div className="bg-[#1C1208] px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 py-8 md:py-24 relative overflow-hidden w-full">
         <div className="flex justify-center lg:justify-start">
-          <SectionLabel light className="!mb-0 !text-white">Brand Philosophy</SectionLabel>
+          <SectionLabel light className="!mb-1 !text-white">Brand Philosophy</SectionLabel>
         </div>
 
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-16 items-center lg:items-start w-full">
@@ -61,11 +61,11 @@ export function AboutShree() {
             ].map(({ Icon, title, body }) => (
               <div
                 key={title}
-                className="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left gap-3 sm:gap-5 p-4 sm:p-6 border border-white/10 bg-white/[0.03] transition-colors hover:border-rust/50"
+                className="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left gap-2 sm:gap-5 p-3 sm:p-6 border border-white/10 bg-white/[0.03] transition-colors hover:border-rust/50"
               >
-                <Icon className="w-5 h-5 text-rust shrink-0" />
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-rust shrink-0" />
                 <div>
-                  <Annotation className="!text-white/40 !font-bold responsive-stat-label block mb-1">
+                  <Annotation className="!text-white/40 !font-bold responsive-stat-label block mb-0.5 sm:mb-1">
                     {title}
                   </Annotation>
                   <BodyText light size="sm" className="responsive-body-sm !text-white/70">
@@ -88,7 +88,7 @@ export function AboutShree() {
         ].map(({ value, label, muted }, i) => (
           <div
             key={label}
-            className={`px-4 sm:px-8 py-8 sm:py-10 flex flex-col items-center lg:items-start text-center lg:text-left
+            className={`px-4 sm:px-8 py-6 sm:py-10 flex flex-col items-center lg:items-start text-center lg:text-left
               ${muted ? "bg-[#EDE8DF]" : "bg-[#F5F0E8]"}`}
           >
             <StatItem value={value} label={label} />

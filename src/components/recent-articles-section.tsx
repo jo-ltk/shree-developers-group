@@ -100,7 +100,7 @@ function ArticleCard({ article, index, isActive }: { article: any; index: number
         </div>
       </div>
 
-      <div className="flex flex-col flex-grow items-center md:items-start text-center md:text-left p-5 md:p-8 pt-6 md:pt-10">
+      <div className="flex flex-col flex-grow items-center text-center p-5 md:p-8 pt-6 md:pt-10">
         <Annotation className="mb-4 text-rust responsive-stat-label">{article.date}</Annotation>
         <SectionHeadline size="md" noPeriod className="mb-4 transition-colors duration-300 group-hover:text-rust">
           {article.title}<span className="text-rust">.</span>
@@ -108,7 +108,7 @@ function ArticleCard({ article, index, isActive }: { article: any; index: number
         <BodyText size="sm" className="responsive-body-sm mb-8 flex-grow">
           {article.description}
         </BodyText>
-        <div className="mt-auto">
+        <div className="mt-auto w-full flex justify-center">
           <ButtonGhost href="#" className="responsive-btn-text">
             Read Article
           </ButtonGhost>

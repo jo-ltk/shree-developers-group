@@ -143,7 +143,7 @@ export default function CommunityDetailsPage() {
       <div id="visit" className="scroll-mt-20" />
 
       {/* COMMUNITY OVERVIEW */}
-      <SectionWrapper className="pt-8 pb-0 md:pt-24 md:pb-0">
+      <SectionWrapper noPadding className="!pt-8 !pb-0 md:!pt-24 md:!pb-0">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-10 items-center justify-items-center text-center lg:text-left w-full">
           <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start responsive-minimum-gap">
             <SectionLabel className="mx-auto lg:mx-0 !mb-0">Community Overview</SectionLabel>
@@ -168,7 +168,7 @@ export default function CommunityDetailsPage() {
 
         {/* SHORT CARDS WITH COLOR TRANSITION */}
         <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-8 border-y border-[#1C1208]/10">
-          {overviewFeatures.slice(0, showMore ? undefined : 4).map((item, index) => (
+          {overviewFeatures.map((item, index) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}
@@ -179,7 +179,9 @@ export default function CommunityDetailsPage() {
                 duration: 0.5, 
                 backgroundColor: { duration: 0.4, ease: "circOut" } 
               }}
-              className="relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer"
+              className={`relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer ${
+                index >= 4 && !showMore ? "hidden lg:flex" : "flex"
+              }`}
             >
               {/* LARGE DECORATIVE NUMBER */}
               <span 
@@ -212,7 +214,7 @@ export default function CommunityDetailsPage() {
         </div>
 
         {!showMore && (
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-10 lg:hidden">
             <button 
               onClick={() => setShowMore(true)}
               className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
@@ -247,7 +249,7 @@ export default function CommunityDetailsPage() {
       </SectionWrapper>
 
       {/* AMENITIES */}
-      <SectionWrapper className="pt-8 pb-0 md:pt-24 md:pb-0">
+      <SectionWrapper noPadding className="!pt-4 !pb-0 md:!pt-4 md:!pb-0">
         <div className="flex flex-col items-center text-center gap-2 mb-8 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end lg:text-left">
           {/* RIGHT SIDE: HEADLINE — shown first on mobile */}
           <div className="lg:col-span-5 lg:order-2 flex flex-col items-center lg:items-end w-full lg:text-right responsive-minimum-gap">
@@ -272,7 +274,7 @@ export default function CommunityDetailsPage() {
         </div>
 
         <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-8 border-y border-[#1C1208]/10">
-          {amenities.slice(0, showMoreAmenities ? undefined : 4).map((item, index) => (
+          {amenities.map((item, index) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}
@@ -283,7 +285,9 @@ export default function CommunityDetailsPage() {
                 duration: 0.5, 
                 backgroundColor: { duration: 0.4, ease: "circOut" } 
               }}
-              className="relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer"
+              className={`relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer ${
+                index >= 4 && !showMoreAmenities ? "hidden lg:flex" : "flex"
+              }`}
             >
               {/* LARGE DECORATIVE NUMBER */}
               <span 
@@ -316,7 +320,7 @@ export default function CommunityDetailsPage() {
         </div>
 
         {!showMoreAmenities && (
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-10 lg:hidden">
             <button 
               onClick={() => setShowMoreAmenities(true)}
               className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
