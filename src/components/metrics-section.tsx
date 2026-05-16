@@ -212,26 +212,26 @@ export default function CommunityDetailsPage() {
 
       {/* AMENITIES */}
       <SectionWrapper className="pt-16 pb-0 md:pt-24 md:pb-0">
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 md:gap-10 items-center lg:items-end mb-16 text-center lg:text-left">
+        <div className="flex flex-col items-center text-center gap-3 mb-16 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end lg:text-left">
+          {/* RIGHT SIDE: HEADLINE — shown first on mobile */}
+          <div className="lg:col-span-5 lg:order-2 flex flex-col items-center lg:items-end w-full lg:text-right">
+            <SectionLabel className="mx-auto lg:mx-0">Amenities</SectionLabel>
+
+            <SectionHeadline 
+              size="xl" 
+              className="mt-1 leading-[1.1] text-center lg:text-right mx-auto lg:mx-0 whitespace-normal responsive-headline-xl"
+            >
+              Spaces designed for everyday life
+            </SectionHeadline>
+          </div>
+
           {/* LEFT SIDE: DESCRIPTION */}
-          <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col items-center lg:items-start w-full">
+          <div className="lg:col-span-7 lg:order-1 flex flex-col items-center lg:items-start w-full">
             <BodyText size="lg" className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left responsive-body-sm">
               Thoughtfully curated facilities designed to elevate your daily routine. 
               From serene wellness spaces to active community hubs, every amenity 
               reflects a commitment to refined living and personal well-being.
             </BodyText>
-          </div>
-
-          {/* RIGHT SIDE: HEADLINE */}
-          <div className="lg:col-span-5 order-1 lg:order-2 flex flex-col items-center lg:items-end w-full text-center lg:text-right">
-            <SectionLabel className="mx-auto lg:mx-0">Amenities</SectionLabel>
-
-            <SectionHeadline 
-              size="xl" 
-              className="mt-0 leading-[1.1] text-center lg:text-right mx-auto lg:mx-0 whitespace-nowrap lg:whitespace-normal responsive-headline-xl"
-            >
-              Spaces designed for everyday life
-            </SectionHeadline>
           </div>
         </div>
 
@@ -299,26 +299,36 @@ export default function CommunityDetailsPage() {
                 briefings, pricing schedules, and site visit coordination.
               </BodyText>
 
-              <div className="space-y-4 w-full max-w-md mx-auto lg:mx-0">
+              <div className="space-y-4 w-full mx-auto lg:mx-0">
                 <motion.a
                   href="tel:+17705550123"
                   whileHover={{ backgroundColor: "#1C1208" }}
                   transition={{ duration: 0.4, ease: "circOut" }}
-                  className="flex items-center justify-center lg:justify-start gap-4 p-4 md:p-6 bg-white border border-[#1C1208]/5 group transition-all"
+                  className="flex items-center justify-between gap-4 p-5 md:p-6 bg-white border border-[#1C1208]/5 group transition-all w-full"
                 >
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208] group-hover:bg-[#D43F33] group-hover:text-white transition-all duration-500">
-                    <Phone className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-11 h-11 md:w-13 md:h-13 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208] group-hover:bg-[#D43F33] group-hover:text-white transition-all duration-500 flex-shrink-0">
+                      <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    </div>
+
+                    <div className="text-left">
+                      <Annotation className="!text-dark/30 group-hover:!text-white/40 mb-1 transition-colors responsive-stat-label">
+                        Call Now
+                      </Annotation>
+                      <span
+                        className="font-sans font-bold tracking-widest text-dark group-hover:text-white transition-colors"
+                        style={{ fontSize: "1rem", letterSpacing: "0.08em" }}
+                      >
+                        +1 (770) 555-0123
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="text-left">
-                    <Annotation className="!text-dark/30 group-hover:!text-white/40 mb-0.5 transition-colors responsive-stat-label">
-                      Call Now
-                    </Annotation>
-                    <span
-                      className="font-sans font-bold tracking-widest text-dark group-hover:text-white transition-colors responsive-btn-text"
-                    >
-                      +1 (770) 555-0123
-                    </span>
+                  {/* Right arrow */}
+                  <div className="w-8 h-8 flex items-center justify-center border border-[#1C1208]/10 group-hover:border-white/20 transition-colors flex-shrink-0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-dark/40 group-hover:text-white transition-colors">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
                   </div>
                 </motion.a>
 

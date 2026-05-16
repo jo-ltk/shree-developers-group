@@ -6,7 +6,7 @@ import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
-import { ButtonGhost } from "./ui/button-ghost";
+import { ButtonPrimary } from "./ui/button-primary";
 import { Annotation } from "./ui/annotation";
 import { ShieldCheck, Award, Ruler, Compass, Lightbulb } from "lucide-react";
 
@@ -128,9 +128,9 @@ export function IntroStatement() {
 
         {/* CTA */}
         <div data-intro-reveal>
-          <ButtonGhost href="/about" className="responsive-btn-text">
+          <ButtonPrimary href="/about" className="responsive-btn-text">
             Learn More About Us
-          </ButtonGhost>
+          </ButtonPrimary>
         </div>
 
       </div>

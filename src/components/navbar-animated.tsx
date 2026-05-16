@@ -71,9 +71,9 @@ export function NavbarAnimated() {
                 <Menu className="h-5 w-5 transition-transform duration-500 group-hover:rotate-180" />
               </div>
               <div className="flex flex-col items-start leading-none">
-                <Annotation className={`responsive-stat-label !font-bold ${isAtTop ? "text-white" : "text-dark"} opacity-80 group-hover:opacity-100`}>
+                <span className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100">
                   Menu
-                </Annotation>
+                </span>
                 <span className={`mt-1.5 h-[1px] w-0 transition-all duration-500 group-hover:w-full ${isAtTop ? 'bg-white' : 'bg-rust'}`} />
               </div>
             </button>
@@ -109,12 +109,12 @@ export function NavbarAnimated() {
           >
             {/* Menu Header */}
             <div className="flex items-center justify-between px-6 pt-12 sm:px-10 lg:px-16 lg:pt-20 xl:px-20">
-              <Annotation className="responsive-stat-label !font-bold !text-[#1C1208]/40">Navigation</Annotation>
+              <span className="text-[11px] font-bold uppercase tracking-[0.4em] opacity-40">Navigation</span>
               <button
                 onClick={() => setMobileOpen(false)}
                 className="group flex items-center gap-3 text-dark transition-opacity hover:opacity-70"
               >
-                <Annotation className="responsive-stat-label !font-bold !text-dark">Close</Annotation>
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Close</span>
                 <div className="flex h-12 w-12 items-center justify-center rounded-full border border-dark/10">
                   <X className="h-5 w-5" />
                 </div>
@@ -135,7 +135,7 @@ export function NavbarAnimated() {
                       initial={{ x: -40, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.1 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                      className="block font-light leading-none tracking-tight transition-transform duration-500 group-hover:-translate-y-2 responsive-headline-xl"
+                      className="block text-[clamp(2rem,6vw,5rem)] font-light leading-none tracking-tight transition-transform duration-500 group-hover:-translate-y-2"
                       style={{ fontFamily: "'Cormorant Garamond', serif" }}
                     >
                       {link.title}
@@ -153,11 +153,11 @@ export function NavbarAnimated() {
                 className="mt-12 grid grid-cols-1 gap-10 border-t border-dark/10 pt-10 md:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:pt-12"
               >
                 <div>
-                  <Annotation className="mb-4 responsive-stat-label !font-bold !text-dark/40">Inquiries</Annotation>
+                  <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Inquiries</h4>
                   <a href="mailto:info@shreedevelopers.com" className="text-base font-light lg:text-lg hover:text-rust transition-colors">info@shreedevelopers.com</a>
                 </div>
                 <div className="lg:text-center">
-                  <Annotation className="mb-4 responsive-stat-label !font-bold !text-dark/40">Follow Us</Annotation>
+                  <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Follow Us</h4>
                   <div className="flex gap-6 lg:justify-center">
                     <a href="#" className="hover:text-rust transition-colors"><Instagram className="h-5 w-5" /></a>
                     <a href="#" className="hover:text-rust transition-colors"><Facebook className="h-5 w-5" /></a>
@@ -165,10 +165,10 @@ export function NavbarAnimated() {
                   </div>
                 </div>
                 <div className="lg:text-right">
-                  <Annotation className="mb-4 responsive-stat-label !font-bold !text-dark/40">Shree Experience</Annotation>
-                  <BodyText className="ml-auto max-w-[280px] font-light leading-relaxed opacity-60 italic responsive-body-sm">
+                  <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Shree Experience</h4>
+                  <p className="ml-auto max-w-[280px] text-xs font-light leading-relaxed opacity-60 italic lg:text-sm">
                     Architecting legacies of trust across the horizon since 1998.
-                  </BodyText>
+                  </p>
                 </div>
               </motion.div>
             </div>
