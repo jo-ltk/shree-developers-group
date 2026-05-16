@@ -95,7 +95,7 @@ export function CommunityDetails() {
                 href="#request-info"
                 className="w-1/2 sm:w-auto !h-[50px] sm:!h-[56px] !px-2 sm:!px-10 !text-white flex justify-center text-center responsive-minimum-gap"
               >
-                <span className="sm:hidden text-[9px]">Req Info</span>
+                <span className="sm:hidden text-[9px]">Request info</span>
                 <span className="hidden sm:inline">Request Information</span>
               </ButtonPrimary>
 
