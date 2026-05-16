@@ -97,7 +97,7 @@ export function CtaBanner() {
       ref={sectionRef}
       dark
       noPadding
-      className="relative min-h-[52vh] md:min-h-[58vh] flex flex-col overflow-hidden"
+      className="relative min-h-[45vh] md:min-h-[50vh] flex flex-col overflow-hidden"
     >
       {/* BACKGROUND */}
 
@@ -130,7 +130,7 @@ export function CtaBanner() {
 
       {/* CONTENT */}
 
-      <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 py-8 md:py-24 max-w-[1550px] mx-auto w-full">
+      <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 pt-12 pb-4 md:pt-20 md:pb-6 max-w-[1550px] mx-auto w-full">
         {/* TOP BAR */}
 
         <div className="flex items-center justify-between mb-4">
@@ -246,23 +246,13 @@ export function CtaBanner() {
         {/* BOTTOM BAR */}
 
         <div className="mt-6 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-5">
-            <Annotation light className="opacity-40 responsive-stat-label">
-              ESTABLISHED 2009
-            </Annotation>
-
-            <div className="w-1 h-1 bg-rust rotate-45" />
-
-            <Annotation light className="opacity-40 responsive-stat-label">
-              SUWANEE, GEORGIA
-            </Annotation>
-          </div>
+         
 
           <Annotation
             light
             className="!text-white/30 responsive-stat-label !font-bold"
           >
-            SHREE DEVELOPERS GROUP © 2026
+            SHREE DEVELOPERS GROUP
           </Annotation>
         </div>
       </div>

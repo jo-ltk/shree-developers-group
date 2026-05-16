@@ -5,9 +5,11 @@ import Link from "next/link";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionHeadline } from "./ui/section-headline";
 import { SectionLabel } from "./ui/section-label";
-import { ButtonGhost } from "./ui/button-ghost";
 import { Annotation } from "./ui/annotation";
 import { BodyText } from "./ui/body-text";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Status = "Ongoing" | "Completed" | "Coming Soon";
 
@@ -77,20 +79,18 @@ const communities: Community[] = [
   },
 ];
 
-function CommunityCard({ c }: { c: Community }) {
+function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
   const isSoon = c.status === "Coming Soon";
-  const href = isSoon
-    ? "/contact"
-    : `/InteractiveSiteMap?project=${c.slug}`;
-
+  const href = isSoon ? "/contact" : `/InteractiveSiteMap?project=${c.slug}`;
   const displayIndex = parseInt(c.index, 10);
 
   return (
     <Link
       href={href}
-      className="group relative flex flex-col gap-4 md:gap-5 w-full cursor-pointer no-underline"
+      className={`group relative flex flex-col gap-4 md:gap-5 w-full cursor-pointer no-underline transition-all duration-500 ${
+        isActive === false ? "opacity-40 blur-[1px]" : "opacity-100"
+      }`}
     >
-      {/* Image */}
       <div className="relative w-full overflow-hidden bg-[#E8E3DB] aspect-[4/3] sm:aspect-[4/4.5] md:aspect-[4/5]">
         <Image
           src={c.image}
@@ -102,7 +102,6 @@ function CommunityCard({ c }: { c: Community }) {
           ].join(" ")}
         />
 
-        {/* Top Pills */}
         <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
           <div className="bg-white/90 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-full max-w-[48%]">
             <Annotation className="!text-[#1C1208] responsive-stat-label !font-bold truncate">
@@ -114,19 +113,15 @@ function CommunityCard({ c }: { c: Community }) {
             <span
               className={[
                 "w-1.5 h-1.5 rounded-full flex-shrink-0",
-                isSoon
-                  ? "bg-[#1C1208]/40"
-                  : "bg-emerald-500 animate-pulse",
+                isSoon ? "bg-[#1C1208]/40" : "bg-emerald-500 animate-pulse",
               ].join(" ")}
             />
-
             <Annotation className="!text-[#1C1208] responsive-stat-label !font-bold whitespace-nowrap">
               {c.status}
             </Annotation>
           </div>
         </div>
 
-        {/* CTA */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 px-3 w-full flex justify-center">
           <div className="bg-white/95 backdrop-blur-md rounded-full flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 shadow-lg transition-all duration-300 gap-2 border border-white/50 group-hover:-translate-y-1 group-hover:bg-white max-w-full">
             <span className="text-[#1C1208] group-hover:text-[#D43F33] responsive-btn-text font-bold uppercase whitespace-nowrap transition-colors duration-300">
@@ -134,66 +129,33 @@ function CommunityCard({ c }: { c: Community }) {
             </span>
 
             <div className="w-5 h-5 rounded-full bg-[#1C1208]/5 group-hover:bg-[#D43F33]/10 flex items-center justify-center transition-colors duration-300">
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="text-[#1C1208] group-hover:text-[#D43F33] transform transition-all duration-300 group-hover:translate-x-0.5"
-              >
-                <path
-                  d="M5 12h14M12 5l7 7-7 7"
-                  strokeLinecap="square"
-                />
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#1C1208] group-hover:text-[#D43F33] transform transition-all duration-300 group-hover:translate-x-0.5">
+                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="square" />
               </svg>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content */}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-3 px-1 sm:px-2 text-center md:text-left">
-        {/* Index */}
         <Annotation className="!text-[#1C1208]/55 responsive-stat-label !font-medium shrink-0 pt-0.5">
           0/{displayIndex}
         </Annotation>
 
-        {/* Text */}
         <div className="flex flex-col items-center md:items-start gap-2 flex-1 min-w-0">
-          <h3
-            className="text-[#1C1208] uppercase font-bold leading-tight m-0"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "clamp(1rem, 3vw, 1.25rem)",
-              letterSpacing: "0.02em",
-            }}
-          >
+          <h3 className="text-[#1C1208] uppercase font-bold leading-tight m-0" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(1rem, 3vw, 1.25rem)", letterSpacing: "0.02em" }}>
             {c.name}
           </h3>
-
-          <BodyText
-            className="responsive-body-sm !text-[#1C1208]/70 leading-relaxed m-0"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-            }}
-          >
+          <BodyText className="responsive-body-sm !text-[#1C1208]/70 leading-relaxed m-0" style={{ fontFamily: "'Montserrat', sans-serif" }}>
             {c.concept}
           </BodyText>
-
-          {/* Specs */}
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-1">
             <Annotation className="!text-[#1C1208] responsive-stat-label !font-bold">
-              {c.specs.beds > 0
-                ? `${c.specs.beds} Bed | ${c.specs.baths} Bath`
-                : c.price}
+              {c.specs.beds > 0 ? `${c.specs.beds} Bed | ${c.specs.baths} Bath` : c.price}
             </Annotation>
-
             {c.specs.beds > 0 && (
               <>
                 <span className="w-px h-3 bg-[#1C1208]/15" />
-
                 <Annotation className="!text-[#1C1208]/70 responsive-stat-label !font-bold">
                   {c.price}
                 </Annotation>
@@ -207,62 +169,126 @@ function CommunityCard({ c }: { c: Community }) {
 }
 
 export function Gallery() {
-  return (
-    <SectionWrapper
-      id="gallery"
-      dark={false}
-      className="!pt-8 !pb-0 md:!py-24 overflow-hidden"
-    >
-      {/* Header */}
-      <div className="flex flex-col items-center md:items-start text-center md:text-left responsive-minimum-gap mb-8 md:mb-12">
-        <SectionLabel className="!mb-0 justify-center md:justify-start">Featured Communities</SectionLabel>
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
 
-        <SectionHeadline
-          size="xl"
-          className="responsive-headline-xl m-0"
-        >
-          Communities built to last
-        </SectionHeadline>
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % communities.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + communities.length) % communities.length);
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const timer = setInterval(() => {
+      setCurrentIndex((current) => (current + 1) % communities.length);
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, [isAutoPlaying]);
+
+  return (
+    <SectionWrapper id="gallery" dark={false} className="!pt-8 !pb-8 md:!py-24 overflow-hidden">
+      {/* Desktop Version */}
+      <div className="hidden md:block">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left responsive-minimum-gap mb-8 md:mb-12">
+          <SectionLabel className="!mb-0 justify-center md:justify-start">Featured Communities</SectionLabel>
+          <SectionHeadline size="xl" className="responsive-headline-xl m-0">
+            Communities built to last
+          </SectionHeadline>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:gap-10 mt-8 md:mt-12">
+          {communities.map((c) => (
+            <CommunityCard key={c.slug} c={c} />
+          ))}
+        </div>
+
+        <div className="flex justify-center py-8">
+          <button
+            onClick={() => (window.location.href = "/projects")}
+            className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 !text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
+            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.25em" }}
+          >
+            <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+            <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
+            <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Projects</span>
+            <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </button>
+        </div>
       </div>
 
-      {/* Grid */}
-     <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:gap-10 mt-8 md:mt-12">
-  {communities.map((c) => (
-    <CommunityCard key={c.slug} c={c} />
-  ))}
-</div>
+      {/* Mobile Version (New Slider) */}
+      <div className="md:hidden px-4" ref={containerRef}>
+        <div className="flex flex-col gap-3 mb-8">
+          <SectionLabel className="!mb-0">Featured Living</SectionLabel>
+          <SectionHeadline size="xl" className="!text-[2.25rem] leading-[1.1] tracking-tight m-0">
+            Communities built <br /> to last
+          </SectionHeadline>
+        </div>
 
-      {/* Footer */}
-      <div className="flex justify-center py-8">
-        <button
-          onClick={() => window.location.href = '/projects'}
-          className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 !text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
-          style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.6rem",
-            letterSpacing: "0.25em",
-          }}
-        >
-          {/* Corner accents */}
-          <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
-          <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
-
-          <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Projects</span>
-
-          {/* Arrow box */}
-          <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.5"
+        <div className="relative overflow-visible">
+          <div className="overflow-hidden -mx-4 px-4">
+            <motion.div
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, { offset, velocity }) => {
+                const swipe = Math.abs(offset.x) > 50 || Math.abs(velocity.x) > 500;
+                if (swipe) {
+                  if (offset.x > 0) prevSlide();
+                  else nextSlide();
+                  setIsAutoPlaying(false);
+                }
+              }}
+              animate={{ x: `-${currentIndex * 100}%` }}
+              transition={{ type: "spring", stiffness: 200, damping: 30 }}
+              className="flex"
             >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+              {communities.map((c, idx) => (
+                <div key={c.slug} className="min-w-full pr-6">
+                  <CommunityCard c={c} isActive={currentIndex === idx} />
+                </div>
+              ))}
+            </motion.div>
           </div>
-        </button>
+
+          <div className="flex items-center justify-center gap-3 mt-6">
+            {communities.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => { setCurrentIndex(idx); setIsAutoPlaying(false); }}
+                className={`h-1 transition-all duration-500 rounded-full ${currentIndex === idx ? "w-10 bg-[#1C1208]" : "w-3 bg-[#1C1208]/10"}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center pt-4">
+          <button
+            onClick={() => (window.location.href = "/projects")}
+            className="group relative inline-flex h-[46px] items-center gap-3 bg-rust px-5 !text-white no-underline overflow-hidden responsive-btn-text cursor-pointer"
+            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.25em" }}
+          >
+            <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+            <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
+            <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Projects</span>
+            <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </button>
+        </div>
       </div>
     </SectionWrapper>
   );

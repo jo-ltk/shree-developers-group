@@ -33,9 +33,9 @@ export function NavbarAnimated() {
 
     if (latest < 80) {
       setIsHidden(false);
-    } else if (diff > 20) {
+    } else if (diff > 50) {
       setIsHidden(true);
-    } else if (diff < -20) {
+    } else if (diff < -30) {
       setIsHidden(false);
     }
 
@@ -47,8 +47,8 @@ export function NavbarAnimated() {
       <motion.header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${
           isAtTop
-            ? "bg-transparent py-6 lg:py-8"
-            : "bg-white/80 pb-4 pt-3 shadow-lg backdrop-blur-xl border-b border-dark/5"
+            ? "bg-transparent py-4 md:py-6 lg:py-8"
+            : "bg-white/95 py-2.5 md:py-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-2xl border-b border-dark/5"
         }`}
         variants={{
           visible: { y: 0, opacity: 1 },
@@ -57,21 +57,21 @@ export function NavbarAnimated() {
         animate={isHidden ? "hidden" : "visible"}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="w-full px-6 sm:px-10 lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-20 xl:px-24">
           <div className="flex items-center justify-between">
             {/* Left: Interactive Menu Trigger */}
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
-              className={`group flex items-center gap-4 transition-colors duration-500 ${
+              className={`group flex items-center gap-2.5 md:gap-4 transition-colors duration-500 ${
                 isAtTop ? "text-white" : "text-dark"
               }`}
             >
-              <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-current/20 bg-current/5 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-active:scale-95">
-                <Menu className="h-5 w-5 transition-transform duration-500 group-hover:rotate-180" />
+              <div className="relative flex h-10 w-10 md:h-12 md:w-12 items-center justify-center overflow-hidden rounded-full border border-current/20 bg-current/5 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-active:scale-95">
+                <Menu className="h-4 w-4 md:h-5 md:w-5 transition-transform duration-500 group-hover:rotate-180" />
               </div>
-              <div className="flex flex-col items-start leading-none">
-                <span className="text-[11px] font-bold uppercase tracking-[0.3em] opacity-80 group-hover:opacity-100">
+              <div className="hidden xs:flex flex-col items-start leading-none">
+                <span className="text-[10px] md:text-[11px] font-medium uppercase tracking-[0.25em] opacity-70 group-hover:opacity-100">
                   Menu
                 </span>
                 <span className={`mt-1.5 h-[1px] w-0 transition-all duration-500 group-hover:w-full ${isAtTop ? 'bg-white' : 'bg-rust'}`} />
@@ -86,7 +86,9 @@ export function NavbarAnimated() {
               <BrandMark
                 variant={isAtTop ? "steel" : "black"}
                 className={`transition-all duration-500 ${
-                  isAtTop ? "h-20 w-[14rem]" : "h-14 w-[11rem]"
+                  isAtTop 
+                    ? "h-12 w-[10rem] md:h-20 md:w-[14rem]" 
+                    : "h-9 w-[8rem] md:h-14 md:w-[11rem]"
                 }`}
                 imageClassName="object-right"
                 alt="Shree Developers Group logo"
