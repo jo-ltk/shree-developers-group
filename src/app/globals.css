@@ -409,3 +409,74 @@ html {
 .credibility-stat:last-child {
   border-right: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive Spacing System (Reference from Gallery Section)
+   Use these classes to maintain consistent mobile/desktop spacing ratios.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* Section Padding (Mobile: 64px | Desktop: 96px) */
+.responsive-section-py {
+  padding-top: 4rem; /* py-16 */
+  padding-bottom: 4rem;
+}
+@media (min-width: 768px) {
+  .responsive-section-py {
+    padding-top: 6rem; /* py-24 */
+    padding-bottom: 6rem;
+  }
+}
+
+/* Section Margins / Gaps between Header and Content (Mobile: 32px | Desktop: 48px) */
+.responsive-section-mt {
+  margin-top: 2rem; /* mt-8 */
+}
+@media (min-width: 768px) {
+  .responsive-section-mt {
+    margin-top: 3rem; /* mt-12 */
+  }
+}
+
+.responsive-section-gap {
+  gap: 2rem; /* gap-8 */
+}
+@media (min-width: 768px) {
+  .responsive-section-gap {
+    gap: 3rem; /* gap-12 */
+  }
+}
+
+/* Grid Gaps (Mobile: 32px | Desktop: 40px) */
+.responsive-grid-gap {
+  gap: 2rem; /* gap-8 */
+}
+@media (min-width: 768px) {
+  .responsive-grid-gap {
+    gap: 2.5rem; /* gap-10 */
+  }
+}
+
+/* Card Internal Gaps - Major (Mobile: 16px | Desktop: 20px) */
+.responsive-card-gap {
+  gap: 1rem; /* gap-4 */
+}
+@media (min-width: 768px) {
+  .responsive-card-gap {
+    gap: 1.25rem; /* gap-5 */
+  }
+}
+
+/* Header Content Gap (Mobile/Desktop: 20px) */
+.responsive-header-gap {
+  gap: 1.25rem; /* gap-5 */
+}
+
+/* Card Internal Gaps - Minor (Mobile/Desktop: 12px) */
+.responsive-card-gap-sm {
+  gap: 0.75rem; /* gap-3 */
+}
+
+/* Minimum Space / Ultra-Tight Text Stacking (Mobile/Desktop: 8px) */
+.responsive-minimum-gap {
+  gap: 0.5rem; /* gap-2 */
+}

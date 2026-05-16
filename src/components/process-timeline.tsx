@@ -69,20 +69,20 @@ export function ProcessTimeline() {
   return (
     <SectionWrapper
       id="process"
-      className="!pt-16 !pb-0 md:!pt-24 md:!pb-0 bg-[#F5F0E8] overflow-hidden"
+      className="!pt-8 !pb-0 md:!pt-24 md:!pb-0 bg-[#F5F0E8] overflow-hidden"
     >
 
       {/* HEADER */}
 
-      <div className="mb-10 sm:mb-12 md:mb-16 text-center px-2">
+      <div className="mb-8 md:mb-16 text-center px-2 flex flex-col items-center responsive-minimum-gap">
 
-        <SectionLabel className="justify-center">
+        <SectionLabel className="justify-center !mb-0">
           Our Process
         </SectionLabel>
 
         <SectionHeadline
           size="xl"
-          className="mt-4 px-2 responsive-headline-xl"
+          className="m-0 px-2 responsive-headline-xl"
         >
           How we build legacies
         </SectionHeadline>

@@ -13,18 +13,18 @@ export function AboutShree() {
     <SectionWrapper id="about-shree" noPadding fullWidth>
 
       {/* ── B. BRAND PHILOSOPHY — dark, equal 6/6 ── */}
-      <div className="bg-[#1C1208] px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 py-16 md:py-24 relative overflow-hidden w-full">
+      <div className="bg-[#1C1208] px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 py-8 md:py-24 relative overflow-hidden w-full">
         <div className="flex justify-center lg:justify-start">
-          <SectionLabel light className="mb-6 !text-white">Brand Philosophy</SectionLabel>
+          <SectionLabel light className="!mb-0 !text-white">Brand Philosophy</SectionLabel>
         </div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-16 items-center lg:items-start w-full">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-16 items-center lg:items-start w-full">
           {/* Left col */}
-          <div className="w-full lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <SectionHeadline size="lg" light className="mb-6 !text-white text-center lg:text-left mx-auto lg:mx-0 responsive-headline-xl">
+          <div className="w-full lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left responsive-minimum-gap">
+            <SectionHeadline size="lg" light className="m-0 !text-white text-center lg:text-left mx-auto lg:mx-0 responsive-headline-xl">
               The Shree Way
             </SectionHeadline>
-            <BodyText light className="responsive-body-sm mb-8 max-w-xl !text-white/80 !font-light text-center lg:text-left mx-auto lg:mx-0" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <BodyText light className="responsive-body-sm m-0 max-w-xl !text-white/80 !font-light text-center lg:text-left mx-auto lg:mx-0" style={{ fontFamily: "'Poppins', sans-serif" }}>
               The finest homes are built on four pillars: Restraint, Craft, Tension, and Texture. 
               We use timeless materials that speak for themselves.
             </BodyText>

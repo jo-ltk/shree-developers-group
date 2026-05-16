@@ -9,30 +9,30 @@ import { Annotation } from "./ui/annotation";
 
 export function QuickActions() {
   return (
-    <section className="w-full border-b border-dark/5 bg-cream py-12 md:py-16">
-      <div className="mx-auto flex max-w-[1450px] flex-col items-center gap-0 px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 text-center">
+    <section className="w-full border-b border-dark/5 bg-cream py-8 md:py-16">
+      <div className="mx-auto flex max-w-[1450px] flex-col items-center px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32 text-center responsive-minimum-gap">
 
         {/* Brand Name */}
         <SectionHeadline
           size="xl"
-          className="mb-7 responsive-headline-xl"
+          className="m-0 responsive-headline-xl"
         >
           Shree Developers Group
         </SectionHeadline>
 
         {/* Emotional statement */}
         <BodyText
-          className="responsive-body-sm mb-4"
+          className="responsive-body-sm m-0"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
          Building Futures, One Community At A Time
         </BodyText>
 
         {/* Rule */}
-        <div className="mb-9 h-px w-full max-w-[420px] bg-rust/[0.16]" />
+        <div className="my-2 h-px w-full max-w-[420px] bg-rust/[0.16]" />
 
         {/* CTAs */}
-        <div className="mb-10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-5 sm:gap-5">
+        <div className="mb-6 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-5 sm:gap-5">
           <ButtonPrimary href="/projects" className="!h-[50px] !px-7 responsive-btn-text">
             Explore Communities
           </ButtonPrimary>
@@ -50,7 +50,7 @@ export function QuickActions() {
 
         {/* Social inquiry */}
         <Annotation
-          className="mb-4 responsive-stat-label text-dark/25"
+          className="mb-2 responsive-stat-label text-dark/25"
         >
           Instant Inquiry
         </Annotation>

@@ -128,6 +128,8 @@ const features = [
 export default function CommunityDetailsPage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState("Morning (9AM - 12PM)");
+  const [showMore, setShowMore] = useState(false);
+  const [showMoreAmenities, setShowMoreAmenities] = useState(false);
 
   const timeOptions = [
     "Morning (9AM - 12PM)",
@@ -141,12 +143,12 @@ export default function CommunityDetailsPage() {
       <div id="visit" className="scroll-mt-20" />
 
       {/* COMMUNITY OVERVIEW */}
-      <SectionWrapper className="pt-16 pb-0 md:pt-24 md:pb-0">
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 md:gap-10 items-center justify-items-center text-center lg:text-left w-full">
-          <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start">
-            <SectionLabel className="mx-auto lg:mx-0">Community Overview</SectionLabel>
+      <SectionWrapper className="pt-8 pb-0 md:pt-24 md:pb-0">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-10 items-center justify-items-center text-center lg:text-left w-full">
+          <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start responsive-minimum-gap">
+            <SectionLabel className="mx-auto lg:mx-0 !mb-0">Community Overview</SectionLabel>
 
-            <SectionHeadline size="xl" className="mt-0 text-center lg:text-left mx-auto lg:mx-0 responsive-headline-xl">
+            <SectionHeadline size="xl" className="m-0 text-center lg:text-left mx-auto lg:mx-0 responsive-headline-xl leading-tight">
               Built around{" "}
               <br className="hidden sm:block" />
               family living
@@ -165,8 +167,8 @@ export default function CommunityDetailsPage() {
         {/* CARDS */}
 
         {/* SHORT CARDS WITH COLOR TRANSITION */}
-        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
-          {overviewFeatures.map((item, index) => (
+        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-8 border-y border-[#1C1208]/10">
+          {overviewFeatures.slice(0, showMore ? undefined : 4).map((item, index) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}
@@ -195,7 +197,7 @@ export default function CommunityDetailsPage() {
                   </div>
                 </div>
 
-                <SectionHeadline size="sm" className="leading-tight group-hover:text-white transition-colors duration-500">
+                <SectionHeadline size="sm" className="leading-tight group-hover:!text-white transition-colors duration-500">
                   {item.title}
                 </SectionHeadline>
               </div>
@@ -208,18 +210,52 @@ export default function CommunityDetailsPage() {
             </motion.div>
           ))}
         </div>
+
+        {!showMore && (
+          <div className="flex justify-center mt-10">
+            <button 
+              onClick={() => setShowMore(true)}
+              className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "0.6rem",
+                letterSpacing: "0.25em",
+              }}
+            >
+              {/* Corner accents */}
+              <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+              <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
+
+              <span className="uppercase font-bold whitespace-nowrap relative z-10">Read More</span>
+
+              {/* Arrow box */}
+              <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </button>
+          </div>
+        )}
       </SectionWrapper>
 
       {/* AMENITIES */}
-      <SectionWrapper className="pt-16 pb-0 md:pt-24 md:pb-0">
-        <div className="flex flex-col items-center text-center gap-3 mb-16 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end lg:text-left">
+      <SectionWrapper className="pt-8 pb-0 md:pt-24 md:pb-0">
+        <div className="flex flex-col items-center text-center gap-2 mb-8 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end lg:text-left">
           {/* RIGHT SIDE: HEADLINE — shown first on mobile */}
-          <div className="lg:col-span-5 lg:order-2 flex flex-col items-center lg:items-end w-full lg:text-right">
-            <SectionLabel className="mx-auto lg:mx-0">Amenities</SectionLabel>
+          <div className="lg:col-span-5 lg:order-2 flex flex-col items-center lg:items-end w-full lg:text-right responsive-minimum-gap">
+            <SectionLabel className="mx-auto lg:mx-0 !mb-0">Amenities</SectionLabel>
 
             <SectionHeadline 
               size="xl" 
-              className="mt-1 leading-[1.1] text-center lg:text-right mx-auto lg:mx-0 whitespace-normal responsive-headline-xl"
+              className="mt-0 leading-[1.1] text-center lg:text-right mx-auto lg:mx-0 whitespace-normal responsive-headline-xl"
             >
               Spaces designed for everyday life
             </SectionHeadline>
@@ -235,8 +271,8 @@ export default function CommunityDetailsPage() {
           </div>
         </div>
 
-        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-16 border-y border-[#1C1208]/10">
-          {amenities.map((item, index) => (
+        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-8 border-y border-[#1C1208]/10">
+          {amenities.slice(0, showMoreAmenities ? undefined : 4).map((item, index) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}
@@ -265,36 +301,70 @@ export default function CommunityDetailsPage() {
                   </div>
                 </div>
 
-                <SectionHeadline size="sm" className="leading-tight group-hover:text-white transition-colors duration-500">
+                <SectionHeadline size="sm" className="leading-tight group-hover:!text-white transition-colors duration-500">
                   {item.title}
                 </SectionHeadline>
               </div>
 
               <div className="relative z-10 mt-1.5 sm:mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
-                <BodyText size="sm" className="text-dark/60 group-hover:text-white/80 leading-snug max-w-[240px] responsive-body-sm">
+                <BodyText size="sm" className="text-dark/60 group-hover:!text-white leading-snug max-w-[240px] responsive-body-sm">
                   {item.body}
                 </BodyText>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {!showMoreAmenities && (
+          <div className="flex justify-center mt-10">
+            <button 
+              onClick={() => setShowMoreAmenities(true)}
+              className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "0.6rem",
+                letterSpacing: "0.25em",
+              }}
+            >
+              {/* Corner accents */}
+              <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+              <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
+
+              <span className="uppercase font-bold whitespace-nowrap relative z-10">Read More</span>
+
+              {/* Arrow box */}
+              <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </button>
+          </div>
+        )}
       </SectionWrapper>
 
       {/* ENQUIRY */}
-      <section id="request-info" className="!pt-16 !pb-0 md:!pt-24 md:!pb-0 bg-[#F5F0E8]">
+      <section id="request-info" className="!pt-8 !pb-0 md:!pt-24 md:!pb-0 bg-[#F5F0E8]">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
-          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-24 items-center justify-items-center w-full">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-24 items-center justify-items-center w-full">
             {/* LEFT */}
-            <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
-              <SectionLabel className="mx-auto lg:mx-0">Contact Us</SectionLabel>
+            <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left responsive-minimum-gap">
+              <SectionLabel className="mx-auto lg:mx-0 !mb-0">Contact Us</SectionLabel>
               <SectionHeadline
                 size="xl"
-                className="leading-[1.05] mt-0 mb-6 text-center lg:text-left mx-auto lg:mx-0 whitespace-nowrap responsive-headline-xl"
+                className="leading-[1.05] m-0 text-center lg:text-left mx-auto lg:mx-0 whitespace-nowrap responsive-headline-xl"
               >
                 Start the conversation
               </SectionHeadline>
 
-              <BodyText className="mb-10 max-w-lg mx-auto lg:mx-0 text-center lg:text-left opacity-60 responsive-body-sm">
+              <BodyText className="m-0 max-w-lg mx-auto lg:mx-0 text-center lg:text-left opacity-60 responsive-body-sm">
                 Our advisors are available to provide detailed project
                 briefings, pricing schedules, and site visit coordination.
               </BodyText>

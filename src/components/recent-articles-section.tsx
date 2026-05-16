@@ -127,19 +127,19 @@ export function RecentArticlesSection() {
   }, []);
 
   return (
-    <SectionWrapper id="articles" ref={sectionRef} dark={false} className="!py-16 md:!py-24">
+    <SectionWrapper id="articles" ref={sectionRef} dark={false} className="!pt-8 !pb-0 md:!py-24">
       {/* Asymmetric Header Grid (7/5 Split) */}
-      <div data-articles-heading className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-12 items-center md:items-end mb-10 md:mb-12 text-center md:text-left">
-        <div className="col-span-12 lg:col-span-7 flex flex-col items-center md:items-start">
-          <SectionLabel className="justify-center md:justify-start">Media & Blog</SectionLabel>
-          <SectionHeadline size="xl" className="responsive-headline-xl">
+      <div data-articles-heading className="flex flex-col md:grid md:grid-cols-12 gap-2 md:gap-12 items-center md:items-end mb-10 md:mb-12 text-center md:text-left">
+        <div className="col-span-12 lg:col-span-7 flex flex-col items-center md:items-start responsive-minimum-gap">
+          <SectionLabel className="justify-center md:justify-start !mb-0">Media & Blog</SectionLabel>
+          <SectionHeadline size="xl" className="responsive-headline-xl m-0">
             Insights, updates,
             <br />
             and design stories
           </SectionHeadline>
         </div>
-        <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start">
-          <BodyText size="md" className="mb-8 responsive-body-sm">
+        <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col items-center md:items-start responsive-minimum-gap">
+          <BodyText size="md" className="m-0 responsive-body-sm">
             Short reads for buyers who want to understand the thinking behind a Shree development, 
             from planning discipline to the details that make ownership simpler.
           </BodyText>
@@ -148,7 +148,7 @@ export function RecentArticlesSection() {
       </div>
 
       {/* Articles Grid */}
-      <div className="grid gap-px bg-border/20 md:grid-cols-3 mb-10">
+      <div className="grid gap-px bg-border/20 md:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {visibleArticles.map((article, index) => (
             <motion.article
@@ -159,10 +159,7 @@ export function RecentArticlesSection() {
               data-article-card
               className="group relative bg-cream flex flex-col h-full cursor-pointer"
             >
-            <div className="flex items-start justify-between p-4 md:p-8">
-              <Annotation className="responsive-stat-label">{article.fig}</Annotation>
-              <CrosshairIcon className="opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
+
 
             <div className="relative aspect-[2/1] md:aspect-[16/10] w-full overflow-hidden">
               <Image
@@ -204,21 +201,38 @@ export function RecentArticlesSection() {
       </div>
 
       {/* Show More Button */}
+
+      {/* Show More Button */}
       {!showAll && articles.length > initialLimit && (
-        <div className="flex justify-center mt-12 md:mt-16">
+        <div className="flex justify-center pt-0 pb-8">
           <button
             onClick={() => setShowAll(true)}
-            className="group relative flex items-center gap-3 px-8 py-4 bg-dark text-cream rounded-full overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl active:scale-95"
+            className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 !text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: "0.6rem",
+              letterSpacing: "0.25em",
+            }}
           >
-            <Annotation className="relative z-10 !text-cream responsive-btn-text !font-bold">
-              View All Insights
-            </Annotation>
-            <div className="relative z-10 w-6 h-6 rounded-full bg-cream/10 flex items-center justify-center transition-transform duration-500 group-hover:rotate-45">
-              <ArrowUpRight className="w-3.5 h-3.5 text-cream" />
+            {/* Corner accents */}
+            <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+            <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
+
+            <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Insights</span>
+
+            {/* Arrow box */}
+            <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2.5"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </div>
-            
-            {/* Hover Background Animation */}
-            <div className="absolute inset-0 bg-rust translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0" />
           </button>
         </div>
       )}

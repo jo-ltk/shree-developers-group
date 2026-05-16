@@ -6,15 +6,14 @@ import { CrosshairIcon } from "./ui/crosshair-icon";
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "15",      suffix: "+", label: "Years Experience",     word: false },
-  { value: "200",     suffix: "+", label: "Homes Delivered",       word: false },
-  { value: "Trusted", suffix: "", label: "Georgia, United States",     word: true  },
-  { value: "Top",     suffix: "",  label: "Quality Craftsmanship", word: true  },
+  { value: "15",  suffix: "+", label: "Years Experience",     word: false },
+  { value: "200", suffix: "+", label: "Homes Delivered",       word: false },
+  { value: "Top", suffix: "",  label: "Quality Craftsmanship", word: true  },
 ];
 
 export function CredibilityMetrics() {
   return (
-    <SectionWrapper dark className="!py-12 md:!py-16">
+    <SectionWrapper dark className="!pt-8 !pb-0 md:!py-16">
 
       {/* Blueprint grid lines */}
       <div className="pointer-events-none absolute inset-0 flex justify-between px-6 md:px-12 lg:px-20 z-0">
@@ -26,9 +25,9 @@ export function CredibilityMetrics() {
       <div className="relative z-10 flex flex-col gap-4 md:gap-6">
 
         {/* Headline + logo centered */}
-        <div className="flex flex-col items-center text-center gap-2 md:gap-3">
+        <div className="flex flex-col items-center text-center responsive-minimum-gap">
           {/* Logo — tighter horizontal layout */}
-          <div className="relative flex items-center justify-center h-16 md:h-24 w-auto mb-2">
+          <div className="relative flex items-center justify-center h-16 md:h-24 w-auto m-0">
             <img
               src="/15-years-logo.png"
               alt="15+ Years of Excellence"
@@ -39,7 +38,7 @@ export function CredibilityMetrics() {
           <SectionHeadline 
             light 
             size="xl" 
-            className="whitespace-nowrap responsive-headline-xl"
+            className="whitespace-nowrap responsive-headline-xl m-0"
           >
             Why homeowners trust us
           </SectionHeadline>
@@ -48,14 +47,14 @@ export function CredibilityMetrics() {
         {/* Stats grid */}
         <div className="w-full max-w-5xl mx-auto mt-4 md:mt-8">
           <div
-            className="grid grid-cols-4 credibility-grid"
+            className="grid grid-cols-3 credibility-grid"
             style={{ border: "1px solid rgba(245,240,232,0.08)" }}
           >
             {stats.map((s, i) => (
               <div
                 key={i}
                 className={`credibility-stat group relative flex flex-col items-center justify-center text-center px-1 py-4 sm:p-6 md:p-8 transition-colors duration-300 cursor-default
-                  ${i === 3 ? '' : 'border-r'} 
+                  ${i === 2 ? '' : 'border-r'} 
                   border-[rgba(245,240,232,0.08)]
                 `}
               >

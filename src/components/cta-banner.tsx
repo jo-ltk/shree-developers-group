@@ -130,10 +130,10 @@ export function CtaBanner() {
 
       {/* CONTENT */}
 
-      <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 py-16 md:py-24 max-w-[1550px] mx-auto w-full">
+      <div className="relative z-10 flex-1 flex flex-col px-8 md:px-12 lg:px-20 py-8 md:py-24 max-w-[1550px] mx-auto w-full">
         {/* TOP BAR */}
 
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             <div className="w-10 h-px bg-rust" />
 
@@ -155,12 +155,12 @@ export function CtaBanner() {
 
         <div
           ref={containerRef}
-          className="flex-1 flex flex-col items-center justify-center text-center"
+          className="flex-1 flex flex-col items-center justify-center text-center responsive-minimum-gap"
         >
           <SectionHeadline
             light
             size="xl"
-            className="max-w-5xl responsive-headline-xl"
+            className="max-w-5xl responsive-headline-xl m-0"
             noPeriod
           >
             {headlineLines.map((line, lIndex) => (
@@ -212,7 +212,7 @@ export function CtaBanner() {
 
           {/* SUBTEXT */}
 
-          <div className="mt-10 max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <BodyText
               light
               size="lg"
@@ -225,27 +225,27 @@ export function CtaBanner() {
 
           {/* BUTTONS */}
 
-          <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-5 mt-12">
+          <div className="flex items-center justify-center gap-2 sm:gap-5 mt-8">
             <ButtonPrimary
               href="#contact"
-              className="!h-14 !px-10 whitespace-nowrap responsive-btn-text"
+              className="!h-12 px-2 sm:!px-10 whitespace-nowrap !text-[9px] sm:!text-[10px] shrink-0"
             >
-              Schedule Your Tour
+              Schedule Tour
             </ButtonPrimary>
 
             <ButtonGhost
               href="mailto:sales@shreedevelopersgroup.com"
               light
-              className="!h-14 !px-10 border-white/30 hover:border-white whitespace-nowrap !text-white/90 responsive-btn-text"
+              className="!h-12 px-2 sm:!px-10 border-white/30 hover:border-white whitespace-nowrap !text-white/90 !text-[9px] sm:!text-[10px] shrink-0"
             >
-              Contact Sales Advisor
+              Contact Sales
             </ButtonGhost>
           </div>
         </div>
 
         {/* BOTTOM BAR */}
 
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
+        <div className="mt-6 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-5">
             <Annotation light className="opacity-40 responsive-stat-label">
               ESTABLISHED 2009

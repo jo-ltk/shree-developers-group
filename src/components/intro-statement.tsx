@@ -62,17 +62,17 @@ export function IntroStatement() {
   }, []);
 
   return (
-    <SectionWrapper id="about-brief" ref={sectionRef} dark={false} className="!pt-16 !pb-0 md:!pt-24 md:!pb-0">
-      <div className="flex flex-col items-center text-center gap-10 md:gap-14">
+    <SectionWrapper id="about-brief" ref={sectionRef} dark={false} className="!pt-8 !pb-0 md:!pt-24 md:!pb-0">
+      <div className="flex flex-col items-center text-center gap-6 md:gap-10">
 
         {/* Heading block */}
-        <div className="flex flex-col items-center gap-5 max-w-2xl" data-intro-reveal>
-          <SectionLabel className="justify-center">About Shree</SectionLabel>
-          <SectionHeadline size="xl" className="responsive-headline-xl">
+        <div className="flex flex-col items-center max-w-2xl responsive-minimum-gap" data-intro-reveal>
+          <SectionLabel className="justify-center !mb-0">About Shree</SectionLabel>
+          <SectionHeadline size="xl" className="responsive-headline-xl m-0">
             Where trust always finds its home
           </SectionHeadline>
           <BodyText
-            className="responsive-body-sm text-[#1C1208]/55 leading-relaxed"
+            className="responsive-body-sm text-[#1C1208]/55 leading-relaxed m-0"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 400 }}
           >
             A home should feel considered before the first visit and dependable

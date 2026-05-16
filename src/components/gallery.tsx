@@ -211,20 +211,18 @@ export function Gallery() {
     <SectionWrapper
       id="gallery"
       dark={false}
-      className="!py-16 md:!py-24 overflow-hidden"
+      className="!pt-8 !pb-0 md:!py-24 overflow-hidden"
     >
       {/* Header */}
-      <div className="flex flex-col items-center md:items-start text-center md:text-left gap-5 mb-8 md:mb-12">
-        <div className="flex flex-col items-center md:items-start gap-3 max-w-2xl">
-          <SectionLabel className="justify-center md:justify-start">Featured Communities</SectionLabel>
+      <div className="flex flex-col items-center md:items-start text-center md:text-left responsive-minimum-gap mb-8 md:mb-12">
+        <SectionLabel className="!mb-0 justify-center md:justify-start">Featured Communities</SectionLabel>
 
-          <SectionHeadline
-            size="xl"
-            className="responsive-headline-xl"
-          >
-            Communities built to last
-          </SectionHeadline>
-        </div>
+        <SectionHeadline
+          size="xl"
+          className="responsive-headline-xl m-0"
+        >
+          Communities built to last
+        </SectionHeadline>
       </div>
 
       {/* Grid */}
@@ -235,19 +233,36 @@ export function Gallery() {
 </div>
 
       {/* Footer */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-10 pt-5 border-t border-dark/10">
-        <Annotation
-          className="responsive-stat-label !font-bold !text-[#1C1208]/30"
+      <div className="flex justify-center py-8">
+        <button
+          onClick={() => window.location.href = '/projects'}
+          className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 !text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: "0.6rem",
+            letterSpacing: "0.25em",
+          }}
         >
-          3 Communities · 2026
-        </Annotation>
+          {/* Corner accents */}
+          <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+          <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
 
-        <ButtonGhost
-          href="/projects"
-          className="responsive-btn-text w-fit"
-        >
-          View All Projects
-        </ButtonGhost>
+          <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Projects</span>
+
+          {/* Arrow box */}
+          <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.5"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </button>
       </div>
     </SectionWrapper>
   );
