@@ -28,7 +28,7 @@ import { Annotation } from "@/components/ui/annotation";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 import { ButtonPrimary } from "@/components/ui/button-primary";
 import { SectionLabel } from "./ui/section-label";
-
+import { ElysianGatesDetails } from "./community-details";
 
 const amenities = [
   {
@@ -248,6 +248,9 @@ export default function CommunityDetailsPage() {
         )}
       </SectionWrapper>
 
+      <ElysianGatesDetails />
+      <ElysianGatesOverview />
+
       {/* AMENITIES */}
       <SectionWrapper noPadding className="!pt-4 !pb-0 md:!pt-4 md:!pb-0">
         <div className="flex flex-col items-center text-center gap-2 mb-8 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-end lg:text-left">
@@ -355,7 +358,7 @@ export default function CommunityDetailsPage() {
       </SectionWrapper>
 
       {/* ENQUIRY */}
-      <section id="request-info" className="!pt-8 !pb-0 md:!pt-24 md:!pb-0 bg-[#F5F0E8]">
+      <section id="request-info" className="!pt-6 !pb-6 md:!pt-16 md:!pb-16 bg-[#F5F0E8]">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
           <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-24 items-center justify-items-center w-full">
             {/* LEFT */}
@@ -532,6 +535,119 @@ export default function CommunityDetailsPage() {
         </div>
       </section>
 
+    </div>
+  );
+}
+
+export function ElysianGatesOverview() {
+  const [showMore, setShowMore] = useState(false);
+
+  return (
+    <div className="bg-[#F5F0E8] overflow-hidden">
+      {/* SECTION ANCHOR */}
+      <div id="visit-elysian" className="scroll-mt-20" />
+
+      {/* COMMUNITY OVERVIEW */}
+      <SectionWrapper noPadding className="!pt-8 !pb-0 md:!pt-24 md:!pb-0">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-10 items-center justify-items-center text-center lg:text-left w-full">
+          <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start responsive-minimum-gap">
+            <SectionLabel className="mx-auto lg:mx-0 !mb-0">Community Overview</SectionLabel>
+
+            <SectionHeadline size="xl" className="m-0 text-center lg:text-left mx-auto lg:mx-0 responsive-headline-xl leading-tight">
+              Built around{" "}
+              <br className="hidden sm:block" />
+              natural seclusion
+            </SectionHeadline>
+          </div>
+
+          <div className="w-full lg:col-span-7 flex flex-col items-center lg:items-start">
+            <BodyText size="lg" className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left responsive-body-sm">
+              Elysian Gates combines high-performance systems, expansive wooded backyards, underground utilities, and a refined residential atmosphere designed for those who seek architectural precision and natural seclusion.
+            </BodyText>
+          </div>
+        </div>
+
+        {/* CARDS */}
+        <div className="-mx-6 sm:-mx-8 md:-mx-12 lg:-mx-20 xl:-mx-24 2xl:-mx-32 grid grid-cols-2 lg:grid-cols-3 gap-px bg-[#1C1208]/10 mt-8 border-y border-[#1C1208]/10">
+          {overviewFeatures.map((item, index) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ backgroundColor: "#1C1208" }}
+              transition={{ 
+                duration: 0.5, 
+                backgroundColor: { duration: 0.4, ease: "circOut" } 
+              }}
+              className={`relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer ${
+                index >= 2 && !showMore ? "hidden lg:flex" : "flex"
+              }`}
+            >
+              {/* LARGE DECORATIVE NUMBER */}
+              <span 
+                className="absolute -bottom-2 -right-2 sm:-bottom-6 sm:-right-6 text-black/[0.03] font-serif text-[4rem] sm:text-[10rem] md:text-[12rem] leading-none pointer-events-none select-none transition-all duration-700 group-hover:text-white/[0.05] group-hover:-translate-y-2"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                {item.num}
+              </span>
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-2 sm:mb-8">
+                  <Annotation className="!text-dark/40 group-hover:!text-white/40 transition-colors responsive-stat-label">0{index + 1}</Annotation>
+                  <div className="group-hover:rotate-90 group-hover:scale-125 transition-all duration-500">
+                    <CrosshairIcon className="group-hover:text-white w-4 h-4 sm:w-6 sm:h-6" />
+                  </div>
+                </div>
+
+                <SectionHeadline size="sm" className="leading-tight group-hover:!text-white transition-colors duration-500">
+                  {item.title}
+                </SectionHeadline>
+              </div>
+
+              <div className="relative z-10 mt-1.5 sm:mt-4 opacity-60 group-hover:opacity-100 transition-all duration-500">
+                <BodyText size="sm" className="text-dark/60 group-hover:!text-white leading-snug max-w-[240px] responsive-body-sm">
+                  {item.description}
+                </BodyText>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {!showMore && (
+          <div className="flex justify-center mt-10 lg:hidden">
+            <button 
+              onClick={() => setShowMore(true)}
+              className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "0.6rem",
+                letterSpacing: "0.25em",
+              }}
+            >
+              {/* Corner accents */}
+              <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
+              <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
+
+              <span className="uppercase font-bold whitespace-nowrap relative z-10">Read More</span>
+
+              {/* Arrow box */}
+              <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </button>
+          </div>
+        )}
+      </SectionWrapper>
     </div>
   );
 }
