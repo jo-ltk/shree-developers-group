@@ -2,7 +2,6 @@
 
 import { SectionHeadline } from "./ui/section-headline";
 import { ButtonPrimary } from "./ui/button-primary";
-import { ButtonGhost } from "./ui/button-ghost";
 import { Instagram } from "lucide-react";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
@@ -37,15 +36,7 @@ export function QuickActions() {
             Explore Communities
           </ButtonPrimary>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-            <ButtonGhost href="/contact?type=visit" className="responsive-btn-text">
-              Book a Visit
-            </ButtonGhost>
-            <div className="hidden sm:block h-6 w-px bg-dark/10" />
-            <ButtonGhost href="/contact?type=pricing" className="responsive-btn-text">
-              Get Pricing
-            </ButtonGhost>
-          </div>
+
         </div>
 
         {/* Social inquiry */}

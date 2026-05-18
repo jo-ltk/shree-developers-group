@@ -79,10 +79,10 @@ export function ImageGallery() {
   const repeatedImages = [...galleryImages, ...galleryImages, ...galleryImages];
 
   return (
-    <SectionWrapper id="experience-gallery" dark={false} className="!pt-0 !pb-8 md:!pb-24 overflow-hidden">
+    <SectionWrapper id="experience-gallery" dark={false} className="!pt-0 !pb-8 md:!pb-12 overflow-hidden">
       <NoScrollbarStyle />
       
-      <div className="flex flex-col items-center mb-8 md:mb-12">
+      <div className="flex flex-col items-center mb-8 md:mb-8">
         <div className="flex flex-col responsive-minimum-gap items-center">
           <SectionLabel className="justify-center !mb-0">Visual Journey</SectionLabel>
           <SectionHeadline size="xl" noPeriod className="responsive-headline-xl max-w-4xl text-center m-0">
@@ -107,7 +107,7 @@ export function ImageGallery() {
       {/* Marquee Slider */}
       <div className="relative w-screen max-w-none ml-[calc(-50vw+50%)] overflow-hidden group">
         <div 
-          className="flex min-w-max items-center gap-6 md:gap-12 animate-marquee group-hover:[animation-play-state:paused]"
+          className="flex min-w-max items-center gap-4 md:gap-6 animate-marquee group-hover:[animation-play-state:paused]"
           style={{ 
             animation: "marquee 60s linear infinite",
           }}
@@ -116,7 +116,7 @@ export function ImageGallery() {
             <div
               key={idx}
               onClick={() => openLightbox(idx)}
-              className={`relative flex-shrink-0 overflow-hidden bg-[#E8E3DB] cursor-pointer w-[280px] h-[350px] md:w-[450px] md:h-[600px] ${idx % 2 === 0 ? "mt-8 md:mt-12" : "mb-8 md:mb-12"}`}
+              className="relative flex-shrink-0 overflow-hidden bg-[#E8E3DB] cursor-pointer w-[280px] h-[70vh] md:w-[450px] md:h-[85vh]"
             >
               <Image
                 src={image.url}

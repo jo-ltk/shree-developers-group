@@ -180,7 +180,7 @@ export default function CommunityDetailsPage() {
                 backgroundColor: { duration: 0.4, ease: "circOut" } 
               }}
               className={`relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer ${
-                index >= 4 && !showMore ? "hidden lg:flex" : "flex"
+                index >= 2 && !showMore ? "hidden lg:flex" : "flex"
               }`}
             >
               {/* LARGE DECORATIVE NUMBER */}
@@ -286,7 +286,7 @@ export default function CommunityDetailsPage() {
                 backgroundColor: { duration: 0.4, ease: "circOut" } 
               }}
               className={`relative bg-[#F5F0E8] p-4 sm:p-8 md:p-10 overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[240px] group cursor-pointer ${
-                index >= 4 && !showMoreAmenities ? "hidden lg:flex" : "flex"
+                index >= 2 && !showMoreAmenities ? "hidden lg:flex" : "flex"
               }`}
             >
               {/* LARGE DECORATIVE NUMBER */}
