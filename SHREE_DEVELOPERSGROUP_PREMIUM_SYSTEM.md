@@ -226,7 +226,7 @@ export function SectionLabel({
 **Usage**:
 
 ```tsx
-<SectionLabel counter="03 / 08">Our Projects</SectionLabel>
+<SectionLabel >Our Projects</SectionLabel>
 <SectionLabel light>Services Offered</SectionLabel>
 ```
 

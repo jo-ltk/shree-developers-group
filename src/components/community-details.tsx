@@ -94,19 +94,19 @@ export function CommunityDetails() {
             {/* Actions Group */}
             <div className="flex flex-nowrap sm:flex-wrap items-center justify-center lg:justify-start responsive-minimum-gap w-full pt-4">
               <ButtonPrimary
-                href="#request-info"
+                href="/projects/sydney-oaks"
                 className="w-1/2 sm:w-auto !h-[50px] sm:!h-[56px] !px-2 sm:!px-10 !text-white flex justify-center text-center responsive-minimum-gap"
               >
-                <span className="sm:hidden text-[9px]">Request info</span>
-                <span className="hidden sm:inline">Request Information</span>
+                <span className="sm:hidden text-[9px]">Explore</span>
+                <span className="hidden sm:inline">Explore Details</span>
               </ButtonPrimary>
 
               <ButtonPrimary
-                href="#visit"
+                href="#request-info"
                 className="w-1/2 sm:w-auto !h-[50px] sm:!h-[56px] !px-2 sm:!px-10 !bg-white/5 border border-white/30 hover:!bg-white/10 !text-white flex justify-center text-center responsive-minimum-gap"
               >
-                <span className="sm:hidden text-[9px]">Visit</span>
-                <span className="hidden sm:inline">Schedule A Visit</span>
+                <span className="sm:hidden text-[9px]">Request info</span>
+                <span className="hidden sm:inline">Request Information</span>
               </ButtonPrimary>
             </div>
           </div>

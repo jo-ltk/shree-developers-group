@@ -21,6 +21,61 @@ export type ProjectData = {
   progress: ProgressEntry[];
   amenities: string[];
   locationMap: string;
+
+  // New fields for Sydney Oaks dedicated page
+  name?: string;
+  priceText?: string;
+  statusBadge?: "Ready to Move" | "Ongoing" | "Coming Soon";
+  tagline?: string;
+  reraNumber?: string;
+  possessionDate?: string;
+  projectArea?: string;
+  totalUnits?: string;
+  priceRange?: string;
+  propertyType?: string;
+  highlightsList?: string[];
+  floorPlansDetails?: {
+    name: string;
+    image: string;
+    bedrooms: number;
+    bathrooms: number;
+    parking: number;
+    area: number;
+    price: string;
+    emi: string;
+    availability: "Available" | "Sold Out" | "Coming Soon";
+    virtualTourUrl: string;
+  }[];
+  unitsList?: {
+    id: string;
+    name: string;
+    bhk: number;
+    area: number;
+    facing: string;
+    price: string;
+    availability: "Available" | "Booking Open" | "Sold Out";
+    image: string;
+  }[];
+  nearbyPlaces?: {
+    category: "Schools" | "Hospitals" | "Metro" | "Airport" | "Shopping" | "Tech Parks";
+    name: string;
+    distance: string;
+    time: string;
+  }[];
+  faqsList?: {
+    question: string;
+    answer: string;
+  }[];
+  testimonialsList?: {
+    name: string;
+    review: string;
+    rating: number;
+    image: string;
+  }[];
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 };
 
 export const allProjects: ProjectData[] = [
@@ -322,21 +377,188 @@ export const allProjects: ProjectData[] = [
     highlight: "Thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture",
     summary: "Spacious estate lots and modern farmhouse architecture blending seamlessly into the natural Gwinnett landscape.",
     brief: "Sydney Oaks brings modern farmhouse architecture to a thoughtfully planned neighborhood in Gwinnett County. With spacious estate lots and a focus on blending the built environment with the natural landscape, Sydney Oaks offers a balanced lifestyle. The homes feature open-concept floor plans, premium materials, and a design language that feels both current and timeless.",
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82",
     plans: [
       { label: "Community Layout", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
       { label: "4BHK Farmhouse Plan", image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80" },
     ],
     renders: [
       { label: "Street View Render", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" },
-      { label: "Park & Trail Visualization", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80", isVideo: true },
+      { label: "Interior Walkthrough Video", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80", isVideo: true },
     ],
     progress: [
       { date: "Apr 2026", note: "Paving of Oak Ridge Trail completed", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" },
       { date: "Jan 2026", note: "Underground utility lines installed" },
     ],
-    amenities: ["Estate-Sized Lots", "Modern Farmhouse Design", "Landscaped Avenues", "Natural Trail Access", "Family-Focused Planning"],
+    amenities: [
+      "Swimming Pool",
+      "Club House",
+      "Gym",
+      "Kids Play Area",
+      "Walking Track",
+      "Basketball Court",
+      "Garden Area",
+      "Security",
+      "CCTV",
+      "Indoor Games",
+      "Co-working Space",
+      "Party Hall"
+    ],
     locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
+
+    // New Fields
+    name: "Sydney Oaks",
+    priceText: "From low $400s",
+    statusBadge: "Ongoing",
+    tagline: "Where Modern Living Meets the Oak Ridge Trails",
+    reraNumber: "RERA-GA-8923",
+    possessionDate: "Q4 2026",
+    projectArea: "12 Acres",
+    totalUnits: "89 Town Homes",
+    priceRange: "$410k - $580k",
+    propertyType: "Luxury Villas",
+    highlightsList: [
+      "Wooded backyard retreats bordering natural trails",
+      "Curated lifestyle amenities at our private community core",
+      "High-efficiency HVAC and eco-conscious construction standards",
+      "Open-concept family floor plans designed by award-winning architects"
+    ],
+    floorPlansDetails: [
+      {
+        name: "The Maple Townhome",
+        image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80",
+        bedrooms: 3,
+        bathrooms: 2.5,
+        parking: 2,
+        area: 2400,
+        price: "$410,000",
+        emi: "$2,150/mo",
+        availability: "Available",
+        virtualTourUrl: "#tour-maple"
+      },
+      {
+        name: "Oak Ridge Villa",
+        image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+        bedrooms: 4,
+        bathrooms: 3.5,
+        parking: 2,
+        area: 3600,
+        price: "$495,000",
+        emi: "$2,650/mo",
+        availability: "Available",
+        virtualTourUrl: "#tour-oakridge"
+      },
+      {
+        name: "The Sequoia Estate",
+        image: "https://images.unsplash.com/photo-1536895058696-a69b1c7ba34f?auto=format&fit=crop&w=1200&q=80",
+        bedrooms: 5,
+        bathrooms: 4,
+        parking: 3,
+        area: 4200,
+        price: "$580,000",
+        emi: "$3,100/mo",
+        availability: "Coming Soon",
+        virtualTourUrl: "#tour-sequoia"
+      }
+    ],
+    unitsList: [
+      {
+        id: "Unit 102-A",
+        name: "Oak Ridge Villa (Lot 12)",
+        bhk: 4,
+        area: 3600,
+        facing: "East-Facing",
+        price: "$495,000",
+        availability: "Available",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "Unit 105-B",
+        name: "The Maple Townhome (Lot 34)",
+        bhk: 3,
+        area: 2400,
+        facing: "North-Facing",
+        price: "$410,000",
+        availability: "Booking Open",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "Unit 108-C",
+        name: "The Sequoia Estate (Lot 05)",
+        bhk: 5,
+        area: 4200,
+        facing: "West-Facing",
+        price: "$580,000",
+        availability: "Available",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "Unit 112-D",
+        name: "The Maple Townhome (Lot 21)",
+        bhk: 3,
+        area: 2400,
+        facing: "South-Facing",
+        price: "$415,000",
+        availability: "Sold Out",
+        image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    nearbyPlaces: [
+      { category: "Schools", name: "North Gwinnett High School", distance: "2.3 miles", time: "5 min" },
+      { category: "Schools", name: "Riverside Elementary School", distance: "1.5 miles", time: "4 min" },
+      { category: "Hospitals", name: "Emory Johns Creek Hospital", distance: "4.8 miles", time: "10 min" },
+      { category: "Metro", name: "MARTA Station - Doraville", distance: "15 miles", time: "22 min" },
+      { category: "Airport", name: "Atlanta Hartsfield-Jackson (ATL)", distance: "38 miles", time: "45 min" },
+      { category: "Shopping", name: "Sugarloaf Mills Mall", distance: "6.2 miles", time: "12 min" },
+      { category: "Tech Parks", name: "Duluth Tech Corridor", distance: "5.1 miles", time: "9 min" }
+    ],
+    faqsList: [
+      {
+        question: "What is the expected completion date of Sydney Oaks?",
+        answer: "Phase 1 handovers are scheduled to begin in October 2026, with the final phase of townhomes concluding by April 2027."
+      },
+      {
+        question: "Are home loans approved for this project?",
+        answer: "Yes, Sydney Oaks is fully approved for construction finance and home loans by major national and regional banking institutions."
+      },
+      {
+        question: "What is the booking and reservation process?",
+        answer: "You can reserve a villa plot or completed townhouse layout with an initial refundable reservation deposit of $5,000, followed by a 10% builder contract signing within 15 days."
+      },
+      {
+        question: "What are the monthly maintenance charges?",
+        answer: "Maintenance is estimated at $145/month, covering common park landscaping, road paving care, clubhouse upkeep, and 24/7 security guard services."
+      },
+      {
+        question: "Are all legal approvals and RERA clearances in place?",
+        answer: "Yes, the development holds a verified clear title deed and is registered under state housing regulatory authority (RERA Ref: RERA-GA-8923)."
+      },
+      {
+        question: "Does the booking cost cover access to all clubhouse amenities?",
+        answer: "Yes, ownership includes lifetime resident membership to the swimming pool, fitness center, basketball courts, and common co-working lounges."
+      }
+    ],
+    testimonialsList: [
+      {
+        name: "Sarah & David Vance",
+        review: "The modern farmhouse architecture is exactly what we wanted. The integration with Gwinnett's natural trail systems was the deciding factor for our family.",
+        rating: 5,
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+      },
+      {
+        name: "Marcus Chen",
+        review: "Spacious estate layouts coupled with high-performance insulation. Dealing with the site office during foundation inspection has been seamless.",
+        rating: 5,
+        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
+      },
+      {
+        name: "Dr. Alisha Patel",
+        review: "Perfect location. It is incredibly quiet and peaceful, yet I can drive to Emory Johns Creek Hospital in under ten minutes. Outstanding planning.",
+        rating: 5,
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+      }
+    ],
+    coordinates: { lat: 34.0531, lng: -84.0624 }
   },
 ];
 
