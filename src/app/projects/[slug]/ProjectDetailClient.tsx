@@ -589,7 +589,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </SectionWrapper>
 
       {/* C. GALLERY */}
-      <section className="overflow-hidden bg-cream pt-2 pb-3 sm:pt-3 sm:pb-4 md:pt-4 md:pb-5">
+      <section className="overflow-hidden bg-cream pt-2 pb-5 sm:pt-3 sm:pb-6 md:pt-4 md:pb-8">
         <div className="mx-auto mb-6 max-w-[1450px] px-4 sm:mb-8 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
             <div className="w-full max-w-xl md:max-w-none">
@@ -685,7 +685,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       />
 
       {/* J. ENQUIRY SECTION */}
-      <section id="enquiry" className="scroll-mt-20 pt-2 pb-8 sm:pt-3 sm:pb-10 md:pt-4 md:pb-14 bg-cream">
+      <section id="enquiry" className="scroll-mt-20 pt-4 pb-8 sm:pt-5 sm:pb-10 md:pt-6 md:pb-14 bg-cream">
         <div className="mx-auto max-w-[1450px] px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="grid grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-stretch">
             <div className="col-span-12 flex flex-col items-center justify-between gap-5 py-4 text-center sm:py-6 lg:col-span-5 lg:items-stretch lg:gap-4 lg:py-6 lg:text-left">
@@ -1592,7 +1592,7 @@ function MasterPlanSection({
     ];
 
   return (
-    <SectionWrapper dark={false} className="!pt-2 !pb-12 md:!pt-3 md:!pb-16 bg-[#F5F0E8]">
+    <SectionWrapper dark={false} className="!pt-6 !pb-10 md:!pt-8 md:!pb-14 bg-[#F5F0E8]">
       <div className="mb-8 flex flex-col items-center gap-5 text-center md:flex-row md:items-end md:justify-between md:text-left">
         <div className="w-full max-w-xl md:max-w-none">
           <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
@@ -1957,7 +1957,7 @@ function KeyAdvantagesSection({
   const lgCols = items.length > 4 ? "lg:grid-cols-3" : "lg:grid-cols-4";
 
   return (
-    <SectionWrapper dark={false} className="!pt-2 !pb-3 md:!pt-3 md:!pb-4 lg:!pt-4 lg:!pb-5 bg-[#F5F0E8]">
+    <SectionWrapper dark={false} className="!pt-6 !pb-6 md:!pt-8 md:!pb-8 lg:!pt-10 lg:!pb-10 bg-[#F5F0E8]">
       <div className="mx-auto max-w-[1450px]">
         <div className="mb-6 flex flex-col items-center text-center md:mb-8 md:items-start md:text-left">
           <SectionLabel className="justify-center md:justify-start !mb-3 md:!mb-5">
@@ -2116,7 +2116,7 @@ function LocationAdvantagesSection({
     };
 
     return (
-      <SectionWrapper dark={false} className="!pt-12 !pb-3 md:!pt-16 md:!pb-4 bg-[#F5F0E8]">
+      <SectionWrapper dark={false} className="!pt-12 !pb-5 md:!pt-16 md:!pb-6 bg-[#F5F0E8]">
         <div
           data-reveal
           className="mb-6 flex flex-col items-center space-y-4 text-center sm:space-y-6 md:mb-8 md:items-start md:text-left"
@@ -2226,7 +2226,7 @@ function LocationAdvantagesSection({
   }
 
   return (
-    <SectionWrapper dark={false} className="!pt-12 !pb-3 md:!pt-16 md:!pb-4 bg-[#F5F0E8]">
+    <SectionWrapper dark={false} className="!pt-12 !pb-5 md:!pt-16 md:!pb-6 bg-[#F5F0E8]">
       <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
         <div className="col-span-12 flex flex-col items-center space-y-6 text-center md:items-start md:space-y-8 md:text-left">
           <div className="w-full max-w-none space-y-4 sm:space-y-6">
