@@ -105,8 +105,22 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
     return () => ctx.revert();
   }, []);
 
-  // Standardize Data with Fallbacks for Sydney Oaks context
   const name = project.name || project.title;
+  const configurationLabel = project.configurationLabel || "3 & 4 BHK";
+  const overviewParagraphs = project.overviewParagraphs || [
+    `${name} is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected landscape.`,
+    "Each home is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local trails, premier schools, and civic centers, all within a fully gated community framework.",
+  ];
+  const highlightCriteria = project.highlightCriteria || [
+    { title: "Top County Schools", desc: "Within acclaimed school districts renowned for excellence." },
+    { title: "Healthcare Integration", desc: "Minutes from major regional hospitals providing premium care." },
+    { title: "Business Connectivity", desc: "Quick commutes to regional offices and commercial business parks." },
+    { title: "Park & Trail Access", desc: "Gated layout with direct paths into scenic trail networks." },
+  ];
+  const locationConnectivityBlurb =
+    project.locationConnectivityBlurb ||
+    `Positioned along ${project.location}'s central access ways, ${name} bridges the boundary between natural seclusion and rapid civic reach.`;
+  const sitePlanSvg = project.sitePlanSvg || "/svg/siteMap-final.svg";
   const tagline = project.tagline || "Luxury homes in Suwanee, Georgia";
   const priceText = project.priceText || "From low $400s";
   const statusBadge = project.statusBadge || "Ongoing";
@@ -283,7 +297,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Compass className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Configuration</Annotation>
-              <span className="font-display font-light text-sm text-cream">3 & 4 BHK</span>
+              <span className="font-display font-light text-sm text-cream">{configurationLabel}</span>
             </div>
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Calendar className="text-rust w-5 h-5 mb-2 shrink-0" />
@@ -316,12 +330,14 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
               </SectionHeadline>
 
               <div className="space-y-6 text-dark/80">
-                <p className="text-lg leading-relaxed font-light">
-                  Sydney Oaks is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle in Gwinnett County. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected oak forests.
-                </p>
-                <p className="text-md leading-relaxed font-light opacity-90">
-                  Each townhome is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local hiking trails, premier Gwinnett schools, and local civic centers, all within a fully gated community framework.
-                </p>
+                {overviewParagraphs.map((paragraph, idx) => (
+                  <p
+                    key={idx}
+                    className={`leading-relaxed font-light ${idx === 0 ? "text-lg" : "text-md opacity-90"}`}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
 
@@ -337,24 +353,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
             <Annotation className="mb-4">HIGHLIGHT CRITERIA</Annotation>
 
             <div className="flex flex-col flex-1 justify-between gap-4 h-full">
-              {[
-                {
-                  title: "Top Gwinnett County Schools",
-                  desc: "Directly within district zones of North Gwinnett schools, renowned for excellence.",
-                },
-                {
-                  title: "Healthcare Integration",
-                  desc: "Under 10 minutes drive from Emory Johns Creek Hospital, providing premium care.",
-                },
-                {
-                  title: "Duluth Tech Connectivity",
-                  desc: "Quick commutes to Duluth and Suwanee technical offices and commercial business parks.",
-                },
-                {
-                  title: "Lush Park & Trail access",
-                  desc: "The gated layout wraps around direct private paths into the scenic Oak Ridge Trailway.",
-                },
-              ].map((item, index) => {
+              {highlightCriteria.map((item, index) => {
                 const isOpen = activeHighlight === index;
                 return (
                   <div
@@ -471,7 +470,12 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </section>
 
       {/* D. MASTER PLAN / SITE PLAN */}
-      <MasterPlanSection components={project.masterPlanComponents || []} />
+      <MasterPlanSection
+        components={project.masterPlanComponents || []}
+        projectSlug={project.slug}
+        projectName={name}
+        sitePlanSvg={sitePlanSvg}
+      />
 
       {/* E. FLOOR PLANS */}
       <FloorPlansSection floorPlans={floorPlans} />
@@ -516,10 +520,15 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </SectionWrapper>
 
       {/* G. LOCATION ADVANTAGES */}
-      <LocationAdvantagesSection nearbyPlaces={nearbyPlaces} coordinates={coordinates} rera={reraNumber} />
+      <LocationAdvantagesSection
+        nearbyPlaces={nearbyPlaces}
+        coordinates={coordinates}
+        rera={reraNumber}
+        locationBlurb={locationConnectivityBlurb}
+      />
 
       {/* H. WHY CHOOSE THIS PROJECT */}
-      <KeyAdvantagesSection projectName={name} />
+      <KeyAdvantagesSection projectName={name} advantages={project.keyAdvantages} />
 
       {/* J. ENQUIRY SECTION */}
       <section id="enquiry" className="scroll-mt-20 py-12 sm:py-16 md:py-24 bg-cream border-t border-dark/10">
@@ -570,6 +579,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
         <LightboxModal
           images={galleryImages}
           currentIdx={lightboxIdx}
+          albumTitle={`${name} Visual Album`}
           onClose={() => setLightboxOpen(false)}
         />
       )}
@@ -813,9 +823,9 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Chat on WhatsApp"
-                  className="flex min-h-[48px] flex-col items-center justify-center gap-1 rounded-sm bg-[#25D366] py-2.5 text-white shadow-sm transition-colors duration-300 hover:bg-[#1EBE5A] cursor-pointer select-none"
+                  className="group flex min-h-[48px] flex-col items-center justify-center gap-1.5 rounded-sm border border-dark/15 bg-cream py-2.5 text-dark transition-colors duration-300 hover:border-rust hover:bg-rust/5 hover:text-rust cursor-pointer select-none"
                 >
-                  <WhatsAppBrandIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  <WhatsAppBrandIcon className="h-4 w-4 text-dark/70 transition-colors group-hover:text-rust sm:h-[18px] sm:w-[18px]" />
                   <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">WhatsApp</span>
                 </a>
                 <a
@@ -823,17 +833,17 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Follow on Instagram"
-                  className="flex min-h-[48px] flex-col items-center justify-center gap-1 rounded-sm bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] py-2.5 text-white shadow-sm transition-opacity duration-300 hover:opacity-90 cursor-pointer select-none"
+                  className="group flex min-h-[48px] flex-col items-center justify-center gap-1.5 rounded-sm border border-dark/15 bg-cream py-2.5 text-dark transition-colors duration-300 hover:border-rust hover:bg-rust/5 hover:text-rust cursor-pointer select-none"
                 >
-                  <Instagram className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={2} />
+                  <Instagram className="h-4 w-4 text-dark/70 transition-colors group-hover:text-rust sm:h-[18px] sm:w-[18px]" strokeWidth={1.75} />
                   <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">Instagram</span>
                 </a>
                 <a
                   href="tel:+14045550123"
                   aria-label="Call now"
-                  className="flex min-h-[48px] flex-col items-center justify-center gap-1 rounded-sm bg-[#2563EB] py-2.5 text-white shadow-sm transition-colors duration-300 hover:bg-[#1D4ED8] cursor-pointer select-none"
+                  className="group flex min-h-[48px] flex-col items-center justify-center gap-1.5 rounded-sm border border-dark/15 bg-cream py-2.5 text-dark transition-colors duration-300 hover:border-rust hover:bg-rust/5 hover:text-rust cursor-pointer select-none"
                 >
-                  <Phone className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={2} />
+                  <Phone className="h-4 w-4 text-dark/70 transition-colors group-hover:text-rust sm:h-[18px] sm:w-[18px]" strokeWidth={1.75} />
                   <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">Call Now</span>
                 </a>
               </div>
@@ -1159,14 +1169,18 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
 /* ===========================================================================
    D. MASTER PLAN / SITE PLAN (static preview → interactive map)
    =========================================================================== */
-const SYDNEY_OAKS_SITE_PLAN_SVG = "/svg/siteMap-final.svg";
-const SYDNEY_OAKS_INTERACTIVE_MAP_HREF = "/InteractiveSiteMap?project=sydney-oaks";
-
 function MasterPlanSection({
   components,
+  projectSlug,
+  projectName,
+  sitePlanSvg,
 }: {
   components: NonNullable<ProjectData["masterPlanComponents"]>;
+  projectSlug: string;
+  projectName: string;
+  sitePlanSvg: string;
 }) {
+  const interactiveMapHref = `/InteractiveSiteMap?project=${projectSlug}`;
   const masterPlanItems = components.length
     ? components
     : [
@@ -1188,7 +1202,7 @@ function MasterPlanSection({
         </div>
 
         <Link
-          href={SYDNEY_OAKS_INTERACTIVE_MAP_HREF}
+          href={interactiveMapHref}
           className="inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark md:w-auto md:max-w-none shrink-0"
         >
           Explore Interactive Map
@@ -1199,14 +1213,14 @@ function MasterPlanSection({
       <div className="flex flex-col gap-5">
         <div className="border border-dark/10 bg-cream p-2 md:p-3">
           <Link
-            href={SYDNEY_OAKS_INTERACTIVE_MAP_HREF}
+            href={interactiveMapHref}
             className="group relative block aspect-[16/10] max-h-[520px] w-full overflow-hidden bg-[#EDE8DF] no-underline md:max-h-[600px]"
-            aria-label="Open Sydney Oaks interactive site map"
+            aria-label={`Open ${projectName} interactive site map`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={SYDNEY_OAKS_SITE_PLAN_SVG}
-              alt="Sydney Oaks master site plan"
+              src={sitePlanSvg}
+              alt={`${projectName} master site plan`}
               className="h-full w-full object-contain object-center select-none pointer-events-none"
               draggable={false}
             />
@@ -1534,9 +1548,22 @@ const KEY_ADVANTAGES = [
 
 const KEY_ADVANTAGES_MOBILE_INITIAL = 2;
 
-function KeyAdvantagesSection({ projectName }: { projectName: string }) {
+function KeyAdvantagesSection({
+  projectName,
+  advantages,
+}: {
+  projectName: string;
+  advantages?: NonNullable<ProjectData["keyAdvantages"]>;
+}) {
   const [expanded, setExpanded] = useState(false);
-  const hasMore = KEY_ADVANTAGES.length > KEY_ADVANTAGES_MOBILE_INITIAL;
+  const items = advantages?.length
+    ? KEY_ADVANTAGES.map((item, idx) => ({
+        ...item,
+        title: advantages[idx]?.title ?? item.title,
+        description: advantages[idx]?.description ?? item.description,
+      }))
+    : KEY_ADVANTAGES;
+  const hasMore = items.length > KEY_ADVANTAGES_MOBILE_INITIAL;
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 lg:!py-24 bg-[#F5F0E8] border-b border-dark/10">
@@ -1551,7 +1578,7 @@ function KeyAdvantagesSection({ projectName }: { projectName: string }) {
         </div>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-px lg:grid-cols-4 sm:border sm:border-dark/10 sm:bg-dark/10">
-          {KEY_ADVANTAGES.map((item, idx) => {
+          {items.map((item, idx) => {
             const Icon = item.icon;
             const hiddenOnMobile = idx >= KEY_ADVANTAGES_MOBILE_INITIAL && !expanded;
 
@@ -1599,11 +1626,13 @@ function KeyAdvantagesSection({ projectName }: { projectName: string }) {
 function LocationAdvantagesSection({
   nearbyPlaces,
   coordinates: _coordinates,
-  rera: _rera
+  rera: _rera,
+  locationBlurb,
 }: {
   nearbyPlaces: ProjectData["nearbyPlaces"];
   coordinates: ProjectData["coordinates"];
   rera: string;
+  locationBlurb: string;
 }) {
   const [nearbyExpanded, setNearbyExpanded] = useState(false);
   const allNearbyPlaces = nearbyPlaces || [];
@@ -1625,7 +1654,7 @@ function LocationAdvantagesSection({
             </div>
 
             <p className="mx-auto max-w-lg text-sm text-dark/70 font-light md:mx-0 md:max-w-xl">
-              Positioned along Gwinnett County&apos;s central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.
+              {locationBlurb}
             </p>
           </div>
 
@@ -1891,10 +1920,12 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
 function LightboxModal({
   images,
   currentIdx,
-  onClose
+  albumTitle,
+  onClose,
 }: {
   images: { src: string; alt: string }[];
   currentIdx: number;
+  albumTitle: string;
   onClose: () => void;
 }) {
   const [activeIdx, setActiveIdx] = useState(currentIdx);
@@ -1924,7 +1955,7 @@ function LightboxModal({
       {/* Top row */}
       <div className="flex justify-between items-center text-cream border-b border-cream/10 pb-4">
         <div>
-          <Annotation light className="!text-rust">Sydney Oaks Visual Album</Annotation>
+          <Annotation light className="!text-rust">{albumTitle}</Annotation>
           <span className="font-display text-xs md:text-sm text-cream/60">
             Image {activeIdx + 1} of {images.length}
           </span>

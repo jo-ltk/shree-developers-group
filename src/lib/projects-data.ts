@@ -79,7 +79,20 @@ export type ProjectData = {
     lat: number;
     lng: number;
   };
+  overviewParagraphs?: string[];
+  highlightCriteria?: { title: string; desc: string }[];
+  locationConnectivityBlurb?: string;
+  sitePlanSvg?: string;
+  configurationLabel?: string;
+  keyAdvantages?: { title: string; description: string }[];
 };
+
+export const DEDICATED_PROJECT_SLUGS = ["sydney-oaks", "elysian-gates"] as const;
+export type DedicatedProjectSlug = (typeof DEDICATED_PROJECT_SLUGS)[number];
+
+export function isDedicatedProjectSlug(slug: string): slug is DedicatedProjectSlug {
+  return (DEDICATED_PROJECT_SLUGS as readonly string[]).includes(slug);
+}
 
 export const allProjects: ProjectData[] = [
   {
@@ -351,23 +364,253 @@ export const allProjects: ProjectData[] = [
     year: "Ongoing",
     status: "active",
     highlight: "Exclusive gated living featuring high-performance homes and private wooded backyards",
-    summary: "A private, high-performance enclave where architectural precision meets the quiet seclusion of North Georgia's wooded landscape.",
-    brief: "Elysian Gates is a premiere gated enclave in Forsyth County, designed for those who seek both architectural performance and natural seclusion. Each home is built with high-efficiency systems and features expansive wooded backyards, offering a level of privacy rarely found in modern developments. The community is defined by its commitment to quiet luxury and structural excellence.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82",
+    summary:
+      "A private, high-performance enclave where architectural precision meets the quiet seclusion of North Georgia's wooded landscape.",
+    brief:
+      "Elysian Gates is a premiere gated enclave in Forsyth County, designed for those who seek both architectural performance and natural seclusion. Each home is built with high-efficiency systems and features expansive wooded backyards, offering a level of privacy rarely found in modern developments. The community is defined by its commitment to quiet luxury and structural excellence.",
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
     plans: [
-      { label: "Master Site Plan", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
+      { label: "Community Layout", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
       { label: "5BHK Estate Plan", image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80" },
     ],
     renders: [
-      { label: "Entrance Gate Render", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80" },
+      { label: "Entrance Gate Render", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=80" },
       { label: "Aerial Woods View", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80", isVideo: true },
     ],
     progress: [
       { date: "May 2026", note: "Final landscaping for Phase 1 completed", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80" },
       { date: "Feb 2026", note: "Model home interiors finalized" },
     ],
-    amenities: ["Gated Perimeter", "High-Performance Homes", "Private Wooded Lots", "Underground Utilities", "24/7 Security"],
+    amenities: [
+      "Swimming Pool",
+      "Club House",
+      "Gym",
+      "Kids Play Area",
+      "Walking Track",
+      "Basketball Court",
+      "Garden Area",
+      "Security",
+      "CCTV",
+      "Indoor Games",
+      "Co-working Space",
+      "Party Hall",
+    ],
     locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
+    name: "Elysian Gates",
+    priceText: "From mid $500s",
+    statusBadge: "Ongoing",
+    tagline: "Where Quiet Luxury Meets Wooded Seclusion",
+    reraNumber: "RERA-GA-7841",
+    possessionDate: "Q2 2027",
+    projectArea: "18 Acres",
+    totalUnits: "42 Estate Homes",
+    priceRange: "$550k - $780k",
+    propertyType: "Luxury Estate Homes",
+    sitePlanPdfUrl: "/pdfs/site-plan.pdf",
+    floorPlansPdfUrl: "/pdfs/aspen-plan-set.pdf",
+    sitePlanSvg: "/svg/elysian-gates.svg",
+    configurationLabel: "4 & 5 BHK",
+    overviewParagraphs: [
+      "Elysian Gates is conceived as a private sanctuary for families seeking architectural performance and natural seclusion in Forsyth County. Designed with contemporary estate architecture as the foundation, each residence leverages high-efficiency systems, premium stonework, and expansive glazing that frames the protected wooded backdrop.",
+      "Each home is positioned to capture optimal ventilation and daylight throughout the seasons, ensuring comfortable living and bright gathering spaces. Connectivity runs deep here — residents enjoy secure access to Forsyth trail networks, acclaimed schools, and Cumming's civic amenities, all within a fully gated enclave framework.",
+    ],
+    highlightCriteria: [
+      {
+        title: "Top Forsyth County Schools",
+        desc: "Within reach of Lambert, West Forsyth, and South Forsyth school zones known for academic excellence.",
+      },
+      {
+        title: "Healthcare Integration",
+        desc: "Under 12 minutes from Northside Hospital Forsyth, providing premium regional care.",
+      },
+      {
+        title: "North Metro Connectivity",
+        desc: "Quick commutes to Halcyon, Avalon, and GA-400 business corridors.",
+      },
+      {
+        title: "Wooded Trail Access",
+        desc: "The gated layout adjoins private paths into preserved hardwood corridors and community greens.",
+      },
+    ],
+    locationConnectivityBlurb:
+      "Positioned along Forsyth County's premier residential corridors, Elysian Gates bridges the boundary between wooded seclusion and rapid north-metro reach.",
+    keyAdvantages: [
+      {
+        title: "Premium Location",
+        description:
+          "Forsyth County address with quick access to wooded trails, schools, healthcare, and daily essentials.",
+      },
+      {
+        title: "Smart Planning",
+        description:
+          "Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.",
+      },
+      {
+        title: "High Appreciation",
+        description:
+          "Positioned in a growing residential corridor with strong demand for estate-focused communities.",
+      },
+      {
+        title: "Trusted Developer",
+        description:
+          "Delivered by Shree Developers Group with transparent documentation and responsive site support.",
+      },
+    ],
+    masterPlanComponents: [
+      {
+        name: "Plot Layout",
+        desc: "Premium, low-density layout comprising 42 estate homesites structured for privacy, natural ventilation, and wooded setbacks.",
+      },
+      {
+        name: "Amenities Zoning",
+        desc: "A central community core grouping the swimming pool, fully-equipped gym, children's play court, and outdoor walking path.",
+      },
+      {
+        name: "Entry & Exit",
+        desc: "Single-point gated access lobby with 24/7 security cabin control, perimeter sensor arrays, and video surveillance.",
+      },
+    ],
+    highlightsList: [
+      "Expansive wooded backyard retreats bordering natural corridors",
+      "Curated lifestyle amenities at the private community core",
+      "High-efficiency HVAC and eco-conscious construction standards",
+      "Open-concept estate floor plans designed by award-winning architects",
+    ],
+    floorPlansDetails: [
+      {
+        name: "The Cypress Estate",
+        image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
+        bedrooms: 4,
+        bathrooms: 3.5,
+        parking: 2,
+        area: 4200,
+        price: "$550,000",
+        emi: "$2,850/mo",
+        availability: "Available",
+        virtualTourUrl: "#tour-cypress",
+      },
+      {
+        name: "The Magnolia Villa",
+        image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=80",
+        bedrooms: 5,
+        bathrooms: 4.5,
+        parking: 3,
+        area: 5200,
+        price: "$665,000",
+        emi: "$3,450/mo",
+        availability: "Available",
+        virtualTourUrl: "#tour-magnolia",
+      },
+      {
+        name: "The Laurel Grand Estate",
+        image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80",
+        bedrooms: 5,
+        bathrooms: 5,
+        parking: 3,
+        area: 5800,
+        price: "$780,000",
+        emi: "$4,050/mo",
+        availability: "Coming Soon",
+        virtualTourUrl: "#tour-laurel",
+      },
+    ],
+    unitsList: [
+      {
+        id: "Unit 201-A",
+        name: "The Magnolia Villa (Lot 08)",
+        bhk: 5,
+        area: 5200,
+        facing: "East-Facing",
+        price: "$665,000",
+        availability: "Available",
+        image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "Unit 204-B",
+        name: "The Cypress Estate (Lot 19)",
+        bhk: 4,
+        area: 4200,
+        facing: "North-Facing",
+        price: "$550,000",
+        availability: "Booking Open",
+        image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "Unit 207-C",
+        name: "The Laurel Grand Estate (Lot 03)",
+        bhk: 5,
+        area: 5800,
+        facing: "West-Facing",
+        price: "$780,000",
+        availability: "Available",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "Unit 211-D",
+        name: "The Cypress Estate (Lot 14)",
+        bhk: 4,
+        area: 4200,
+        facing: "South-Facing",
+        price: "$558,000",
+        availability: "Sold Out",
+        image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    nearbyPlaces: [
+      { category: "Schools", name: "Lambert High School", distance: "3.1 miles", time: "7 min" },
+      { category: "Schools", name: "South Forsyth High School", distance: "4.2 miles", time: "9 min" },
+      { category: "Hospitals", name: "Northside Hospital Forsyth", distance: "5.4 miles", time: "11 min" },
+      { category: "Metro", name: "MARTA Station - North Springs", distance: "18 miles", time: "26 min" },
+      { category: "Shopping", name: "Halcyon & Avalon", distance: "7.8 miles", time: "14 min" },
+      { category: "Tech Parks", name: "Cumming Tech Corridor", distance: "6.3 miles", time: "11 min" },
+    ],
+    faqsList: [
+      {
+        question: "What is the expected completion date of Elysian Gates?",
+        answer: "Phase 1 handovers are scheduled to begin in June 2027, with the final phase of estate homes concluding by December 2027.",
+      },
+      {
+        question: "Are home loans approved for this project?",
+        answer: "Yes, Elysian Gates is fully approved for construction finance and home loans by major national and regional banking institutions.",
+      },
+      {
+        question: "What is the booking and reservation process?",
+        answer: "You can reserve a homesite or completed estate layout with an initial refundable reservation deposit of $7,500, followed by a 10% builder contract signing within 15 days.",
+      },
+      {
+        question: "What are the monthly maintenance charges?",
+        answer: "Maintenance is estimated at $165/month, covering common park landscaping, road paving care, clubhouse upkeep, and 24/7 security guard services.",
+      },
+      {
+        question: "Are all legal approvals and RERA clearances in place?",
+        answer: "Yes, the development holds a verified clear title deed and is registered under state housing regulatory authority (RERA Ref: RERA-GA-7841).",
+      },
+      {
+        question: "Does the booking cost cover access to all clubhouse amenities?",
+        answer: "Yes, ownership includes lifetime resident membership to the swimming pool, fitness center, basketball courts, and common co-working lounges.",
+      },
+    ],
+    testimonialsList: [
+      {
+        name: "Rachel & James Whitmore",
+        review: "The estate architecture and wooded setbacks are exactly what we wanted. Forsyth's trail access and school districts made Elysian Gates an easy choice for our family.",
+        rating: 5,
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
+      },
+      {
+        name: "Daniel Okonkwo",
+        review: "Spacious layouts with high-performance insulation. The site team has been transparent through foundation and framing inspections.",
+        rating: 5,
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+      },
+      {
+        name: "Dr. Priya Nair",
+        review: "Quiet, private, yet minutes from Northside Forsyth and Halcyon. Outstanding planning for long-term family living.",
+        rating: 5,
+        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80",
+      },
+    ],
+    coordinates: { lat: 34.2071, lng: -84.1402 },
   },
   {
     index: "10",
@@ -422,6 +665,54 @@ export const allProjects: ProjectData[] = [
     propertyType: "Luxury Villas",
     sitePlanPdfUrl: "/pdfs/site-plan.pdf",
     floorPlansPdfUrl: "/pdfs/aspen-plan-set.pdf",
+    sitePlanSvg: "/svg/siteMap-final.svg",
+    configurationLabel: "3 & 4 BHK",
+    overviewParagraphs: [
+      "Sydney Oaks is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle in Gwinnett County. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected oak forests.",
+      "Each townhome is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local hiking trails, premier Gwinnett schools, and local civic centers, all within a fully gated community framework.",
+    ],
+    highlightCriteria: [
+      {
+        title: "Top Gwinnett County Schools",
+        desc: "Directly within district zones of North Gwinnett schools, renowned for excellence.",
+      },
+      {
+        title: "Healthcare Integration",
+        desc: "Under 10 minutes drive from Emory Johns Creek Hospital, providing premium care.",
+      },
+      {
+        title: "Duluth Tech Connectivity",
+        desc: "Quick commutes to Duluth and Suwanee technical offices and commercial business parks.",
+      },
+      {
+        title: "Lush Park & Trail access",
+        desc: "The gated layout wraps around direct private paths into the scenic Oak Ridge Trailway.",
+      },
+    ],
+    locationConnectivityBlurb:
+      "Positioned along Gwinnett County's central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.",
+    keyAdvantages: [
+      {
+        title: "Premium Location",
+        description:
+          "Gwinnett County address with quick access to wooded trails, schools, healthcare, and daily essentials.",
+      },
+      {
+        title: "Smart Planning",
+        description:
+          "Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.",
+      },
+      {
+        title: "High Appreciation",
+        description:
+          "Positioned in a growing residential corridor with strong demand for family-focused communities.",
+      },
+      {
+        title: "Trusted Developer",
+        description:
+          "Delivered by Shree Developers Group with transparent documentation and responsive site support.",
+      },
+    ],
     masterPlanComponents: [
       { name: "Plot Layout", desc: "Premium, low-density layout comprising 89 beautifully proportioned estate townhome plots structured for high natural ventilation and spacing." },
       { name: "Amenities Zoning", desc: "A central 2-acre community park core grouping the swimming pool, fully-equipped gym, children's play court, and outdoor walking path." },

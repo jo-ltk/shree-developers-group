@@ -1,15 +1,19 @@
 import { notFound } from "next/navigation";
-import { getProjectBySlug, getAllProjectSlugs } from "@/lib/projects-data";
+import {
+  getProjectBySlug,
+  DEDICATED_PROJECT_SLUGS,
+  isDedicatedProjectSlug,
+} from "@/lib/projects-data";
 import { ProjectDetailClient } from "./ProjectDetailClient";
 
 export function generateStaticParams() {
-  return [{ slug: "sydney-oaks" }];
+  return DEDICATED_PROJECT_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (slug !== "sydney-oaks") return { title: "Project Not Found" };
-  const project = getProjectBySlug("sydney-oaks");
+  if (!isDedicatedProjectSlug(slug)) return { title: "Project Not Found" };
+  const project = getProjectBySlug(slug);
   if (!project) return { title: "Project Not Found" };
   return {
     title: `${project.title} — Shree Developers Group`,
@@ -19,8 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (slug !== "sydney-oaks") notFound();
-  const project = getProjectBySlug("sydney-oaks");
+  if (!isDedicatedProjectSlug(slug)) notFound();
+  const project = getProjectBySlug(slug);
   if (!project) notFound();
   return <ProjectDetailClient project={project} />;
 }

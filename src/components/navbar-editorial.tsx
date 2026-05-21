@@ -10,9 +10,14 @@ import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 
+const projectNavLinks = [
+  { label: "Sydney Oaks", href: "/projects/sydney-oaks" },
+  { label: "Elysian Gates", href: "/projects/elysian-gates" },
+];
+
 const navColumns = [
   { title: "About", href: "/about", links: [] as string[] },
-  { title: "Projects", href: "/#gallery", links: ["Sydney Oaks", "Elysian Gates"] },
+  { title: "Projects", href: "/#gallery", links: projectNavLinks.map((p) => p.label) },
   { title: "Interactive Map", href: "/InteractiveSiteMap", links: [] as string[] },
   { title: "Contact", href: "/#footer", links: [] as string[] },
 ];
@@ -219,15 +224,25 @@ export function NavbarEditorial({ invertLogoAtTop = false }: NavbarEditorialProp
                   >
                     {column.links.length > 0 ? (
                       <div className="space-y-2.5 !text-[var(--text-primary)]">
-                        {column.links.map((item) => (
-                          <Link
-                            key={item}
-                            href={column.href}
-                            className="block transition-all duration-200 hover:translate-x-0.5 hover:text-[var(--color-accent)]"
-                          >
-                            <BodyText className="responsive-body-sm">{item}</BodyText>
-                          </Link>
-                        ))}
+                        {column.title === "Projects"
+                          ? projectNavLinks.map((item) => (
+                              <Link
+                                key={item.label}
+                                href={item.href}
+                                className="block transition-all duration-200 hover:translate-x-0.5 hover:text-[var(--color-accent)]"
+                              >
+                                <BodyText className="responsive-body-sm">{item.label}</BodyText>
+                              </Link>
+                            ))
+                          : column.links.map((item) => (
+                              <Link
+                                key={item}
+                                href={column.href}
+                                className="block transition-all duration-200 hover:translate-x-0.5 hover:text-[var(--color-accent)]"
+                              >
+                                <BodyText className="responsive-body-sm">{item}</BodyText>
+                              </Link>
+                            ))}
                       </div>
                     ) : null}
                   </div>
@@ -308,16 +323,27 @@ export function NavbarEditorial({ invertLogoAtTop = false }: NavbarEditorialProp
                   </Link>
                   {column.links.length > 0 && (
                     <div className="space-y-3 border-b border-[rgba(183,170,152,0.35)] py-3 pl-5">
-                      {column.links.map((link) => (
-                        <Link
-                          key={link}
-                          href={column.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="block !text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
-                        >
-                          <BodyText className="responsive-body-sm">{link}</BodyText>
-                        </Link>
-                      ))}
+                      {column.title === "Projects"
+                        ? projectNavLinks.map((link) => (
+                            <Link
+                              key={link.label}
+                              href={link.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block !text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
+                            >
+                              <BodyText className="responsive-body-sm">{link.label}</BodyText>
+                            </Link>
+                          ))
+                        : column.links.map((link) => (
+                            <Link
+                              key={link}
+                              href={column.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block !text-[var(--text-primary)] transition-colors duration-200 hover:text-[var(--color-accent)]"
+                            >
+                              <BodyText className="responsive-body-sm">{link}</BodyText>
+                            </Link>
+                          ))}
                     </div>
                   )}
                 </div>

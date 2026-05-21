@@ -79,7 +79,11 @@ const communities: Community[] = [
 
 function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
   const isSoon = c.status === "Coming Soon";
-  const href = isSoon ? "/contact" : `/InteractiveSiteMap?project=${c.slug}`;
+  const href = isSoon
+    ? "/contact"
+    : c.slug === "sydney-oaks" || c.slug === "elysian-gates"
+      ? `/projects/${c.slug}`
+      : `/InteractiveSiteMap?project=${c.slug}`;
   const displayIndex = parseInt(c.index, 10);
 
   return (
@@ -123,7 +127,11 @@ function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 px-3 w-full flex justify-center">
           <div className="bg-white/95 backdrop-blur-md rounded-full flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 shadow-lg transition-all duration-300 gap-2 border border-white/50 group-hover:-translate-y-1 group-hover:bg-white max-w-full">
             <span className="text-[#1C1208] group-hover:text-[#D43F33] responsive-btn-text font-bold uppercase whitespace-nowrap transition-colors duration-300">
-              {isSoon ? "Register Interest" : "Interactive Map"}
+              {isSoon
+                ? "Register Interest"
+                : c.slug === "sydney-oaks" || c.slug === "elysian-gates"
+                  ? "View Project"
+                  : "Interactive Map"}
             </span>
 
             <div className="w-5 h-5 rounded-full bg-[#1C1208]/5 group-hover:bg-[#D43F33]/10 flex items-center justify-center transition-colors duration-300">
