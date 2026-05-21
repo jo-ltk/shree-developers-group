@@ -385,6 +385,10 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
 
+  .motion-safe\:animate-carousel-hint-nudge {
+    animation: none;
+  }
+
   .project-card-marquee-track,
   .project-card-marquee-track-reverse,
   .marquee-text-track-forward,

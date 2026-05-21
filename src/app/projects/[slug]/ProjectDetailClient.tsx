@@ -47,6 +47,8 @@ import {
   Zap,
   ChefHat,
   Lightbulb,
+  GraduationCap,
+  ShoppingCart,
   type LucideIcon
 } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
@@ -60,6 +62,7 @@ import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
 import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
+import { MobileHorizontalCarousel } from "@/components/ui/mobile-horizontal-carousel";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const amenityIconMap: Record<string, LucideIcon> = {
@@ -133,6 +136,18 @@ const amenitySectionIconMap: Record<string, LucideIcon> = {
 
 function getAmenitySectionIcon(title: string) {
   return amenitySectionIconMap[title.toLowerCase()] || CheckCircle2;
+}
+
+const locationGroupIconMap: Record<string, LucideIcon> = {
+  "nearby recreation": Waves,
+  "shopping & grocery": ShoppingCart,
+  "entertainment & dining": PartyPopper,
+  "healthcare access": ShieldCheck,
+  "school district": GraduationCap,
+};
+
+function getLocationGroupIcon(title: string) {
+  return locationGroupIconMap[title.toLowerCase()] || MapPin;
 }
 
 export function ProjectDetailClient({ project }: { project: ProjectData }) {
@@ -653,6 +668,9 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       {/* G. LOCATION ADVANTAGES */}
       <LocationAdvantagesSection
         nearbyPlaces={nearbyPlaces}
+        locationPlaceGroups={project.locationPlaceGroups}
+        locationSectionLabel={project.locationSectionLabel}
+        locationHeadline={project.locationHeadline}
         coordinates={coordinates}
         rera={reraNumber}
         locationBlurb={locationConnectivityBlurb}
@@ -1126,25 +1144,17 @@ function AmenitiesSection({
             <>
               {/* Mobile: compact preview + swipe / read more */}
               <div
-                className="amenities-table amenities-table--mobile mx-auto w-full max-w-sm lg:hidden"
+                className="amenities-table amenities-table--mobile w-full lg:hidden"
                 role="region"
                 aria-label="Community amenities"
               >
                 {!mobileAmenitiesExpanded ? (
                   <>
-                    <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-1 pl-[calc(50%-min(44vw,11rem))] pr-[calc(50%-min(44vw,11rem))] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                      {groupedSections.map((section) => (
-                        <div
-                          key={`snap-${section.title}`}
-                          className="w-[min(88vw,22rem)] shrink-0 snap-center"
-                        >
-                          {renderMobileCategory(section, true)}
-                        </div>
-                      ))}
-                    </div>
-                    <p className="mt-3 text-center font-sans text-[9px] font-medium uppercase tracking-[0.2em] text-cream/45">
-                      Swipe for more categories
-                    </p>
+                    <MobileHorizontalCarousel variant="dark">
+                      {groupedSections.map((section) =>
+                        renderMobileCategory(section, true),
+                      )}
+                    </MobileHorizontalCarousel>
                     <button
                       type="button"
                       onClick={() => setMobileAmenitiesExpanded(true)}
@@ -2010,77 +2020,275 @@ function KeyAdvantagesSection({
    =========================================================================== */
 function LocationAdvantagesSection({
   nearbyPlaces,
+  locationPlaceGroups,
+  locationSectionLabel,
+  locationHeadline,
   coordinates: _coordinates,
   rera: _rera,
   locationBlurb,
 }: {
   nearbyPlaces: ProjectData["nearbyPlaces"];
+  locationPlaceGroups?: NonNullable<ProjectData["locationPlaceGroups"]>;
+  locationSectionLabel?: string;
+  locationHeadline?: string;
   coordinates: ProjectData["coordinates"];
   rera: string;
   locationBlurb: string;
 }) {
   const [nearbyExpanded, setNearbyExpanded] = useState(false);
+  const [mobileLocationExpanded, setMobileLocationExpanded] = useState(false);
   const allNearbyPlaces = nearbyPlaces || [];
-  const hasMoreNearby = allNearbyPlaces.length > 4;
+  const groupedPlaces = locationPlaceGroups?.filter((g) => g.places.length > 0) ?? [];
+  const hasGrouped = groupedPlaces.length > 0;
+  const hasFlat = allNearbyPlaces.length > 0;
+  const hasBlurb = Boolean(locationBlurb?.trim());
+
+  if (!hasGrouped && !hasFlat && !hasBlurb) return null;
+
+  const sectionLabel = locationSectionLabel ?? "Connectivity";
+  const headlineContent = locationHeadline ?? (
+    <>
+      Location advantages & <em className="font-normal italic">transit</em>
+    </>
+  );
+
+  if (hasGrouped) {
+    const rowCount = Math.max(0, ...groupedPlaces.map((group) => group.places.length));
+    const columnCount = groupedPlaces.length;
+
+    const renderLocationRow = (
+      place: { name: string; distance?: string },
+      compact?: boolean,
+    ) => (
+      <div
+        className={`flex items-center gap-2.5 border-t border-dark/10 bg-cream/55 px-3 text-dark transition-colors first:border-t-0 hover:bg-rust/5 ${
+          compact ? "min-h-[3.5rem] py-2.5" : "min-h-[4.25rem] py-3 sm:min-h-[4.75rem]"
+        }`}
+      >
+        <div
+          className={`flex shrink-0 items-center justify-center border border-dark/15 text-rust ${
+            compact ? "h-7 w-7" : "h-8 w-8"
+          }`}
+        >
+          <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="m-0 text-[11px] font-semibold leading-tight sm:text-xs">{place.name}</p>
+          {place.distance && (
+            <span className="mt-0.5 block font-sans text-[10px] font-bold uppercase tracking-wide text-rust">
+              {place.distance}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+
+    const renderMobileGroup = (
+      group: (typeof groupedPlaces)[number],
+      compact?: boolean,
+    ) => {
+      const GroupIcon = getLocationGroupIcon(group.title);
+
+      return (
+        <div
+          key={`mobile-loc-${group.title}`}
+          className="shrink-0 overflow-hidden border border-dark/10 bg-cream"
+        >
+          <div
+            className={`flex items-center justify-center gap-2 border-b border-dark/10 bg-cream-deep px-3 text-center text-dark lg:justify-start lg:text-left ${
+              compact ? "h-11 py-2" : "h-12 py-2.5"
+            }`}
+          >
+            <GroupIcon className="h-4 w-4 shrink-0 text-rust" strokeWidth={1.75} aria-hidden />
+            <span className="min-w-0 font-sans text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-dark/70">
+              {group.title}
+            </span>
+          </div>
+          <div>
+            {group.places.map((place) => (
+              <div key={place.name}>{renderLocationRow(place, compact)}</div>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    return (
+      <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
+        <div
+          data-reveal
+          className="mb-6 flex flex-col items-center space-y-4 text-center sm:space-y-6 md:mb-8 md:items-start md:text-left"
+        >
+          <div>
+            <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
+              {sectionLabel}
+            </SectionLabel>
+            <SectionHeadline size="lg" className="font-display font-light leading-none text-balance">
+              {headlineContent}
+            </SectionHeadline>
+          </div>
+          {hasBlurb && (
+            <p className="mx-auto max-w-3xl text-sm font-light text-dark/70 sm:text-base md:mx-0 md:max-w-none">
+              {locationBlurb}
+            </p>
+          )}
+        </div>
+
+        <div
+          className="location-groups location-groups--mobile w-full lg:hidden"
+          role="region"
+          aria-label="Location advantages"
+        >
+          {!mobileLocationExpanded ? (
+            <>
+              <MobileHorizontalCarousel variant="light">
+                {groupedPlaces.map((group) => renderMobileGroup(group, true))}
+              </MobileHorizontalCarousel>
+              <button
+                type="button"
+                onClick={() => setMobileLocationExpanded(true)}
+                className="mt-4 w-full cursor-pointer rounded-sm border border-dark/15 bg-cream py-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-dark transition-colors hover:border-rust hover:text-rust hover:bg-cream-deep"
+              >
+                View all locations
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="mx-auto max-h-[min(65vh,28rem)] w-full space-y-3 overflow-y-auto overscroll-y-contain pr-0.5 [-webkit-overflow-scrolling:touch]">
+                {groupedPlaces.map((group) => renderMobileGroup(group, true))}
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileLocationExpanded(false)}
+                className="mt-4 w-full cursor-pointer rounded-sm border border-dark/15 bg-cream py-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-dark transition-colors hover:border-rust hover:text-rust hover:bg-cream-deep"
+              >
+                Show less
+              </button>
+            </>
+          )}
+        </div>
+
+        <div
+          className="location-groups location-groups--desktop hidden overflow-x-auto border border-dark/10 lg:block"
+          role="region"
+          aria-label="Location advantages table"
+        >
+          <div
+            className="grid gap-px bg-dark/10 text-dark"
+            style={{
+              gridTemplateColumns: `repeat(${columnCount}, minmax(11rem, 1fr))`,
+              minWidth: `${columnCount * 11}rem`,
+            }}
+            role="table"
+          >
+            {groupedPlaces.map((group) => {
+              const GroupIcon = getLocationGroupIcon(group.title);
+
+              return (
+                <div
+                  key={`head-loc-${group.title}`}
+                  role="columnheader"
+                  className="flex h-14 items-center gap-2 bg-cream-deep px-3 py-2.5"
+                >
+                  <GroupIcon className="h-4 w-4 shrink-0 text-rust" strokeWidth={1.75} aria-hidden />
+                  <span className="min-w-0 font-sans text-[10px] font-bold uppercase leading-tight tracking-[0.14em] text-dark/70">
+                    {group.title}
+                  </span>
+                </div>
+              );
+            })}
+
+            {Array.from({ length: rowCount }, (_, rowIdx) =>
+              groupedPlaces.map((group) => {
+                const place = group.places[rowIdx];
+
+                return (
+                  <div
+                    key={`${group.title}-row-${rowIdx}`}
+                    role="cell"
+                    className="bg-cream transition-colors duration-300 hover:bg-rust/5"
+                  >
+                    {place ? (
+                      renderLocationRow(place)
+                    ) : (
+                      <div className="min-h-[4.75rem] bg-cream/55" aria-hidden />
+                    )}
+                  </div>
+                );
+              }),
+            )}
+          </div>
+        </div>
+      </SectionWrapper>
+    );
+  }
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
       <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
-
-        <div className="col-span-12 flex flex-col items-center space-y-6 text-center md:items-start md:space-y-7 md:text-left">
-          <div className="w-full max-w-xl space-y-4 sm:space-y-6 md:max-w-none">
+        <div className="col-span-12 flex flex-col items-center space-y-6 text-center md:items-start md:space-y-8 md:text-left">
+          <div className="w-full max-w-none space-y-4 sm:space-y-6">
             <div>
               <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
-                Connectivity
+                {sectionLabel}
               </SectionLabel>
-              <SectionHeadline size="lg" className="font-display font-light leading-none">
-                Location advantages & <em className="font-normal italic">transit</em>
+              <SectionHeadline size="lg" className="font-display font-light leading-none text-balance">
+                {headlineContent}
               </SectionHeadline>
             </div>
 
-            <p className="mx-auto max-w-lg text-sm text-dark/70 font-light md:mx-0 md:max-w-xl">
-              {locationBlurb}
-            </p>
+            {hasBlurb && (
+              <p className="mx-auto max-w-3xl text-sm text-dark/70 font-light sm:text-base md:mx-0 md:max-w-none">
+                {locationBlurb}
+              </p>
+            )}
           </div>
 
-          <div className="w-full grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
-            {allNearbyPlaces.map((place, idx) => (
-              <div
-                key={`${place.name}-${idx}`}
-                className={`border border-dark/10 bg-cream/55 p-3.5 sm:p-4 flex justify-between items-center gap-3 sm:gap-4 text-dark transition-colors hover:border-rust/30 hover:bg-rust/5 ${
-                  idx >= 4 && !nearbyExpanded ? "hidden md:flex" : "flex"
-                }`}
-              >
-                <div className="flex min-w-0 items-center gap-2.5 sm:gap-3 text-left">
-                  <span className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center border border-current/15">
-                    <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </span>
-                  <div className="min-w-0">
-                    <span className="text-[11px] sm:text-xs font-bold block leading-tight">{place.name}</span>
-                    <span className="text-[8px] sm:text-[9px] text-dark/50 uppercase block font-semibold tracking-wider mt-0.5">
-                      {place.category}
-                    </span>
+          {hasFlat ? (
+            <>
+              <div className="w-full grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
+                {allNearbyPlaces.map((place, idx) => (
+                  <div
+                    key={`${place.name}-${idx}`}
+                    className={`border border-dark/10 bg-cream/55 p-3.5 sm:p-4 flex justify-between items-center gap-3 sm:gap-4 text-dark transition-colors hover:border-rust/30 hover:bg-rust/5 ${
+                      idx >= 4 && !nearbyExpanded ? "hidden md:flex" : "flex"
+                    }`}
+                  >
+                    <div className="flex min-w-0 items-center gap-2.5 sm:gap-3 text-left">
+                      <span className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center border border-current/15">
+                        <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      </span>
+                      <div className="min-w-0">
+                        <span className="text-[11px] sm:text-xs font-bold block leading-tight">
+                          {place.name}
+                        </span>
+                        <span className="text-[8px] sm:text-[9px] text-dark/50 uppercase block font-semibold tracking-wider mt-0.5">
+                          {place.category}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <span className="text-xs sm:text-sm font-bold block">{place.time}</span>
+                      <span className="text-[8px] sm:text-[9px] text-dark/50 block font-light">
+                        {place.distance}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="shrink-0 text-right">
-                  <span className="text-xs sm:text-sm font-bold block">{place.time}</span>
-                  <span className="text-[8px] sm:text-[9px] text-dark/50 block font-light">{place.distance}</span>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          {hasMoreNearby && !nearbyExpanded && (
-            <button
-              type="button"
-              onClick={() => setNearbyExpanded(true)}
-              className="md:hidden w-full max-w-sm py-3 border border-dark/15 text-dark hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-cream hover:bg-cream-deep"
-            >
-              Read More
-            </button>
-          )}
+              {allNearbyPlaces.length > 4 && !nearbyExpanded && (
+                <button
+                  type="button"
+                  onClick={() => setNearbyExpanded(true)}
+                  className="md:hidden w-full max-w-sm py-3 border border-dark/15 text-dark hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-cream hover:bg-cream-deep"
+                >
+                  Read More
+                </button>
+              )}
+            </>
+          ) : null}
         </div>
-
       </div>
     </SectionWrapper>
   );

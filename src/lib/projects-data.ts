@@ -67,6 +67,12 @@ export type ProjectData = {
     distance: string;
     time: string;
   }[];
+  locationSectionLabel?: string;
+  locationHeadline?: string;
+  locationPlaceGroups?: {
+    title: string;
+    places: { name: string; distance?: string }[];
+  }[];
   faqsList?: {
     question: string;
     answer: string;
@@ -735,8 +741,55 @@ export const allProjects: ProjectData[] = [
       "Sydney Oaks is a thoughtfully planned mixed-use community designed to create a balanced lifestyle where residents can truly live, work, and play within one connected environment. Nestled in Forsyth County, the development offers a walkable neighborhood experience with integrated retail, dining, office spaces, parks, and recreational zones. The community focuses on modern family living with professionally landscaped surroundings, green spaces, pedestrian-friendly streets, and convenient access to schools, healthcare, shopping, and entertainment. The architectural character combines comfort, functionality, and timeless design, making it ideal for families, professionals, and long-term homeowners. With strong connectivity to major lifestyle destinations and daily conveniences within minutes, Sydney Oaks delivers a modern suburban experience with a strong sense of community and accessibility.",
     ],
     highlightCriteria: [],
+    locationSectionLabel: "Location Advantages",
+    locationHeadline: "Prime connectivity in Forsyth County",
     locationConnectivityBlurb:
-      "Positioned along Gwinnett County's central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.",
+      "Sydney Oaks offers excellent access to schools, recreation, healthcare, dining, shopping, and daily essentials — making it highly convenient for families and professionals.",
+    locationPlaceGroups: [
+      {
+        title: "Nearby Recreation",
+        places: [
+          { name: "Dobbs Creek Recreation Center", distance: "0.3 miles" },
+          { name: "Sawnee Mountainside Trail", distance: "1.7 miles" },
+          { name: "Lake Lanier", distance: "5.0 miles" },
+        ],
+      },
+      {
+        title: "Shopping & Grocery",
+        places: [
+          { name: "Walmart", distance: "4.0 miles" },
+          { name: "Costco", distance: "4.0 miles" },
+          { name: "Publix", distance: "3.7 miles" },
+          { name: "Kroger", distance: "2.9 miles" },
+        ],
+      },
+      {
+        title: "Entertainment & Dining",
+        places: [
+          { name: "Cumming City Center", distance: "2.5 miles" },
+          { name: "Stars & Strikes", distance: "3.8 miles" },
+          { name: "Tam's Backstage", distance: "2.1 miles" },
+          { name: "Community Cup", distance: "2.0 miles" },
+        ],
+      },
+      {
+        title: "Healthcare Access",
+        places: [
+          { name: "Northside Hospital Forsyth", distance: "4.5 miles" },
+          { name: "Piedmont Urgent Care", distance: "3.7 miles" },
+          { name: "Cumming Medical Center", distance: "2.9 miles" },
+        ],
+      },
+      {
+        title: "School District",
+        places: [
+          { name: "Cumming Elementary School" },
+          { name: "Otwell Middle School" },
+          { name: "Forsyth Central High School" },
+          { name: "Alliance Academy for Innovation" },
+        ],
+      },
+    ],
     keyAdvantages: [
       {
         title: "Premium Location",
@@ -850,14 +903,7 @@ export const allProjects: ProjectData[] = [
         image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
       }
     ],
-    nearbyPlaces: [
-      { category: "Schools", name: "North Gwinnett High School", distance: "2.3 miles", time: "5 min" },
-      { category: "Schools", name: "Riverside Elementary School", distance: "1.5 miles", time: "4 min" },
-      { category: "Hospitals", name: "Emory Johns Creek Hospital", distance: "4.8 miles", time: "10 min" },
-      { category: "Metro", name: "MARTA Station - Doraville", distance: "15 miles", time: "22 min" },
-      { category: "Shopping", name: "Sugarloaf Mills Mall", distance: "6.2 miles", time: "12 min" },
-      { category: "Tech Parks", name: "Duluth Tech Corridor", distance: "5.1 miles", time: "9 min" }
-    ],
+    nearbyPlaces: [],
     faqsList: [
       {
         question: "What is the expected completion date of Sydney Oaks?",

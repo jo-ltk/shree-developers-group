@@ -13,6 +13,15 @@ const config: Config = {
         dark: "#1C1208",
         rust: "#D43F33",
       },
+      keyframes: {
+        "carousel-hint-nudge": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(4px)" },
+        },
+      },
+      animation: {
+        "carousel-hint-nudge": "carousel-hint-nudge 2s ease-in-out infinite",
+      },
     },
   },
   plugins: [],
