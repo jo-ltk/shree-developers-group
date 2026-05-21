@@ -448,7 +448,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </section>
 
       {/* B. COMMUNITY OVERVIEW */}
-      <SectionWrapper dark={false} className="!py-16 md:!py-24">
+      <SectionWrapper dark={false} className="!pt-16 !pb-3 md:!pt-24 md:!pb-5">
         <div data-reveal className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
           <div
@@ -589,7 +589,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </SectionWrapper>
 
       {/* C. GALLERY */}
-      <section className="overflow-hidden border-y border-dark/10 bg-cream py-12 sm:py-16 md:py-24">
+      <section className="overflow-hidden bg-cream pt-2 pb-3 sm:pt-3 sm:pb-4 md:pt-4 md:pb-5">
         <div className="mx-auto mb-6 max-w-[1450px] px-4 sm:mb-8 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
             <div className="w-full max-w-xl md:max-w-none">
@@ -685,11 +685,11 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       />
 
       {/* J. ENQUIRY SECTION */}
-      <section id="enquiry" className="scroll-mt-20 py-12 sm:py-16 md:py-24 bg-cream border-t border-dark/10">
+      <section id="enquiry" className="scroll-mt-20 pt-2 pb-8 sm:pt-3 sm:pb-10 md:pt-4 md:pb-14 bg-cream">
         <div className="mx-auto max-w-[1450px] px-4 sm:px-8 md:px-12 lg:px-20">
-          <div className="grid grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-stretch">
-            <div className="col-span-12 flex flex-col items-center justify-between gap-8 border-y border-dark/10 py-6 text-center sm:py-8 lg:col-span-5 lg:items-stretch lg:gap-0 lg:py-10 lg:text-left">
-              <div className="w-full max-w-lg space-y-4 sm:space-y-6 lg:max-w-none">
+          <div className="grid grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-stretch">
+            <div className="col-span-12 flex flex-col items-center justify-between gap-5 py-4 text-center sm:py-6 lg:col-span-5 lg:items-stretch lg:gap-4 lg:py-6 lg:text-left">
+              <div className="w-full max-w-lg space-y-3 sm:space-y-4 lg:max-w-none">
                 <div>
                   <SectionLabel className="justify-center lg:justify-start !mb-4 md:!mb-6">
                     Project Consultation
@@ -1106,7 +1106,9 @@ function AmenitiesSection({
                 >
                   <AmenityIcon className="h-3.5 w-3.5" strokeWidth={1.75} />
                 </div>
-                <p className="amenities-table__text m-0 min-w-0 flex-1">{amenity}</p>
+                <p className="amenities-table__text m-0 min-w-0 flex-1 text-xs font-semibold leading-snug sm:text-sm">
+                  {amenity}
+                </p>
               </div>
             );
           };
@@ -1231,7 +1233,7 @@ function AmenitiesSection({
                               <div className="flex h-8 w-8 shrink-0 items-center justify-center border border-cream/25 text-rust">
                                 <AmenityIcon className="h-3.5 w-3.5" strokeWidth={1.75} />
                               </div>
-                              <p className="amenities-table__text m-0 min-w-0 flex-1">
+                              <p className="amenities-table__text m-0 min-w-0 flex-1 text-xs font-semibold leading-snug sm:text-sm">
                                 {amenity}
                               </p>
                             </>
@@ -1590,7 +1592,7 @@ function MasterPlanSection({
     ];
 
   return (
-    <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
+    <SectionWrapper dark={false} className="!pt-2 !pb-12 md:!pt-3 md:!pb-16 bg-[#F5F0E8]">
       <div className="mb-8 flex flex-col items-center gap-5 text-center md:flex-row md:items-end md:justify-between md:text-left">
         <div className="w-full max-w-xl md:max-w-none">
           <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
@@ -1955,10 +1957,10 @@ function KeyAdvantagesSection({
   const lgCols = items.length > 4 ? "lg:grid-cols-3" : "lg:grid-cols-4";
 
   return (
-    <SectionWrapper dark={false} className="!py-12 md:!py-16 lg:!py-24 bg-[#F5F0E8] border-b border-dark/10">
+    <SectionWrapper dark={false} className="!pt-2 !pb-3 md:!pt-3 md:!pb-4 lg:!pt-4 lg:!pb-5 bg-[#F5F0E8]">
       <div className="mx-auto max-w-[1450px]">
-        <div className="mb-8 flex flex-col items-center text-center md:mb-12 md:items-start md:text-left">
-          <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
+        <div className="mb-6 flex flex-col items-center text-center md:mb-8 md:items-start md:text-left">
+          <SectionLabel className="justify-center md:justify-start !mb-3 md:!mb-5">
             {sectionLabel ?? "Key Advantages"}
           </SectionLabel>
           <SectionHeadline size="lg" className="font-display font-light max-w-xl md:max-w-none">
@@ -2005,7 +2007,7 @@ function KeyAdvantagesSection({
           <button
             type="button"
             onClick={() => setExpanded((prev) => !prev)}
-            className="md:hidden mt-4 w-full max-w-sm mx-auto py-3 border border-dark/15 text-dark hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-cream hover:bg-cream-deep"
+            className="md:hidden mt-2 w-full max-w-sm mx-auto py-3 border border-dark/15 text-dark hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-cream hover:bg-cream-deep"
           >
             {expanded ? "Read Less" : "Read More"}
           </button>
@@ -2073,7 +2075,7 @@ function LocationAdvantagesSection({
           <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="m-0 text-[11px] font-semibold leading-tight sm:text-xs">{place.name}</p>
+          <p className="m-0 text-xs font-semibold leading-snug sm:text-sm">{place.name}</p>
           {place.distance && (
             <span className="mt-0.5 block font-sans text-[10px] font-bold uppercase tracking-wide text-rust">
               {place.distance}
@@ -2114,7 +2116,7 @@ function LocationAdvantagesSection({
     };
 
     return (
-      <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
+      <SectionWrapper dark={false} className="!pt-12 !pb-3 md:!pt-16 md:!pb-4 bg-[#F5F0E8]">
         <div
           data-reveal
           className="mb-6 flex flex-col items-center space-y-4 text-center sm:space-y-6 md:mb-8 md:items-start md:text-left"
@@ -2224,7 +2226,7 @@ function LocationAdvantagesSection({
   }
 
   return (
-    <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
+    <SectionWrapper dark={false} className="!pt-12 !pb-3 md:!pt-16 md:!pb-4 bg-[#F5F0E8]">
       <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
         <div className="col-span-12 flex flex-col items-center space-y-6 text-center md:items-start md:space-y-8 md:text-left">
           <div className="w-full max-w-none space-y-4 sm:space-y-6">

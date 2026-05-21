@@ -144,15 +144,6 @@ h3 {
 
 .amenities-table .amenities-table__text {
   font-family: "Montserrat", sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1.45;
-}
-
-@media (min-width: 640px) {
-  .amenities-table .amenities-table__text {
-    font-size: 12px;
-  }
 }
 
 .section-light {
