@@ -129,6 +129,32 @@ h3 {
   color: var(--text-secondary);
 }
 
+/* Amenities table — force light text on dark cells (body color would otherwise match bg) */
+.amenities-table,
+.amenities-table .amenities-table__text,
+.amenities-table .amenities-table__label {
+  color: #f5f0e8 !important;
+}
+
+.amenities-table .amenities-table__label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.amenities-table .amenities-table__text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+@media (min-width: 640px) {
+  .amenities-table .amenities-table__text {
+    font-size: 12px;
+  }
+}
+
 .section-light {
   background: var(--bg-main);
   color: var(--text-primary);

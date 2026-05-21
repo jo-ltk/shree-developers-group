@@ -44,6 +44,9 @@ import {
   BriefcaseBusiness,
   PartyPopper,
   Instagram,
+  Zap,
+  ChefHat,
+  Lightbulb,
   type LucideIcon
 } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
@@ -75,7 +78,61 @@ const amenityIconMap: Record<string, LucideIcon> = {
 };
 
 function getAmenityIcon(amenity: string) {
-  return amenityIconMap[amenity.toLowerCase()] || CheckCircle2;
+  const lower = amenity.toLowerCase();
+  if (amenityIconMap[lower]) return amenityIconMap[lower];
+
+  const rules: [string, LucideIcon][] = [
+    ["landscap", Trees],
+    ["park", Trees],
+    ["green", Trees],
+    ["sidewalk", Footprints],
+    ["walkable", Footprints],
+    ["retail", Building2],
+    ["dining", Building2],
+    ["gathering", Users],
+    ["recreation", Dumbbell],
+    ["aquatic", Waves],
+    ["trail", Footprints],
+    ["lake", Waves],
+    ["lanier", Waves],
+    ["shopping", Building2],
+    ["entertainment", PartyPopper],
+    ["lighting", Lightbulb],
+    ["ceiling fan", Lightbulb],
+    ["crown molding", Home],
+    ["flex room", Home],
+    ["bonus room", Home],
+    ["cat6", Navigation],
+    ["quartz", ChefHat],
+    ["kitchen", ChefHat],
+    ["cabinet", ChefHat],
+    ["appliance", ChefHat],
+    ["energy star", Zap],
+    ["thermostat", Zap],
+    ["window", Shield],
+    ["insulation", Shield],
+    ["house wrap", Shield],
+    ["hvac", Zap],
+    ["led", Lightbulb],
+  ];
+
+  for (const [keyword, icon] of rules) {
+    if (lower.includes(keyword)) return icon;
+  }
+
+  return CheckCircle2;
+}
+
+const amenitySectionIconMap: Record<string, LucideIcon> = {
+  "community amenities": Trees,
+  "lifestyle & recreation": Map,
+  "interior features": Home,
+  "kitchen features": ChefHat,
+  "energy efficient features": Zap,
+};
+
+function getAmenitySectionIcon(title: string) {
+  return amenitySectionIconMap[title.toLowerCase()] || CheckCircle2;
 }
 
 export function ProjectDetailClient({ project }: { project: ProjectData }) {
@@ -86,7 +143,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const [activeHighlight, setActiveHighlight] = useState<number | null>(0);
   const [highlightsExpanded, setHighlightsExpanded] = useState(false);
-  const [amenitiesExpanded, setAmenitiesExpanded] = useState(false);
 
   // Setup GSAP
   useLayoutEffect(() => {
@@ -540,43 +596,10 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       <FloorPlansSection floorPlans={floorPlans} />
 
       {/* F. AMENITIES SECTION */}
-      <SectionWrapper dark={true} className="!py-16 md:!py-24">
-        <div data-reveal className="mb-10 text-center md:text-left">
-          <SectionLabel light>Infrastructure</SectionLabel>
-          <SectionHeadline size="lg" light className="!text-[#F5F0E8] font-display">
-            Curated <em className="italic">amenities</em>
-          </SectionHeadline>
-        </div>
-
-        <div data-reveal className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[#F5F0E8]/10 border border-[#F5F0E8]/10">
-          {project.amenities.map((amenity, i) => {
-            const AmenityIcon = getAmenityIcon(amenity);
-
-            return (
-              <div
-                key={i}
-                className={`bg-dark p-6 sm:p-8 gap-4 group hover:bg-[#2A2118] transition-colors duration-500 ${
-                  i >= 4
-                    ? (amenitiesExpanded ? "flex items-center" : "hidden md:flex md:items-center")
-                    : "flex items-center"
-                }`}
-              >
-                <div className="w-10 h-10 border border-[#F5F0E8]/20 text-[#F5F0E8]/55 flex items-center justify-center transition-colors group-hover:border-rust group-hover:text-rust shrink-0">
-                  <AmenityIcon className="h-5 w-5" strokeWidth={1.7} />
-                </div>
-                <Annotation light className="!text-[#F5F0E8]/80 font-bold tracking-widest">{amenity.toUpperCase()}</Annotation>
-              </div>
-            );
-          })}
-        </div>
-
-        <button
-          onClick={() => setAmenitiesExpanded(!amenitiesExpanded)}
-          className="md:hidden mt-6 w-full py-3 border border-[#F5F0E8]/15 text-[#F5F0E8] hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-[#2A2118]/20 hover:bg-[#2A2118]"
-        >
-          {amenitiesExpanded ? "Read Less" : "Read More"}
-        </button>
-      </SectionWrapper>
+      <AmenitiesSection
+        sections={project.amenitySections}
+        amenities={project.amenities}
+      />
 
       {/* G. LOCATION ADVANTAGES */}
       <LocationAdvantagesSection
@@ -954,6 +977,260 @@ function formatPlanAvailabilityShort(status: string) {
     default:
       return status;
   }
+}
+
+/* ===========================================================================
+   F. AMENITIES
+   =========================================================================== */
+function AmenitiesSection({
+  sections,
+  amenities,
+}: {
+  sections?: NonNullable<ProjectData["amenitySections"]>;
+  amenities: ProjectData["amenities"];
+}) {
+  const [amenitiesExpanded, setAmenitiesExpanded] = useState(false);
+  const [mobileAmenitiesExpanded, setMobileAmenitiesExpanded] = useState(false);
+  const groupedSections = sections?.filter((s) => s.items.length > 0) ?? [];
+  const hasGrouped = groupedSections.length > 0;
+  const flatAmenities = amenities.filter(Boolean);
+
+  if (!hasGrouped && flatAmenities.length === 0) return null;
+
+  if (hasGrouped) {
+    return (
+      <SectionWrapper dark={true} className="!py-12 md:!py-16">
+        <div
+          data-reveal
+          className="mb-8 flex flex-col items-center text-center md:mb-10 md:items-start md:text-left"
+        >
+          <SectionLabel light className="justify-center md:justify-start">
+            Amenities
+          </SectionLabel>
+          <SectionHeadline size="lg" light className="!text-cream">
+            Community <em className="italic">amenities</em>
+          </SectionHeadline>
+        </div>
+
+        {(() => {
+          const rowCount = Math.max(
+            0,
+            ...groupedSections.map((section) => section.items.length),
+          );
+
+          const renderAmenityRow = (amenity: string, compact?: boolean) => {
+            const AmenityIcon = getAmenityIcon(amenity);
+
+            return (
+              <div
+                className={`flex items-center gap-2.5 bg-dark px-3 ${
+                  compact ? "min-h-[3.5rem] py-2.5" : "min-h-[4.25rem] py-3 sm:min-h-[4.75rem]"
+                }`}
+              >
+                <div
+                  className={`flex shrink-0 items-center justify-center border border-cream/25 text-rust ${
+                    compact ? "h-7 w-7" : "h-8 w-8"
+                  }`}
+                >
+                  <AmenityIcon className="h-3.5 w-3.5" strokeWidth={1.75} />
+                </div>
+                <p className="amenities-table__text m-0 min-w-0 flex-1">{amenity}</p>
+              </div>
+            );
+          };
+
+          const renderMobileCategory = (
+            section: (typeof groupedSections)[number],
+            compact?: boolean,
+          ) => {
+            const SectionIcon = getAmenitySectionIcon(section.title);
+
+            return (
+              <div
+                key={`mobile-${section.title}`}
+                className="shrink-0 overflow-hidden border border-cream/10"
+              >
+                <div
+                  className={`flex items-center justify-center gap-2 bg-dark-mid px-3 text-center lg:justify-start lg:text-left ${
+                    compact ? "h-11 py-2" : "h-12 py-2.5"
+                  }`}
+                >
+                  <SectionIcon
+                    className="h-4 w-4 shrink-0 text-rust"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
+                  <span className="amenities-table__label min-w-0 font-bold uppercase leading-tight tracking-[0.14em]">
+                    {section.title}
+                  </span>
+                </div>
+                <div className="divide-y divide-cream/10 bg-cream/10">
+                  {section.items.map((amenity) => (
+                    <div key={amenity}>{renderAmenityRow(amenity, compact)}</div>
+                  ))}
+                </div>
+              </div>
+            );
+          };
+
+          return (
+            <>
+              {/* Mobile: compact preview + swipe / read more */}
+              <div
+                className="amenities-table amenities-table--mobile mx-auto w-full max-w-sm lg:hidden"
+                role="region"
+                aria-label="Community amenities"
+              >
+                {!mobileAmenitiesExpanded ? (
+                  <>
+                    <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-1 pl-[calc(50%-min(44vw,11rem))] pr-[calc(50%-min(44vw,11rem))] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                      {groupedSections.map((section) => (
+                        <div
+                          key={`snap-${section.title}`}
+                          className="w-[min(88vw,22rem)] shrink-0 snap-center"
+                        >
+                          {renderMobileCategory(section, true)}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="mt-3 text-center font-sans text-[9px] font-medium uppercase tracking-[0.2em] text-cream/45">
+                      Swipe for more categories
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setMobileAmenitiesExpanded(true)}
+                      className="mt-4 w-full cursor-pointer rounded-sm border border-cream/15 bg-dark-mid/40 py-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:border-rust hover:text-rust"
+                    >
+                      View all amenities
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="mx-auto max-h-[min(65vh,28rem)] w-full space-y-3 overflow-y-auto overscroll-y-contain pr-0.5 [-webkit-overflow-scrolling:touch]">
+                      {groupedSections.map((section) => renderMobileCategory(section, true))}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setMobileAmenitiesExpanded(false)}
+                      className="mt-4 w-full cursor-pointer rounded-sm border border-cream/15 bg-dark-mid/40 py-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:border-rust hover:text-rust"
+                    >
+                      Show less
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Desktop: 5-column table (unchanged) */}
+              <div
+                className="amenities-table amenities-table--desktop hidden overflow-x-auto border border-cream/10 lg:block"
+                role="region"
+                aria-label="Community amenities table"
+              >
+                <div
+                  className="grid min-w-[56rem] grid-cols-5 gap-px bg-cream/10 text-cream"
+                  role="table"
+                >
+                  {groupedSections.map((section) => {
+                    const SectionIcon = getAmenitySectionIcon(section.title);
+
+                    return (
+                      <div
+                        key={`head-${section.title}`}
+                        role="columnheader"
+                        className="flex h-14 items-center gap-2 bg-dark-mid px-3 py-2.5"
+                      >
+                        <SectionIcon
+                          className="h-4 w-4 shrink-0 text-rust"
+                          strokeWidth={1.75}
+                          aria-hidden
+                        />
+                        <span className="amenities-table__label min-w-0 font-bold uppercase leading-tight tracking-[0.14em]">
+                          {section.title}
+                        </span>
+                      </div>
+                    );
+                  })}
+
+                  {Array.from({ length: rowCount }, (_, rowIdx) =>
+                    groupedSections.map((section) => {
+                      const amenity = section.items[rowIdx];
+                      const AmenityIcon = amenity ? getAmenityIcon(amenity) : null;
+
+                      return (
+                        <div
+                          key={`${section.title}-row-${rowIdx}`}
+                          role="cell"
+                          className="flex min-h-[4.75rem] items-center gap-2.5 bg-dark px-3 py-3 transition-colors duration-300 hover:bg-dark-mid"
+                        >
+                          {amenity && AmenityIcon ? (
+                            <>
+                              <div className="flex h-8 w-8 shrink-0 items-center justify-center border border-cream/25 text-rust">
+                                <AmenityIcon className="h-3.5 w-3.5" strokeWidth={1.75} />
+                              </div>
+                              <p className="amenities-table__text m-0 min-w-0 flex-1">
+                                {amenity}
+                              </p>
+                            </>
+                          ) : null}
+                        </div>
+                      );
+                    }),
+                  )}
+                </div>
+              </div>
+            </>
+          );
+        })()}
+      </SectionWrapper>
+    );
+  }
+
+  return (
+    <SectionWrapper dark={true} className="!py-16 md:!py-24">
+      <div data-reveal className="mb-10 text-center md:text-left">
+        <SectionLabel light>Infrastructure</SectionLabel>
+        <SectionHeadline size="lg" light className="!text-[#F5F0E8] font-display">
+          Curated <em className="italic">amenities</em>
+        </SectionHeadline>
+      </div>
+
+      <div data-reveal className="grid grid-cols-2 gap-px border border-[#F5F0E8]/10 bg-[#F5F0E8]/10 md:grid-cols-3 lg:grid-cols-4">
+        {flatAmenities.map((amenity, i) => {
+          const AmenityIcon = getAmenityIcon(amenity);
+
+          return (
+            <div
+              key={amenity}
+              className={`gap-4 bg-dark p-6 transition-colors duration-500 hover:bg-[#2A2118] sm:p-8 ${
+                i >= 4
+                  ? amenitiesExpanded
+                    ? "flex items-center"
+                    : "hidden md:flex md:items-center"
+                  : "flex items-center"
+              }`}
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#F5F0E8]/20 text-[#F5F0E8]/55 transition-colors group-hover:border-rust group-hover:text-rust">
+                <AmenityIcon className="h-5 w-5" strokeWidth={1.7} />
+              </div>
+              <Annotation light className="!text-[#F5F0E8]/80 font-bold tracking-widest">
+                {amenity.toUpperCase()}
+              </Annotation>
+            </div>
+          );
+        })}
+      </div>
+
+      {flatAmenities.length > 4 && (
+        <button
+          type="button"
+          onClick={() => setAmenitiesExpanded(!amenitiesExpanded)}
+          className="mt-6 w-full cursor-pointer rounded-sm border border-[#F5F0E8]/15 bg-[#2A2118]/20 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#F5F0E8] transition-all duration-300 hover:border-rust hover:bg-[#2A2118] hover:text-rust md:hidden"
+        >
+          {amenitiesExpanded ? "Read Less" : "Read More"}
+        </button>
+      )}
+    </SectionWrapper>
+  );
 }
 
 /* ===========================================================================

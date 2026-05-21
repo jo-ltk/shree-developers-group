@@ -20,6 +20,8 @@ export type ProjectData = {
   renders: { label: string; image: string; isVideo?: boolean }[];
   progress: ProgressEntry[];
   amenities: string[];
+  /** Grouped amenities (e.g. Community, Lifestyle, Interior) — replaces flat grid when set */
+  amenitySections?: { title: string; items: string[] }[];
   locationMap: string;
 
   // New fields for Sydney Oaks dedicated page
@@ -642,19 +644,58 @@ export const allProjects: ProjectData[] = [
       { date: "Apr 2026", note: "Paving of Oak Ridge Trail completed", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" },
       { date: "Jan 2026", note: "Underground utility lines installed" },
     ],
-    amenities: [
-      "Swimming Pool",
-      "Club House",
-      "Gym",
-      "Kids Play Area",
-      "Walking Track",
-      "Basketball Court",
-      "Garden Area",
-      "Security",
-      "CCTV",
-      "Indoor Games",
-      "Co-working Space",
-      "Party Hall"
+    amenities: [],
+    amenitySections: [
+      {
+        title: "Community Amenities",
+        items: [
+          "HOA maintained landscaping and exterior maintenance",
+          "Parks and green open spaces",
+          "Professionally landscaped common areas",
+          "Double sidewalks and walkable streets",
+          "Integrated retail and dining spaces",
+        ],
+      },
+      {
+        title: "Lifestyle & Recreation",
+        items: [
+          "Nearby recreation centers",
+          "Aquatic center access",
+          "Mountain trails and nature connectivity",
+          "Lake Lanier nearby",
+          "Entertainment and shopping districts within minutes",
+        ],
+      },
+      {
+        title: "Interior Features",
+        items: [
+          "Curated lighting packages",
+          "Ceiling fans in family room and owner's suite",
+          "Crown molding and upgraded interior finishes",
+          "Flex room and bonus room options",
+          "Structured CAT6 wiring",
+        ],
+      },
+      {
+        title: "Kitchen Features",
+        items: [
+          "Quartz countertops",
+          "Stainless steel appliances",
+          "Soft-close upper cabinets",
+          "Kitchen island pendant lighting",
+          "Energy-efficient LED fixtures",
+        ],
+      },
+      {
+        title: "Energy Efficient Features",
+        items: [
+          "ENERGY STAR HVAC systems",
+          "Programmable thermostats",
+          "Low-E insulated windows",
+          "Weather-resistant house wrap",
+          "High-efficiency insulation systems",
+        ],
+      },
     ],
     locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
 
