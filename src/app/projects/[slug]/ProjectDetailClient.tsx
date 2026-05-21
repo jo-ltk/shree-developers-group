@@ -322,18 +322,27 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       <SectionWrapper dark={false} className="!py-16 md:!py-24">
         <div data-reveal className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
-          <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full">
-            <div>
-              <SectionLabel>Overview</SectionLabel>
-              <SectionHeadline size="md" className="mb-6 font-display font-light">
+          <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full items-center text-center lg:items-start lg:text-left">
+            <div className="w-full max-w-xl lg:max-w-none">
+              <SectionLabel className="w-full justify-center text-center lg:justify-start lg:text-left !mb-4 lg:!mb-6">
+                Overview
+              </SectionLabel>
+              <SectionHeadline
+                size="md"
+                className="mb-5 sm:mb-6 font-display font-light text-balance !text-[clamp(1.35rem,5vw,1.9rem)]"
+              >
                 Crafting spaces where light meets <em className="font-normal italic">sanctuary</em>
               </SectionHeadline>
 
-              <div className="space-y-6 text-dark/80">
+              <div className="space-y-5 sm:space-y-6 text-dark/80">
                 {overviewParagraphs.map((paragraph, idx) => (
                   <p
                     key={idx}
-                    className={`leading-relaxed font-light ${idx === 0 ? "text-lg" : "text-md opacity-90"}`}
+                    className={`leading-relaxed font-light text-pretty ${
+                      idx === 0
+                        ? "text-base sm:text-lg"
+                        : "text-sm sm:text-base opacity-90"
+                    }`}
                   >
                     {paragraph}
                   </p>
@@ -341,9 +350,9 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
               </div>
             </div>
 
-            <div className="mt-8 border-t border-dark/15 pt-6">
+            <div className="mt-8 w-full max-w-xl border-t border-dark/15 pt-6 lg:max-w-none">
               <Annotation className="!text-rust mb-4">COMMUNITY KEYNOTE</Annotation>
-              <blockquote className="border-l-2 border-rust pl-4 italic text-dark/70 font-display text-lg">
+              <blockquote className="mx-auto max-w-md border-l-0 pl-0 italic text-dark/70 font-display text-base sm:text-lg lg:mx-0 lg:max-w-none lg:border-l-2 lg:border-rust lg:pl-4">
                 &ldquo;Modern design should not separate us from nature; it should act as the frame that celebrates it.&rdquo;
               </blockquote>
             </div>
