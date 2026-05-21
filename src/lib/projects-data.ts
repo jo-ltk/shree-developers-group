@@ -96,6 +96,8 @@ export type ProjectData = {
   sitePlanSvg?: string;
   configurationLabel?: string;
   keyAdvantages?: { title: string; description: string }[];
+  keyAdvantagesSectionLabel?: string;
+  keyAdvantagesHeadline?: string;
   /** Hero-only copy; other sections keep using summary/brief until updated */
   heroDescription?: string;
   heroKeySpecs?: string[];
@@ -790,26 +792,38 @@ export const allProjects: ProjectData[] = [
         ],
       },
     ],
+    keyAdvantagesSectionLabel: "Why Choose This Project",
+    keyAdvantagesHeadline: "Why Sydney Oaks?",
     keyAdvantages: [
       {
-        title: "Premium Location",
+        title: "Premium Mixed-Use Planning",
         description:
-          "Gwinnett County address with quick access to wooded trails, schools, healthcare, and daily essentials.",
+          "A modern development concept that combines residential, retail, office, and recreational spaces within one integrated masterplan.",
       },
       {
-        title: "Smart Planning",
+        title: "Prime Forsyth County Location",
         description:
-          "Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.",
+          "Strategically located near top-rated schools, shopping centers, healthcare facilities, and recreational destinations.",
       },
       {
-        title: "High Appreciation",
+        title: "Family-Friendly Community",
         description:
-          "Positioned in a growing residential corridor with strong demand for family-focused communities.",
+          "Walkable streets, landscaped surroundings, parks, and nearby educational institutions create a strong community atmosphere.",
       },
       {
-        title: "Trusted Developer",
+        title: "High Lifestyle Convenience",
         description:
-          "Delivered by Shree Developers Group with transparent documentation and responsive site support.",
+          "Everything from grocery stores to dining and entertainment is located within minutes, reducing commute time and improving daily living.",
+      },
+      {
+        title: "Quality Construction & Design",
+        description:
+          "Energy-efficient systems, upgraded interiors, premium finishes, and professionally planned architecture ensure long-term comfort and value.",
+      },
+      {
+        title: "Strong Investment Potential",
+        description:
+          "Forsyth County continues to grow rapidly, making Sydney Oaks an attractive opportunity for homeowners and investors alike.",
       },
     ],
     masterPlanComponents: [

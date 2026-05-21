@@ -677,7 +677,12 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       />
 
       {/* H. WHY CHOOSE THIS PROJECT */}
-      <KeyAdvantagesSection projectName={name} advantages={project.keyAdvantages} />
+      <KeyAdvantagesSection
+        projectName={name}
+        advantages={project.keyAdvantages}
+        sectionLabel={project.keyAdvantagesSectionLabel}
+        headline={project.keyAdvantagesHeadline}
+      />
 
       {/* J. ENQUIRY SECTION */}
       <section id="enquiry" className="scroll-mt-20 py-12 sm:py-16 md:py-24 bg-cream border-t border-dark/10">
@@ -1914,65 +1919,60 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
 /* ===========================================================================
    KEY ADVANTAGES (Why choose this project)
    =========================================================================== */
-const KEY_ADVANTAGES = [
-  {
-    icon: MapPin,
-    title: "Premium Location",
-    description:
-      "Gwinnett County address with quick access to wooded trails, schools, healthcare, and daily essentials.",
-  },
-  {
-    icon: Compass,
-    title: "Smart Planning",
-    description:
-      "Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.",
-  },
-  {
-    icon: DollarSign,
-    title: "High Appreciation",
-    description:
-      "Positioned in a growing residential corridor with strong demand for family-focused communities.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Trusted Developer",
-    description:
-      "Transparent delivery, careful material choices, and construction quality managed with clear standards.",
-  },
-] as const;
+const KEY_ADVANTAGE_ICONS: LucideIcon[] = [
+  Layers,
+  MapPin,
+  Users,
+  ShoppingCart,
+  Building2,
+  DollarSign,
+  Compass,
+  ShieldCheck,
+];
 
 const KEY_ADVANTAGES_MOBILE_INITIAL = 2;
 
 function KeyAdvantagesSection({
   projectName,
   advantages,
+  sectionLabel,
+  headline,
 }: {
   projectName: string;
   advantages?: NonNullable<ProjectData["keyAdvantages"]>;
+  sectionLabel?: string;
+  headline?: string;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const items = advantages?.length
-    ? KEY_ADVANTAGES.map((item, idx) => ({
-        ...item,
-        title: advantages[idx]?.title ?? item.title,
-        description: advantages[idx]?.description ?? item.description,
-      }))
-    : KEY_ADVANTAGES;
+
+  if (!advantages?.length) return null;
+
+  const items = advantages.map((item, idx) => ({
+    ...item,
+    icon: KEY_ADVANTAGE_ICONS[idx % KEY_ADVANTAGE_ICONS.length],
+  }));
   const hasMore = items.length > KEY_ADVANTAGES_MOBILE_INITIAL;
+  const lgCols = items.length > 4 ? "lg:grid-cols-3" : "lg:grid-cols-4";
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 lg:!py-24 bg-[#F5F0E8] border-b border-dark/10">
       <div className="mx-auto max-w-[1450px]">
         <div className="mb-8 flex flex-col items-center text-center md:mb-12 md:items-start md:text-left">
           <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
-            Key Advantages
+            {sectionLabel ?? "Key Advantages"}
           </SectionLabel>
           <SectionHeadline size="lg" className="font-display font-light max-w-xl md:max-w-none">
-            Why choose <em className="font-normal italic">{projectName}</em>
+            {headline ?? (
+              <>
+                Why choose <em className="font-normal italic">{projectName}</em>
+              </>
+            )}
           </SectionHeadline>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-px lg:grid-cols-4 sm:border sm:border-dark/10 sm:bg-dark/10">
+        <div
+          className={`grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-px ${lgCols} sm:border sm:border-dark/10 sm:bg-dark/10`}
+        >
           {items.map((item, idx) => {
             const Icon = item.icon;
             const hiddenOnMobile = idx >= KEY_ADVANTAGES_MOBILE_INITIAL && !expanded;
