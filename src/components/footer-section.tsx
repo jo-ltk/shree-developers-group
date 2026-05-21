@@ -91,8 +91,9 @@ export function FooterSection() {
         {/* LOGO BAR */}
         <div data-footer-animate className="mt-0 flex flex-col items-center justify-center border-t border-[#F5F0E8]/5 pt-0">
           <BrandMark
-            variant="steel"
+            variant="black"
             className="h-16 w-48 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+            imageClassName="invert"
           />
           <Annotation light className="mt-2 !text-[#F5F0E8]/20 responsive-stat-label">
             SHREE DEVELOPERS GROUP

@@ -20,7 +20,12 @@ const navColumns = [
 const desktopGridClass =
   "grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] items-start gap-x-8";
 
-export function NavbarEditorial() {
+type NavbarEditorialProps = {
+  /** Invert the black logo to white when at top (use on dark hero pages only). */
+  invertLogoAtTop?: boolean;
+};
+
+export function NavbarEditorial({ invertLogoAtTop = false }: NavbarEditorialProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -59,6 +64,13 @@ export function NavbarEditorial() {
     []
   );
 
+  const logoImageClassName = [
+    "object-left",
+    isAtTop && invertLogoAtTop ? "invert" : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <>
       <motion.header
@@ -85,11 +97,11 @@ export function NavbarEditorial() {
           <div className={`${desktopGridClass} hidden xl:grid items-center`}>
             <Link href="/" className="w-fit text-dark">
               <BrandMark
-                variant={isAtTop ? "steel" : "black"}
+                variant="black"
                 className={`transition-all duration-500 ${
                   isAtTop ? "h-20 w-[14rem]" : "h-14 w-[10rem]"
                 }`}
-                imageClassName="object-left"
+                imageClassName={logoImageClassName}
                 alt="Shree Developers Group logo"
                 priority
               />
@@ -113,11 +125,11 @@ export function NavbarEditorial() {
           <div className="flex items-center justify-between xl:hidden">
             <Link href="/" className="relative z-50 text-[var(--text-primary)]">
               <BrandMark
-                variant={isAtTop ? "steel" : "black"}
+                variant="black"
                 className={`transition-all duration-500 ${
                   isAtTop ? "h-14 w-[10rem]" : "h-11 w-[8rem]"
                 }`}
-                imageClassName="object-left"
+                imageClassName={logoImageClassName}
                 alt="Shree Developers Group logo"
                 priority
               />

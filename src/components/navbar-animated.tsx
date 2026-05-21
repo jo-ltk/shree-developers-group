@@ -84,13 +84,13 @@ export function NavbarAnimated() {
               className="relative transition-all duration-700 hover:opacity-80 active:scale-95"
             >
               <BrandMark
-                variant={isAtTop ? "steel" : "black"}
+                variant="black"
                 className={`transition-all duration-500 ${
                   isAtTop 
                     ? "h-12 w-[10rem] md:h-20 md:w-[14rem]" 
                     : "h-9 w-[8rem] md:h-14 md:w-[11rem]"
                 }`}
-                imageClassName="object-right"
+                imageClassName={isAtTop ? "object-right invert" : "object-right"}
                 alt="Shree Developers Group logo"
                 priority
               />

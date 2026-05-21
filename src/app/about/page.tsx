@@ -38,7 +38,7 @@ const fadeUp: Variants = {
 export default function AboutPage() {
   return (
     <main className="bg-[#F5F0E8] overflow-hidden">
-      <NavbarEditorial />
+      <NavbarEditorial invertLogoAtTop />
       {/* HERO SECTION */}
       <section className="relative">
         {/* Cinematic Header Image */}

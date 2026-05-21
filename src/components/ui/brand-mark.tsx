@@ -20,7 +20,7 @@ const logoSrc = {
 export function BrandMark({
   className,
   imageClassName,
-  variant = "steel",
+  variant = "black",
   alt = "Shree Developers Group logo",
   priority = false,
 }: BrandMarkProps) {
