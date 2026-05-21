@@ -33,7 +33,17 @@ import {
   Shield,
   Trees,
   ShieldCheck,
-  Map
+  Map,
+  Waves,
+  Dumbbell,
+  Baby,
+  Footprints,
+  Trophy,
+  Camera,
+  Gamepad2,
+  BriefcaseBusiness,
+  PartyPopper,
+  type LucideIcon
 } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
 import { ensureGsapPlugins } from "@/lib/gsap";
@@ -46,12 +56,29 @@ import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
 import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
-import { ButtonPrimary } from "@/components/ui/button-primary";
-import { ButtonGhost } from "@/components/ui/button-ghost";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { SydneyOaksStage } from "@/app/InteractiveSiteMap/components/SydneyOaksStage";
 import { MAP_CONFIGS } from "@/app/InteractiveSiteMap/data/lots";
 import type { LotStatus } from "@/app/InteractiveSiteMap/types/site-map";
+
+const amenityIconMap: Record<string, LucideIcon> = {
+  "swimming pool": Waves,
+  "club house": Building2,
+  gym: Dumbbell,
+  "kids play area": Baby,
+  "walking track": Footprints,
+  "basketball court": Trophy,
+  "garden area": Trees,
+  security: ShieldCheck,
+  cctv: Camera,
+  "indoor games": Gamepad2,
+  "co-working space": BriefcaseBusiness,
+  "party hall": PartyPopper,
+};
+
+function getAmenityIcon(amenity: string) {
+  return amenityIconMap[amenity.toLowerCase()] || CheckCircle2;
+}
 
 export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const pageRef = useRef<HTMLDivElement | null>(null);
@@ -82,7 +109,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
 
   // Standardize Data with Fallbacks for Sydney Oaks context
   const name = project.name || project.title;
-  const tagline = project.tagline || "Where Modern Living Meets the Oak Ridge Trails";
+  const tagline = project.tagline || "Luxury homes in Suwanee, Georgia";
   const priceText = project.priceText || "From low $400s";
   const statusBadge = project.statusBadge || "Ongoing";
   const reraNumber = project.reraNumber || "RERA-GA-8923";
@@ -147,197 +174,128 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
     <div ref={pageRef} className="overflow-x-hidden bg-cream font-sans">
       <NavbarEditorial />
 
-      {/* 1. HERO SECTION (Split & Gallery) */}
-      <section className="relative w-full pt-28 md:pt-36 pb-16 md:pb-24 bg-[#F5F0E8] border-b border-dark/10">
-        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20">
-          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
+      {/* A. HERO BANNER */}
+      <section className="relative w-full pt-24 md:pt-32 pb-12 md:pb-16 bg-[#F5F0E8] border-b border-dark/10">
+        <div className="mx-auto max-w-[1600px] px-6 sm:px-8 md:px-12 lg:px-16">
+          <div className="grid grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
 
             {/* Left Hero Content */}
-            <div className="col-span-12 lg:col-span-7 space-y-8 lg:pt-8">
-              <div className="flex items-center gap-3">
-                <span className="bg-rust/10 border border-rust/20 px-3 py-1 rounded-full text-rust font-bold text-[9px] uppercase tracking-widest">
+            <div data-reveal className="col-span-12 lg:col-span-5 space-y-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="border border-rust/25 px-3 py-1 text-rust font-bold text-[9px] uppercase tracking-widest">
                   {statusBadge}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-dark/20" />
-                <Annotation className="!text-dark/60">{project.location}</Annotation>
+                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-dark/60">
+                  <MapPin className="h-3.5 w-3.5 text-rust" />
+                  {project.location}
+                </span>
               </div>
 
-              <div className="space-y-5">
-                <h1 className="hero-title text-dark">
+              <div className="space-y-4">
+                <h1 className="font-display text-[clamp(3.8rem,8vw,8rem)] leading-[0.82] text-dark">
                   {name}<span className="text-rust">.</span>
                 </h1>
                 <p
-                  className="text-xl md:text-2xl font-light text-rust italic max-w-2xl leading-relaxed"
+                  className="text-xl md:text-2xl font-light text-rust italic max-w-xl leading-snug"
                   style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
                 >
                   {tagline}
                 </p>
               </div>
 
-              <BodyText size="lg" className="max-w-2xl text-dark/70 font-light leading-relaxed">
-                {project.brief}
+              <BodyText size="lg" className="max-w-xl text-dark/70 font-light leading-relaxed">
+                {project.summary || project.brief}
               </BodyText>
 
-              {/* Spacious Aligned Spec Rows */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 pt-4 border-t border-dark/10 w-full mt-6">
-                {/* Starting Price */}
-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
-                    Starting Price
-                  </span>
-                  <div
-                    className="text-lg font-light text-dark"
-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-                  >
-                    {priceText}
-                  </div>
+              <div className="grid grid-cols-3 gap-3 border-y border-dark/10 py-4">
+                <div>
+                  <span className="block text-[9px] font-bold tracking-[0.2em] text-rust uppercase">Price</span>
+                  <span className="mt-1 block font-display text-lg text-dark">{priceText}</span>
                 </div>
+                <div>
+                  <span className="block text-[9px] font-bold tracking-[0.2em] text-rust uppercase">Homes</span>
+                  <span className="mt-1 block font-display text-lg text-dark">{totalUnits}</span>
+                </div>
+                <div>
+                  <span className="block text-[9px] font-bold tracking-[0.2em] text-rust uppercase">Possession</span>
+                  <span className="mt-1 block font-display text-lg text-dark">{possessionDate}</span>
+                </div>
+              </div>
 
-                {/* Project Status */}
-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
-                    Project Status
-                  </span>
-                  <div
-                    className="text-lg font-light text-rust italic"
-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-                  >
-                    Ready for Site Visits
-                  </div>
-                </div>
-
-                {/* Total Homesites */}
-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
-                    Total Homesites
-                  </span>
-                  <div
-                    className="text-lg font-light text-dark"
-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-                  >
-                    {totalUnits}
-                  </div>
-                </div>
-
-                {/* Possession Date */}
-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
-                    Possession Date
-                  </span>
-                  <div
-                    className="text-lg font-light text-dark"
-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-                  >
-                    {possessionDate}
-                  </div>
-                </div>
+              <div className="flex flex-wrap gap-4 pt-3">
+                <Link
+                  href="#enquiry"
+                  className="inline-flex h-14 items-center justify-center gap-4 bg-rust px-8 text-[11px] font-bold uppercase tracking-[0.24em] text-white no-underline transition-colors hover:bg-dark"
+                >
+                  Request Information
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="#enquiry"
+                  className="inline-flex h-14 items-center justify-center gap-4 border border-dark/20 px-8 text-[11px] font-bold uppercase tracking-[0.24em] text-dark no-underline transition-colors hover:border-rust hover:text-rust"
+                >
+                  Schedule Visit
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
               </div>
             </div>
 
-            {/* Right Sticky Enquiry Card */}
-            <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-28 z-20">
-              <StickyEnquiryForm projectTitle={name} />
+            {/* Right Hero Image */}
+            <div data-reveal className="col-span-12 lg:col-span-7 relative min-h-[360px] md:min-h-[540px] lg:min-h-[650px] w-full overflow-hidden bg-[#EDE8DF] border border-dark/10">
+              <Image
+                src={project.image}
+                alt={`${name} Exterior`}
+                fill
+                priority
+                sizes="(max-width: 1200px) 100vw, 58vw"
+                className="object-cover"
+              />
             </div>
 
-          </div>
-
-          {/* Hero Gallery Scrolling Marquee */}
-          <div className="mt-12 md:mt-16 relative w-screen max-w-none ml-[calc(-50vw+50%)] overflow-hidden group">
-            <div
-              className="flex min-w-max items-center gap-4 md:gap-6 animate-marquee-hero group-hover:[animation-play-state:paused]"
-              style={{
-                animation: "marqueeHero 55s linear infinite",
-              }}
-            >
-              {repeatedImages.map((image, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => openLightbox(idx % galleryImages.length)}
-                  className="relative flex-shrink-0 overflow-hidden bg-[#E8E3DB] cursor-pointer w-[280px] h-[40vh] md:w-[450px] md:h-[55vh] border border-dark/5"
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    priority={idx < 3}
-                    sizes="(max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                    <span className="text-white/60 text-[10px] uppercase tracking-[0.2em] mb-1">Sydney Oaks</span>
-                    <span className="text-white text-lg font-serif italic">{image.alt}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* CSS for marquee animation */}
-            <style jsx>{`
-              @keyframes marqueeHero {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-33.333%); }
-              }
-              .animate-marquee-hero {
-                will-change: transform;
-              }
-            `}</style>
           </div>
         </div>
       </section>
 
-      {/* 2. QUICK INFO BAR (Premium Specs Dashboard) */}
+      {/* QUICK INFO BAR (Premium Specs Dashboard) */}
       <section className="bg-dark text-cream border-y border-rust/10 py-8">
         <div className="mx-auto max-w-[1600px] px-6 sm:px-8 md:px-12 lg:px-20">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 lg:gap-6 items-stretch">
-
-            {/* Project Area */}
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Layers className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Project Area</Annotation>
               <span className="font-display font-light text-sm text-cream">{projectArea}</span>
             </div>
-
-            {/* Total Units */}
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Building2 className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Total Units</Annotation>
               <span className="font-display font-light text-sm text-cream">{totalUnits}</span>
             </div>
-
-            {/* Configuration */}
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Compass className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Configuration</Annotation>
               <span className="font-display font-light text-sm text-cream">3 & 4 BHK</span>
             </div>
-
-            {/* Possession Date */}
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Calendar className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Possession Date</Annotation>
               <span className="font-display font-light text-sm text-cream">{possessionDate}</span>
             </div>
-
-            {/* Price Range */}
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <DollarSign className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Price Range</Annotation>
               <span className="font-display font-light text-sm text-cream">{priceRange}</span>
             </div>
-
-            {/* Property Type */}
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Home className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Property Type</Annotation>
               <span className="font-display font-light text-sm text-cream">{propertyType}</span>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 3. PROJECT OVERVIEW */}
-      <SectionWrapper dark={false} className="!py-12 md:!py-16">
+      {/* B. COMMUNITY OVERVIEW */}
+      <SectionWrapper dark={false} className="!py-16 md:!py-24">
         <div data-reveal className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
           <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full">
@@ -442,56 +400,8 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
         </div>
       </SectionWrapper>
 
-      {/* 4. FEATURED MODEL / FLOOR PLAN SECTION */}
-      <FloorPlansCarousel floorPlans={floorPlans} />
-
-      {/* 5. AMENITIES SECTION */}
-      <SectionWrapper dark={true} className="!py-12 md:!py-16">
-        <div data-reveal className="mb-10 text-center md:text-left">
-          <SectionLabel light>Infrastructure</SectionLabel>
-          <SectionHeadline size="lg" light className="!text-[#F5F0E8] font-display">
-            Curated <em className="italic">amenities</em>
-          </SectionHeadline>
-        </div>
-
-        <div data-reveal className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[#F5F0E8]/10 border border-[#F5F0E8]/10">
-          {project.amenities.map((amenity, i) => (
-            <div
-              key={i}
-              className={`bg-dark p-6 sm:p-8 gap-4 group hover:bg-[#2A2118] transition-colors duration-500 ${
-                i >= 4
-                  ? (amenitiesExpanded ? "flex items-center" : "hidden md:flex md:items-center")
-                  : "flex items-center"
-              }`}
-            >
-              <div className="w-10 h-10 border border-[#F5F0E8]/20 flex items-center justify-center transition-colors group-hover:border-rust shrink-0">
-                <CrosshairIcon light className="opacity-40" />
-              </div>
-              <Annotation light className="!text-[#F5F0E8]/80 font-bold tracking-widest">{amenity.toUpperCase()}</Annotation>
-            </div>
-          ))}
-        </div>
-
-        {/* Read More / Read Less button for amenities on mobile */}
-        <button
-          onClick={() => setAmenitiesExpanded(!amenitiesExpanded)}
-          className="md:hidden mt-6 w-full py-3 border border-[#F5F0E8]/15 text-[#F5F0E8] hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-[#2A2118]/20 hover:bg-[#2A2118]"
-        >
-          {amenitiesExpanded ? "Read Less" : "Read More"}
-        </button>
-      </SectionWrapper>
-
-      {/* 6. MASTER PLAN SECTION (With Zoom and Fullscreen Preview using Interactive Map) */}
-      <MasterPlanSection />
-
-      {/* 7. AVAILABLE UNITS SECTION (With BHK / Price Filters & Sort) */}
-      <AvailableUnitsSection units={units} />
-
-      {/* 8. LOCATION ADVANTAGES & MAP */}
-      <LocationAdvantagesSection nearbyPlaces={nearbyPlaces} coordinates={coordinates} rera={reraNumber} />
-
-      {/* 9. PROJECT GALLERY (Scrolling Marquee with lightbox) */}
-      <section className="bg-cream py-12 md:py-16 border-t border-dark/10 overflow-hidden">
+      {/* C. GALLERY */}
+      <section className="bg-cream py-16 md:py-24 border-y border-dark/10 overflow-hidden">
         <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20 mb-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
             <div>
@@ -533,7 +443,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
             ))}
           </div>
 
-          {/* CSS for marquee animation */}
           <style jsx>{`
             @keyframes marquee {
               0% { transform: translateX(0); }
@@ -546,48 +455,170 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
         </div>
       </section>
 
+      {/* D. MASTER PLAN / SITE PLAN */}
+      <MasterPlanPdfSection
+        sitePlanPdfUrl={project.sitePlanPdfUrl || "/pdfs/site-plan.pdf"}
+        components={project.masterPlanComponents || []}
+      />
 
-      {/* 11. FAQ SECTION (Accordion) */}
-      <FAQSection faqs={faqs} />
+      {/* E. FLOOR PLANS */}
+      <FloorPlansPdfSection
+        floorPlans={floorPlans}
+        floorPlansPdfUrl={project.floorPlansPdfUrl || "/pdfs/aspen-plan-set.pdf"}
+      />
 
-      {/* 12. RELATED PROJECTS SECTION */}
-      <RelatedProjectsSection currentSlug={project.slug} />
-
-      {/* 13. FINAL CTA SECTION */}
-      <section className="relative bg-dark py-24 md:py-32 overflow-hidden border-t border-rust/10 text-center">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80"
-            alt="Sydney Oaks Landscaping"
-            fill
-            className="object-cover opacity-15"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/95 via-dark/75 to-dark" />
+      {/* F. AMENITIES SECTION */}
+      <SectionWrapper dark={true} className="!py-16 md:!py-24">
+        <div data-reveal className="mb-10 text-center md:text-left">
+          <SectionLabel light>Infrastructure</SectionLabel>
+          <SectionHeadline size="lg" light className="!text-[#F5F0E8] font-display">
+            Curated <em className="italic">amenities</em>
+          </SectionHeadline>
         </div>
 
-        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20 relative z-10 space-y-8">
-          <Annotation light className="!text-rust tracking-[0.3em] font-semibold">SCHEDULE YOUR SITE VISIT TODAY</Annotation>
+        <div data-reveal className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[#F5F0E8]/10 border border-[#F5F0E8]/10">
+          {project.amenities.map((amenity, i) => {
+            const AmenityIcon = getAmenityIcon(amenity);
 
-          <h2
-            className="text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[0.98] font-light text-cream max-w-3xl mx-auto"
-            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-          >
-            Experience the harmony of modern build and <em className="font-normal italic">historic trailways</em>.
-          </h2>
+            return (
+              <div
+                key={i}
+                className={`bg-dark p-6 sm:p-8 gap-4 group hover:bg-[#2A2118] transition-colors duration-500 ${
+                  i >= 4
+                    ? (amenitiesExpanded ? "flex items-center" : "hidden md:flex md:items-center")
+                    : "flex items-center"
+                }`}
+              >
+                <div className="w-10 h-10 border border-[#F5F0E8]/20 text-[#F5F0E8]/55 flex items-center justify-center transition-colors group-hover:border-rust group-hover:text-rust shrink-0">
+                  <AmenityIcon className="h-5 w-5" strokeWidth={1.7} />
+                </div>
+                <Annotation light className="!text-[#F5F0E8]/80 font-bold tracking-widest">{amenity.toUpperCase()}</Annotation>
+              </div>
+            );
+          })}
+        </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
-            <ButtonPrimary href="#enquiry" className="shadow-lg hover:shadow-rust/10">
-              Contact Sales Advisory
-            </ButtonPrimary>
-            <ButtonGhost href="#enquiry" light>
-              Download Brochure (PDF)
-            </ButtonGhost>
+        <button
+          onClick={() => setAmenitiesExpanded(!amenitiesExpanded)}
+          className="md:hidden mt-6 w-full py-3 border border-[#F5F0E8]/15 text-[#F5F0E8] hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-[#2A2118]/20 hover:bg-[#2A2118]"
+        >
+          {amenitiesExpanded ? "Read Less" : "Read More"}
+        </button>
+      </SectionWrapper>
+
+      {/* G. LOCATION ADVANTAGES */}
+      <LocationAdvantagesSection nearbyPlaces={nearbyPlaces} coordinates={coordinates} rera={reraNumber} />
+
+      {/* H. WHY CHOOSE THIS PROJECT */}
+      <SectionWrapper dark={false} className="!py-16 md:!py-24 bg-[#F5F0E8] border-b border-dark/10">
+        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20">
+          <div className="mb-12 text-center md:text-left">
+            <SectionLabel>Key Advantages</SectionLabel>
+            <SectionHeadline size="lg" className="font-display font-light">
+              Why choose <em className="font-normal italic">{name}</em>
+            </SectionHeadline>
           </div>
 
-          <div className="pt-8 flex justify-center items-center gap-3 text-cream/40 text-[10px] tracking-widest uppercase">
-            <Phone size={12} className="text-rust" /> Call Advisory: (404) 555-0123
-            <span className="w-1.5 h-1.5 rounded-full bg-cream/10" />
-            <Mail size={12} className="text-rust" /> hello@shreedevelopers.com
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px border border-dark/10 bg-dark/10">
+            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">01</span>
+                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
+                  <MapPin size={20} strokeWidth={1.8} />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl font-light text-dark">Premium Location</h3>
+                <p className="text-sm text-dark/65 font-light leading-relaxed">
+                  Gwinnett County address with quick access to wooded trails, schools, healthcare, and daily essentials.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">02</span>
+                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
+                  <Compass size={20} strokeWidth={1.8} />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl font-light text-dark">Smart Planning</h3>
+                <p className="text-sm text-dark/65 font-light leading-relaxed">
+                  Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">03</span>
+                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
+                  <DollarSign size={20} strokeWidth={1.8} />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl font-light text-dark">High Appreciation</h3>
+                <p className="text-sm text-dark/65 font-light leading-relaxed">
+                  Positioned in a growing residential corridor with strong demand for family-focused communities.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">04</span>
+                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
+                  <ShieldCheck size={20} strokeWidth={1.8} />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-xl font-light text-dark">Trusted Developer</h3>
+                <p className="text-sm text-dark/65 font-light leading-relaxed">
+                  Transparent delivery, careful material choices, and construction quality managed with clear standards.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SectionWrapper>
+
+      {/* J. ENQUIRY SECTION */}
+      <section id="enquiry" className="py-16 md:py-24 bg-cream border-t border-dark/10">
+        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20">
+          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
+            <div className="col-span-12 lg:col-span-5 flex flex-col justify-between border-y border-dark/10 py-8 lg:py-10">
+              <div className="space-y-6">
+                <div>
+                  <SectionLabel>Project Consultation</SectionLabel>
+                  <SectionHeadline size="lg" className="font-display font-light">
+                    Plan your visit to <em className="font-normal italic">{name}</em>
+                  </SectionHeadline>
+                </div>
+                <p className="max-w-lg text-sm font-light leading-relaxed text-dark/70">
+                  Request the Sydney Oaks dossier, floor plan set, pricing guidance, and a convenient callback from our project advisor.
+                </p>
+              </div>
+
+              <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
+                <div className="border border-dark/10 bg-[#F5F0E8] p-4">
+                  <span className="block text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Site Visit</span>
+                  <span className="mt-2 block font-display text-xl text-dark">Schedule walkthrough</span>
+                </div>
+                <div className="border border-dark/10 bg-[#F5F0E8] p-4">
+                  <span className="block text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Documents</span>
+                  <span className="mt-2 block font-display text-xl text-dark">Plans & dossier</span>
+                </div>
+                <div className="border border-dark/10 bg-[#F5F0E8] p-4">
+                  <span className="block text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Response</span>
+                  <span className="mt-2 block font-display text-xl text-dark">Advisor callback</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-12 lg:col-span-7 h-full">
+              <StickyEnquiryForm projectTitle={name} />
+            </div>
           </div>
         </div>
       </section>
@@ -611,7 +642,13 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
    =========================================================================== */
 function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", email: "", message: "", visitDate: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    callbackTime: "Morning",
+    callbackMethod: "Phone"
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -619,99 +656,141 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ name: "", phone: "", email: "", message: "", visitDate: "" });
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        callbackTime: "Morning",
+        callbackMethod: "Phone"
+      });
     }, 4000);
   };
 
   return (
-    <div className="bg-[#EDE8DF] border border-dark/15 p-6 md:p-8 shadow-xl relative w-full rounded-sm">
+    <div className="bg-[#EDE8DF] border border-dark/15 p-6 md:p-8 shadow-xl relative w-full h-full rounded-sm">
       <div className="absolute top-0 right-0 p-6 opacity-10"><CrosshairIcon /></div>
 
       {!submitted ? (
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <Annotation className="!text-rust mb-1.5 font-bold">Request consultation</Annotation>
-            <span className="font-display font-light text-xl text-dark block leading-none">
-              Dossier & Site Bookings
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="space-y-1">
-              <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Full Name *</label>
-              <input
-                type="text"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
-                placeholder="Enter your name"
-              />
+        <form className="flex h-full flex-col justify-between gap-5" onSubmit={handleSubmit}>
+          <div className="space-y-5">
+            <div>
+              <Annotation className="!text-rust mb-1.5 font-bold">Request consultation</Annotation>
+              <span className="font-display font-light text-xl text-dark block leading-none">
+                Dossier & Callback Booking
+              </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              {/* Full Name */}
               <div className="space-y-1">
-                <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Phone Number *</label>
+                <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Full Name *</label>
                 <input
-                  type="tel"
+                  type="text"
                   required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
-                  placeholder="+1 (000) 000-0000"
+                  placeholder="Enter your name"
                 />
               </div>
-              <div className="space-y-1">
-                <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Email Address *</label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
-                  placeholder="name@example.com"
-                />
+
+              {/* Phone & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Phone Number *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
+                    placeholder="+1 (000) 000-0000"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
+                    placeholder="name@example.com"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-1">
-              <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Preferred Site Visit Date (Optional)</label>
-              <input
-                type="date"
-                value={formData.visitDate}
-                onChange={(e) => setFormData({ ...formData, visitDate: e.target.value })}
-                className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
-              />
-            </div>
+              {/* Preferred Callback details */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Callback Method *</label>
+                  <select
+                    required
+                    value={formData.callbackMethod}
+                    onChange={(e) => setFormData({ ...formData, callbackMethod: e.target.value })}
+                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-xs outline-none transition-colors appearance-none h-[38px] cursor-pointer"
+                  >
+                    <option value="Phone">Phone Call</option>
+                    <option value="WhatsApp">WhatsApp Message</option>
+                    <option value="Email">Email Details</option>
+                  </select>
+                </div>
 
-            <div className="space-y-1">
-              <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Message (Optional)</label>
-              <textarea
-                rows={2}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors resize-none"
-                placeholder="I am interested in the 4BHK Oak Ridge Villa..."
-              />
+                <div className="space-y-1">
+                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Preferred Callback Time *</label>
+                  <select
+                    required
+                    value={formData.callbackTime}
+                    onChange={(e) => setFormData({ ...formData, callbackTime: e.target.value })}
+                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-xs outline-none transition-colors appearance-none h-[38px] cursor-pointer"
+                  >
+                    <option value="Morning">Morning (9 AM - 12 PM)</option>
+                    <option value="Afternoon">Afternoon (12 PM - 4 PM)</option>
+                    <option value="Evening">Evening (4 PM - 7 PM)</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-3 pt-2">
+          <div className="space-y-4 pt-2">
             <button
               type="submit"
               className="w-full h-[48px] bg-dark text-white uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-rust transition-colors duration-500 cursor-pointer"
             >
-              Book Site Visit
+              Book Callback Request
             </button>
 
-            <button
-              type="button"
-              onClick={() => alert("Downloading Sydney Oaks Brochure PDF (2.8 MB)...")}
-              className="w-full h-[48px] bg-transparent border border-dark/20 text-dark uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-dark/5 transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <FileText size={14} className="text-rust" />
-              Download Brochure
-            </button>
+            {/* Quick-Contact Direct Buttons */}
+            <div className="pt-4 border-t border-dark/10">
+              <span className="text-[8px] uppercase tracking-[0.2em] font-semibold text-dark/50 block text-center mb-3">
+                Or Connect Instantly
+              </span>
+              <div className="grid grid-cols-3 gap-2.5">
+                <a
+                  href="https://wa.me/14045550123"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center justify-center py-2.5 bg-[#E8F5E9] hover:bg-[#C8E6C9] border border-green-500/20 text-green-800 transition-colors duration-300 rounded-sm text-center cursor-pointer select-none"
+                >
+                  <span className="text-[9px] font-bold uppercase tracking-wider">WhatsApp</span>
+                </a>
+                <a
+                  href="https://instagram.com/shreedevelopers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center justify-center py-2.5 bg-[#FDF2F8] hover:bg-[#FCE7F3] border border-pink-500/20 text-pink-800 transition-colors duration-300 rounded-sm text-center cursor-pointer select-none"
+                >
+                  <span className="text-[9px] font-bold uppercase tracking-wider">Instagram</span>
+                </a>
+                <a
+                  href="tel:+14045550123"
+                  className="flex flex-col items-center justify-center py-2.5 bg-[#E0F2FE] hover:bg-[#BAE6FD] border border-blue-500/20 text-blue-800 transition-colors duration-300 rounded-sm text-center cursor-pointer select-none"
+                >
+                  <span className="text-[9px] font-bold uppercase tracking-wider">Call Now</span>
+                </a>
+              </div>
+            </div>
           </div>
         </form>
       ) : (
@@ -721,10 +800,162 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
           </div>
           <h3 className="font-display font-light text-2xl text-dark">Thank You</h3>
           <p className="text-sm text-dark/70 font-light max-w-xs mx-auto">
-            Your request for Sydney Oaks has been sent to our sales team. An advisor will contact you within 24 hours.
+            Your preferred callback request for {projectTitle} has been submitted. A real estate advisor will contact you during your selected time window.
           </p>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ===========================================================================
+   D. MASTER PLAN / SITE PLAN
+   =========================================================================== */
+function MasterPlanPdfSection({
+  sitePlanPdfUrl,
+  components,
+}: {
+  sitePlanPdfUrl: string;
+  components: NonNullable<ProjectData["masterPlanComponents"]>;
+}) {
+  const masterPlanItems = components.length
+    ? components
+    : [
+      { name: "Plot Layout", desc: "Low-density homesite arrangement with clearly proportioned residential plots." },
+      { name: "Amenities Zoning", desc: "Community amenities grouped for easy access from the residential blocks." },
+      { name: "Entry & Exit", desc: "Defined access points for smooth arrival, controlled entry, and internal circulation." },
+    ];
+
+  return (
+    <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
+      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-5">
+        <div>
+          <SectionLabel>D. Master Plan / Site Plan</SectionLabel>
+          <SectionHeadline size="lg" className="font-display font-light">
+            Plot layout & <em className="font-normal italic">site planning</em>
+          </SectionHeadline>
+        </div>
+
+        <a
+          href={sitePlanPdfUrl}
+          download
+          className="inline-flex h-12 items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark"
+        >
+          Download Site Plan
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+
+      <div className="grid grid-cols-12 gap-6 lg:gap-8 items-start">
+        <div className="col-span-12 lg:col-span-4 space-y-3">
+          {masterPlanItems.map((item, index) => (
+            <div key={item.name} className="border border-dark/10 bg-cream p-5">
+              <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-rust">
+                0{index + 1}
+              </span>
+              <h3 className="mt-2 font-display text-2xl font-light text-dark">{item.name}</h3>
+              <p className="mt-3 text-sm font-light leading-relaxed text-dark/65">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="col-span-12 lg:col-span-8 border border-dark/10 bg-cream p-3">
+          <div className="h-[520px] md:h-[700px] bg-[#EDE8DF]">
+            <iframe
+              src={`${sitePlanPdfUrl}#view=FitH`}
+              title="Sydney Oaks site plan PDF"
+              className="h-full w-full border-0"
+            />
+          </div>
+        </div>
+      </div>
+    </SectionWrapper>
+  );
+}
+
+/* ===========================================================================
+   E. FLOOR PLANS
+   =========================================================================== */
+function FloorPlansPdfSection({
+  floorPlans,
+  floorPlansPdfUrl,
+}: {
+  floorPlans: NonNullable<ProjectData["floorPlansDetails"]>;
+  floorPlansPdfUrl: string;
+}) {
+  if (!floorPlans.length) return null;
+
+  return (
+    <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#EDE8DF] border-y border-dark/10">
+      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-5">
+        <div>
+          <SectionLabel>E. Floor Plans</SectionLabel>
+          <SectionHeadline size="lg" className="font-display font-light">
+            Unit types & <em className="font-normal italic">dimensions</em>
+          </SectionHeadline>
+        </div>
+
+        <a
+          href={floorPlansPdfUrl}
+          download
+          className="inline-flex h-12 items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark"
+        >
+          Download Floor Plans
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+
+      <div className="grid grid-cols-12 gap-6 lg:gap-8 items-stretch">
+        <div className="col-span-12 lg:col-span-5 flex h-full flex-col gap-3">
+          {floorPlans.map((plan) => (
+            <div key={plan.name} className="flex-1 border border-dark/10 bg-cream p-5">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <div>
+                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Unit Type</span>
+                  <h3 className="mt-1 font-display text-2xl font-light text-dark">{plan.name}</h3>
+                </div>
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-px bg-dark/10">
+                <PlanFact label="Beds" value={`${plan.bedrooms}`} />
+                <PlanFact label="Baths" value={`${plan.bathrooms}`} />
+                <PlanFact label="Parking" value={`${plan.parking}`} />
+                <PlanFact label="Dimensions" value={`${plan.area.toLocaleString()} sq.ft.`} />
+              </div>
+
+              <div className="mt-4 flex items-center justify-between border-t border-dark/10 pt-4">
+                <span className="font-display text-xl text-dark">{plan.price}</span>
+                <a
+                  href={floorPlansPdfUrl}
+                  download
+                  className="text-[9px] font-bold uppercase tracking-[0.2em] text-rust hover:text-dark"
+                >
+                  Download
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="col-span-12 lg:col-span-7 h-full border border-dark/10 bg-cream p-3">
+          <div className="h-full min-h-[520px] md:min-h-[680px] bg-[#F5F0E8]">
+            <iframe
+              src={`${floorPlansPdfUrl}#view=FitH`}
+              title="Sydney Oaks floor plans PDF"
+              className="h-full w-full border-0"
+            />
+          </div>
+        </div>
+      </div>
+    </SectionWrapper>
+  );
+}
+
+function PlanFact({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-cream px-4 py-3">
+      <span className="block text-[8px] font-bold uppercase tracking-[0.2em] text-dark/45">{label}</span>
+      <span className="mt-1 block font-display text-lg text-dark">{value}</span>
     </div>
   );
 }
@@ -1374,29 +1605,21 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
    =========================================================================== */
 function LocationAdvantagesSection({
   nearbyPlaces,
-  coordinates,
-  rera
+  coordinates: _coordinates,
+  rera: _rera
 }: {
   nearbyPlaces: ProjectData["nearbyPlaces"];
   coordinates: ProjectData["coordinates"];
   rera: string;
 }) {
-  const [activeCategory, setActiveCategory] = useState<any>("all");
-  const [highlightedLandmark, setHighlightedLandmark] = useState<string | null>(null);
-
-  const categories = ["all", "Schools", "Hospitals", "Metro", "Airport", "Shopping", "Tech Parks"];
-
-  const filteredPlaces = useMemo(() => {
-    if (activeCategory === "all") return nearbyPlaces || [];
-    return (nearbyPlaces || []).filter((p) => p.category === activeCategory);
-  }, [nearbyPlaces, activeCategory]);
+  const visibleNearbyPlaces = (nearbyPlaces || []).slice(0, 6);
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
       <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
-        {/* Left Side: Category filters & list */}
-        <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full space-y-6">
+        {/* Left Side: Compact nearby places */}
+        <div className="col-span-12 flex flex-col h-full space-y-7">
           <div className="space-y-6">
             <div>
               <SectionLabel >Connectivity</SectionLabel>
@@ -1408,43 +1631,25 @@ function LocationAdvantagesSection({
             <p className="text-sm text-dark/70 font-light max-w-xl">
               Positioned along Gwinnett County's central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.
             </p>
-
-            {/* Category Tabs */}
-            <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-hide border-b border-dark/10">
-              {categories.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setActiveCategory(c)}
-                  className={`px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider transition-colors whitespace-nowrap cursor-pointer rounded-sm ${activeCategory === c
-                    ? "bg-dark text-cream"
-                    : "bg-transparent text-dark/65 hover:text-dark hover:bg-dark/5"
-                    }`}
-                >
-                  {c === "all" ? "All Locations" : c}
-                </button>
-              ))}
-            </div>
           </div>
 
-          {/* Places List */}
-          <div className="space-y-3 flex-grow overflow-y-auto pr-2 divide-y divide-dark/5 min-h-[300px] max-h-[360px]">
-            {filteredPlaces.map((place, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {visibleNearbyPlaces.map((place, idx) => (
               <div
                 key={idx}
-                className={`pt-3 flex justify-between items-center gap-4 group cursor-pointer transition-colors ${highlightedLandmark === place.name ? "text-rust font-semibold" : "text-dark"
-                  }`}
-                onMouseEnter={() => setHighlightedLandmark(place.name)}
-                onMouseLeave={() => setHighlightedLandmark(null)}
+                className="border border-dark/10 bg-cream/55 p-4 flex justify-between items-center gap-4 text-dark transition-colors hover:border-rust/30 hover:bg-rust/5"
               >
                 <div className="flex items-center gap-3">
-                  <MapPin size={14} className={highlightedLandmark === place.name ? "text-rust" : "text-dark/40"} />
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-current/15">
+                    <MapPin size={15} />
+                  </span>
                   <div>
                     <span className="text-xs font-bold block">{place.name}</span>
-                    <span className="text-[9px] text-dark/50 uppercase block font-semibold mt-0.5">{place.category}</span>
+                    <span className="text-[9px] text-dark/50 uppercase block font-semibold tracking-wider mt-0.5">{place.category}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-semibold block">{place.time}</span>
+                  <span className="text-sm font-bold block">{place.time}</span>
                   <span className="text-[9px] text-dark/50 block font-light">{place.distance}</span>
                 </div>
               </div>
@@ -1452,117 +1657,10 @@ function LocationAdvantagesSection({
           </div>
         </div>
 
-        {/* Right Side: Beautiful styled SVG interactive map */}
-        <div className="col-span-12 lg:col-span-5 bg-dark text-cream p-6 rounded-sm shadow-xl flex flex-col justify-between h-full relative border border-rust/10">
-          <div className="absolute top-4 left-4 opacity-25"><CrosshairIcon light /></div>
-
-          <div className="mb-4">
-            <Annotation light className="!text-rust mb-1">LOCAL GEOGRAPHY</Annotation>
-            <h3 className="font-display font-light text-xl leading-none">Interactive Area Blueprint</h3>
-          </div>
-
-          {/* Styled SVG Map representing Suwanee/Johns Creek Atlanta corridor */}
-          <div className="relative w-full flex-1 min-h-[320px] bg-[#2A2118] border border-cream/10 rounded-sm overflow-hidden flex items-center justify-center">
-
-            {/* Visual Grid Lines */}
-            <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 opacity-5 pointer-events-none">
-              {Array.from({ length: 36 }).map((_, i) => (
-                <div key={i} className="border border-cream" />
-              ))}
-            </div>
-
-            {/* Custom SVG Map Roads and Rivers representation */}
-            <svg viewBox="0 0 400 300" className="w-full h-full opacity-60">
-              {/* Chattahoochee River bend representation */}
-              <path d="M 0 50 Q 150 180, 280 220 T 400 290" fill="none" stroke="#2c5282" strokeWidth="6" opacity="0.3" />
-
-              {/* I-85 Highway line */}
-              <line x1="300" y1="0" x2="100" y2="300" stroke="#a0aec0" strokeWidth="2" strokeDasharray="5,5" />
-              <text x="310" y="25" fill="#a0aec0" fontSize="8" fontFamily="Montserrat" className="font-semibold">I-85 Corridor</text>
-
-              {/* Local arterial roads */}
-              <path d="M 50 0 L 350 300" fill="none" stroke="#4a5568" strokeWidth="1.5" />
-              <path d="M 0 150 L 400 150" fill="none" stroke="#4a5568" strokeWidth="1.5" />
-
-              {/* Gwinnett schools zone line */}
-              <rect x="50" y="20" width="100" height="90" fill="none" stroke="#ffffff" strokeWidth="1" strokeDasharray="3,3" opacity="0.1" />
-            </svg>
-
-            {/* Sydney Oaks Site Pin (Center highlight) */}
-            <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
-              <span className="w-4 h-4 bg-rust border-2 border-white rounded-full flex items-center justify-center animate-ping absolute" />
-              <span className="w-4 h-4 bg-rust border-2 border-white rounded-full flex items-center justify-center relative">
-                <span className="w-1.5 h-1.5 bg-white rounded-full" />
-              </span>
-              <div className="bg-dark/95 border border-rust/30 px-2.5 py-1 text-[8px] font-bold text-cream uppercase tracking-widest mt-1 shadow-lg whitespace-nowrap">
-                Sydney Oaks Site
-              </div>
-            </div>
-
-            {/* Landmark Markers Mapping */}
-            <div className="absolute top-[28%] left-[28%]">
-              <MapMarkerPin
-                label="NG High School"
-                active={highlightedLandmark === "North Gwinnett High School"}
-                onHover={(act) => setHighlightedLandmark(act ? "North Gwinnett High School" : null)}
-              />
-            </div>
-
-            <div className="absolute top-[68%] left-[64%]">
-              <MapMarkerPin
-                label="Emory Hospital"
-                active={highlightedLandmark === "Emory Johns Creek Hospital"}
-                onHover={(act) => setHighlightedLandmark(act ? "Emory Johns Creek Hospital" : null)}
-              />
-            </div>
-
-            <div className="absolute top-[48%] left-[78%]">
-              <MapMarkerPin
-                label="Duluth Tech Park"
-                active={highlightedLandmark === "Duluth Tech Corridor"}
-                onHover={(act) => setHighlightedLandmark(act ? "Duluth Tech Corridor" : null)}
-              />
-            </div>
-
-            <div className="absolute top-[18%] left-[65%]">
-              <MapMarkerPin
-                label="Sugarloaf Mall"
-                active={highlightedLandmark === "Sugarloaf Mills Mall"}
-                onHover={(act) => setHighlightedLandmark(act ? "Sugarloaf Mills Mall" : null)}
-              />
-            </div>
-
-          </div>
-
-          <div className="flex justify-between items-center text-[10px] text-cream/40 pt-4 font-mono">
-            <span>RERA REG: {rera}</span>
-            <span>LAT: 34.0531 / LNG: -84.0624</span>
-          </div>
-
-        </div>
-
       </div>
     </SectionWrapper>
   );
 }
-
-function MapMarkerPin({ label, active, onHover }: { label: string; active: boolean; onHover: (act: boolean) => void }) {
-  return (
-    <div
-      className="relative flex flex-col items-center cursor-pointer select-none"
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
-    >
-      <span className={`w-2.5 h-2.5 rounded-full border border-white transition-all duration-300 ${active ? "bg-rust scale-125" : "bg-[#4a5568]"
-        }`} />
-      <span className={`text-[7px] tracking-wide px-1 py-0.5 rounded-sm transition-all duration-300 mt-1 whitespace-nowrap ${active ? "bg-rust text-white font-bold opacity-100" : "bg-dark/70 text-cream/70 opacity-60"
-        }`}>
-        {label}
-      </span>
-    </div>
-  );
-}
-
 
 /* ===========================================================================
    11. FAQ SECTION (Accordion Style)

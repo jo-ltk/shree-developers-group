@@ -1,0 +1,360 @@
+diff --git a/src/app/projects/[slug]/ProjectDetailClient.tsx b/src/app/projects/[slug]/ProjectDetailClient.tsx
+index eb9b0ac..c7935d7 100644
+--- a/src/app/projects/[slug]/ProjectDetailClient.tsx
++++ b/src/app/projects/[slug]/ProjectDetailClient.tsx
+@@ -72,300 +72,64 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
+           autoAlpha: 0,
+           y: 20,
+           duration: 0.8,
+-          ease: "power2.out",
+-          scrollTrigger: { trigger: el as Element, start: "top 90%", once: true },
+-        });
+-      });
+-    }, pageRef);
+-    return () => ctx.revert();
+-  }, []);
+-
+-  // Standardize Data with Fallbacks for Sydney Oaks context
+-  const name = project.name || project.title;
+-  const tagline = project.tagline || "Where Modern Living Meets the Oak Ridge Trails";
+-  const priceText = project.priceText || "From low $400s";
+-  const statusBadge = project.statusBadge || "Ongoing";
+-  const reraNumber = project.reraNumber || "RERA-GA-8923";
+-  const possessionDate = project.possessionDate || "Q4 2026";
+-  const projectArea = project.projectArea || "12 Acres";
+-  const totalUnits = project.totalUnits || "89 Town Homes";
+-  const priceRange = project.priceRange || "$410k - $580k";
+-  const propertyType = project.propertyType || "Luxury Villas";
+-  const highlightsList = project.highlightsList || [
+-    "Wooded backyard retreats bordering natural trails",
+-    "Curated lifestyle amenities at our private community core",
+-    "High-efficiency HVAC and eco-conscious construction standards",
+-    "Open-concept family floor plans designed by award-winning architects"
+-  ];
+-
+-  const floorPlans = project.floorPlansDetails || [
+-    {
+-      name: "The Maple Townhome",
+-      image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80",
+-      bedrooms: 3,
+-      bathrooms: 2.5,
+-      parking: 2,
+-      area: 2400,
+-      price: "$410,000",
+-      emi: "$2,150/mo",
+-      availability: "Available" as const,
+-      virtualTourUrl: "#tour-maple"
+-    }
+-  ];
+-
+-  const units = project.unitsList || [];
+-  const nearbyPlaces = project.nearbyPlaces || [];
+-  const faqs = project.faqsList || [];
+-  const testimonials = project.testimonialsList || [];
+-  const coordinates = project.coordinates || { lat: 34.0531, lng: -84.0624 };
+-
+-  // Collect gallery photos (Hero main + Renders)
+-  const galleryImages = useMemo(() => {
+-    const list = [{ src: project.image, alt: `${name} Exterior` }];
+-    if (project.renders) {
+-      project.renders.forEach((r) => {
+-        list.push({ src: r.image, alt: r.label });
+-      });
+-    }
+-    // Add floor plan image as additional view if short
+-    if (floorPlans && floorPlans[0]) {
+-      list.push({ src: floorPlans[0].image, alt: `${floorPlans[0].name} Layout` });
+-    }
+-    return list.slice(0, 5); // 1 main + 4 previews
+-  }, [project.image, project.renders, floorPlans, name]);
+-
+-  const repeatedImages = useMemo(() => {
+-    return [...galleryImages, ...galleryImages, ...galleryImages];
+-  }, [galleryImages]);
+-
+-  const openLightbox = (idx: number) => {
+-    setLightboxIdx(idx);
+-    setLightboxOpen(true);
+-  };
+-
+-  return (
+-    <div ref={pageRef} className="overflow-x-hidden bg-cream font-sans">
+-      <NavbarEditorial />
+-
+-      {/* 1. HERO SECTION (Split & Gallery) */}
+-      <section className="relative w-full pt-28 md:pt-36 pb-16 md:pb-24 bg-[#F5F0E8] border-b border-dark/10">
+-        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20">
+-          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
+-
+-            {/* Left Hero Content */}
+-            <div className="col-span-12 lg:col-span-7 space-y-8 lg:pt-8">
+-              <div className="flex items-center gap-3">
+-                <span className="bg-rust/10 border border-rust/20 px-3 py-1 rounded-full text-rust font-bold text-[9px] uppercase tracking-widest">
+-                  {statusBadge}
+-                </span>
+-                <span className="w-1.5 h-1.5 rounded-full bg-dark/20" />
+-                <Annotation className="!text-dark/60">{project.location}</Annotation>
+-              </div>
+-
+-              <div className="space-y-5">
+-                <h1 className="hero-title text-dark">
+-                  {name}<span className="text-rust">.</span>
+-                </h1>
+-                <p
+-                  className="text-xl md:text-2xl font-light text-rust italic max-w-2xl leading-relaxed"
+-                  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+-                >
+-                  {tagline}
+-                </p>
+-              </div>
+-
+-              <BodyText size="lg" className="max-w-2xl text-dark/70 font-light leading-relaxed">
+-                {project.brief}
+-              </BodyText>
+-
+-              {/* Spacious Aligned Spec Rows */}
+-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 pt-4 border-t border-dark/10 w-full mt-6">
+-                {/* Starting Price */}
+-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
+-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
+-                    Starting Price
+-                  </span>
+-                  <div
+-                    className="text-lg font-light text-dark"
+-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+-                  >
+-                    {priceText}
+-                  </div>
+-                </div>
+-
+-                {/* Project Status */}
+-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
+-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
+-                    Project Status
+-                  </span>
+-                  <div
+-                    className="text-lg font-light text-rust italic"
+-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+-                  >
+-                    Ready for Site Visits
+-                  </div>
+-                </div>
+-
+-                {/* Total Homesites */}
+-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
+-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
+-                    Total Homesites
+-                  </span>
+-                  <div
+-                    className="text-lg font-light text-dark"
+-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+-                  >
+-                    {totalUnits}
+-                  </div>
+-                </div>
+-
+-                {/* Possession Date */}
+-                <div className="flex justify-between items-baseline py-3.5 border-b border-dark/10">
+-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-rust uppercase">
+-                    Possession Date
+-                  </span>
+-                  <div
+-                    className="text-lg font-light text-dark"
+-                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+-                  >
+-                    {possessionDate}
+-                  </div>
+-                </div>
+-              </div>
+-            </div>
+-
+-            {/* Right Sticky Enquiry Card */}
+-            <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-28 z-20">
+-              <StickyEnquiryForm projectTitle={name} />
+-            </div>
+-
+-          </div>
+-
+-          {/* Hero Gallery Scrolling Marquee */}
+-          <div className="mt-12 md:mt-16 relative w-screen max-w-none ml-[calc(-50vw+50%)] overflow-hidden group">
+-            <div
+-              className="flex min-w-max items-center gap-4 md:gap-6 animate-marquee-hero group-hover:[animation-play-state:paused]"
+-              style={{
+-                animation: "marqueeHero 55s linear infinite",
+-              }}
+-            >
+-              {repeatedImages.map((image, idx) => (
+-                <div
+-                  key={idx}
+-                  onClick={() => openLightbox(idx % galleryImages.length)}
+-                  className="relative flex-shrink-0 overflow-hidden bg-[#E8E3DB] cursor-pointer w-[280px] h-[40vh] md:w-[450px] md:h-[55vh] border border-dark/5"
+-                >
+-                  <Image
+-                    src={image.src}
+-                    alt={image.alt}
+-                    fill
+-                    priority={idx < 3}
+-                    sizes="(max-width: 1200px) 50vw, 33vw"
+-                    className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-110"
+-                  />
+-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+-                    <span className="text-white/60 text-[10px] uppercase tracking-[0.2em] mb-1">Sydney Oaks</span>
+-                    <span className="text-white text-lg font-serif italic">{image.alt}</span>
++          return (
++            <div ref={pageRef} className="overflow-x-hidden bg-cream font-sans">
++              {/* HERO BANNER (with enquiry CTA) */}
++              <section className="relative w-full pt-28 md:pt-36 pb-16 md:pb-24 bg-[#F5F0E8] border-b border-dark/10">
++                {/* ...existing code... */}
++                <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
++                  {/* ...existing code... */}
++                  <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-28 z-20">
++                    <StickyEnquiryForm projectTitle={name} />
+                   </div>
+                 </div>
+-              ))}
+-            </div>
+-
+-            {/* CSS for marquee animation */}
+-            <style jsx>{`
+-              @keyframes marqueeHero {
+-                0% { transform: translateX(0); }
+-                100% { transform: translateX(-33.333%); }
+-              }
+-              .animate-marquee-hero {
+-                will-change: transform;
+-              }
+-            `}</style>
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* 2. QUICK INFO BAR (Premium Specs Dashboard) */}
+-      <section className="bg-dark text-cream border-y border-rust/10 py-8">
+-        <div className="mx-auto max-w-[1600px] px-6 sm:px-8 md:px-12 lg:px-20">
+-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 lg:gap-6 items-stretch">
+-
+-            {/* Project Area */}
+-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
+-              <Layers className="text-rust w-5 h-5 mb-2 shrink-0" />
+-              <Annotation light className="mb-1">Project Area</Annotation>
+-              <span className="font-display font-light text-sm text-cream">{projectArea}</span>
+-            </div>
+-
+-            {/* Total Units */}
+-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
+-              <Building2 className="text-rust w-5 h-5 mb-2 shrink-0" />
+-              <Annotation light className="mb-1">Total Units</Annotation>
+-              <span className="font-display font-light text-sm text-cream">{totalUnits}</span>
+-            </div>
+-
+-            {/* Configuration */}
+-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
+-              <Compass className="text-rust w-5 h-5 mb-2 shrink-0" />
+-              <Annotation light className="mb-1">Configuration</Annotation>
+-              <span className="font-display font-light text-sm text-cream">3 & 4 BHK</span>
+-            </div>
+-
+-            {/* Possession Date */}
+-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
+-              <Calendar className="text-rust w-5 h-5 mb-2 shrink-0" />
+-              <Annotation light className="mb-1">Possession Date</Annotation>
+-              <span className="font-display font-light text-sm text-cream">{possessionDate}</span>
+-            </div>
+-
+-            {/* Price Range */}
+-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
+-              <DollarSign className="text-rust w-5 h-5 mb-2 shrink-0" />
+-              <Annotation light className="mb-1">Price Range</Annotation>
+-              <span className="font-display font-light text-sm text-cream">{priceRange}</span>
+-            </div>
+-
+-            {/* Property Type */}
+-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
+-              <Home className="text-rust w-5 h-5 mb-2 shrink-0" />
+-              <Annotation light className="mb-1">Property Type</Annotation>
+-              <span className="font-display font-light text-sm text-cream">{propertyType}</span>
+-            </div>
+-
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* 3. PROJECT OVERVIEW */}
+-      <SectionWrapper dark={false} className="!py-12 md:!py-16">
+-        <div data-reveal className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
+-
+-          <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full">
+-            <div>
+-              <SectionLabel>Overview</SectionLabel>
+-              <SectionHeadline size="md" className="mb-6 font-display font-light">
+-                Crafting spaces where light meets <em className="font-normal italic">sanctuary</em>
+-              </SectionHeadline>
+-
+-              <div className="space-y-6 text-dark/80">
+-                <p className="text-lg leading-relaxed font-light">
+-                  Sydney Oaks is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle in Gwinnett County. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected oak forests.
+-                </p>
+-                <p className="text-md leading-relaxed font-light opacity-90">
+-                  Each townhome is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local hiking trails, premier Gwinnett schools, and local civic centers, all within a fully gated community framework.
+-                </p>
+-              </div>
+-            </div>
+-
+-            <div className="mt-8 border-t border-dark/15 pt-6">
+-              <Annotation className="!text-rust mb-4">COMMUNITY KEYNOTE</Annotation>
+-              <blockquote className="border-l-2 border-rust pl-4 italic text-dark/70 font-display text-lg">
+-                &ldquo;Modern design should not separate us from nature; it should act as the frame that celebrates it.&rdquo;
+-              </blockquote>
++                {/* ...existing code... */}
++              </section>
++
++              {/* COMMUNITY OVERVIEW (Project Overview) */}
++              <SectionWrapper dark={false} className="!py-12 md:!py-16">
++                {/* ...existing code... */}
++              </SectionWrapper>
++
++              {/* GALLERY (Project Gallery) */}
++              <section className="bg-cream py-12 md:py-16 border-t border-dark/10 overflow-hidden">
++                {/* ...existing code... */}
++              </section>
++
++              {/* MASTER PLAN / SITE PLAN */}
++              <MasterPlanSection />
++
++              {/* FLOOR PLANS */}
++              <FloorPlansCarousel floorPlans={floorPlans} />
++
++              {/* AMENITIES SECTION */}
++              <SectionWrapper dark={true} className="!py-12 md:!py-16">
++                {/* ...existing code... */}
++              </SectionWrapper>
++
++              {/* LOCATION ADVANTAGES */}
++              <LocationAdvantagesSection nearbyPlaces={nearbyPlaces} coordinates={coordinates} rera={reraNumber} />
++
++              {/* WHY CHOOSE THIS PROJECT (use Project Overview highlights) */}
++              <SectionWrapper dark={false} className="!py-12 md:!py-16">
++                {/* ...existing code... */}
++              </SectionWrapper>
++
++              {/* ENQUIRY SECTION (StickyEnquiryForm at bottom) */}
++              <SectionWrapper dark={false} className="!py-12 md:!py-16">
++                <StickyEnquiryForm projectTitle={name} />
++              </SectionWrapper>
++
++              {/* LIGHTBOX COMPONENT */}
++              {lightboxOpen && (
++                <LightboxModal
++                  images={galleryImages}
++                  currentIdx={lightboxIdx}
++                  onClose={() => setLightboxOpen(false)}
++                />
++              )}
+             </div>
+-          </div>
+-
+-          <div className="col-span-12 lg:col-span-5 flex flex-col h-full">
++          );
+             <Annotation className="mb-4">HIGHLIGHT CRITERIA</Annotation>
+ 
+             <div className="flex flex-col flex-1 justify-between gap-4 h-full">

@@ -34,6 +34,9 @@ export type ProjectData = {
   priceRange?: string;
   propertyType?: string;
   highlightsList?: string[];
+  sitePlanPdfUrl?: string;
+  floorPlansPdfUrl?: string;
+  masterPlanComponents?: { name: string; desc: string }[];
   floorPlansDetails?: {
     name: string;
     image: string;
@@ -417,6 +420,13 @@ export const allProjects: ProjectData[] = [
     totalUnits: "89 Town Homes",
     priceRange: "$410k - $580k",
     propertyType: "Luxury Villas",
+    sitePlanPdfUrl: "/pdfs/site-plan.pdf",
+    floorPlansPdfUrl: "/pdfs/aspen-plan-set.pdf",
+    masterPlanComponents: [
+      { name: "Plot Layout", desc: "Premium, low-density layout comprising 89 beautifully proportioned estate townhome plots structured for high natural ventilation and spacing." },
+      { name: "Amenities Zoning", desc: "A central 2-acre community park core grouping the swimming pool, fully-equipped gym, children's play court, and outdoor walking path." },
+      { name: "Entry & Exit", desc: "Single-point gated access lobby with 24/7 security cabin control, perimeter sensor arrays, and video surveillance." }
+    ],
     highlightsList: [
       "Wooded backyard retreats bordering natural trails",
       "Curated lifestyle amenities at our private community core",
