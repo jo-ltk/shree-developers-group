@@ -85,6 +85,12 @@ export type ProjectData = {
   sitePlanSvg?: string;
   configurationLabel?: string;
   keyAdvantages?: { title: string; description: string }[];
+  /** Hero-only copy; other sections keep using summary/brief until updated */
+  heroDescription?: string;
+  heroKeySpecs?: string[];
+  heroLocationLabel?: string;
+  heroHideStatusBadge?: boolean;
+  heroCtaSecondary?: string;
 };
 
 export const DEDICATED_PROJECT_SLUGS = ["sydney-oaks", "elysian-gates"] as const;
@@ -656,7 +662,20 @@ export const allProjects: ProjectData[] = [
     name: "Sydney Oaks",
     priceText: "From low $400s",
     statusBadge: "Ongoing",
-    tagline: "Where Modern Living Meets the Oak Ridge Trails",
+    tagline: "Luxury Mixed-Use Townhome Community in Forsyth County, Georgia",
+    heroDescription:
+      "Modern townhomes designed for connected living with integrated retail, office spaces, green landscapes, and walkable community planning. Located in the heart of Cumming, Sydney Oaks combines residential comfort with convenience, lifestyle, and long-term value.",
+    heroLocationLabel: "Forsyth County / Cumming, GA",
+    heroHideStatusBadge: true,
+    heroKeySpecs: [
+      "Premium mixed-use development",
+      "Located in Forsyth County / Cumming, GA",
+      "Retail + Office + Residential integration",
+      "Family-oriented community",
+      "HOA maintained landscape and exteriors",
+      "Starting from the low $500s",
+    ],
+    heroCtaSecondary: "Schedule a Visit",
     reraNumber: "RERA-GA-8923",
     possessionDate: "Q4 2026",
     projectArea: "12 Acres",

@@ -124,6 +124,11 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const tagline = project.tagline || "Luxury homes in Suwanee, Georgia";
   const priceText = project.priceText || "From low $400s";
   const statusBadge = project.statusBadge || "Ongoing";
+  const heroDescription = project.heroDescription;
+  const heroKeySpecs = project.heroKeySpecs;
+  const heroLocationLabel = project.heroLocationLabel || project.location;
+  const showHeroStatusBadge = !project.heroHideStatusBadge;
+  const heroCtaSecondary = project.heroCtaSecondary || "Schedule Visit";
   const reraNumber = project.reraNumber || "RERA-GA-8923";
   const possessionDate = project.possessionDate || "Q4 2026";
   const projectArea = project.projectArea || "12 Acres";
@@ -189,20 +194,28 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       {/* A. HERO BANNER */}
       <section className="relative w-full pt-20 sm:pt-24 md:pt-32 pb-10 sm:pb-12 md:pb-16 bg-[#F5F0E8] border-b border-dark/10">
         <div className="mx-auto max-w-[1600px] px-4 sm:px-8 md:px-12 lg:px-16">
-          <div className="grid grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
+          <div
+            className={`grid grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-stretch ${
+              heroKeySpecs?.length ? "lg:grid-rows-1" : ""
+            }`}
+          >
 
             {/* Left Hero Content */}
             <div
               data-reveal
-              className="col-span-12 lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left space-y-4 sm:space-y-6"
+              className={`col-span-12 flex h-full min-h-0 flex-col items-center text-center lg:items-start lg:text-left lg:justify-between ${
+                heroKeySpecs?.length ? "lg:col-span-6 lg:min-h-full" : "lg:col-span-5"
+              } gap-4 sm:gap-5 lg:gap-6`}
             >
               <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 lg:items-start">
-                <span className="w-fit border border-rust/25 px-3 py-1 text-rust font-bold text-[9px] uppercase tracking-widest">
-                  {statusBadge}
-                </span>
+                {showHeroStatusBadge && (
+                  <span className="w-fit border border-rust/25 px-3 py-1 text-rust font-bold text-[9px] uppercase tracking-widest">
+                    {statusBadge}
+                  </span>
+                )}
                 <span className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.22em] text-dark/60">
                   <MapPin className="h-3.5 w-3.5 shrink-0 text-rust" />
-                  <span className="leading-snug">{project.location}</span>
+                  <span className="leading-snug">{heroLocationLabel}</span>
                 </span>
               </div>
 
@@ -226,52 +239,89 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                 size="lg"
                 className="mx-auto max-w-lg text-base sm:text-lg text-dark/70 font-light leading-relaxed lg:mx-0 lg:max-w-xl"
               >
-                {project.summary || project.brief}
+                {heroDescription ?? project.summary ?? project.brief}
               </BodyText>
 
-              <div className="w-full border-y border-dark/10 py-4">
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center lg:text-left">
-                  <div className="min-w-0 space-y-0.5 sm:space-y-1">
-                    <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Price</span>
-                    <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{priceText}</span>
+              <div className="w-full border-y border-dark/10 py-4 lg:py-5">
+                {heroKeySpecs && heroKeySpecs.length > 0 ? (
+                  <div className="w-full text-left">
+                    <span className="block text-[9px] sm:text-[10px] font-bold tracking-[0.18em] sm:tracking-[0.2em] text-rust uppercase text-center lg:text-left">
+                      Key Specs
+                    </span>
+                    <ul className="mt-3.5 grid w-full grid-cols-2 gap-x-4 gap-y-3.5 sm:gap-x-6 sm:gap-y-4 lg:gap-x-8">
+                      {heroKeySpecs.map((spec) => (
+                        <li
+                          key={spec}
+                          className="flex items-start gap-2.5 min-w-0 sm:gap-3"
+                        >
+                          <span
+                            className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-rust/25 bg-rust/5"
+                            aria-hidden
+                          >
+                            <CheckCircle2 className="h-3 w-3 text-rust sm:h-3.5 sm:w-3.5" strokeWidth={2.25} />
+                          </span>
+                          <span className="font-display text-xs sm:text-sm lg:text-[15px] text-dark/90 leading-snug">
+                            {spec}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <div className="min-w-0 space-y-0.5 sm:space-y-1">
-                    <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Homes</span>
-                    <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{totalUnits}</span>
+                ) : (
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center lg:text-left">
+                    <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                      <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Price</span>
+                      <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{priceText}</span>
+                    </div>
+                    <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                      <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Homes</span>
+                      <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{totalUnits}</span>
+                    </div>
+                    <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                      <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Possession</span>
+                      <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{possessionDate}</span>
+                    </div>
                   </div>
-                  <div className="min-w-0 space-y-0.5 sm:space-y-1">
-                    <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Possession</span>
-                    <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{possessionDate}</span>
-                  </div>
-                </div>
+                )}
               </div>
 
-              <div className="flex w-full max-w-md flex-col items-center gap-3 pt-1 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-start sm:gap-4 sm:pt-3 lg:max-w-none">
+              <div
+                className={`flex w-full flex-row flex-nowrap items-stretch justify-center gap-2.5 pt-1 sm:gap-4 sm:justify-start sm:pt-3 lg:max-w-none ${
+                  heroKeySpecs?.length ? "lg:mt-auto" : ""
+                }`}
+              >
                 <Link
                   href="#enquiry"
-                  className="inline-flex h-12 sm:h-14 w-full max-w-sm sm:max-w-none sm:w-auto items-center justify-center gap-3 sm:gap-4 bg-rust px-6 sm:px-8 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.24em] text-white no-underline transition-colors hover:bg-dark"
+                  className="inline-flex h-12 sm:h-14 min-w-0 flex-1 sm:flex-none sm:w-auto items-center justify-center gap-2 sm:gap-4 bg-rust px-3 sm:px-8 text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.24em] text-white no-underline transition-colors hover:bg-dark"
                 >
                   Request Information
-                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <ArrowRight className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
                 </Link>
                 <Link
                   href="#enquiry"
-                  className="inline-flex h-12 sm:h-14 w-full max-w-sm sm:max-w-none sm:w-auto items-center justify-center gap-3 sm:gap-4 border border-dark/20 px-6 sm:px-8 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.24em] text-dark no-underline transition-colors hover:border-rust hover:text-rust"
+                  className="inline-flex h-12 sm:h-14 min-w-0 flex-1 sm:flex-none sm:w-auto items-center justify-center gap-2 sm:gap-4 border border-dark/20 px-3 sm:px-8 text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.24em] text-dark no-underline transition-colors hover:border-rust hover:text-rust"
                 >
-                  Schedule Visit
-                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  {heroCtaSecondary}
+                  <ArrowRight className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
                 </Link>
               </div>
             </div>
 
             {/* Right Hero Image */}
-            <div data-reveal className="col-span-12 lg:col-span-7 relative mt-2 sm:mt-0 min-h-[240px] sm:min-h-[360px] md:min-h-[540px] lg:min-h-[650px] w-full overflow-hidden bg-[#EDE8DF] border border-dark/10">
+            <div
+              data-reveal
+              className={`col-span-12 relative mt-2 sm:mt-0 w-full self-stretch overflow-hidden bg-[#EDE8DF] border border-dark/10 min-h-[240px] sm:min-h-[300px] ${
+                heroKeySpecs?.length
+                  ? "lg:col-span-6 lg:mt-0 lg:h-full lg:min-h-full"
+                  : "lg:col-span-7 lg:min-h-[540px] xl:min-h-[620px]"
+              }`}
+            >
               <Image
                 src={project.image}
                 alt={`${name} Exterior`}
                 fill
                 priority
-                sizes="(max-width: 1200px) 100vw, 58vw"
+                sizes="(max-width: 1200px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
