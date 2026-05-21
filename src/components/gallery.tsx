@@ -77,7 +77,15 @@ const communities: Community[] = [
   },
 ];
 
-function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
+function CommunityCard({
+  c,
+  isActive,
+  featuredMobile = false,
+}: {
+  c: Community;
+  isActive?: boolean;
+  featuredMobile?: boolean;
+}) {
   const isSoon = c.status === "Coming Soon";
   const href = isSoon
     ? "/contact"
@@ -89,11 +97,18 @@ function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
   return (
     <Link
       href={href}
-      className={`group relative flex flex-col gap-4 md:gap-5 w-full cursor-pointer no-underline transition-all duration-500 ${
-        isActive === false ? "opacity-40 blur-[1px]" : "opacity-100"
-      }`}
+      className={`group relative flex w-full cursor-pointer flex-col no-underline transition-all duration-500 ${
+        featuredMobile ? "gap-6" : "gap-4 md:gap-5"
+      } ${isActive === false && !featuredMobile ? "opacity-40 blur-[1px]" : "opacity-100"}`}
     >
-      <div className="relative w-full overflow-hidden bg-[#E8E3DB] aspect-[4/3] sm:aspect-[4/4.5] md:aspect-[4/5]">
+      <div
+        className={[
+          "relative w-full overflow-hidden bg-[#E8E3DB]",
+          featuredMobile
+            ? "aspect-[4/5] min-h-[22rem]"
+            : "aspect-[4/3] sm:aspect-[4/4.5] md:aspect-[4/5]",
+        ].join(" ")}
+      >
         <Image
           src={c.image}
           alt={c.name}
@@ -104,29 +119,65 @@ function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
           ].join(" ")}
         />
 
-        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
-          <div className="bg-white/90 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-full max-w-[48%]">
-            <Annotation className="!text-[#1C1208] responsive-stat-label !font-bold truncate">
+        <div
+          className={`absolute left-3 right-3 z-10 flex items-start justify-between gap-2 ${
+            featuredMobile ? "top-4" : "top-3"
+          }`}
+        >
+          <div
+            className={`max-w-[48%] rounded-full border border-white/20 bg-white/90 backdrop-blur-md ${
+              featuredMobile ? "px-3.5 py-1.5" : "px-2.5 py-1"
+            }`}
+          >
+            <Annotation
+              className={`!font-bold truncate !text-[#1C1208] ${
+                featuredMobile ? "!text-[0.65rem] !tracking-[0.18em]" : "responsive-stat-label"
+              }`}
+            >
               {c.type}
             </Annotation>
           </div>
 
-          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-full shrink-0">
+          <div
+            className={`flex shrink-0 items-center gap-2 rounded-full border border-white/20 bg-white/90 backdrop-blur-md ${
+              featuredMobile ? "px-3.5 py-1.5" : "px-2.5 py-1"
+            }`}
+          >
             <span
               className={[
                 "w-1.5 h-1.5 rounded-full flex-shrink-0",
                 isSoon ? "bg-[#1C1208]/40" : "bg-emerald-500 animate-pulse",
               ].join(" ")}
             />
-            <Annotation className="!text-[#1C1208] responsive-stat-label !font-bold whitespace-nowrap">
+            <Annotation
+              className={`!font-bold whitespace-nowrap !text-[#1C1208] ${
+                featuredMobile ? "!text-[0.65rem] !tracking-[0.18em]" : "responsive-stat-label"
+              }`}
+            >
               {c.status}
             </Annotation>
           </div>
         </div>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 px-3 w-full flex justify-center">
-          <div className="bg-white/95 backdrop-blur-md rounded-full flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 shadow-lg transition-all duration-300 gap-2 border border-white/50 group-hover:-translate-y-1 group-hover:bg-white max-w-full">
-            <span className="text-[#1C1208] group-hover:text-[#D43F33] responsive-btn-text font-bold uppercase whitespace-nowrap transition-colors duration-300">
+        <div
+          className={`absolute left-1/2 z-20 flex w-full -translate-x-1/2 justify-center px-3 ${
+            featuredMobile ? "bottom-5" : "bottom-4"
+          }`}
+        >
+          <div
+            className={`flex max-w-full items-center justify-center rounded-full border border-white/50 bg-white/95 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-white ${
+              featuredMobile
+                ? "gap-2.5 px-6 py-3 shadow-[0_8px_32px_rgba(28,18,8,0.12)]"
+                : "gap-2 px-4 py-2 sm:px-5 sm:py-2.5"
+            }`}
+          >
+            <span
+              className={`font-bold uppercase whitespace-nowrap text-[#1C1208] transition-colors duration-300 group-hover:text-[#D43F33] ${
+                featuredMobile
+                  ? "text-[0.7rem] tracking-[0.2em]"
+                  : "responsive-btn-text"
+              }`}
+            >
               {isSoon
                 ? "Register Interest"
                 : c.slug === "sydney-oaks" || c.slug === "elysian-gates"
@@ -143,26 +194,66 @@ function CommunityCard({ c, isActive }: { c: Community; isActive?: boolean }) {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-3 px-1 sm:px-2 text-center md:text-left">
-        <Annotation className="!text-[#1C1208]/55 responsive-stat-label !font-medium shrink-0 pt-0.5">
+      <div
+        className={`flex flex-col items-center gap-3 text-center md:flex-row md:items-start md:text-left ${
+          featuredMobile ? "gap-5 px-6" : "px-1 sm:px-2"
+        }`}
+      >
+        <Annotation
+          className={`shrink-0 !font-medium !text-[#1C1208]/55 pt-0.5 ${
+            featuredMobile ? "!text-[0.7rem] !tracking-[0.22em]" : "responsive-stat-label"
+          }`}
+        >
           0/{displayIndex}
         </Annotation>
 
-        <div className="flex flex-col items-center md:items-start gap-2 flex-1 min-w-0">
-          <h3 className="text-[#1C1208] uppercase font-bold leading-tight m-0" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(1rem, 3vw, 1.25rem)", letterSpacing: "0.02em" }}>
+        <div
+          className={`flex min-w-0 flex-1 flex-col items-center gap-2 md:items-start ${
+            featuredMobile ? "gap-3.5" : ""
+          }`}
+        >
+          <h3
+            className="m-0 font-bold uppercase leading-tight text-[#1C1208]"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: featuredMobile
+                ? "clamp(1.35rem, 5.5vw, 1.75rem)"
+                : "clamp(1rem, 3vw, 1.25rem)",
+              letterSpacing: "0.02em",
+            }}
+          >
             {c.name}
           </h3>
-          <BodyText className="responsive-body-sm !text-[#1C1208]/70 leading-relaxed m-0" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+          <BodyText
+            className={`m-0 leading-relaxed !text-[#1C1208]/70 ${
+              featuredMobile
+                ? "!text-[0.9375rem] !leading-[1.65] max-w-[22rem]"
+                : "responsive-body-sm"
+            }`}
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
             {c.concept}
           </BodyText>
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-1">
-            <Annotation className="!text-[#1C1208] responsive-stat-label !font-bold">
+          <div
+            className={`flex flex-wrap items-center justify-center gap-2.5 pt-1 md:justify-start ${
+              featuredMobile ? "gap-3 pt-0.5" : ""
+            }`}
+          >
+            <Annotation
+              className={`!font-bold !text-[#1C1208] ${
+                featuredMobile ? "!text-[0.7rem] !tracking-[0.2em]" : "responsive-stat-label"
+              }`}
+            >
               {c.specs.beds > 0 ? `${c.specs.beds} Bed | ${c.specs.baths} Bath` : c.price}
             </Annotation>
             {c.specs.beds > 0 && (
               <>
                 <span className="w-px h-3 bg-[#1C1208]/15" />
-                <Annotation className="!text-[#1C1208]/70 responsive-stat-label !font-bold">
+                <Annotation
+                  className={`!font-bold !text-[#1C1208]/70 ${
+                    featuredMobile ? "!text-[0.7rem] !tracking-[0.2em]" : "responsive-stat-label"
+                  }`}
+                >
                   {c.price}
                 </Annotation>
               </>
@@ -199,7 +290,7 @@ export function Gallery() {
   }, [isAutoPlaying]);
 
   return (
-    <SectionWrapper id="gallery" dark={false} className="!pt-8 !pb-4 md:!pt-24 md:!pb-4 overflow-hidden">
+    <SectionWrapper id="gallery" dark={false} className="!pt-14 !pb-12 md:!pt-24 md:!pb-4 overflow-hidden">
       {/* Desktop Version */}
       <div className="hidden md:block">
         <div className="flex flex-col items-center md:items-start text-center md:text-left responsive-minimum-gap mb-8 md:mb-12">
@@ -234,16 +325,21 @@ export function Gallery() {
       </div>
 
       {/* Mobile Version (New Slider) */}
-      <div className="md:hidden px-4" ref={containerRef}>
-        <div className="flex flex-col gap-3 mb-8">
-          <SectionLabel className="!mb-0">Featured Living</SectionLabel>
-          <SectionHeadline size="xl" className="!text-[2.25rem] leading-[1.1] tracking-tight m-0">
+      <div className="md:hidden" ref={containerRef}>
+        <div className="mb-10 flex flex-col gap-4">
+          <SectionLabel className="!mb-0 !text-[0.7rem] !tracking-[0.28em]">
+            Featured Living
+          </SectionLabel>
+          <SectionHeadline
+            size="xl"
+            className="!text-[clamp(2.75rem,10vw,3.5rem)] !leading-[1.05] tracking-tight m-0"
+          >
             Communities built <br /> to last
           </SectionHeadline>
         </div>
 
-        <div className="relative overflow-visible">
-          <div className="overflow-hidden -mx-4 px-4">
+        <div className="relative -mx-6 w-[calc(100%+3rem)] overflow-visible">
+          <div className="overflow-hidden">
             <motion.div
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
@@ -258,38 +354,41 @@ export function Gallery() {
               }}
               animate={{ x: `-${currentIndex * 100}%` }}
               transition={{ type: "spring", stiffness: 200, damping: 30 }}
-              className="flex"
+              className="flex touch-pan-y"
             >
               {communities.map((c, idx) => (
-                <div key={c.slug} className="min-w-full pr-6">
-                  <CommunityCard c={c} isActive={currentIndex === idx} />
+                <div key={c.slug} className="min-w-full shrink-0">
+                  <CommunityCard c={c} isActive={currentIndex === idx} featuredMobile />
                 </div>
               ))}
             </motion.div>
           </div>
 
-          <div className="flex items-center justify-center gap-3 mt-6">
+          <div className="mt-8 flex items-center justify-center gap-3">
             {communities.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => { setCurrentIndex(idx); setIsAutoPlaying(false); }}
-                className={`h-1 transition-all duration-500 rounded-full ${currentIndex === idx ? "w-10 bg-[#1C1208]" : "w-3 bg-[#1C1208]/10"}`}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`rounded-full transition-all duration-500 ${
+                  currentIndex === idx ? "h-1.5 w-12 bg-[#1C1208]" : "h-1.5 w-4 bg-[#1C1208]/15"
+                }`}
               />
             ))}
           </div>
         </div>
 
-        <div className="flex justify-center pt-4">
+        <div className="pt-8">
           <button
             onClick={() => (window.location.href = "/projects")}
-            className="group relative inline-flex h-[46px] items-center gap-3 bg-rust px-5 !text-white no-underline overflow-hidden responsive-btn-text cursor-pointer"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.25em" }}
+            className="group relative flex h-14 w-full items-center justify-center gap-3 bg-rust px-6 !text-white no-underline overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)]"
+            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.28em" }}
           >
             <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
             <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
-            <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Projects</span>
-            <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+            <span className="relative z-10 font-bold uppercase whitespace-nowrap">View All Projects</span>
+            <div className="relative z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center border border-white/30 transition-transform duration-300 group-hover:translate-x-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </div>

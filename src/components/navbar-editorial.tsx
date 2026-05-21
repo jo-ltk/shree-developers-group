@@ -25,12 +25,7 @@ const navColumns = [
 const desktopGridClass =
   "grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] items-start gap-x-8";
 
-type NavbarEditorialProps = {
-  /** Invert the black logo to white when at top (use on dark hero pages only). */
-  invertLogoAtTop?: boolean;
-};
-
-export function NavbarEditorial({ invertLogoAtTop = false }: NavbarEditorialProps) {
+export function NavbarEditorial() {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -69,12 +64,7 @@ export function NavbarEditorial({ invertLogoAtTop = false }: NavbarEditorialProp
     []
   );
 
-  const logoImageClassName = [
-    "object-left",
-    isAtTop && invertLogoAtTop ? "invert" : null,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const logoImageClassName = "object-left";
 
   return (
     <>

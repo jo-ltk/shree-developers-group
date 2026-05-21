@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import galleryCloudinary from "@/data/gallery-cloudinary.json";
+import { cloudinaryImageUrl } from "@/lib/cloudinary";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionHeadline } from "./ui/section-headline";
 import { SectionLabel } from "./ui/section-label";
@@ -19,22 +21,30 @@ const NoScrollbarStyle = () => (
   `}</style>
 );
 
-const galleryImages = [
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935490/shree-gallery/exfcj6syu54ugowjcjx3.jpg", alt: "Architectural detail 1", title: "Refined Vision" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935497/shree-gallery/xn6bxhuica3zr8sswr2z.jpg", alt: "Architectural detail 2", title: "Modern Living" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935505/shree-gallery/nbtuyztymqhpecabm27n.jpg", alt: "Architectural detail 3", title: "Elegant Spaces" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935513/shree-gallery/pvsbrhjpc5zxnlvmwlyk.jpg", alt: "Architectural detail 4", title: "Serene Sanctuaries" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935520/shree-gallery/dfwwjaugwrztrzm4pmwx.jpg", alt: "Architectural detail 5", title: "Grand Arrivals" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935527/shree-gallery/e5jfwc0uohsqgtdm2qt4.jpg", alt: "Architectural detail 6", title: "Luxe Textures" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935534/shree-gallery/ymg8w2pvns7jud8ly7b0.jpg", alt: "Architectural detail 7", title: "Bespoke Design" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935540/shree-gallery/r83kmoarupaaqtncptv6.jpg", alt: "Architectural detail 8", title: "Urban Oasis" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935547/shree-gallery/hy8jynxcd3zurxakekq6.jpg", alt: "Architectural detail 9", title: "Timeless Style" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935553/shree-gallery/wdx2nlherhyteeiuz49d.jpg", alt: "Architectural detail 10", title: "Sophisticated Comfort" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935559/shree-gallery/a1bqriv7n2hmae3fikq6.jpg", alt: "Architectural detail 11", title: "Pure Aesthetics" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935567/shree-gallery/sprmoli2b673pruzac7u.jpg", alt: "Architectural detail 12", title: "Living Art" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935574/shree-gallery/hwyi16be7ytkc7ghd2bc.jpg", alt: "Architectural detail 13", title: "Exquisite Detail" },
-  { url: "https://res.cloudinary.com/dduy8wigb/image/upload/v1778935582/shree-gallery/mbjyw2a0ihdthavkqonm.jpg", alt: "Architectural detail 14", title: "Final Vision" },
-];
+const galleryTitles = [
+  "Refined Vision",
+  "Modern Living",
+  "Elegant Spaces",
+  "Serene Sanctuaries",
+  "Grand Arrivals",
+  "Luxe Textures",
+  "Bespoke Design",
+  "Urban Oasis",
+  "Timeless Style",
+  "Sophisticated Comfort",
+  "Pure Aesthetics",
+  "Living Art",
+  "Exquisite Detail",
+  "Final Vision",
+] as const;
+
+const galleryImages = galleryCloudinary.map((item, i) => ({
+  publicId: item.publicId,
+  thumbUrl: cloudinaryImageUrl(item.publicId, { width: 900, quality: 90 }),
+  fullUrl: cloudinaryImageUrl(item.publicId, { width: 2400, quality: 92 }),
+  alt: `Refined living interior ${i + 1}`,
+  title: galleryTitles[i],
+}));
 
 export function ImageGallery() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -119,10 +129,11 @@ export function ImageGallery() {
               className="relative flex-shrink-0 overflow-hidden bg-[#E8E3DB] cursor-pointer w-[280px] h-[70vh] md:w-[450px] md:h-[85vh]"
             >
               <Image
-                src={image.url}
+                src={image.thumbUrl}
                 alt={image.alt}
                 fill
-                sizes="(max-width: 1200px) 50vw, 33vw"
+                unoptimized
+                sizes="(max-width: 768px) 280px, 450px"
                 className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
@@ -191,9 +202,11 @@ export function ImageGallery() {
           >
             <div className="relative w-full h-full">
               <Image
-                src={galleryImages[selectedIdx].url}
+                src={galleryImages[selectedIdx].fullUrl}
                 alt={galleryImages[selectedIdx].alt}
                 fill
+                unoptimized
+                sizes="(max-width: 1280px) 100vw, 1152px"
                 className="object-contain"
                 priority
               />

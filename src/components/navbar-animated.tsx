@@ -90,7 +90,7 @@ export function NavbarAnimated() {
                     ? "h-12 w-[10rem] md:h-20 md:w-[14rem]" 
                     : "h-9 w-[8rem] md:h-14 md:w-[11rem]"
                 }`}
-                imageClassName={isAtTop ? "object-right invert" : "object-right"}
+                imageClassName="object-right"
                 alt="Shree Developers Group logo"
                 priority
               />
