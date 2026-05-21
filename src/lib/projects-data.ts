@@ -82,6 +82,9 @@ export type ProjectData = {
     lng: number;
   };
   overviewParagraphs?: string[];
+  overviewSectionLabel?: string;
+  overviewHeadline?: string;
+  overviewKeynote?: string;
   highlightCriteria?: { title: string; desc: string }[];
   locationConnectivityBlurb?: string;
   sitePlanSvg?: string;
@@ -727,28 +730,11 @@ export const allProjects: ProjectData[] = [
     floorPlansPdfUrl: "/pdfs/aspen-plan-set.pdf",
     sitePlanSvg: "/svg/siteMap-final.svg",
     configurationLabel: "3 & 4 BHK",
+    overviewSectionLabel: "Community Overview",
     overviewParagraphs: [
-      "Sydney Oaks is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle in Gwinnett County. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected oak forests.",
-      "Each townhome is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local hiking trails, premier Gwinnett schools, and local civic centers, all within a fully gated community framework.",
+      "Sydney Oaks is a thoughtfully planned mixed-use community designed to create a balanced lifestyle where residents can truly live, work, and play within one connected environment. Nestled in Forsyth County, the development offers a walkable neighborhood experience with integrated retail, dining, office spaces, parks, and recreational zones. The community focuses on modern family living with professionally landscaped surroundings, green spaces, pedestrian-friendly streets, and convenient access to schools, healthcare, shopping, and entertainment. The architectural character combines comfort, functionality, and timeless design, making it ideal for families, professionals, and long-term homeowners. With strong connectivity to major lifestyle destinations and daily conveniences within minutes, Sydney Oaks delivers a modern suburban experience with a strong sense of community and accessibility.",
     ],
-    highlightCriteria: [
-      {
-        title: "Top Gwinnett County Schools",
-        desc: "Directly within district zones of North Gwinnett schools, renowned for excellence.",
-      },
-      {
-        title: "Healthcare Integration",
-        desc: "Under 10 minutes drive from Emory Johns Creek Hospital, providing premium care.",
-      },
-      {
-        title: "Duluth Tech Connectivity",
-        desc: "Quick commutes to Duluth and Suwanee technical offices and commercial business parks.",
-      },
-      {
-        title: "Lush Park & Trail access",
-        desc: "The gated layout wraps around direct private paths into the scenic Oak Ridge Trailway.",
-      },
-    ],
+    highlightCriteria: [],
     locationConnectivityBlurb:
       "Positioned along Gwinnett County's central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.",
     keyAdvantages: [

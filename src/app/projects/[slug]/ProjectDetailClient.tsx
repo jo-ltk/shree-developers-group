@@ -143,6 +143,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const [activeHighlight, setActiveHighlight] = useState<number | null>(0);
   const [highlightsExpanded, setHighlightsExpanded] = useState(false);
+  const [overviewExpanded, setOverviewExpanded] = useState(false);
 
   // Setup GSAP
   useLayoutEffect(() => {
@@ -167,12 +168,19 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
     `${name} is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected landscape.`,
     "Each home is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local trails, premier schools, and civic centers, all within a fully gated community framework.",
   ];
-  const highlightCriteria = project.highlightCriteria || [
-    { title: "Top County Schools", desc: "Within acclaimed school districts renowned for excellence." },
-    { title: "Healthcare Integration", desc: "Minutes from major regional hospitals providing premium care." },
-    { title: "Business Connectivity", desc: "Quick commutes to regional offices and commercial business parks." },
-    { title: "Park & Trail Access", desc: "Gated layout with direct paths into scenic trail networks." },
-  ];
+  const overviewSectionLabel = project.overviewSectionLabel ?? "Overview";
+  const overviewHeadline = project.overviewHeadline;
+  const overviewKeynote = project.overviewKeynote;
+  const highlightCriteria =
+    project.highlightCriteria ?? [
+      { title: "Top County Schools", desc: "Within acclaimed school districts renowned for excellence." },
+      { title: "Healthcare Integration", desc: "Minutes from major regional hospitals providing premium care." },
+      { title: "Business Connectivity", desc: "Quick commutes to regional offices and commercial business parks." },
+      { title: "Park & Trail Access", desc: "Gated layout with direct paths into scenic trail networks." },
+    ];
+  const showOverviewHighlights = highlightCriteria.length > 0;
+  const isSingleWideOverview =
+    !showOverviewHighlights && overviewParagraphs.length === 1;
   const locationConnectivityBlurb =
     project.locationConnectivityBlurb ||
     `Positioned along ${project.location}'s central access ways, ${name} bridges the boundary between natural seclusion and rapid civic reach.`;
@@ -428,42 +436,82 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       <SectionWrapper dark={false} className="!py-16 md:!py-24">
         <div data-reveal className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
-          <div className="col-span-12 lg:col-span-7 flex flex-col justify-between h-full items-center text-center lg:items-start lg:text-left">
-            <div className="w-full max-w-xl lg:max-w-none">
+          <div
+            className={`flex flex-col justify-between h-full items-center text-center lg:items-start lg:text-left ${
+              showOverviewHighlights ? "col-span-12 lg:col-span-7" : "col-span-12"
+            }`}
+          >
+            <div className="w-full max-w-none">
               <SectionLabel className="w-full justify-center text-center lg:justify-start lg:text-left !mb-4 lg:!mb-6">
-                Overview
+                {overviewSectionLabel}
               </SectionLabel>
-              <SectionHeadline
-                size="md"
-                className="mb-5 sm:mb-6 font-display font-light text-balance !text-[clamp(1.35rem,5vw,1.9rem)]"
-              >
-                Crafting spaces where light meets <em className="font-normal italic">sanctuary</em>
-              </SectionHeadline>
+              {overviewHeadline && (
+                <SectionHeadline
+                  size="md"
+                  className="mb-5 sm:mb-6 font-display font-light text-balance !text-[clamp(1.35rem,5vw,1.9rem)]"
+                >
+                  {overviewHeadline}
+                </SectionHeadline>
+              )}
 
-              <div className="space-y-5 sm:space-y-6 text-dark/80">
-                {overviewParagraphs.map((paragraph, idx) => (
+              {isSingleWideOverview ? (
+                <>
                   <p
-                    key={idx}
-                    className={`leading-relaxed font-light text-pretty ${
-                      idx === 0
-                        ? "text-base sm:text-lg"
-                        : "text-sm sm:text-base opacity-90"
+                    className={`w-full max-w-none font-light leading-relaxed text-pretty text-base text-dark/80 sm:text-lg lg:text-lg lg:leading-[1.75] ${
+                      !overviewExpanded ? "line-clamp-[9] lg:line-clamp-none" : ""
                     }`}
                   >
-                    {paragraph}
+                    {overviewParagraphs[0]}
                   </p>
-                ))}
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => setOverviewExpanded((prev) => !prev)}
+                    className="mx-auto mt-5 w-full max-w-sm cursor-pointer rounded-sm border border-dark/15 bg-[#EDE8DF] py-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-dark transition-colors hover:border-rust hover:text-rust lg:hidden"
+                  >
+                    {overviewExpanded ? "Read Less" : "Read More"}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="space-y-5 sm:space-y-6 text-dark/80">
+                    {overviewParagraphs.map((paragraph, idx) => (
+                      <p
+                        key={idx}
+                        className={`leading-relaxed font-light text-pretty ${
+                          idx === 0
+                            ? "text-base sm:text-lg"
+                            : "text-sm sm:text-base opacity-90"
+                        } ${!overviewExpanded && idx > 0 ? "hidden lg:block" : ""}`}
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+
+                  {overviewParagraphs.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setOverviewExpanded((prev) => !prev)}
+                      className="mx-auto mt-5 w-full max-w-sm cursor-pointer rounded-sm border border-dark/15 bg-[#EDE8DF] py-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-dark transition-colors hover:border-rust hover:text-rust lg:hidden"
+                    >
+                      {overviewExpanded ? "Read Less" : "Read More"}
+                    </button>
+                  )}
+                </>
+              )}
             </div>
 
-            <div className="mt-8 w-full max-w-xl border-t border-dark/15 pt-6 lg:max-w-none">
-              <Annotation className="!text-rust mb-4">COMMUNITY KEYNOTE</Annotation>
-              <blockquote className="mx-auto max-w-md border-l-0 pl-0 italic text-dark/70 font-display text-base sm:text-lg lg:mx-0 lg:max-w-none lg:border-l-2 lg:border-rust lg:pl-4">
-                &ldquo;Modern design should not separate us from nature; it should act as the frame that celebrates it.&rdquo;
-              </blockquote>
-            </div>
+            {overviewKeynote && (
+              <div className="mt-8 w-full max-w-xl border-t border-dark/15 pt-6 lg:max-w-none">
+                <Annotation className="!text-rust mb-4">COMMUNITY KEYNOTE</Annotation>
+                <blockquote className="mx-auto max-w-md border-l-0 pl-0 italic text-dark/70 font-display text-base sm:text-lg lg:mx-0 lg:max-w-none lg:border-l-2 lg:border-rust lg:pl-4">
+                  &ldquo;{overviewKeynote}&rdquo;
+                </blockquote>
+              </div>
+            )}
           </div>
 
+          {showOverviewHighlights && (
           <div className="col-span-12 lg:col-span-5 flex flex-col h-full">
             <Annotation className="mb-4">HIGHLIGHT CRITERIA</Annotation>
 
@@ -520,6 +568,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
             </div>
 
           </div>
+          )}
 
         </div>
       </SectionWrapper>
