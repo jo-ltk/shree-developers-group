@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { Lot, Hotspot, LotStatus, MapViewBox } from "../types/site-map";
-import { MapControls } from "./MapControls";
 
 type Filter = "All" | LotStatus;
 
@@ -46,7 +44,6 @@ export function SydneyOaksStage({
   lots: Lot[];
 }) {
   const artworkRef = useRef<HTMLDivElement>(null);
-  const transformRef = useRef<any>(null);
   const [svgMarkup, setSvgMarkup] = useState("");
   const [hotspots, setHotspots] = useState<Hotspot[]>([]);
   const [viewBox, setViewBox] = useState<MapViewBox>(FALLBACK_VIEWBOX);
@@ -129,14 +126,8 @@ export function SydneyOaksStage({
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#F5F0E8]">
-      <TransformWrapper ref={transformRef} centerOnInit minScale={0.5} maxScale={3}>
-        <MapControls 
-          onZoomIn={() => transformRef.current?.zoomIn()} 
-          onZoomOut={() => transformRef.current?.zoomOut()} 
-          onReset={() => transformRef.current?.resetTransform()} 
-        />
-        <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full">
-          <div ref={artworkRef} className="h-full w-full cursor-grab active:cursor-grabbing">
+      <div className="h-full w-full">
+          <div ref={artworkRef} className="h-full w-full">
             <svg viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`} className="h-full w-full">
                 <defs>
                     <mask id="sydney-focus-aperture">
@@ -211,8 +202,7 @@ export function SydneyOaksStage({
               ))}
             </svg>
           </div>
-        </TransformComponent>
-      </TransformWrapper>
+      </div>
     </div>
   );
 }

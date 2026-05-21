@@ -149,14 +149,14 @@ const LotRows = ({
         type="button"
         onClick={() => handleSelectLot(lot.id)}
         whileTap={reduceMotion ? undefined : { scale: 0.99 }}
-        className={`flex w-full items-center gap-4 px-5 py-4 text-left transition-colors duration-300 ${
+        className={`flex w-full min-w-0 items-center gap-3 px-4 py-3 text-left transition-colors duration-300 ${
           lot.id === selectedLotId
             ? "bg-[#EDE8DF]"
             : "bg-transparent hover:bg-[#EDE8DF]/50"
         }`}
       >
         <Annotation
-          className="min-w-[40px] !text-3xl leading-none !text-[#1C1208]"
+          className="w-9 shrink-0 !text-2xl leading-none !text-[#1C1208]"
           style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
         >
           {lot.lotNumber.toString().padStart(2, '0')}
@@ -224,41 +224,6 @@ const MapPanel = ({
       )}
     </ErrorBoundary>
 
-    {/* Legend — desktop: bottom-left panel */}
-    <div className="absolute bottom-8 left-8 z-20 hidden lg:block bg-[#F5F0E8]/90 border border-[#1C1208]/10 p-4 backdrop-blur-md">
-      <Annotation className="mb-3 opacity-100">Status Legend</Annotation>
-      <div className="space-y-2">
-        {[
-          { label: "Available", color: "#C9AE7B" },
-          { label: "Sold",      color: "rgba(28,18,8,0.2)" },
-          { label: "Reserved",  color: "#D43F33" },
-        ].map(({ label, color }) => (
-          <div key={label} className="flex items-center gap-3">
-            <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
-            <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/60">
-              {label}
-            </Annotation>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Legend — mobile: floating compact pill */}
-    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex lg:hidden items-center gap-2.5 bg-[#F5F0E8]/95 border border-[#1C1208]/10 px-2.5 py-1 rounded-full shadow-lg backdrop-blur-md whitespace-nowrap">
-      {[
-        { label: "Available", color: "#C9AE7B" },
-        { label: "Sold",      color: "rgba(28,18,8,0.2)" },
-        { label: "Reserved",  color: "#D43F33" },
-      ].map(({ label, color }) => (
-        <div key={label} className="flex items-center gap-1.5">
-          <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
-          <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/60">
-            {label}
-          </Annotation>
-        </div>
-      ))}
-    </div>
-
     {/* Compass — desktop only */}
     <div className="absolute right-8 top-8 z-20 hidden lg:flex flex-col items-center gap-1 opacity-40">
       <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]">N</Annotation>
@@ -268,18 +233,18 @@ const MapPanel = ({
 );
 
 const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?: boolean }) => (
-  <div className={`grid grid-cols-4 border-t border-[#1C1208]/10`}>
+  <div className="grid min-w-0 grid-cols-4 border-t border-[#1C1208]/10">
     {[
       { label: "Beds",   value: selectedLot.beds,   Icon: BedDouble },
       { label: "Baths",  value: selectedLot.baths,  Icon: Bath },
       { label: "Garage", value: selectedLot.garage, Icon: Car },
       { label: "Story",  value: selectedLot.story === "Two Story" ? "2" : "1", Icon: Home },
-    ].map(({ label, value, Icon }) => (
-      <div key={label} className={`flex flex-col items-center gap-1 border-r border-[#1C1208]/10 last:border-r-0 ${compact ? "py-3" : "py-6"}`}>
-        <BodyText className={`${compact ? "text-xl" : "text-2xl"} !font-light leading-none !text-[#1C1208]`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+    ].map(({ label, value }) => (
+      <div key={label} className={`flex min-w-0 flex-col items-center gap-1 border-r border-[#1C1208]/10 px-0.5 last:border-r-0 ${compact ? "py-3" : "py-6"}`}>
+        <BodyText className={`${compact ? "text-lg" : "text-2xl"} !font-light leading-none !text-[#1C1208]`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>
           {value}
         </BodyText>
-        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40">
+        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 truncate max-w-full text-center">
           {label}
         </Annotation>
       </div>
@@ -353,7 +318,7 @@ export function InteractiveSiteMapClient({
   }
 
   return (
-    <div className="flex h-[100dvh] flex-col overflow-hidden bg-[#F5F0E8] text-[#1C1208]">
+    <div className="flex h-[100dvh] min-h-0 flex-col overflow-hidden bg-[#F5F0E8] text-[#1C1208]">
 
       {/* ════════════════════════════════════
           HEADER
@@ -433,21 +398,21 @@ export function InteractiveSiteMapClient({
       {/* ════════════════════════════════════
           DESKTOP (lg+)
       ════════════════════════════════════ */}
-      <div className="hidden flex-1 overflow-hidden lg:grid lg:grid-cols-[1fr_400px]">
+      <div className="hidden min-h-0 flex-1 overflow-hidden lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(280px,clamp(300px,32vw,400px))]">
         <MapPanel 
-          className="h-full border-r border-[#1C1208]/10" 
+          className="min-h-0 h-full border-r border-[#1C1208]/10" 
           activeFilter={activeFilter} 
           selectedLotId={selectedLotId} 
           handleSelectLot={handleSelectLot} 
           selectedMap={selectedMap}
         />
 
-        <aside className="relative flex flex-col overflow-hidden bg-[#F5F0E8]">
-          <div className="shrink-0 overflow-hidden">
+        <aside className="relative flex min-h-0 min-w-0 flex-col overflow-hidden bg-[#F5F0E8]">
+          <div className="shrink-0 max-h-[min(28vh,200px)] overflow-hidden lg:max-h-[min(30vh,220px)]">
              <ImagePanel 
                 src={selectedLot.image} 
                 alt={selectedLot.title}
-                aspectRatio="aspect-[4/3]"
+                aspectRatio="aspect-[5/3]"
                 className="w-full"
                 label={selectedLot.status.toUpperCase()}
                 counter={selectedLot.lotNumber.toString().padStart(2, '0')}
@@ -455,43 +420,46 @@ export function InteractiveSiteMapClient({
              />
           </div>
 
-          <div id="sb-scroll" className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#1C120820_transparent]">
-            <article className="px-8 py-10">
+          <div
+            id="sb-scroll"
+            className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain [scrollbar-width:thin] [scrollbar-color:#1C120820_transparent]"
+          >
+            <article className="min-w-0 max-w-full px-5 py-6 xl:px-6 xl:py-8">
               <SectionLabel counter={`LOT ${selectedLot.lotNumber.toString().padStart(2, '0')}`}>
                 Selected Homesite
               </SectionLabel>
               
-              <SectionHeadline size="md" className="mb-4">
+              <SectionHeadline size="md" className="mb-3 break-words">
                 {selectedLot.title}
               </SectionHeadline>
 
-              <BodyText size="sm" className="mb-10 text-[#1C1208]/60">
+              <BodyText size="sm" className="mb-6 text-[#1C1208]/60">
                 {selectedLot.description}
               </BodyText>
 
-              <div className="flex items-center gap-10 mb-10">
-                 <StatItem value={selectedLot.price} label="Price" />
-                 <StatItem value={`${selectedLot.sqft.toLocaleString()}`} label="Total SQ FT" separator />
+              <div className="mb-5 grid min-w-0 grid-cols-2 gap-2 border-t border-[#1C1208]/10 pt-4">
+                 <StatItem compact value={selectedLot.price} label="Price" />
+                 <StatItem compact value={`${selectedLot.sqft.toLocaleString()}`} label="Total SQ FT" separator />
               </div>
 
-              <SpecGrid selectedLot={selectedLot} />
+              <SpecGrid selectedLot={selectedLot} compact />
 
-              <div className="mt-12">
+              <div className="mt-8">
                 <ButtonPrimary href={`/contact?source=InteractiveSiteMap&lot=${selectedLot.lotNumber}`} className="w-full">
                   Request Lot Details
                 </ButtonPrimary>
               </div>
 
-              <Ornament className="my-16" />
+              <Ornament className="my-8" />
 
-              <div className="flex items-center justify-between mb-8">
-                <SectionLabel className="mb-0">
+              <div className="mb-4 flex min-w-0 items-center justify-between gap-2">
+                <SectionLabel className="mb-0 shrink-0">
                    All Homesites
                 </SectionLabel>
-                <Annotation>{visibleLots.length} Results</Annotation>
+                <Annotation className="shrink-0">{visibleLots.length} Results</Annotation>
               </div>
 
-              <div className="border border-[#1C1208]/10 bg-[#EDE8DF]/30">
+              <div className="min-w-0 border border-[#1C1208]/10 bg-[#EDE8DF]/30">
                 <LotRows 
                   visibleLots={visibleLots} 
                   selectedLotId={selectedLotId} 
@@ -502,7 +470,7 @@ export function InteractiveSiteMapClient({
             </article>
           </div>
           
-          <div className="absolute top-4 right-4 pointer-events-none">
+          <div className="pointer-events-none absolute top-4 right-4">
              <CrosshairIcon className="opacity-20" />
           </div>
         </aside>

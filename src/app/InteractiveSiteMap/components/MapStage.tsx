@@ -1,18 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 import { Lot, Hotspot, LotStatus, MapViewBox } from "../types/site-map";
-import { MapControls } from "./MapControls";
 
 type Filter = "All" | LotStatus;
 
 const FALLBACK_VIEWBOX: MapViewBox = { x: 0, y: 0, width: 3392, height: 2160 };
-const MIN_SCALE = 0.5;
-const MAX_SCALE = 3;
-const ZOOM_STEP = 0.5; // for +/- buttons
-
 function parseNumber(value: string | null) {
   const n = Number.parseFloat(value ?? "");
   return Number.isFinite(n) ? n : 0;
@@ -49,7 +43,6 @@ export function MapStage({
   };
 }) {
   const artworkRef = useRef<HTMLDivElement>(null);
-  const transformRef = useRef<any>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [svgMarkup, setSvgMarkup] = useState("");
@@ -162,40 +155,7 @@ export function MapStage({
   return (
     <div className="site-map-premium-shell absolute inset-[2px] flex flex-col bg-[#F5F0E8] overflow-hidden">
       <div className="relative flex-1">
-        <TransformWrapper
-          ref={transformRef}
-          centerOnInit
-          centerZoomedOut
-          limitToBounds
-          minScale={MIN_SCALE}
-          maxScale={MAX_SCALE}
-          initialScale={1}
-         wheel={{
-  disabled: false,
-            step: 0.04,
-}}
-          pinch={{ disabled: false }}
-          panning={{
-            disabled: false,
-            velocityDisabled: true,   // no momentum — stable, controlled
-            allowLeftClickPan: true,
-            excluded: ["button", "INPUT", "TEXTAREA", "SELECT", "OPTION"],
-          }}
-          zoomAnimation={{ animationTime: 400, animationType: "easeOutCubic" }}
-          doubleClick={{ disabled: true }}
-        >
-          {/* Controls MUST be inside TransformWrapper to use context */}
-          <MapControls
-            onZoomIn={() => transformRef.current?.zoomIn(ZOOM_STEP, 220, "easeOutCubic")}
-            onZoomOut={() => transformRef.current?.zoomOut(ZOOM_STEP, 220, "easeOutCubic")}
-            onReset={() => transformRef.current?.resetTransform(280, "easeOutCubic")}
-          />
-
-          <TransformComponent
-            wrapperClass="!absolute !inset-0 !w-full !h-full cursor-grab active:cursor-grabbing"
-            contentClass="!w-full !h-full"
-            contentStyle={{ width: "100%", height: "100%" }}
-          >
+        <div className="absolute inset-0 w-full h-full">
             <div
               className="site-map-plane relative w-full h-full"
               style={{ aspectRatio: `${viewBox.width} / ${viewBox.height}` }}
@@ -330,8 +290,7 @@ export function MapStage({
                 })}
               </svg>
             </div>
-          </TransformComponent>
-        </TransformWrapper>
+        </div>
 
         {/* Watermark */}
         <div className="absolute bottom-6 right-6 z-20 pointer-events-none opacity-40">
