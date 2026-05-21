@@ -518,7 +518,6 @@ export const allProjects: ProjectData[] = [
       { category: "Schools", name: "Riverside Elementary School", distance: "1.5 miles", time: "4 min" },
       { category: "Hospitals", name: "Emory Johns Creek Hospital", distance: "4.8 miles", time: "10 min" },
       { category: "Metro", name: "MARTA Station - Doraville", distance: "15 miles", time: "22 min" },
-      { category: "Airport", name: "Atlanta Hartsfield-Jackson (ATL)", distance: "38 miles", time: "45 min" },
       { category: "Shopping", name: "Sugarloaf Mills Mall", distance: "6.2 miles", time: "12 min" },
       { category: "Tech Parks", name: "Duluth Tech Corridor", distance: "5.1 miles", time: "9 min" }
     ],

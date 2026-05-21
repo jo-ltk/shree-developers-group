@@ -8,9 +8,9 @@ import {
   ArrowRight,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   Star,
   MapPin,
-  Maximize2,
   Minimize2,
   ZoomIn,
   ZoomOut,
@@ -43,6 +43,7 @@ import {
   Gamepad2,
   BriefcaseBusiness,
   PartyPopper,
+  Instagram,
   type LucideIcon
 } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
@@ -57,9 +58,6 @@ import { Annotation } from "@/components/ui/annotation";
 import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { SydneyOaksStage } from "@/app/InteractiveSiteMap/components/SydneyOaksStage";
-import { MAP_CONFIGS } from "@/app/InteractiveSiteMap/data/lots";
-import type { LotStatus } from "@/app/InteractiveSiteMap/types/site-map";
 
 const amenityIconMap: Record<string, LucideIcon> = {
   "swimming pool": Waves,
@@ -175,73 +173,85 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       <NavbarEditorial />
 
       {/* A. HERO BANNER */}
-      <section className="relative w-full pt-24 md:pt-32 pb-12 md:pb-16 bg-[#F5F0E8] border-b border-dark/10">
-        <div className="mx-auto max-w-[1600px] px-6 sm:px-8 md:px-12 lg:px-16">
-          <div className="grid grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
+      <section className="relative w-full pt-20 sm:pt-24 md:pt-32 pb-10 sm:pb-12 md:pb-16 bg-[#F5F0E8] border-b border-dark/10">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-8 md:px-12 lg:px-16">
+          <div className="grid grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
 
             {/* Left Hero Content */}
-            <div data-reveal className="col-span-12 lg:col-span-5 space-y-6">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="border border-rust/25 px-3 py-1 text-rust font-bold text-[9px] uppercase tracking-widest">
+            <div
+              data-reveal
+              className="col-span-12 lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left space-y-4 sm:space-y-6"
+            >
+              <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 lg:items-start">
+                <span className="w-fit border border-rust/25 px-3 py-1 text-rust font-bold text-[9px] uppercase tracking-widest">
                   {statusBadge}
                 </span>
-                <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-dark/60">
-                  <MapPin className="h-3.5 w-3.5 text-rust" />
-                  {project.location}
+                <span className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.22em] text-dark/60">
+                  <MapPin className="h-3.5 w-3.5 shrink-0 text-rust" />
+                  <span className="leading-snug">{project.location}</span>
                 </span>
               </div>
 
-              <div className="space-y-4">
-                <h1 className="font-display text-[clamp(3.8rem,8vw,8rem)] leading-[0.82] text-dark">
+              <div className="w-full max-w-xl space-y-3 sm:space-y-4 lg:max-w-none">
+                <SectionHeadline
+                  size="hero"
+                  noPeriod
+                  className="!text-[clamp(2.25rem,11vw,7rem)]"
+                >
                   {name}<span className="text-rust">.</span>
-                </h1>
+                </SectionHeadline>
                 <p
-                  className="text-xl md:text-2xl font-light text-rust italic max-w-xl leading-snug"
+                  className="mx-auto max-w-lg text-lg sm:text-xl md:text-2xl font-light text-rust italic leading-snug lg:mx-0 lg:max-w-xl"
                   style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
                 >
                   {tagline}
                 </p>
               </div>
 
-              <BodyText size="lg" className="max-w-xl text-dark/70 font-light leading-relaxed">
+              <BodyText
+                size="lg"
+                className="mx-auto max-w-lg text-base sm:text-lg text-dark/70 font-light leading-relaxed lg:mx-0 lg:max-w-xl"
+              >
                 {project.summary || project.brief}
               </BodyText>
 
-              <div className="grid grid-cols-3 gap-3 border-y border-dark/10 py-4">
-                <div>
-                  <span className="block text-[9px] font-bold tracking-[0.2em] text-rust uppercase">Price</span>
-                  <span className="mt-1 block font-display text-lg text-dark">{priceText}</span>
-                </div>
-                <div>
-                  <span className="block text-[9px] font-bold tracking-[0.2em] text-rust uppercase">Homes</span>
-                  <span className="mt-1 block font-display text-lg text-dark">{totalUnits}</span>
-                </div>
-                <div>
-                  <span className="block text-[9px] font-bold tracking-[0.2em] text-rust uppercase">Possession</span>
-                  <span className="mt-1 block font-display text-lg text-dark">{possessionDate}</span>
+              <div className="w-full border-y border-dark/10 py-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center lg:text-left">
+                  <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                    <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Price</span>
+                    <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{priceText}</span>
+                  </div>
+                  <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                    <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Homes</span>
+                    <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{totalUnits}</span>
+                  </div>
+                  <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                    <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Possession</span>
+                    <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{possessionDate}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 pt-3">
+              <div className="flex w-full max-w-md flex-col items-center gap-3 pt-1 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-start sm:gap-4 sm:pt-3 lg:max-w-none">
                 <Link
                   href="#enquiry"
-                  className="inline-flex h-14 items-center justify-center gap-4 bg-rust px-8 text-[11px] font-bold uppercase tracking-[0.24em] text-white no-underline transition-colors hover:bg-dark"
+                  className="inline-flex h-12 sm:h-14 w-full max-w-sm sm:max-w-none sm:w-auto items-center justify-center gap-3 sm:gap-4 bg-rust px-6 sm:px-8 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.24em] text-white no-underline transition-colors hover:bg-dark"
                 >
                   Request Information
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
                 <Link
                   href="#enquiry"
-                  className="inline-flex h-14 items-center justify-center gap-4 border border-dark/20 px-8 text-[11px] font-bold uppercase tracking-[0.24em] text-dark no-underline transition-colors hover:border-rust hover:text-rust"
+                  className="inline-flex h-12 sm:h-14 w-full max-w-sm sm:max-w-none sm:w-auto items-center justify-center gap-3 sm:gap-4 border border-dark/20 px-6 sm:px-8 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.24em] text-dark no-underline transition-colors hover:border-rust hover:text-rust"
                 >
                   Schedule Visit
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </div>
             </div>
 
             {/* Right Hero Image */}
-            <div data-reveal className="col-span-12 lg:col-span-7 relative min-h-[360px] md:min-h-[540px] lg:min-h-[650px] w-full overflow-hidden bg-[#EDE8DF] border border-dark/10">
+            <div data-reveal className="col-span-12 lg:col-span-7 relative mt-2 sm:mt-0 min-h-[240px] sm:min-h-[360px] md:min-h-[540px] lg:min-h-[650px] w-full overflow-hidden bg-[#EDE8DF] border border-dark/10">
               <Image
                 src={project.image}
                 alt={`${name} Exterior`}
@@ -401,23 +411,28 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </SectionWrapper>
 
       {/* C. GALLERY */}
-      <section className="bg-cream py-16 md:py-24 border-y border-dark/10 overflow-hidden">
-        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20 mb-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-            <div>
-              <SectionLabel>Visual Album</SectionLabel>
+      <section className="overflow-hidden border-y border-dark/10 bg-cream py-12 sm:py-16 md:py-24">
+        <div className="mx-auto mb-6 max-w-[1450px] px-4 sm:mb-8 sm:px-8 md:px-12 lg:px-20">
+          <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
+            <div className="w-full max-w-xl md:max-w-none">
+              <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-6">
+                Visual Album
+              </SectionLabel>
               <SectionHeadline size="lg" className="font-display font-light leading-none">
                 Interior & exterior <em className="font-normal italic">views</em>
               </SectionHeadline>
             </div>
-            <Annotation className="!text-rust">VERIFIED IMAGES // NO PLACEHOLDERS</Annotation>
+            <Annotation className="!text-rust max-w-xs text-center md:max-w-none md:text-left">
+              <span className="sm:hidden">Verified images · No placeholders</span>
+              <span className="hidden sm:inline">VERIFIED IMAGES // NO PLACEHOLDERS</span>
+            </Annotation>
           </div>
         </div>
 
         {/* Marquee Slider */}
-        <div className="relative w-screen max-w-none ml-[calc(-50vw+50%)] overflow-hidden group">
+        <div className="group relative ml-[calc(-50vw+50%)] w-screen max-w-none overflow-hidden">
           <div
-            className="flex min-w-max items-center gap-4 md:gap-6 animate-marquee group-hover:[animation-play-state:paused]"
+            className="animate-marquee flex min-w-max items-center gap-3 sm:gap-4 md:gap-6 group-hover:[animation-play-state:paused]"
             style={{
               animation: "marquee 50s linear infinite",
             }}
@@ -426,18 +441,18 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
               <div
                 key={idx}
                 onClick={() => openLightbox(idx % galleryImages.length)}
-                className="relative flex-shrink-0 overflow-hidden bg-[#E8E3DB] cursor-pointer w-[280px] h-[45vh] md:w-[450px] md:h-[60vh] border border-dark/5"
+                className="relative h-[min(42vh,280px)] w-[min(72vw,240px)] shrink-0 cursor-pointer overflow-hidden border border-dark/5 bg-cream-deep sm:h-[45vh] sm:w-[280px] md:h-[60vh] md:w-[450px]"
               >
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="(max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 75vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                  <span className="text-white/60 text-[10px] uppercase tracking-[0.2em] mb-1">Visual Frame</span>
-                  <span className="text-white text-lg font-serif italic">{image.alt}</span>
+                <div className="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-dark/60 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-500 hover:opacity-100 sm:p-6">
+                  <span className="mb-1 text-[9px] uppercase tracking-[0.2em] text-white/60 sm:text-[10px]">Visual Frame</span>
+                  <span className="font-serif text-base italic text-white sm:text-lg">{image.alt}</span>
                 </div>
               </div>
             ))}
@@ -456,16 +471,10 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       </section>
 
       {/* D. MASTER PLAN / SITE PLAN */}
-      <MasterPlanPdfSection
-        sitePlanPdfUrl={project.sitePlanPdfUrl || "/pdfs/site-plan.pdf"}
-        components={project.masterPlanComponents || []}
-      />
+      <MasterPlanSection components={project.masterPlanComponents || []} />
 
       {/* E. FLOOR PLANS */}
-      <FloorPlansPdfSection
-        floorPlans={floorPlans}
-        floorPlansPdfUrl={project.floorPlansPdfUrl || "/pdfs/aspen-plan-set.pdf"}
-      />
+      <FloorPlansSection floorPlans={floorPlans} />
 
       {/* F. AMENITIES SECTION */}
       <SectionWrapper dark={true} className="!py-16 md:!py-24">
@@ -510,113 +519,44 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       <LocationAdvantagesSection nearbyPlaces={nearbyPlaces} coordinates={coordinates} rera={reraNumber} />
 
       {/* H. WHY CHOOSE THIS PROJECT */}
-      <SectionWrapper dark={false} className="!py-16 md:!py-24 bg-[#F5F0E8] border-b border-dark/10">
-        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20">
-          <div className="mb-12 text-center md:text-left">
-            <SectionLabel>Key Advantages</SectionLabel>
-            <SectionHeadline size="lg" className="font-display font-light">
-              Why choose <em className="font-normal italic">{name}</em>
-            </SectionHeadline>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px border border-dark/10 bg-dark/10">
-            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">01</span>
-                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
-                  <MapPin size={20} strokeWidth={1.8} />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <h3 className="font-display text-xl font-light text-dark">Premium Location</h3>
-                <p className="text-sm text-dark/65 font-light leading-relaxed">
-                  Gwinnett County address with quick access to wooded trails, schools, healthcare, and daily essentials.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">02</span>
-                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
-                  <Compass size={20} strokeWidth={1.8} />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <h3 className="font-display text-xl font-light text-dark">Smart Planning</h3>
-                <p className="text-sm text-dark/65 font-light leading-relaxed">
-                  Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">03</span>
-                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
-                  <DollarSign size={20} strokeWidth={1.8} />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <h3 className="font-display text-xl font-light text-dark">High Appreciation</h3>
-                <p className="text-sm text-dark/65 font-light leading-relaxed">
-                  Positioned in a growing residential corridor with strong demand for family-focused communities.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-cream/55 p-6 md:p-7 min-h-[230px] flex flex-col justify-between transition-colors hover:bg-cream">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">04</span>
-                <div className="h-10 w-10 border border-rust/20 text-rust flex items-center justify-center">
-                  <ShieldCheck size={20} strokeWidth={1.8} />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <h3 className="font-display text-xl font-light text-dark">Trusted Developer</h3>
-                <p className="text-sm text-dark/65 font-light leading-relaxed">
-                  Transparent delivery, careful material choices, and construction quality managed with clear standards.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </SectionWrapper>
+      <KeyAdvantagesSection projectName={name} />
 
       {/* J. ENQUIRY SECTION */}
-      <section id="enquiry" className="py-16 md:py-24 bg-cream border-t border-dark/10">
-        <div className="mx-auto max-w-[1450px] px-6 sm:px-8 md:px-12 lg:px-20">
-          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
-            <div className="col-span-12 lg:col-span-5 flex flex-col justify-between border-y border-dark/10 py-8 lg:py-10">
-              <div className="space-y-6">
+      <section id="enquiry" className="scroll-mt-20 py-12 sm:py-16 md:py-24 bg-cream border-t border-dark/10">
+        <div className="mx-auto max-w-[1450px] px-4 sm:px-8 md:px-12 lg:px-20">
+          <div className="grid grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-stretch">
+            <div className="col-span-12 flex flex-col items-center justify-between gap-8 border-y border-dark/10 py-6 text-center sm:py-8 lg:col-span-5 lg:items-stretch lg:gap-0 lg:py-10 lg:text-left">
+              <div className="w-full max-w-lg space-y-4 sm:space-y-6 lg:max-w-none">
                 <div>
-                  <SectionLabel>Project Consultation</SectionLabel>
+                  <SectionLabel className="justify-center lg:justify-start !mb-4 md:!mb-6">
+                    Project Consultation
+                  </SectionLabel>
                   <SectionHeadline size="lg" className="font-display font-light">
                     Plan your visit to <em className="font-normal italic">{name}</em>
                   </SectionHeadline>
                 </div>
-                <p className="max-w-lg text-sm font-light leading-relaxed text-dark/70">
-                  Request the Sydney Oaks dossier, floor plan set, pricing guidance, and a convenient callback from our project advisor.
+                <p className="mx-auto max-w-md text-sm font-light leading-relaxed text-dark/70 lg:mx-0 lg:max-w-lg">
+                  Request the {name} dossier, floor plan set, pricing guidance, and a convenient callback from our project advisor.
                 </p>
               </div>
 
-              <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
-                <div className="border border-dark/10 bg-[#F5F0E8] p-4">
+              <div className="grid w-full max-w-md grid-cols-1 gap-2.5 sm:max-w-none sm:grid-cols-3 sm:gap-3 lg:grid-cols-1 lg:max-w-none">
+                <div className="border border-dark/10 bg-cream p-3.5 text-center sm:p-4 lg:text-left">
                   <span className="block text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Site Visit</span>
-                  <span className="mt-2 block font-display text-xl text-dark">Schedule walkthrough</span>
+                  <span className="mt-1.5 block font-display text-lg text-dark sm:mt-2 sm:text-xl">Schedule walkthrough</span>
                 </div>
-                <div className="border border-dark/10 bg-[#F5F0E8] p-4">
+                <div className="border border-dark/10 bg-cream p-3.5 text-center sm:p-4 lg:text-left">
                   <span className="block text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Documents</span>
-                  <span className="mt-2 block font-display text-xl text-dark">Plans & dossier</span>
+                  <span className="mt-1.5 block font-display text-lg text-dark sm:mt-2 sm:text-xl">Plans & dossier</span>
                 </div>
-                <div className="border border-dark/10 bg-[#F5F0E8] p-4">
+                <div className="border border-dark/10 bg-cream p-3.5 text-center sm:p-4 lg:text-left">
                   <span className="block text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Response</span>
-                  <span className="mt-2 block font-display text-xl text-dark">Advisor callback</span>
+                  <span className="mt-1.5 block font-display text-lg text-dark sm:mt-2 sm:text-xl">Advisor callback</span>
                 </div>
               </div>
             </div>
 
-            <div className="col-span-12 lg:col-span-7 h-full">
+            <div className="col-span-12 w-full lg:col-span-7 lg:h-full">
               <StickyEnquiryForm projectTitle={name} />
             </div>
           </div>
@@ -633,6 +573,110 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
           onClose={() => setLightboxOpen(false)}
         />
       )}
+    </div>
+  );
+}
+
+function WhatsAppBrandIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
+
+const CONSULTATION_CALLBACK_OPTIONS = [
+  { value: "Phone", label: "Phone call" },
+  { value: "WhatsApp", label: "WhatsApp" },
+  { value: "Email", label: "Email" },
+] as const;
+
+const CONSULTATION_TIME_OPTIONS = [
+  { value: "Morning", label: "Morning (9 AM – 12 PM)" },
+  { value: "Afternoon", label: "Afternoon (12 PM – 4 PM)" },
+  { value: "Evening", label: "Evening (4 PM – 7 PM)" },
+] as const;
+
+function FormSelect({
+  id,
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly { value: string; label: string }[];
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const selected = options.find((opt) => opt.value === value);
+
+  useEffect(() => {
+    if (!open) return;
+    const handlePointer = (event: MouseEvent | TouchEvent) => {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("touchstart", handlePointer);
+    return () => {
+      document.removeEventListener("mousedown", handlePointer);
+      document.removeEventListener("touchstart", handlePointer);
+    };
+  }, [open]);
+
+  return (
+    <div ref={rootRef} className="relative min-w-0 w-full max-w-full space-y-1.5">
+      <label htmlFor={id} className="block text-[9px] font-semibold uppercase tracking-wider text-dark/60">
+        {label}
+      </label>
+      <button
+        type="button"
+        id={id}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex h-11 w-full max-w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-sm border border-dark/10 bg-cream/60 px-3 text-left text-sm outline-none transition-colors focus:border-rust sm:h-[38px] sm:bg-creamDeep/40 sm:text-xs"
+      >
+        <span className="min-w-0 truncate">{selected?.label ?? "Select"}</span>
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 text-dark/45 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          aria-hidden
+        />
+      </button>
+      {open ? (
+        <ul
+          role="listbox"
+          aria-labelledby={id}
+          className="absolute left-0 right-0 top-[calc(100%+4px)] z-30 max-h-44 overflow-y-auto rounded-sm border border-dark/15 bg-cream py-1 shadow-lg"
+        >
+          {options.map((opt) => {
+            const isSelected = opt.value === value;
+            return (
+              <li key={opt.value} role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  onClick={() => {
+                    onChange(opt.value);
+                    setOpen(false);
+                  }}
+                  className={`w-full px-3 py-2.5 text-left text-sm transition-colors sm:text-xs ${
+                    isSelected ? "bg-rust text-white" : "text-dark hover:bg-dark/5"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
     </div>
   );
 }
@@ -666,140 +710,143 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
     }, 4000);
   };
 
+  const fieldClass =
+    "w-full rounded-sm border border-dark/10 bg-cream/60 px-3 py-2.5 text-base outline-none transition-colors focus:border-rust sm:bg-creamDeep/40 sm:py-2 sm:text-sm";
+
   return (
-    <div className="bg-[#EDE8DF] border border-dark/15 p-6 md:p-8 shadow-xl relative w-full h-full rounded-sm">
-      <div className="absolute top-0 right-0 p-6 opacity-10"><CrosshairIcon /></div>
+    <div className="relative mx-auto h-full w-full max-w-lg overflow-visible rounded-sm border border-dark/15 bg-cream-deep p-4 shadow-xl sm:max-w-none sm:p-6 md:p-8 lg:mx-0">
+      <div className="pointer-events-none absolute top-0 right-0 p-4 opacity-10 sm:p-6">
+        <CrosshairIcon />
+      </div>
 
       {!submitted ? (
-        <form className="flex h-full flex-col justify-between gap-5" onSubmit={handleSubmit}>
-          <div className="space-y-5">
-            <div>
-              <Annotation className="!text-rust mb-1.5 font-bold">Request consultation</Annotation>
-              <span className="font-display font-light text-xl text-dark block leading-none">
+        <form className="flex h-full flex-col justify-between gap-5 sm:gap-6" onSubmit={handleSubmit}>
+          <div className="space-y-5 sm:space-y-6">
+            <div className="flex w-full flex-col items-center border-b border-dark/10 pb-4 text-center sm:items-start sm:border-0 sm:pb-0 sm:text-left">
+              <Annotation className="!text-rust mb-2 w-full text-center font-bold sm:mb-1.5 sm:text-left">
+                Request consultation
+              </Annotation>
+              <span className="font-display block max-w-[16rem] text-lg font-light leading-snug text-dark sm:max-w-none sm:text-xl sm:leading-none">
                 Dossier & Callback Booking
               </span>
             </div>
 
-            <div className="space-y-4">
-              {/* Full Name */}
-              <div className="space-y-1">
-                <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Full Name *</label>
+            <div className="min-w-0 space-y-3.5 sm:space-y-4">
+              <div className="space-y-1.5">
+                <label className="block text-[9px] font-semibold uppercase tracking-wider text-dark/60">
+                  Full Name *
+                </label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
+                  className={fieldClass}
                   placeholder="Enter your name"
                 />
               </div>
 
-              {/* Phone & Email */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Phone Number *</label>
+              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
+                <div className="space-y-1.5">
+                  <label className="block text-[9px] font-semibold uppercase tracking-wider text-dark/60">
+                    Phone Number *
+                  </label>
                   <input
                     type="tel"
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
+                    className={fieldClass}
                     placeholder="+1 (000) 000-0000"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Email Address *</label>
+                <div className="space-y-1.5">
+                  <label className="block text-[9px] font-semibold uppercase tracking-wider text-dark/60">
+                    Email Address *
+                  </label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-sm outline-none transition-colors"
+                    className={fieldClass}
                     placeholder="name@example.com"
                   />
                 </div>
               </div>
 
-              {/* Preferred Callback details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Callback Method *</label>
-                  <select
-                    required
-                    value={formData.callbackMethod}
-                    onChange={(e) => setFormData({ ...formData, callbackMethod: e.target.value })}
-                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-xs outline-none transition-colors appearance-none h-[38px] cursor-pointer"
-                  >
-                    <option value="Phone">Phone Call</option>
-                    <option value="WhatsApp">WhatsApp Message</option>
-                    <option value="Email">Email Details</option>
-                  </select>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-[9px] uppercase tracking-wider font-semibold text-dark/60 block">Preferred Callback Time *</label>
-                  <select
-                    required
-                    value={formData.callbackTime}
-                    onChange={(e) => setFormData({ ...formData, callbackTime: e.target.value })}
-                    className="w-full bg-creamDeep/40 border border-dark/10 focus:border-rust px-3 py-2 text-xs outline-none transition-colors appearance-none h-[38px] cursor-pointer"
-                  >
-                    <option value="Morning">Morning (9 AM - 12 PM)</option>
-                    <option value="Afternoon">Afternoon (12 PM - 4 PM)</option>
-                    <option value="Evening">Evening (4 PM - 7 PM)</option>
-                  </select>
-                </div>
+              <div className="grid min-w-0 grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
+                <FormSelect
+                  id="callback-method"
+                  label="Callback Method *"
+                  value={formData.callbackMethod}
+                  onChange={(callbackMethod) => setFormData({ ...formData, callbackMethod })}
+                  options={CONSULTATION_CALLBACK_OPTIONS}
+                />
+                <FormSelect
+                  id="callback-time"
+                  label="Preferred Callback Time *"
+                  value={formData.callbackTime}
+                  onChange={(callbackTime) => setFormData({ ...formData, callbackTime })}
+                  options={CONSULTATION_TIME_OPTIONS}
+                />
               </div>
             </div>
           </div>
 
-          <div className="space-y-4 pt-2">
+          <div className="space-y-3.5 pt-1 sm:space-y-4 sm:pt-2">
             <button
               type="submit"
-              className="w-full h-[48px] bg-dark text-white uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-rust transition-colors duration-500 cursor-pointer"
+              className="h-12 w-full cursor-pointer bg-dark text-[10px] font-bold uppercase tracking-[0.18em] text-white transition-colors duration-500 hover:bg-rust sm:h-[48px] sm:tracking-[0.2em]"
             >
               Book Callback Request
             </button>
 
             {/* Quick-Contact Direct Buttons */}
-            <div className="pt-4 border-t border-dark/10">
-              <span className="text-[8px] uppercase tracking-[0.2em] font-semibold text-dark/50 block text-center mb-3">
+            <div className="border-t border-dark/10 pt-3 sm:pt-4">
+              <span className="mb-2.5 block text-center text-[8px] font-semibold uppercase tracking-[0.2em] text-dark/50 sm:mb-3">
                 Or Connect Instantly
               </span>
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
                 <a
                   href="https://wa.me/14045550123"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center py-2.5 bg-[#E8F5E9] hover:bg-[#C8E6C9] border border-green-500/20 text-green-800 transition-colors duration-300 rounded-sm text-center cursor-pointer select-none"
+                  aria-label="Chat on WhatsApp"
+                  className="flex min-h-[48px] flex-col items-center justify-center gap-1 rounded-sm bg-[#25D366] py-2.5 text-white shadow-sm transition-colors duration-300 hover:bg-[#1EBE5A] cursor-pointer select-none"
                 >
-                  <span className="text-[9px] font-bold uppercase tracking-wider">WhatsApp</span>
+                  <WhatsAppBrandIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">WhatsApp</span>
                 </a>
                 <a
                   href="https://instagram.com/shreedevelopers"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center py-2.5 bg-[#FDF2F8] hover:bg-[#FCE7F3] border border-pink-500/20 text-pink-800 transition-colors duration-300 rounded-sm text-center cursor-pointer select-none"
+                  aria-label="Follow on Instagram"
+                  className="flex min-h-[48px] flex-col items-center justify-center gap-1 rounded-sm bg-linear-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] py-2.5 text-white shadow-sm transition-opacity duration-300 hover:opacity-90 cursor-pointer select-none"
                 >
-                  <span className="text-[9px] font-bold uppercase tracking-wider">Instagram</span>
+                  <Instagram className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={2} />
+                  <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">Instagram</span>
                 </a>
                 <a
                   href="tel:+14045550123"
-                  className="flex flex-col items-center justify-center py-2.5 bg-[#E0F2FE] hover:bg-[#BAE6FD] border border-blue-500/20 text-blue-800 transition-colors duration-300 rounded-sm text-center cursor-pointer select-none"
+                  aria-label="Call now"
+                  className="flex min-h-[48px] flex-col items-center justify-center gap-1 rounded-sm bg-[#2563EB] py-2.5 text-white shadow-sm transition-colors duration-300 hover:bg-[#1D4ED8] cursor-pointer select-none"
                 >
-                  <span className="text-[9px] font-bold uppercase tracking-wider">Call Now</span>
+                  <Phone className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={2} />
+                  <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">Call Now</span>
                 </a>
               </div>
             </div>
           </div>
         </form>
       ) : (
-        <div className="py-12 text-center space-y-4">
-          <div className="w-16 h-16 bg-rust/10 text-rust rounded-full flex items-center justify-center mx-auto border border-rust/20">
-            <CheckCircle2 size={36} />
+        <div className="space-y-4 px-2 py-10 text-center sm:py-12">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-rust/20 bg-rust/10 text-rust sm:h-16 sm:w-16">
+            <CheckCircle2 className="h-8 w-8 sm:h-9 sm:w-9" />
           </div>
-          <h3 className="font-display font-light text-2xl text-dark">Thank You</h3>
-          <p className="text-sm text-dark/70 font-light max-w-xs mx-auto">
+          <h3 className="font-display text-xl font-light text-dark sm:text-2xl">Thank You</h3>
+          <p className="mx-auto max-w-xs text-sm font-light leading-relaxed text-dark/70">
             Your preferred callback request for {projectTitle} has been submitted. A real estate advisor will contact you during your selected time window.
           </p>
         </div>
@@ -808,155 +855,134 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
   );
 }
 
-/* ===========================================================================
-   D. MASTER PLAN / SITE PLAN
-   =========================================================================== */
-function MasterPlanPdfSection({
-  sitePlanPdfUrl,
-  components,
-}: {
-  sitePlanPdfUrl: string;
-  components: NonNullable<ProjectData["masterPlanComponents"]>;
-}) {
-  const masterPlanItems = components.length
-    ? components
-    : [
-      { name: "Plot Layout", desc: "Low-density homesite arrangement with clearly proportioned residential plots." },
-      { name: "Amenities Zoning", desc: "Community amenities grouped for easy access from the residential blocks." },
-      { name: "Entry & Exit", desc: "Defined access points for smooth arrival, controlled entry, and internal circulation." },
-    ];
+function getPlanShortName(name: string) {
+  const base = name.replace(/\s*\([^)]*\)\s*$/, "").trim();
+  return base
+    .replace(/^The\s+/i, "")
+    .replace(/\s+Townhome$/i, "")
+    .replace(/\s+Villa$/i, "")
+    .replace(/\s+Estate$/i, "");
+}
 
-  return (
-    <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
-      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-5">
-        <div>
-          <SectionLabel>D. Master Plan / Site Plan</SectionLabel>
-          <SectionHeadline size="lg" className="font-display font-light">
-            Plot layout & <em className="font-normal italic">site planning</em>
-          </SectionHeadline>
-        </div>
+function formatPlanPriceShort(price: string) {
+  const value = parseInt(price.replace(/\D/g, ""), 10);
+  if (!value) return price;
+  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+  if (value >= 1_000) return `$${Math.round(value / 1_000)}k`;
+  return price;
+}
 
-        <a
-          href={sitePlanPdfUrl}
-          download
-          className="inline-flex h-12 items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark"
-        >
-          Download Site Plan
-          <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-
-      <div className="grid grid-cols-12 gap-6 lg:gap-8 items-start">
-        <div className="col-span-12 lg:col-span-4 space-y-3">
-          {masterPlanItems.map((item, index) => (
-            <div key={item.name} className="border border-dark/10 bg-cream p-5">
-              <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-rust">
-                0{index + 1}
-              </span>
-              <h3 className="mt-2 font-display text-2xl font-light text-dark">{item.name}</h3>
-              <p className="mt-3 text-sm font-light leading-relaxed text-dark/65">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="col-span-12 lg:col-span-8 border border-dark/10 bg-cream p-3">
-          <div className="h-[520px] md:h-[700px] bg-[#EDE8DF]">
-            <iframe
-              src={`${sitePlanPdfUrl}#view=FitH`}
-              title="Sydney Oaks site plan PDF"
-              className="h-full w-full border-0"
-            />
-          </div>
-        </div>
-      </div>
-    </SectionWrapper>
-  );
+function formatPlanAvailabilityShort(status: string) {
+  switch (status) {
+    case "Available":
+      return "Avail.";
+    case "Coming Soon":
+      return "Soon";
+    case "Sold Out":
+      return "Sold";
+    case "Booking Open":
+      return "Open";
+    default:
+      return status;
+  }
 }
 
 /* ===========================================================================
-   E. FLOOR PLANS
+   E. FLOOR PLANS (preview + unit cards)
    =========================================================================== */
-function FloorPlansPdfSection({
+function FloorPlansSection({
   floorPlans,
-  floorPlansPdfUrl,
 }: {
   floorPlans: NonNullable<ProjectData["floorPlansDetails"]>;
-  floorPlansPdfUrl: string;
 }) {
+  const [activePlanIdx, setActivePlanIdx] = useState(0);
+
   if (!floorPlans.length) return null;
+
+  const plan = floorPlans[activePlanIdx] ?? floorPlans[0];
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#EDE8DF] border-y border-dark/10">
-      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-5">
-        <div>
-          <SectionLabel>E. Floor Plans</SectionLabel>
+      <div className="mb-6 sm:mb-8 flex flex-col items-center gap-4 sm:gap-5 text-center md:flex-row md:items-end md:justify-between md:text-left">
+        <div className="w-full max-w-xl md:max-w-none">
+          <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
+            Floor Plans
+          </SectionLabel>
           <SectionHeadline size="lg" className="font-display font-light">
             Unit types & <em className="font-normal italic">dimensions</em>
           </SectionHeadline>
         </div>
 
-        <a
-          href={floorPlansPdfUrl}
-          download
-          className="inline-flex h-12 items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark"
+        <Link
+          href="/contact?source=FloorPlans"
+          className="inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark md:w-auto md:max-w-none shrink-0"
         >
-          Download Floor Plans
+          Request Plan Set
           <ArrowRight className="h-4 w-4" />
-        </a>
+        </Link>
       </div>
 
-      <div className="grid grid-cols-12 gap-6 lg:gap-8 items-stretch">
-        <div className="col-span-12 lg:col-span-5 flex h-full flex-col gap-3">
-          {floorPlans.map((plan) => (
-            <div key={plan.name} className="flex-1 border border-dark/10 bg-cream p-5">
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                <div>
-                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-rust">Unit Type</span>
-                  <h3 className="mt-1 font-display text-2xl font-light text-dark">{plan.name}</h3>
-                </div>
+      <div className="flex flex-col gap-4 sm:gap-5">
+        <div className="border border-dark/10 bg-cream p-1.5 sm:p-2 md:p-3">
+          <div className="relative aspect-[16/10] max-h-[280px] w-full overflow-hidden bg-[#F5F0E8] sm:max-h-[400px] md:max-h-[540px]">
+            <Image
+              src={plan.image}
+              alt={`${plan.name} floor plan preview`}
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 1200px"
+              priority={activePlanIdx === 0}
+            />
+            <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-center gap-2 bg-gradient-to-t from-dark/75 via-dark/35 to-transparent p-3 text-center sm:justify-between sm:gap-3 sm:p-4 sm:text-left md:p-5">
+              <div className="min-w-0 flex-1 sm:flex-none">
+                <span className="text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cream/70">
+                  Selected model
+                </span>
+                <h3 className="font-display text-base font-light text-cream sm:text-lg md:text-xl">{plan.name}</h3>
               </div>
-
-              <div className="mt-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-px bg-dark/10">
-                <PlanFact label="Beds" value={`${plan.bedrooms}`} />
-                <PlanFact label="Baths" value={`${plan.bathrooms}`} />
-                <PlanFact label="Parking" value={`${plan.parking}`} />
-                <PlanFact label="Dimensions" value={`${plan.area.toLocaleString()} sq.ft.`} />
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-t border-dark/10 pt-4">
-                <span className="font-display text-xl text-dark">{plan.price}</span>
-                <a
-                  href={floorPlansPdfUrl}
-                  download
-                  className="text-[9px] font-bold uppercase tracking-[0.2em] text-rust hover:text-dark"
-                >
-                  Download
-                </a>
-              </div>
+              <span className="shrink-0 rounded-sm border border-cream/20 bg-cream/10 px-2 py-0.5 text-[7px] font-bold uppercase tracking-widest text-cream sm:px-2.5 sm:py-1 sm:text-[8px]">
+                {plan.availability}
+              </span>
             </div>
-          ))}
+          </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-7 h-full border border-dark/10 bg-cream p-3">
-          <div className="h-full min-h-[520px] md:min-h-[680px] bg-[#F5F0E8]">
-            <iframe
-              src={`${floorPlansPdfUrl}#view=FitH`}
-              title="Sydney Oaks floor plans PDF"
-              className="h-full w-full border-0"
-            />
-          </div>
+        <div className="grid w-full grid-cols-3 items-stretch gap-2 sm:gap-3 md:gap-4">
+          {floorPlans.map((item, index) => {
+            const isActive = index === activePlanIdx;
+            return (
+              <button
+                key={item.name}
+                type="button"
+                title={item.name}
+                onClick={() => setActivePlanIdx(index)}
+                className={`flex h-full min-w-0 flex-col items-center border bg-cream px-1.5 py-2 text-center transition-colors cursor-pointer sm:px-3 sm:py-3 sm:text-left md:px-4 md:py-3.5 ${
+                  isActive ? "border-rust ring-1 ring-rust/30" : "border-dark/10 hover:border-dark/25"
+                }`}
+              >
+                <h3 className="w-full font-display text-[8px] font-light leading-tight text-dark sm:text-sm md:text-base">
+                  <span className="sm:hidden">{getPlanShortName(item.name)}</span>
+                  <span className="hidden sm:inline">{item.name}</span>
+                </h3>
+                <p className="mt-1.5 hidden w-full text-[11px] font-light leading-snug text-dark/60 sm:block md:text-xs">
+                  {item.bedrooms} bed · {item.bathrooms} bath · {item.parking} pkg · {item.area.toLocaleString()} sq.ft.
+                </p>
+                <div className="mt-auto flex w-full flex-col items-center gap-0.5 border-t border-dark/10 pt-1.5 sm:mt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:pt-2">
+                  <span className="font-display text-[8px] leading-none text-dark sm:text-sm">
+                    <span className="sm:hidden">{formatPlanPriceShort(item.price)}</span>
+                    <span className="hidden sm:inline">{item.price}</span>
+                  </span>
+                  <span className="text-[6px] font-bold uppercase leading-none tracking-wide text-dark/45 sm:text-[8px] sm:tracking-widest">
+                    <span className="sm:hidden">{formatPlanAvailabilityShort(item.availability)}</span>
+                    <span className="hidden sm:inline">{item.availability}</span>
+                  </span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
     </SectionWrapper>
-  );
-}
-
-function PlanFact({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-cream px-4 py-3">
-      <span className="block text-[8px] font-bold uppercase tracking-[0.2em] text-dark/45">{label}</span>
-      <span className="mt-1 block font-display text-lg text-dark">{value}</span>
-    </div>
   );
 }
 
@@ -1131,211 +1157,87 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
 }
 
 /* ===========================================================================
-   6. MASTER PLAN SECTION (Interactive Sitemap & Zoom Stage)
+   D. MASTER PLAN / SITE PLAN (static preview → interactive map)
    =========================================================================== */
-function MasterPlanSection() {
-  const sydneyOaksMapConfig = useMemo(() => {
-    return MAP_CONFIGS.find(m => m.id === "sydney-oaks");
-  }, []);
+const SYDNEY_OAKS_SITE_PLAN_SVG = "/svg/siteMap-final.svg";
+const SYDNEY_OAKS_INTERACTIVE_MAP_HREF = "/InteractiveSiteMap?project=sydney-oaks";
 
-  const lots = useMemo(() => {
-    return sydneyOaksMapConfig?.lots || [];
-  }, [sydneyOaksMapConfig]);
-
-  const [activeFilter, setActiveFilter] = useState<"All" | LotStatus>("All");
-  const [selectedLotId, setSelectedLotId] = useState<number>(lots[0]?.id || 1);
-
-  const selectedLot = useMemo(() => {
-    return lots.find(l => l.id === selectedLotId) || lots[0];
-  }, [lots, selectedLotId]);
-
-  const [fullscreenOpen, setFullscreenOpen] = useState(false);
-
-  if (!sydneyOaksMapConfig) return null;
+function MasterPlanSection({
+  components,
+}: {
+  components: NonNullable<ProjectData["masterPlanComponents"]>;
+}) {
+  const masterPlanItems = components.length
+    ? components
+    : [
+      { name: "Plot Layout", desc: "Low-density homesite arrangement with clearly proportioned residential plots." },
+      { name: "Amenities Zoning", desc: "Community amenities grouped for easy access from the residential blocks." },
+      { name: "Entry & Exit", desc: "Defined access points for smooth arrival, controlled entry, and internal circulation." },
+    ];
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
-      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-        <div>
-          <SectionLabel   >Layout Schema</SectionLabel>
+      <div className="mb-8 flex flex-col items-center gap-5 text-center md:flex-row md:items-end md:justify-between md:text-left">
+        <div className="w-full max-w-xl md:max-w-none">
+          <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
+            Master Plan / Site Plan
+          </SectionLabel>
           <SectionHeadline size="lg" className="font-display font-light">
-            Sydney Oaks <em className="font-normal italic">master plan</em>
+            Plot layout & <em className="font-normal italic">site planning</em>
           </SectionHeadline>
         </div>
 
-        {/* Filters and Fullscreen */}
-        <div className="flex flex-wrap gap-2 items-center">
-          {["All", "Available", "Coming Soon", "Sold"].map((f) => (
-            <button
-              key={f}
-              onClick={() => {
-                setActiveFilter(f as any);
-                // Auto-select first matching lot if current is filtered out
-                const target = f.toLowerCase().replace(/\s+/g, '-');
-                const filtered = f === "All"
-                  ? lots
-                  : lots.filter((l) => l.status.toLowerCase().replace(/\s+/g, '-') === target);
-                if (filtered.length > 0 && !filtered.some(l => l.id === selectedLotId)) {
-                  setSelectedLotId(filtered[0].id);
-                }
-              }}
-              className={`px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider transition-colors cursor-pointer rounded-sm ${activeFilter === f
-                ? "bg-dark text-cream"
-                : "bg-transparent text-dark/65 hover:text-dark hover:bg-dark/5"
-                }`}
-            >
-              {f === "All" ? "All Plots" : f}
-            </button>
-          ))}
+        <Link
+          href={SYDNEY_OAKS_INTERACTIVE_MAP_HREF}
+          className="inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark md:w-auto md:max-w-none shrink-0"
+        >
+          Explore Interactive Map
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
 
-          <button
-            onClick={() => setFullscreenOpen(true)}
-            className="group inline-flex items-center gap-1.5 ml-4 text-[9px] font-bold uppercase tracking-widest text-rust hover:text-dark transition-colors cursor-pointer"
+      <div className="flex flex-col gap-5">
+        <div className="border border-dark/10 bg-cream p-2 md:p-3">
+          <Link
+            href={SYDNEY_OAKS_INTERACTIVE_MAP_HREF}
+            className="group relative block aspect-[16/10] max-h-[520px] w-full overflow-hidden bg-[#EDE8DF] no-underline md:max-h-[600px]"
+            aria-label="Open Sydney Oaks interactive site map"
           >
-            <Maximize2 size={12} className="group-hover:scale-110 transition-transform" />
-            Expand Map
-          </button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-12 gap-6 bg-cream border border-dark/15 p-4 rounded-sm shadow-md overflow-hidden">
-
-        {/* Left Side: Interactive Map stage */}
-        <div className="col-span-12 lg:col-span-8 bg-[#EDE8DF] border border-dark/5 relative h-[400px] md:h-[500px] rounded-sm overflow-hidden">
-          <SydneyOaksStage
-            activeFilter={activeFilter}
-            selectedLotId={selectedLotId}
-            onSelectLot={setSelectedLotId}
-            lots={lots}
-          />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={SYDNEY_OAKS_SITE_PLAN_SVG}
+              alt="Sydney Oaks master site plan"
+              className="h-full w-full object-contain object-center select-none pointer-events-none"
+              draggable={false}
+            />
+            <div className="absolute inset-0 flex items-end justify-center bg-dark/0 p-4 transition-colors group-hover:bg-dark/10 md:p-6">
+              <span className="inline-flex items-center gap-2 bg-dark px-4 py-2 text-[9px] font-bold uppercase tracking-[0.2em] text-cream opacity-0 transition-opacity group-hover:opacity-100 md:text-[10px]">
+                View lots & highlights
+                <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </div>
+          </Link>
         </div>
 
-        {/* Right Side: Selected Lot details */}
-        <div className="col-span-12 lg:col-span-4 flex flex-col justify-between p-4 md:p-6 bg-[#EDE8DF]/30 border border-dark/5 rounded-sm min-h-[380px] lg:min-h-0">
-          <div className="space-y-6">
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-rust bg-rust/5 px-2.5 py-0.5 border border-rust/10">
-                  {selectedLot ? selectedLot.status : "Available"}
-                </span>
-                <span className="font-mono text-xs text-dark/40">LOT {selectedLot ? selectedLot.lotNumber.toString().padStart(2, '0') : "01"}</span>
-              </div>
-              <h3 className="font-display font-light text-2xl text-dark leading-tight mt-2">
-                {selectedLot ? selectedLot.title : "The Homesite"}
+        <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-1.5 sm:max-w-none sm:grid-cols-3 sm:gap-3">
+          {masterPlanItems.map((item, index) => (
+            <div
+              key={item.name}
+              className="border border-dark/10 bg-cream px-2.5 py-2 text-center sm:px-3 sm:py-3 sm:text-left md:px-4 md:py-3.5"
+            >
+              <span className="text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-rust">
+                0{index + 1}
+              </span>
+              <h3 className="mt-0.5 font-display text-xs font-light text-dark sm:mt-1 sm:text-sm md:text-base">
+                {item.name}
               </h3>
+              <p className="mt-1 text-[10px] font-light leading-tight text-dark/60 sm:mt-1.5 sm:text-[11px] sm:leading-snug md:text-xs md:leading-relaxed">
+                {item.desc}
+              </p>
             </div>
-
-            {selectedLot && (
-              <div className="grid grid-cols-2 gap-4 border-y border-dark/10 py-4">
-                <div>
-                  <span className="text-[8px] uppercase tracking-widest font-semibold text-dark/50 block">Dimensions</span>
-                  <span className="font-display text-md text-dark">{(selectedLot.sqft || 0).toLocaleString()} sq.ft.</span>
-                </div>
-                <div>
-                  <span className="text-[8px] uppercase tracking-widest font-semibold text-dark/50 block">Pricing</span>
-                  <span className="font-display text-md text-dark font-medium">{selectedLot.price}</span>
-                </div>
-                <div>
-                  <span className="text-[8px] uppercase tracking-widest font-semibold text-dark/50 block">Configuration</span>
-                  <span className="text-xs text-dark/80 font-medium">{selectedLot.beds} Beds / {selectedLot.baths} Baths</span>
-                </div>
-                <div>
-                  <span className="text-[8px] uppercase tracking-widest font-semibold text-dark/50 block">Floor Plan</span>
-                  <span className="text-xs text-dark/80 font-medium">{selectedLot.story}</span>
-                </div>
-              </div>
-            )}
-
-            <p className="text-xs text-dark/65 leading-relaxed font-light">
-              {selectedLot ? selectedLot.description : "This homesite borders the natural landscape pathways, featuring generous spacing and solar-optimized building footprints."}
-            </p>
-          </div>
-
-          <div className="pt-6">
-            <a
-              href={`/contact?source=InteractiveSiteMap&lot=${selectedLot?.lotNumber}`}
-              className="w-full h-[48px] bg-dark !text-white uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-rust transition-colors duration-500 flex items-center justify-center rounded-sm"
-            >
-              Inquire about Lot {selectedLot?.lotNumber}
-            </a>
-          </div>
+          ))}
         </div>
-
       </div>
-
-      {/* FULLSCREEN MAP OVERLAY */}
-      {fullscreenOpen && (
-        <div className="fixed inset-0 z-[100] bg-dark flex flex-col p-4 md:p-8 select-none">
-          <div className="flex justify-between items-center text-cream mb-4 border-b border-cream/10 pb-4">
-            <div>
-              <Annotation light className="!text-rust">FULLSCREEN INTERACTIVE SITE MAP</Annotation>
-              <h3 className="font-display text-xl">Sydney Oaks Layout Schema</h3>
-            </div>
-            <button
-              onClick={() => setFullscreenOpen(false)}
-              className="w-10 h-10 bg-cream/10 hover:bg-rust/20 border border-cream/15 text-cream flex items-center justify-center rounded-full transition-colors cursor-pointer"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className="flex-1 grid grid-cols-12 gap-6 bg-[#1C1208] relative rounded-sm overflow-hidden p-4">
-            <div className="col-span-12 lg:col-span-9 bg-[#2A2118] border border-cream/10 rounded-sm overflow-hidden relative">
-              <SydneyOaksStage
-                activeFilter={activeFilter}
-                selectedLotId={selectedLotId}
-                onSelectLot={setSelectedLotId}
-                lots={lots}
-              />
-            </div>
-            <div className="col-span-12 lg:col-span-3 flex flex-col justify-between p-6 bg-[#2A2118] border border-cream/10 rounded-sm text-cream">
-              <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-rust bg-rust/5 px-2.5 py-0.5 border border-rust/10">
-                      {selectedLot ? selectedLot.status : "Available"}
-                    </span>
-                    <span className="font-mono text-xs text-cream/40">LOT {selectedLot ? selectedLot.lotNumber.toString().padStart(2, '0') : "01"}</span>
-                  </div>
-                  <h3 className="font-display font-light text-2xl text-cream leading-tight mt-2">
-                    {selectedLot ? selectedLot.title : "The Homesite"}
-                  </h3>
-                </div>
-
-                {selectedLot && (
-                  <div className="grid grid-cols-2 gap-4 border-y border-cream/10 py-4">
-                    <div>
-                      <span className="text-[8px] uppercase tracking-widest font-semibold text-cream/50 block">Dimensions</span>
-                      <span className="font-display text-md text-cream">{selectedLot.sqft.toLocaleString()} sq.ft.</span>
-                    </div>
-                    <div>
-                      <span className="text-[8px] uppercase tracking-widest font-semibold text-cream/50 block">Pricing</span>
-                      <span className="font-display text-md text-cream font-medium">{selectedLot.price}</span>
-                    </div>
-                    <div>
-                      <span className="text-[8px] uppercase tracking-widest font-semibold text-cream/50 block">Configuration</span>
-                      <span className="text-xs text-cream/80">{selectedLot.beds} Beds / {selectedLot.baths} Baths</span>
-                    </div>
-                    <div>
-                      <span className="text-[8px] uppercase tracking-widest font-semibold text-cream/50 block">Floor Plan</span>
-                      <span className="text-xs text-cream/80">{selectedLot.story}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="pt-6">
-                <a
-                  href={`/contact?source=InteractiveSiteMap&lot=${selectedLot?.lotNumber}`}
-                  className="w-full h-[48px] bg-rust !text-white uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-rust/80 transition-colors duration-500 flex items-center justify-center rounded-sm"
-                >
-                  Inquire Lot {selectedLot?.lotNumber}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </SectionWrapper>
   );
 }
@@ -1601,6 +1503,97 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
 }
 
 /* ===========================================================================
+   KEY ADVANTAGES (Why choose this project)
+   =========================================================================== */
+const KEY_ADVANTAGES = [
+  {
+    icon: MapPin,
+    title: "Premium Location",
+    description:
+      "Gwinnett County address with quick access to wooded trails, schools, healthcare, and daily essentials.",
+  },
+  {
+    icon: Compass,
+    title: "Smart Planning",
+    description:
+      "Low-density planning, open layouts, efficient systems, and a design language built for long-term comfort.",
+  },
+  {
+    icon: DollarSign,
+    title: "High Appreciation",
+    description:
+      "Positioned in a growing residential corridor with strong demand for family-focused communities.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Trusted Developer",
+    description:
+      "Transparent delivery, careful material choices, and construction quality managed with clear standards.",
+  },
+] as const;
+
+const KEY_ADVANTAGES_MOBILE_INITIAL = 2;
+
+function KeyAdvantagesSection({ projectName }: { projectName: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const hasMore = KEY_ADVANTAGES.length > KEY_ADVANTAGES_MOBILE_INITIAL;
+
+  return (
+    <SectionWrapper dark={false} className="!py-12 md:!py-16 lg:!py-24 bg-[#F5F0E8] border-b border-dark/10">
+      <div className="mx-auto max-w-[1450px]">
+        <div className="mb-8 flex flex-col items-center text-center md:mb-12 md:items-start md:text-left">
+          <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
+            Key Advantages
+          </SectionLabel>
+          <SectionHeadline size="lg" className="font-display font-light max-w-xl md:max-w-none">
+            Why choose <em className="font-normal italic">{projectName}</em>
+          </SectionHeadline>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-px lg:grid-cols-4 sm:border sm:border-dark/10 sm:bg-dark/10">
+          {KEY_ADVANTAGES.map((item, idx) => {
+            const Icon = item.icon;
+            const hiddenOnMobile = idx >= KEY_ADVANTAGES_MOBILE_INITIAL && !expanded;
+
+            return (
+              <div
+                key={item.title}
+                className={`flex min-h-0 flex-col justify-between border border-dark/10 bg-cream/55 p-5 transition-colors hover:bg-cream sm:min-h-[230px] sm:border-0 sm:p-6 md:p-7 ${
+                  hiddenOnMobile ? "hidden sm:flex" : "flex"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center border border-rust/20 text-rust">
+                    <Icon className="h-[18px] w-[18px] sm:h-5 sm:w-5" strokeWidth={1.8} />
+                  </div>
+                </div>
+                <div className="mt-4 space-y-2 sm:mt-0 sm:space-y-3">
+                  <h3 className="font-display text-lg font-light text-dark sm:text-xl">{item.title}</h3>
+                  <p className="text-sm text-dark/65 font-light leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {hasMore && (
+          <button
+            type="button"
+            onClick={() => setExpanded((prev) => !prev)}
+            className="md:hidden mt-4 w-full max-w-sm mx-auto py-3 border border-dark/15 text-dark hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-cream hover:bg-cream-deep"
+          >
+            {expanded ? "Read Less" : "Read More"}
+          </button>
+        )}
+      </div>
+    </SectionWrapper>
+  );
+}
+
+/* ===========================================================================
    8. LOCATION ADVANTAGES & MAP (Styled SVG Map Component)
    =========================================================================== */
 function LocationAdvantagesSection({
@@ -1612,49 +1605,66 @@ function LocationAdvantagesSection({
   coordinates: ProjectData["coordinates"];
   rera: string;
 }) {
-  const visibleNearbyPlaces = (nearbyPlaces || []).slice(0, 6);
+  const [nearbyExpanded, setNearbyExpanded] = useState(false);
+  const allNearbyPlaces = nearbyPlaces || [];
+  const hasMoreNearby = allNearbyPlaces.length > 4;
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#F5F0E8] border-b border-dark/10">
       <div className="grid grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
-        {/* Left Side: Compact nearby places */}
-        <div className="col-span-12 flex flex-col h-full space-y-7">
-          <div className="space-y-6">
+        <div className="col-span-12 flex flex-col items-center space-y-6 text-center md:items-start md:space-y-7 md:text-left">
+          <div className="w-full max-w-xl space-y-4 sm:space-y-6 md:max-w-none">
             <div>
-              <SectionLabel >Connectivity</SectionLabel>
+              <SectionLabel className="justify-center md:justify-start !mb-4 md:!mb-8">
+                Connectivity
+              </SectionLabel>
               <SectionHeadline size="lg" className="font-display font-light leading-none">
                 Location advantages & <em className="font-normal italic">transit</em>
               </SectionHeadline>
             </div>
 
-            <p className="text-sm text-dark/70 font-light max-w-xl">
-              Positioned along Gwinnett County's central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.
+            <p className="mx-auto max-w-lg text-sm text-dark/70 font-light md:mx-0 md:max-w-xl">
+              Positioned along Gwinnett County&apos;s central access ways, Sydney Oaks bridges the boundary between natural seclusion and rapid civic reach.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {visibleNearbyPlaces.map((place, idx) => (
+          <div className="w-full grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
+            {allNearbyPlaces.map((place, idx) => (
               <div
-                key={idx}
-                className="border border-dark/10 bg-cream/55 p-4 flex justify-between items-center gap-4 text-dark transition-colors hover:border-rust/30 hover:bg-rust/5"
+                key={`${place.name}-${idx}`}
+                className={`border border-dark/10 bg-cream/55 p-3.5 sm:p-4 flex justify-between items-center gap-3 sm:gap-4 text-dark transition-colors hover:border-rust/30 hover:bg-rust/5 ${
+                  idx >= 4 && !nearbyExpanded ? "hidden md:flex" : "flex"
+                }`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-current/15">
-                    <MapPin size={15} />
+                <div className="flex min-w-0 items-center gap-2.5 sm:gap-3 text-left">
+                  <span className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center border border-current/15">
+                    <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </span>
-                  <div>
-                    <span className="text-xs font-bold block">{place.name}</span>
-                    <span className="text-[9px] text-dark/50 uppercase block font-semibold tracking-wider mt-0.5">{place.category}</span>
+                  <div className="min-w-0">
+                    <span className="text-[11px] sm:text-xs font-bold block leading-tight">{place.name}</span>
+                    <span className="text-[8px] sm:text-[9px] text-dark/50 uppercase block font-semibold tracking-wider mt-0.5">
+                      {place.category}
+                    </span>
                   </div>
                 </div>
-                <div className="text-right">
-                  <span className="text-sm font-bold block">{place.time}</span>
-                  <span className="text-[9px] text-dark/50 block font-light">{place.distance}</span>
+                <div className="shrink-0 text-right">
+                  <span className="text-xs sm:text-sm font-bold block">{place.time}</span>
+                  <span className="text-[8px] sm:text-[9px] text-dark/50 block font-light">{place.distance}</span>
                 </div>
               </div>
             ))}
           </div>
+
+          {hasMoreNearby && !nearbyExpanded && (
+            <button
+              type="button"
+              onClick={() => setNearbyExpanded(true)}
+              className="md:hidden w-full max-w-sm py-3 border border-dark/15 text-dark hover:border-rust hover:text-rust transition-all duration-300 font-bold uppercase tracking-wider text-[10px] rounded-sm cursor-pointer text-center bg-cream hover:bg-cream-deep"
+            >
+              Read More
+            </button>
+          )}
         </div>
 
       </div>
