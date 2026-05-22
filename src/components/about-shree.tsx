@@ -59,7 +59,6 @@ const CYCLE_MS = 5000;
 
 export function AboutShree() {
   const storyRef = useRef<HTMLDivElement>(null);
-  const storyNavRef = useRef<HTMLElement>(null);
   const wasInViewRef = useRef(false);
   const userPausedRef = useRef(false);
 
@@ -78,17 +77,6 @@ export function AboutShree() {
       userPausedRef.current = false;
       setPaused(false);
       setProgressCycleKey((k) => k + 1);
-
-      requestAnimationFrame(() => {
-        const whoWeAre = storyNavRef.current?.querySelector<HTMLElement>(
-          '[data-chapter-id="who-we-are"]',
-        );
-        whoWeAre?.scrollIntoView({
-          behavior: reduceMotion ? "auto" : "smooth",
-          inline: "center",
-          block: "nearest",
-        });
-      });
     }
 
     if (!isInView && wasInViewRef.current) {
@@ -230,7 +218,6 @@ export function AboutShree() {
             </div>
 
             <nav
-              ref={storyNavRef}
               data-story-reveal
               aria-label="Chapter navigation"
               className="flex shrink-0 flex-row overflow-x-auto border-b border-[#1C1208]/10 lg:flex-col lg:overflow-visible lg:border-b-0 snap-x snap-mandatory [ms-overflow-style:none] [scrollbar-width:none] overscroll-x-contain touch-pan-x [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
