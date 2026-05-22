@@ -7,9 +7,9 @@ import { SectionHeadline } from "./ui/section-headline";
 import { SectionLabel } from "./ui/section-label";
 import { Annotation } from "./ui/annotation";
 import { BodyText } from "./ui/body-text";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
+import { useInView } from "framer-motion";
+import { FeaturedCommunitiesCarousel } from "./ui/featured-communities-carousel";
 
 type Status = "Ongoing" | "Completed" | "Coming Soon";
 
@@ -81,10 +81,14 @@ function CommunityCard({
   c,
   isActive,
   featuredMobile = false,
+  slidePosition,
+  slideTotal,
 }: {
   c: Community;
   isActive?: boolean;
   featuredMobile?: boolean;
+  slidePosition?: number;
+  slideTotal?: number;
 }) {
   const isSoon = c.status === "Coming Soon";
   const href = isSoon
@@ -92,7 +96,6 @@ function CommunityCard({
     : c.slug === "sydney-oaks" || c.slug === "elysian-gates"
       ? `/projects/${c.slug}`
       : `/InteractiveSiteMap?project=${c.slug}`;
-  const displayIndex = parseInt(c.index, 10);
 
   return (
     <Link
@@ -199,13 +202,16 @@ function CommunityCard({
           featuredMobile ? "gap-5 px-6" : "px-1 sm:px-2"
         }`}
       >
-        <Annotation
-          className={`shrink-0 !font-medium !text-[#1C1208]/55 pt-0.5 ${
-            featuredMobile ? "!text-[0.7rem] !tracking-[0.22em]" : "responsive-stat-label"
-          }`}
-        >
-          0/{displayIndex}
-        </Annotation>
+        {slidePosition != null && slideTotal != null ? (
+          <Annotation
+            className={`shrink-0 !font-medium !text-[#1C1208]/55 pt-0.5 ${
+              featuredMobile ? "!text-[0.7rem] !tracking-[0.22em]" : "responsive-stat-label"
+            }`}
+            aria-hidden={featuredMobile ? "true" : undefined}
+          >
+            {slidePosition}/{slideTotal}
+          </Annotation>
+        ) : null}
 
         <div
           className={`flex min-w-0 flex-1 flex-col items-center gap-2 md:items-start ${
@@ -266,28 +272,8 @@ function CommunityCard({
 }
 
 export function Gallery() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: false, amount: 0.3 });
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % communities.length);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + communities.length) % communities.length);
-  }, []);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    
-    const timer = setInterval(() => {
-      setCurrentIndex((current) => (current + 1) % communities.length);
-    }, 3500);
-
-    return () => clearInterval(timer);
-  }, [isAutoPlaying]);
 
   return (
     <SectionWrapper id="gallery" dark={false} className="!pt-14 !pb-12 md:!pt-24 md:!pb-4 overflow-hidden">
@@ -301,8 +287,13 @@ export function Gallery() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:gap-10 mt-8 md:mt-12">
-          {communities.map((c) => (
-            <CommunityCard key={c.slug} c={c} />
+          {communities.map((c, idx) => (
+            <CommunityCard
+              key={c.slug}
+              c={c}
+              slidePosition={idx + 1}
+              slideTotal={communities.length}
+            />
           ))}
         </div>
 
@@ -339,43 +330,17 @@ export function Gallery() {
         </div>
 
         <div className="relative -mx-6 w-[calc(100%+3rem)] overflow-visible">
-          <div className="overflow-hidden">
-            <motion.div
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
-              onDragEnd={(_, { offset, velocity }) => {
-                const swipe = Math.abs(offset.x) > 50 || Math.abs(velocity.x) > 500;
-                if (swipe) {
-                  if (offset.x > 0) prevSlide();
-                  else nextSlide();
-                  setIsAutoPlaying(false);
-                }
-              }}
-              animate={{ x: `-${currentIndex * 100}%` }}
-              transition={{ type: "spring", stiffness: 200, damping: 30 }}
-              className="flex touch-pan-y"
-            >
-              {communities.map((c, idx) => (
-                <div key={c.slug} className="min-w-full shrink-0">
-                  <CommunityCard c={c} isActive={currentIndex === idx} featuredMobile />
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          <div className="mt-8 flex items-center justify-center gap-3">
-            {communities.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => { setCurrentIndex(idx); setIsAutoPlaying(false); }}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`rounded-full transition-all duration-500 ${
-                  currentIndex === idx ? "h-1.5 w-12 bg-[#1C1208]" : "h-1.5 w-4 bg-[#1C1208]/15"
-                }`}
+          <FeaturedCommunitiesCarousel isInView={isInView}>
+            {communities.map((c, idx) => (
+              <CommunityCard
+                key={c.slug}
+                c={c}
+                featuredMobile
+                slidePosition={idx + 1}
+                slideTotal={communities.length}
               />
             ))}
-          </div>
+          </FeaturedCommunitiesCarousel>
         </div>
 
         <div className="pt-8">

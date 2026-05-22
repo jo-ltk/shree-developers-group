@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useInView, useReducedMotion } from "framer-motion";
+import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SectionHeadline } from "@/components/ui/section-headline";
@@ -8,6 +10,7 @@ import { BodyText } from "@/components/ui/body-text";
 import { StatItem } from "@/components/ui/stat-item";
 import { ShieldCheck, MapPinned } from "lucide-react";
 import { Annotation } from "./ui/annotation";
+import { cn } from "@/lib/utils";
 
 const CHAPTERS = [
   {
@@ -53,47 +56,95 @@ const CHAPTERS = [
 ];
 
 const CYCLE_MS = 5000;
-const TICK_MS  = 50;
 
 export function AboutShree() {
-  const [active, setActive]   = useState(0);
-  const [paused, setPaused]   = useState(false);
-  const [progress, setProgress] = useState(0);
+  const storyRef = useRef<HTMLDivElement>(null);
+  const storyNavRef = useRef<HTMLElement>(null);
+  const wasInViewRef = useRef(false);
+  const userPausedRef = useRef(false);
 
-  const cycleRef    = useRef<ReturnType<typeof setInterval> | null>(null);
-  const tickRef     = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isInView = useInView(storyRef, { once: false, amount: 0.35, margin: "0px 0px -8% 0px" });
+  const reduceMotion = useReducedMotion();
 
-  const clearTimers = () => {
-    if (cycleRef.current)  clearInterval(cycleRef.current);
-    if (tickRef.current)   clearInterval(tickRef.current);
-  };
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(true);
+  const [progressCycleKey, setProgressCycleKey] = useState(0);
+  const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const startTimers = useCallback((currentActive: number, isPaused: boolean) => {
-    clearTimers();
-    if (isPaused) return;
+  // Start at Who We Are + autoplay when Our Story scrolls into view
+  useEffect(() => {
+    if (isInView && !wasInViewRef.current) {
+      setActive(0);
+      userPausedRef.current = false;
+      setPaused(false);
+      setProgressCycleKey((k) => k + 1);
 
-    cycleRef.current = setInterval(() => {
-      setActive((prev) => (prev + 1) % CHAPTERS.length);
-      setProgress(0);
-    }, CYCLE_MS);
+      requestAnimationFrame(() => {
+        const whoWeAre = storyNavRef.current?.querySelector<HTMLElement>(
+          '[data-chapter-id="who-we-are"]',
+        );
+        whoWeAre?.scrollIntoView({
+          behavior: reduceMotion ? "auto" : "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      });
+    }
 
-    tickRef.current = setInterval(() => {
-      setProgress((p) => Math.min(p + (TICK_MS / CYCLE_MS) * 100, 100));
-    }, TICK_MS);
-  }, []);
+    if (!isInView && wasInViewRef.current) {
+      setPaused(true);
+      if (cycleRef.current) clearInterval(cycleRef.current);
+    }
+
+    wasInViewRef.current = isInView;
+  }, [isInView, reduceMotion]);
 
   useEffect(() => {
-    setProgress(0);
-    startTimers(active, paused);
-    return clearTimers;
-  }, [active, paused, startTimers]);
+    if (cycleRef.current) clearInterval(cycleRef.current);
+
+    if (paused || reduceMotion || !isInView || userPausedRef.current) return;
+
+    cycleRef.current = setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % CHAPTERS.length;
+        setProgressCycleKey((k) => k + 1);
+        return next;
+      });
+    }, CYCLE_MS);
+
+    return () => {
+      if (cycleRef.current) clearInterval(cycleRef.current);
+    };
+  }, [paused, isInView, reduceMotion]);
+
+  useLayoutEffect(() => {
+    if (reduceMotion || !storyRef.current) return;
+
+    const { gsap } = ensureGsapPlugins();
+    const ctx = gsap.context(() => {
+      gsap.from("[data-story-reveal]", {
+        autoAlpha: 0,
+        y: 28,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: storyRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+    }, storyRef);
+
+    return () => ctx.revert();
+  }, [reduceMotion]);
 
   const handleSelect = (i: number) => {
     setActive(i);
-    setProgress(0);
+    setPaused(true);
+    userPausedRef.current = true;
+    setProgressCycleKey((k) => k + 1);
   };
-
-  const ch = CHAPTERS[active];
 
   return (
     <SectionWrapper id="about-shree" noPadding fullWidth>
@@ -155,10 +206,16 @@ export function AboutShree() {
       </div>
 
       {/* ── OUR STORY — Tab Navigator (warm cream) ── */}
-      <div className="bg-[#F5F0E8] w-full pt-8 pb-8 lg:pt-16 lg:pb-16">
+      <div
+        ref={storyRef}
+        className="bg-[#F5F0E8] w-full pt-8 pb-8 lg:pt-16 lg:pb-16"
+      >
 
         {/* ── Top header bar (Mobile/Tablet only) ── */}
-        <div className="flex justify-center px-6 sm:px-8 md:px-12 pt-4 mb-8 lg:hidden">
+        <div
+          data-story-reveal
+          className="flex justify-center px-6 sm:px-8 md:px-12 pt-4 mb-8 lg:hidden"
+        >
           <SectionLabel className="!mb-0">Our Story</SectionLabel>
         </div>
 
@@ -168,50 +225,60 @@ export function AboutShree() {
           {/* ── LEFT: Tab rail & Desktop Header ── */}
           <div className="flex flex-col lg:col-span-4 lg:border-r border-[#1C1208]/10 lg:pr-8">
             {/* Desktop-only Header */}
-            <div className="hidden lg:flex flex-col items-start mb-8">
+            <div data-story-reveal className="hidden lg:flex flex-col items-start mb-8">
               <SectionLabel className="!mb-0 text-left">Our Story</SectionLabel>
             </div>
 
             <nav
+              ref={storyNavRef}
+              data-story-reveal
               aria-label="Chapter navigation"
-              className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible
-                         shrink-0 border-b lg:border-b-0
-                         scrollbar-hide [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex shrink-0 flex-row overflow-x-auto border-b border-[#1C1208]/10 lg:flex-col lg:overflow-visible lg:border-b-0 snap-x snap-mandatory [ms-overflow-style:none] [scrollbar-width:none] overscroll-x-contain touch-pan-x [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
             >
               {CHAPTERS.map((c, i) => {
                 const isActive = i === active;
+                const isPast = i < active;
                 return (
                   <button
                     key={c.id}
+                    data-chapter-id={c.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
                     onClick={() => handleSelect(i)}
-                    className="group relative flex items-center text-left
-                               px-5 lg:px-6 shrink-0 lg:w-full
-                               border-b-2 lg:border-b-0 lg:border-r-[2px] lg:-mr-[1px]
-                               transition-all duration-300 overflow-hidden"
-                    style={{
-                      borderColor: isActive ? "#B45309" : "transparent",
-                      background:  isActive ? "rgba(28,18,8,0.04)" : "transparent",
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                    }}
+                    className={cn(
+                      "group relative flex shrink-0 snap-start items-center overflow-hidden text-left",
+                      "border-b-2 px-5 py-2.5 transition-[border-color,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:w-full lg:border-b-0 lg:border-r-2 lg:-mr-px lg:px-6 lg:py-2.5",
+                      isActive
+                        ? "border-[#B45309] bg-[rgba(28,18,8,0.04)]"
+                        : "border-transparent bg-transparent",
+                    )}
                   >
-                    {/* Timer progress fill */}
                     <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: "rgba(28,18,8,0.03)",
-                        transform: `scaleX(${isActive ? progress / 100 : i < active ? 1 : 0})`,
-                        transformOrigin: "left",
-                        transition: isActive ? "none" : "transform 0.4s ease",
-                      }}
+                      className={cn(
+                        "pointer-events-none absolute inset-0 origin-left bg-[rgba(28,18,8,0.03)]",
+                        isPast && "scale-x-100",
+                        isActive && !reduceMotion && !paused && "motion-safe:animate-[storyTabProgress_5s_linear_forwards]",
+                        !isActive && !isPast && "scale-x-0",
+                        (isActive && (reduceMotion || paused)) && "scale-x-100",
+                      )}
+                      style={
+                        isActive && !reduceMotion && !paused
+                          ? undefined
+                          : { transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)" }
+                      }
+                      key={
+                        isActive && !reduceMotion && !paused
+                          ? `progress-${active}-${progressCycleKey}`
+                          : `fill-${i}`
+                      }
                     />
-                    {/* Label */}
                     <span
-                      className="relative text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors duration-300"
-                      style={{
-                        fontFamily: "'Poppins', sans-serif",
-                        color: isActive ? "#1C1208" : "rgba(28,18,8,0.38)",
-                      }}
+                      className={cn(
+                        "relative text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors duration-300",
+                        isActive ? "text-[#1C1208]" : "text-[#1C1208]/40",
+                      )}
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       {c.label}
                     </span>
@@ -222,24 +289,28 @@ export function AboutShree() {
           </div>
 
           {/* ── RIGHT: Content panel ── */}
-          <div className="flex-1 relative overflow-hidden lg:col-span-8 lg:col-start-5 mt-8 lg:mt-0 lg:pl-12 xl:pl-16 flex flex-col justify-between">
-            <div className="relative w-full">
-              {/* Slides */}
+          <div
+            data-story-reveal
+            className="relative mt-8 flex flex-1 flex-col justify-between overflow-hidden lg:col-span-8 lg:col-start-5 lg:mt-0 lg:pl-12 xl:pl-16"
+            role="tabpanel"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <div className="relative w-full min-h-[clamp(16rem,52vw,22rem)] lg:min-h-[17rem]">
               {CHAPTERS.map((c, i) => {
                 const isActive = i === active;
                 return (
                   <div
                     key={c.id}
                     aria-hidden={!isActive}
-                    className={`${isActive ? "relative" : "absolute inset-x-0 top-0"} flex flex-col justify-start gap-4 px-8 sm:px-10 lg:px-0 pt-6 pb-6 lg:pt-0 lg:pb-8 w-full h-auto`}
-                    style={{
-                      opacity:    isActive ? 1 : 0,
-                      transform:  isActive ? "translateY(0)" : "translateY(18px)",
-                      transition: "opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1)",
-                      pointerEvents: isActive ? "auto" : "none",
-                    }}
+                    className={cn(
+                      "flex w-full flex-col justify-start gap-4 px-8 pb-6 pt-6 sm:px-10 lg:px-0 lg:pb-8 lg:pt-0",
+                      "transition-opacity duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                      isActive
+                        ? "relative opacity-100"
+                        : "pointer-events-none absolute inset-x-0 top-0 opacity-0",
+                    )}
                   >
-                    {/* Heading */}
                     <SectionHeadline
                       size="lg"
                       className="m-0 text-left"
@@ -248,14 +319,11 @@ export function AboutShree() {
                       {c.heading}
                     </SectionHeadline>
 
-                    {/* Body */}
                     <p
-                      className="leading-relaxed font-light"
+                      className="font-light leading-relaxed text-[#1C1208]/60"
                       style={{
                         fontFamily: "'Poppins', sans-serif",
-                        color: "rgba(28,18,8,0.6)",
                         fontSize: "clamp(0.82rem, 1.35vw, 0.95rem)",
-                        maxWidth: "none",
                       }}
                     >
                       {c.body}
@@ -265,19 +333,23 @@ export function AboutShree() {
               })}
             </div>
 
-            {/* ── Bottom dot strip ── */}
-            <div className="flex items-center gap-1.5 px-8 sm:px-10 lg:px-0 pt-4 pb-4">
+            <div
+              className="flex items-center gap-1.5 px-8 pb-4 pt-4 sm:px-10 lg:px-0"
+              role="tablist"
+              aria-label="Story chapter position"
+            >
               {CHAPTERS.map((c, i) => (
                 <button
                   key={c.id}
-                  onClick={() => handleSelect(i)}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === active}
                   aria-label={c.label}
-                  className="rounded-full transition-all duration-300"
-                  style={{
-                    width:  i === active ? 22 : 6,
-                    height: 6,
-                    background: i === active ? "#B45309" : "rgba(28,18,8,0.15)",
-                  }}
+                  onClick={() => handleSelect(i)}
+                  className={cn(
+                    "h-1.5 rounded-full transition-[width,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    i === active ? "w-[1.375rem] bg-[#B45309]" : "w-1.5 bg-[#1C1208]/15",
+                  )}
                 />
               ))}
             </div>
@@ -304,6 +376,12 @@ export function AboutShree() {
         ))}
       </div>
 
+      <style>{`
+        @keyframes storyTabProgress {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+      `}</style>
     </SectionWrapper>
   );
 }

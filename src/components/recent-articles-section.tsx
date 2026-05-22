@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useLayoutEffect, useRef, useState, useEffect, useCallback } from "react";
-import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { useLayoutEffect, useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
+import { ScrollSnapCarousel } from "./ui/scroll-snap-carousel";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
@@ -74,7 +75,7 @@ const articles = [
   },
 ];
 
-function ArticleCard({ article, index, isActive }: { article: any; index: number; isActive?: boolean }) {
+function ArticleCard({ article, index }: { article: (typeof articles)[number]; index: number }) {
   return (
     <motion.article
       key={article.title}
@@ -82,9 +83,7 @@ function ArticleCard({ article, index, isActive }: { article: any; index: number
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: (index - 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
       data-article-card
-      className={`group relative bg-cream flex flex-col h-full cursor-pointer transition-all duration-500 ${
-        isActive === false ? "opacity-40 blur-[1px]" : "opacity-100"
-      }`}
+      className="group relative flex h-full cursor-pointer flex-col bg-cream"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden">
         <Image
@@ -122,26 +121,10 @@ function ArticleCard({ article, index, isActive }: { article: any; index: number
 export function RecentArticlesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [showAll, setShowAll] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
+  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
   const initialLimit = 3;
-  const visibleArticles = showAll ? articles : articles.slice(0, initialLimit);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((current) => (current + 1) % initialLimit);
-  }, [initialLimit]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((current) => (current - 1 + initialLimit) % initialLimit);
-  }, [initialLimit]);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const timer = setInterval(nextSlide, 3500);
-    return () => clearInterval(timer);
-  }, [isAutoPlaying, nextSlide]);
+  const visibleArticles = articles.slice(0, initialLimit);
+  const mobileArticles = articles.slice(0, initialLimit);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -196,40 +179,20 @@ export function RecentArticlesSection() {
       {/* Mobile Slider Version */}
       <div className="md:hidden" ref={containerRef}>
         <div className="relative overflow-visible">
-          <div className="overflow-hidden -mx-4 px-4">
-            <motion.div
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
-              onDragEnd={(_, { offset, velocity }) => {
-                const swipe = Math.abs(offset.x) > 50 || Math.abs(velocity.x) > 500;
-                if (swipe) {
-                  if (offset.x > 0) prevSlide();
-                  else nextSlide();
-                  setIsAutoPlaying(false);
-                }
-              }}
-              animate={{ x: `-${currentIndex * 100}%` }}
-              transition={{ type: "spring", stiffness: 200, damping: 30 }}
-              className="flex"
-            >
-              {articles.slice(0, initialLimit).map((article, idx) => (
-                <div key={article.title} className="min-w-full pr-6">
-                  <ArticleCard article={article} index={idx} isActive={currentIndex === idx} />
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 mt-6">
-            {articles.slice(0, initialLimit).map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => { setCurrentIndex(idx); setIsAutoPlaying(false); }}
-                className={`h-1 transition-all duration-500 rounded-full ${currentIndex === idx ? "w-10 bg-[#1C1208]" : "w-3 bg-[#1C1208]/10"}`}
-              />
+          <ScrollSnapCarousel
+            isInView={isInView}
+            ariaLabel="Media and blog articles"
+            tablistAriaLabel="Choose article slide"
+            viewportClassName="-mx-4 px-4"
+            slideClassName="pr-6"
+            dotsContainerClassName="mt-6"
+            dotActiveClassName="h-1 w-10 bg-[#1C1208]"
+            dotInactiveClassName="h-1 w-3 bg-[#1C1208]/10"
+          >
+            {mobileArticles.map((article, idx) => (
+              <ArticleCard key={article.title} article={article} index={idx} />
             ))}
-          </div>
+          </ScrollSnapCarousel>
         </div>
       </div>
 
