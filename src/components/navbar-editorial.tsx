@@ -13,6 +13,7 @@ import { Annotation } from "./ui/annotation";
 const projectNavLinks = [
   { label: "Sydney Oaks", href: "/projects/sydney-oaks" },
   { label: "Elysian Gates", href: "/projects/elysian-gates" },
+  { label: "Hanover Park", href: "/projects/hanover-park-at-stockbridge" },
 ];
 
 const navColumns = [

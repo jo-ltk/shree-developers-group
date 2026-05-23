@@ -36,7 +36,18 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://images.unsplash.com https://res.cloudinary.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; media-src 'self' https://res.cloudinary.com;",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://maps.googleapis.com https://maps.gstatic.com https://*.google.com https://*.ggpht.com https://*.googleusercontent.com",
+              "font-src 'self' data: https://fonts.gstatic.com https://maps.gstatic.com",
+              "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://*.gstatic.com",
+              "frame-src 'self' https://www.google.com https://maps.google.com",
+              "worker-src 'self' blob:",
+              "child-src 'self' blob:",
+              "media-src 'self' https://res.cloudinary.com",
+            ].join("; "),
           },
         ],
       },

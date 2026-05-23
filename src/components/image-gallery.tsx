@@ -65,10 +65,10 @@ export function ImageGallery() {
   const repeatedImages = [...galleryImages, ...galleryImages, ...galleryImages];
 
   return (
-    <SectionWrapper id="experience-gallery" dark={false} className="!pt-0 !pb-8 md:!pb-12 overflow-hidden">
+    <SectionWrapper id="experience-gallery" dark={false} className="!pt-0 !pb-0 overflow-hidden">
       <NoScrollbarStyle />
       
-      <div className="flex flex-col items-center mb-8 md:mb-8">
+      <div className="flex flex-col items-center mb-0">
         <div className="flex flex-col responsive-minimum-gap items-center">
           <SectionLabel className="justify-center !mb-0">Visual Journey</SectionLabel>
           <SectionHeadline size="xl" noPeriod className="responsive-headline-xl max-w-4xl text-center m-0">
@@ -93,7 +93,7 @@ export function ImageGallery() {
       {/* Marquee Slider */}
       <div className="relative w-screen max-w-none ml-[calc(-50vw+50%)] overflow-hidden group">
         <div 
-          className="flex min-w-max items-center gap-4 md:gap-6 animate-marquee group-hover:[animation-play-state:paused]"
+          className="flex min-w-max items-stretch gap-0 animate-marquee group-hover:[animation-play-state:paused]"
           style={{ 
             animation: "marquee 60s linear infinite",
           }}

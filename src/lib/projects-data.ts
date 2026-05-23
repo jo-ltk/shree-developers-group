@@ -110,9 +110,29 @@ export type ProjectData = {
   heroCtaSecondary?: string;
   /** Floating accent frames layered over the hero image */
   heroAccentImages?: { src: string; alt: string; caption?: string }[];
+  /** Premium map section with nearby attractions (dedicated project pages) */
+  locationNearbySection?: {
+    sectionLabel: string;
+    headline: string;
+    headlineEmphasis?: string;
+    description: string;
+    googleMapsUrl: string;
+    highlightRadius?: number;
+    nearbyLocations: {
+      name: string;
+      distance: string;
+      time?: string;
+      category?: string;
+      coordinates?: { lat: number; lng: number };
+    }[];
+  };
 };
 
-export const DEDICATED_PROJECT_SLUGS = ["sydney-oaks", "elysian-gates"] as const;
+export const DEDICATED_PROJECT_SLUGS = [
+  "sydney-oaks",
+  "elysian-gates",
+  "hanover-park-at-stockbridge",
+] as const;
 export type DedicatedProjectSlug = (typeof DEDICATED_PROJECT_SLUGS)[number];
 
 export function isDedicatedProjectSlug(slug: string): slug is DedicatedProjectSlug {
@@ -801,6 +821,67 @@ export const allProjects: ProjectData[] = [
         ],
       },
     ],
+    coordinates: { lat: 34.2335397, lng: -84.1247657 },
+    locationNearbySection: {
+      sectionLabel: "Location & Nearby Attractions",
+      headline: "Connected To",
+      headlineEmphasis: "Everything",
+      description:
+        "Sydney Oaks sits at the heart of Forsyth County — minutes from premier shopping, top-rated schools, healthcare, and recreation. Every destination you need is within effortless reach.",
+      googleMapsUrl: "https://maps.app.goo.gl/MCvxLFpoSDwBcPHn9",
+      highlightRadius: 420,
+      nearbyLocations: [
+        {
+          name: "Atlanta Airport",
+          distance: "42 mi",
+          time: "45 min",
+          category: "airport",
+          coordinates: { lat: 33.6407, lng: -84.4277 },
+        },
+        {
+          name: "The Collection at Forsyth",
+          distance: "4.2 mi",
+          time: "10 min",
+          category: "shopping",
+          coordinates: { lat: 34.1123, lng: -84.1436 },
+        },
+        {
+          name: "Lake Lanier",
+          distance: "5.0 mi",
+          time: "12 min",
+          category: "recreation",
+          coordinates: { lat: 34.1682, lng: -84.0373 },
+        },
+        {
+          name: "Cumming City Center",
+          distance: "2.5 mi",
+          time: "8 min",
+          category: "transit",
+          coordinates: { lat: 34.2073, lng: -84.1402 },
+        },
+        {
+          name: "Northside Hospital Forsyth",
+          distance: "4.5 mi",
+          time: "10 min",
+          category: "healthcare",
+          coordinates: { lat: 34.1251, lng: -84.1037 },
+        },
+        {
+          name: "Forsyth Central High School",
+          distance: "1.8 mi",
+          time: "5 min",
+          category: "school",
+          coordinates: { lat: 34.2036, lng: -84.1412 },
+        },
+        {
+          name: "Alliance Academy for Innovation",
+          distance: "3.2 mi",
+          time: "8 min",
+          category: "business",
+          coordinates: { lat: 34.192, lng: -84.165 },
+        },
+      ],
+    },
     keyAdvantagesSectionLabel: "Why Choose This Project",
     keyAdvantagesHeadline: "Why Sydney Oaks?",
     keyAdvantages: [
@@ -991,7 +1072,249 @@ export const allProjects: ProjectData[] = [
         image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
       }
     ],
-    coordinates: { lat: 34.0531, lng: -84.0624 }
+  },
+  {
+    index: "11",
+    slug: "hanover-park-at-stockbridge",
+    title: "Hanover Park at Stockbridge",
+    location: "Stockbridge, GA",
+    type: "Townhomes & Single-Family Homes",
+    year: "Coming Soon",
+    status: "active",
+    highlight:
+      "Resort-inspired community with clubhouse, pool, putting green, pickleball courts, and walkable neighborhood design",
+    summary:
+      "A walkable, resort-inspired neighborhood in Stockbridge pairing timeless architecture with wellness-focused amenities and modern comfort.",
+    brief:
+      "Hanover Park at Stockbridge is a modern, resort-inspired residential community focused on wellness, leisure, walkability, and connection. The master-planned neighborhood combines townhomes and single-family homes around a centralized amenity core with a resort-style pool, PopStroke-inspired putting green, pickleball courts, and an elegant clubhouse.",
+    image: "/images/hanover-park/hero.jpg",
+    plans: [
+      { label: "Master Site Plan", image: "/images/hanover-park/master-plan.jpg" },
+      { label: "Community Layout", image: "/images/hanover-park/master-plan.jpg" },
+    ],
+    renders: [
+      { label: "Clubhouse & Pool Rendering", image: "/images/hanover-park/gallery-01.jpg" },
+      { label: "Community Amenity Vision", image: "/images/hanover-park/gallery-02.jpg" },
+      { label: "Resort-Style Living", image: "/images/hanover-park/gallery-03.jpg" },
+    ],
+    progress: [
+      { date: "May 2026", note: "Master plan and amenity vision released" },
+      { date: "Q3 2026", note: "Site development planning underway" },
+    ],
+    amenities: [],
+    amenitySections: [
+      {
+        title: "Core Amenities",
+        items: [
+          "Resort-style swimming pool with large paver decking",
+          "PopStroke-inspired putting green",
+          "Pickleball courts for all ages",
+          "Elegant clubhouse with gathering space",
+        ],
+      },
+      {
+        title: "Community Design",
+        items: [
+          "Walkable, resort-inspired neighborhood layout",
+          "Centralized amenity zone with sports field",
+          "Green and open spaces with buffer zones",
+          "Internal road system with parking and access areas",
+        ],
+      },
+      {
+        title: "Home Features",
+        items: [
+          "Architectural style aligned with the clubhouse",
+          "Warm-toned brick and stone exteriors",
+          "Townhomes from 1,850 sq. ft. minimum",
+          "Single-family homes from 2,300 sq. ft. minimum",
+          "2-car garage included on all homes",
+        ],
+      },
+    ],
+    locationMap: "/images/hanover-park/master-plan.jpg",
+    name: "Hanover Park at Stockbridge",
+    priceText: "Register for Updates",
+    statusBadge: "Coming Soon",
+    tagline: "Resort-Inspired Living in Stockbridge",
+    heroDescription:
+      "A walkable, resort-inspired neighborhood designed around wellness, leisure, and community connection — with timeless architecture and modern comfort at every homesite.",
+    heroLocationLabel: "Stockbridge, Georgia",
+    heroHideStatusBadge: false,
+    heroKeySpecs: [
+      "Townhomes from 1,850 sq. ft.",
+      "Single-family homes from 2,300 sq. ft.",
+      "2-car garage on every home",
+      "Resort-style pool & clubhouse",
+      "Putting green & pickleball courts",
+      "Walkable community planning",
+    ],
+    heroCtaSecondary: "Register Interest",
+    heroAccentImages: [
+      {
+        src: "/images/hanover-park/gallery-01.jpg",
+        alt: "Hanover Park clubhouse and pool rendering",
+        caption: "Clubhouse",
+      },
+      {
+        src: "/images/hanover-park/gallery-02.jpg",
+        alt: "Hanover Park community amenities",
+        caption: "Amenities",
+      },
+      {
+        src: "/images/hanover-park/gallery-03.jpg",
+        alt: "Hanover Park resort-style neighborhood",
+        caption: "Community",
+      },
+    ],
+    possessionDate: "TBA",
+    projectArea: "Master-Planned Community",
+    totalUnits: "Townhomes & Single-Family Homes",
+    priceRange: "Coming Soon",
+    propertyType: "Townhomes & Single-Family",
+    sitePlanPdfUrl: "/images/hanover-park/master-plan.jpg",
+    sitePlanSvg: "/images/hanover-park/master-plan.jpg",
+    configurationLabel: "Townhomes & Single-Family",
+    overviewSectionLabel: "Community Overview",
+    overviewHeadline: "Resort-inspired living in Stockbridge",
+    overviewParagraphs: [
+      "Hanover Park at Stockbridge is presented as a modern, resort-inspired residential community focused on wellness, leisure, walkability, and community living. The vision pairs timeless architectural design with modern comfort across a thoughtfully planned neighborhood of townhomes and single-family homes.",
+      "The site plan centers recreation and connection — with a community clubhouse, resort-style pool, putting green, pickleball courts, sports field, and walking-friendly layout woven through green and open spaces. Homes feature warm-toned brick and stone exteriors designed to complement the clubhouse architecture, with every residence including a 2-car garage.",
+    ],
+    overviewKeynote:
+      "A walkable neighborhood where wellness, leisure, and gathering spaces shape everyday life.",
+    highlightCriteria: [
+      {
+        title: "Resort-Style Amenities",
+        desc: "Pool, putting green, pickleball courts, and clubhouse designed for social and leisure-focused living.",
+      },
+      {
+        title: "Walkable Layout",
+        desc: "Pedestrian-friendly streets, open spaces, and a centralized amenity core encourage connection outdoors.",
+      },
+      {
+        title: "Timeless Architecture",
+        desc: "Warm brick and stone exteriors aligned with the clubhouse for a cohesive, high-end streetscape.",
+      },
+      {
+        title: "Flexible Home Types",
+        desc: "Townhomes from 1,850 sq. ft. and single-family homes from 2,300 sq. ft., each with a 2-car garage.",
+      },
+    ],
+    locationSectionLabel: "Location",
+    locationHeadline: "Stockbridge, Georgia",
+    locationConnectivityBlurb:
+      "Positioned in Stockbridge with convenient access to metro Atlanta corridors, shopping, schools, and daily essentials.",
+    locationPlaceGroups: [
+      {
+        title: "Community Features",
+        places: [
+          { name: "Resort-style swimming pool" },
+          { name: "PopStroke-inspired putting green" },
+          { name: "Pickleball courts" },
+          { name: "Community clubhouse" },
+          { name: "Community sports field" },
+        ],
+      },
+      {
+        title: "Home Types",
+        places: [
+          { name: "Townhomes — from 1,850 sq. ft." },
+          { name: "Single-family homes — from 2,300 sq. ft." },
+          { name: "2-car garage — all homes" },
+        ],
+      },
+    ],
+    keyAdvantagesSectionLabel: "Why Hanover Park",
+    keyAdvantagesHeadline: "Designed for wellness & connection",
+    keyAdvantages: [
+      {
+        title: "Resort Lifestyle",
+        description:
+          "Pool, putting green, pickleball, and clubhouse amenities create a leisure-focused environment for all ages.",
+      },
+      {
+        title: "Walkable Planning",
+        description:
+          "Internal roads, green spaces, and amenity zones support wellness, outdoor activity, and neighbor connection.",
+      },
+      {
+        title: "Premium Exteriors",
+        description:
+          "Warm brick and stone façades with architecture matched to the clubhouse for timeless suburban elegance.",
+      },
+      {
+        title: "Family-Friendly Scale",
+        description:
+          "Spacious townhome and single-family options with 2-car garages support modern family living.",
+      },
+    ],
+    highlightsList: [
+      "Resort-style pool with expansive paver decking",
+      "PopStroke-inspired putting green and pickleball courts",
+      "Elegant clubhouse gathering space",
+      "Townhomes and single-family homes with 2-car garages",
+    ],
+    floorPlansDetails: [
+      {
+        name: "Townhome Collection",
+        seriesLetter: "T",
+        image: "/images/hanover-park/gallery-02.jpg",
+        bedrooms: 3,
+        bathrooms: 2.5,
+        parking: 2,
+        area: 1850,
+        price: "Coming Soon",
+        emi: "—",
+        availability: "Coming Soon",
+        virtualTourUrl: "#townhome",
+      },
+      {
+        name: "Single-Family Collection",
+        seriesLetter: "S",
+        image: "/images/hanover-park/gallery-03.jpg",
+        bedrooms: 4,
+        bathrooms: 3,
+        parking: 2,
+        area: 2300,
+        price: "Coming Soon",
+        emi: "—",
+        availability: "Coming Soon",
+        virtualTourUrl: "#single-family",
+      },
+    ],
+    unitsList: [],
+    nearbyPlaces: [],
+    faqsList: [
+      {
+        question: "What home types are planned at Hanover Park?",
+        answer:
+          "The community will offer townhomes starting at a minimum of 1,850 sq. ft. and single-family homes starting at a minimum of 2,300 sq. ft. All homes include a 2-car garage.",
+      },
+      {
+        question: "What amenities are included?",
+        answer:
+          "Planned amenities include a resort-style swimming pool with large paver decking, a PopStroke-inspired putting green, pickleball courts, an elegant clubhouse, a community sports field, and extensive green and open spaces.",
+      },
+      {
+        question: "When will homes be available?",
+        answer:
+          "Hanover Park at Stockbridge is in pre-launch planning. Register your interest to receive updates on pricing, lot releases, and sales events.",
+      },
+      {
+        question: "Where is the community located?",
+        answer:
+          "Hanover Park at Stockbridge is located in Stockbridge, Georgia, with a master-planned layout designed for walkability and resort-inspired living.",
+      },
+    ],
+    testimonialsList: [],
+    coordinates: { lat: 33.5443, lng: -84.2339 },
+    masterPlanComponents: [
+      { name: "Clubhouse", desc: "Central gathering space for residents" },
+      { name: "Resort Pool", desc: "Large paver deck and leisure zone" },
+      { name: "Putting Green", desc: "PopStroke-inspired recreation" },
+      { name: "Pickleball Courts", desc: "Active play for all ages" },
+    ],
   },
 ];
 

@@ -65,6 +65,7 @@ import { Annotation } from "@/components/ui/annotation";
 import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 import { MobileHorizontalCarousel } from "@/components/ui/mobile-horizontal-carousel";
+import { LocationNearbySection } from "@/components/location-nearby-section";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const amenityIconMap: Record<string, LucideIcon> = {
@@ -134,6 +135,17 @@ const amenitySectionIconMap: Record<string, LucideIcon> = {
   "interior features": Home,
   "kitchen features": ChefHat,
   "energy efficient features": Zap,
+  "core amenities": Waves,
+  "community design": Footprints,
+  "home features": Home,
+};
+
+const amenityDesktopGridColsClass: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+  5: "grid-cols-5",
 };
 
 function getAmenitySectionIcon(title: string) {
@@ -694,9 +706,19 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       <AmenitiesSection
         sections={project.amenitySections}
         amenities={project.amenities}
+        projectSlug={project.slug}
       />
 
-      {/* G. LOCATION ADVANTAGES */}
+      {/* G. LOCATION & NEARBY MAP */}
+      {project.locationNearbySection && (
+        <LocationNearbySection
+          {...project.locationNearbySection}
+          projectName={name}
+          coordinates={coordinates}
+        />
+      )}
+
+      {/* H. LOCATION ADVANTAGES */}
       <LocationAdvantagesSection
         nearbyPlaces={nearbyPlaces}
         locationPlaceGroups={project.locationPlaceGroups}
@@ -1088,9 +1110,11 @@ function formatPlanAvailabilityShort(status: string) {
 function AmenitiesSection({
   sections,
   amenities,
+  projectSlug,
 }: {
   sections?: NonNullable<ProjectData["amenitySections"]>;
   amenities: ProjectData["amenities"];
+  projectSlug?: string;
 }) {
   const [amenitiesExpanded, setAmenitiesExpanded] = useState(false);
   const [mobileAmenitiesExpanded, setMobileAmenitiesExpanded] = useState(false);
@@ -1116,10 +1140,16 @@ function AmenitiesSection({
         </div>
 
         {(() => {
+          const columnCount = groupedSections.length;
+          const gridColsClass =
+            amenityDesktopGridColsClass[columnCount] ?? "grid-cols-5";
+          const minTableWidth = `${columnCount * 11.2}rem`;
           const rowCount = Math.max(
             0,
             ...groupedSections.map((section) => section.items.length),
           );
+          const fillEmptyDesktopCells =
+            projectSlug === "hanover-park-at-stockbridge";
 
           const renderAmenityRow = (amenity: string, compact?: boolean) => {
             const AmenityIcon = getAmenityIcon(amenity);
@@ -1217,14 +1247,15 @@ function AmenitiesSection({
                 )}
               </div>
 
-              {/* Desktop: 5-column table (unchanged) */}
+              {/* Desktop: column count matches section count */}
               <div
                 className="amenities-table amenities-table--desktop hidden overflow-x-auto border border-cream/10 lg:block"
                 role="region"
                 aria-label="Community amenities table"
               >
                 <div
-                  className="grid min-w-[56rem] grid-cols-5 gap-px bg-cream/10 text-cream"
+                  className={`grid ${gridColsClass} gap-px bg-cream/10 text-cream`}
+                  style={{ minWidth: minTableWidth }}
                   role="table"
                 >
                   {groupedSections.map((section) => {
@@ -1257,7 +1288,14 @@ function AmenitiesSection({
                         <div
                           key={`${section.title}-row-${rowIdx}`}
                           role="cell"
-                          className="flex min-h-[4.75rem] items-center gap-2.5 bg-dark px-3 py-3 transition-colors duration-300 hover:bg-dark-mid"
+                          className={
+                            amenity
+                              ? "flex min-h-[4.75rem] items-center gap-2.5 bg-dark px-3 py-3 transition-colors duration-300 hover:bg-dark-mid"
+                              : fillEmptyDesktopCells
+                                ? "min-h-[4.75rem] bg-dark"
+                                : "min-h-0 bg-transparent"
+                          }
+                          aria-hidden={!amenity}
                         >
                           {amenity && AmenityIcon ? (
                             <>

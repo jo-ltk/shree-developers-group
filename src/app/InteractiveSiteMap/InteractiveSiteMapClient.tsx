@@ -9,6 +9,7 @@ import { BrandMark } from "@/components/ui/brand-mark";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { SydneyOaksStage } from "./components/SydneyOaksStage";
 import { ElysianGatesStage } from "./components/ElysianGatesStage";
+import { HanoverParkStage } from "./components/HanoverParkStage";
 import { MapSwitcher } from "./components/MapSwitcher";
 import { filters, MAP_CONFIGS, type MapConfig } from "./data/lots";
 import type { Lot, LotStatus } from "./types/site-map";
@@ -207,13 +208,15 @@ const MapPanel = ({
         </div>
       </div>
     }>
-      {selectedMap.id === 'sydney-oaks' ? (
+      {selectedMap.id === "sydney-oaks" ? (
         <SydneyOaksStage
           activeFilter={activeFilter}
           selectedLotId={selectedLotId}
           onSelectLot={handleSelectLot}
           lots={selectedMap.lots}
         />
+      ) : selectedMap.id === "hanover-park-at-stockbridge" ? (
+        <HanoverParkStage />
       ) : (
         <ElysianGatesStage
           activeFilter={activeFilter}

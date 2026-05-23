@@ -123,7 +123,21 @@ export const MAP_CONFIGS: MapConfig[] = [
       strokeColor: "#D43F33",
       strokeWidth: 2,
     }
-  }
+  },
+  {
+    id: 'hanover-park-at-stockbridge',
+    name: 'Hanover Park at Stockbridge',
+    url: '/images/hanover-park/master-plan.jpg',
+    lots: generateLots(72, 200, () => "Coming Soon"),
+    hotspotSettings: {
+      padding: 0.25,
+      radiusOffset: 4,
+      cxOffsetFactor: 1.05,
+      cyOffsetFactor: 2.1,
+      strokeColor: "#D43F33",
+      strokeWidth: 2,
+    },
+  },
 ];
 
 // For backward compatibility during refactor

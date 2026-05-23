@@ -10,6 +10,7 @@ import { BodyText } from "./ui/body-text";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { FeaturedCommunitiesCarousel } from "./ui/featured-communities-carousel";
+import { isDedicatedProjectSlug } from "@/lib/projects-data";
 
 type Status = "Ongoing" | "Completed" | "Coming Soon";
 
@@ -61,18 +62,17 @@ const communities: Community[] = [
     availability: "Available",
   },
   {
-    slug: "#",
-    name: "Future Projects",
-    type: "Upcoming Communities",
-    location: "Metro Atlanta",
+    slug: "hanover-park-at-stockbridge",
+    name: "Hanover Park at Stockbridge",
+    type: "Townhomes & Single-Family",
+    location: "Stockbridge, GA",
     status: "Coming Soon",
     price: "Register Interest",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=80",
+    image: "/images/hanover-park/hero.jpg",
     index: "03",
     concept:
-      "New signatures in residential comfort are being drafted. Register for early access to our upcoming developments.",
-    specs: { beds: 0, baths: 0, area: "" },
+      "A resort-inspired neighborhood with pool, putting green, pickleball courts, and walkable community living.",
+    specs: { beds: 3, baths: 2, area: "FROM 1,850 SQ FT" },
     availability: "Coming Soon",
   },
 ];
@@ -90,10 +90,11 @@ function CommunityCard({
   slidePosition?: number;
   slideTotal?: number;
 }) {
-  const isSoon = c.status === "Coming Soon";
+  const hasProjectPage = isDedicatedProjectSlug(c.slug);
+  const isSoon = c.status === "Coming Soon" && !hasProjectPage;
   const href = isSoon
     ? "/contact"
-    : c.slug === "sydney-oaks" || c.slug === "elysian-gates"
+    : hasProjectPage
       ? `/projects/${c.slug}`
       : `/InteractiveSiteMap?project=${c.slug}`;
 
@@ -183,7 +184,7 @@ function CommunityCard({
             >
               {isSoon
                 ? "Register Interest"
-                : c.slug === "sydney-oaks" || c.slug === "elysian-gates"
+                : hasProjectPage
                   ? "View Project"
                   : "Interactive Map"}
             </span>

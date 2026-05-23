@@ -7,7 +7,11 @@ import { CredibilityMetrics } from "@/components/credibility-metrics";
 import { IntroStatement } from "@/components/intro-statement";
 import { LogoSection } from "@/components/logo-section";
 import { MarqueeTextSection } from "@/components/marquee-text-section";
-import { CommunityDetails } from "@/components/community-details";
+import {
+  CommunityDetails,
+  ElysianGatesDetails,
+  HanoverParkDetails,
+} from "@/components/community-details";
 import { AboutShree } from "@/components/about-shree";
 import { ProcessTimeline } from "@/components/process-timeline";
 import CommunityDetailsPage from "@/components/metrics-section";
@@ -37,8 +41,12 @@ export default function Home() {
 
       <ImageGallery />
 
-      <CommunityDetails />
-      <CommunityDetailsPage /> 
+      <div className="flex flex-col gap-4 sm:gap-6 bg-[#F5F0E8] pt-0 pb-0">
+        <CommunityDetails />
+        <ElysianGatesDetails stacked />
+        <HanoverParkDetails stacked />
+        <CommunityDetailsPage />
+      </div> 
 
       <MarqueeTextSection />
 
