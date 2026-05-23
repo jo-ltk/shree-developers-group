@@ -52,9 +52,11 @@ import {
   type LucideIcon
 } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
+import { getVisualJourneyGalleryImages } from "@/lib/visual-journey-gallery";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { NavbarEditorial } from "@/components/navbar-editorial";
 import { FooterSection } from "@/components/footer-section";
+import { ProjectHeroCollage } from "@/components/project-hero-collage";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SectionHeadline } from "@/components/ui/section-headline";
@@ -242,20 +244,41 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const testimonials = project.testimonialsList || [];
   const coordinates = project.coordinates || { lat: 34.0531, lng: -84.0624 };
 
-  // Collect gallery photos (Hero main + Renders)
+  // Collect gallery photos (Visual Journey set for Sydney Oaks; hero/renders for others)
   const galleryImages = useMemo(() => {
-    const list = [{ src: project.image, alt: `${name} Exterior` }];
+    if (project.slug === "sydney-oaks") {
+      return getVisualJourneyGalleryImages().map((image) => ({
+        src: image.thumbUrl,
+        lightboxSrc: image.fullUrl,
+        alt: image.title,
+      }));
+    }
+
+    const list: { src: string; alt: string; lightboxSrc?: string }[] = [
+      { src: project.image, alt: `${name} Exterior` },
+    ];
+    if (project.heroAccentImages) {
+      project.heroAccentImages.forEach((accent) => {
+        list.push({ src: accent.src, alt: accent.alt });
+      });
+    }
     if (project.renders) {
       project.renders.forEach((r) => {
         list.push({ src: r.image, alt: r.label });
       });
     }
-    // Add floor plan image as additional view if short
     if (floorPlans && floorPlans[0]) {
       list.push({ src: floorPlans[0].image, alt: `${floorPlans[0].name} Layout` });
     }
-    return list.slice(0, 5); // 1 main + 4 previews
-  }, [project.image, project.renders, floorPlans, name]);
+    return list.slice(0, 8);
+  }, [
+    project.slug,
+    project.image,
+    project.heroAccentImages,
+    project.renders,
+    floorPlans,
+    name,
+  ]);
 
   const repeatedImages = useMemo(() => {
     return [...galleryImages, ...galleryImages, ...galleryImages];
@@ -395,14 +418,22 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                   : "lg:col-span-7 lg:min-h-[540px] xl:min-h-[620px]"
               }`}
             >
-              <Image
-                src={project.image}
-                alt={`${name} Exterior`}
-                fill
-                priority
-                sizes="(max-width: 1200px) 100vw, 50vw"
-                className="object-cover"
-              />
+              {project.heroAccentImages && project.heroAccentImages.length > 0 ? (
+                <ProjectHeroCollage
+                  mainSrc={project.image}
+                  mainAlt={`${name} Exterior`}
+                  accents={project.heroAccentImages}
+                />
+              ) : (
+                <Image
+                  src={project.image}
+                  alt={`${name} Exterior`}
+                  fill
+                  priority
+                  sizes="(max-width: 1200px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              )}
             </div>
 
           </div>
@@ -625,6 +656,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                   src={image.src}
                   alt={image.alt}
                   fill
+                  unoptimized={image.src.includes("res.cloudinary.com")}
                   sizes="(max-width: 640px) 75vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-110"
                 />
@@ -650,7 +682,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
 
       {/* D. MASTER PLAN / SITE PLAN */}
       <MasterPlanSection
-        components={project.masterPlanComponents || []}
         projectSlug={project.slug}
         projectName={name}
         sitePlanSvg={sitePlanSvg}
@@ -1302,16 +1333,158 @@ function AmenitiesSection({
 /* ===========================================================================
    E. FLOOR PLANS (preview + unit cards)
    =========================================================================== */
+function getPlanViews(plan: NonNullable<ProjectData["floorPlansDetails"]>[number]) {
+  if (plan.views?.length) return plan.views;
+  return [{ label: "Floor Plan", image: plan.image }];
+}
+
+function FloorPlanLightbox({
+  planName,
+  seriesLetter,
+  views,
+  initialIdx,
+  onClose,
+}: {
+  planName: string;
+  seriesLetter?: string;
+  views: { label: string; image: string }[];
+  initialIdx: number;
+  onClose: () => void;
+}) {
+  const [activeIdx, setActiveIdx] = useState(initialIdx);
+  const view = views[activeIdx] ?? views[0];
+
+  const goPrev = () => setActiveIdx((i) => (i - 1 + views.length) % views.length);
+  const goNext = () => setActiveIdx((i) => (i + 1) % views.length);
+
+  useEffect(() => {
+    setActiveIdx(initialIdx);
+  }, [initialIdx]);
+
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") setActiveIdx((i) => (i - 1 + views.length) % views.length);
+      if (e.key === "ArrowRight") setActiveIdx((i) => (i + 1) % views.length);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onClose, views.length]);
+
+  if (!view) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex flex-col bg-dark/97 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${planName} floor plan fullscreen`}
+    >
+      <div className="flex shrink-0 items-center justify-between gap-3 border-b border-cream/10 pb-3 sm:pb-4">
+        <div className="min-w-0">
+          <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-rust sm:text-[10px]">
+            {view.label}
+          </p>
+          <p className="truncate font-display text-sm text-cream sm:text-base">
+            {planName}
+            {seriesLetter ? <span className="text-cream/55"> · Series {seriesLetter}</span> : null}
+          </p>
+          {views.length > 1 ? (
+            <p className="mt-0.5 text-[10px] text-cream/45">
+              Sheet {activeIdx + 1} of {views.length}
+            </p>
+          ) : null}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream/20 bg-cream/10 text-cream transition-colors hover:bg-rust/30 cursor-pointer"
+          aria-label="Close fullscreen"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="relative flex min-h-0 flex-1 items-center justify-center py-3 sm:py-4">
+        {views.length > 1 ? (
+          <button
+            type="button"
+            onClick={goPrev}
+            className="absolute left-0 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 bg-dark/80 text-cream transition-colors hover:border-rust hover:bg-rust/20 cursor-pointer sm:h-12 sm:w-12"
+            aria-label="Previous sheet"
+          >
+            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
+        ) : null}
+
+        <div className="relative h-full w-full max-h-[calc(100dvh-8rem)] px-10 sm:max-h-[calc(100dvh-9rem)] sm:px-14">
+          <Image
+            key={view.image}
+            src={view.image}
+            alt={`${planName} — ${view.label}`}
+            fill
+            className="object-contain object-center"
+            sizes="100vw"
+            priority
+          />
+        </div>
+
+        {views.length > 1 ? (
+          <button
+            type="button"
+            onClick={goNext}
+            className="absolute right-0 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 bg-dark/80 text-cream transition-colors hover:border-rust hover:bg-rust/20 cursor-pointer sm:h-12 sm:w-12"
+            aria-label="Next sheet"
+          >
+            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
+        ) : null}
+      </div>
+
+      {views.length > 1 ? (
+        <div className="flex shrink-0 gap-1 overflow-x-auto pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {views.map((v, index) => (
+            <button
+              key={`${v.label}-${v.image}`}
+              type="button"
+              onClick={() => setActiveIdx(index)}
+              className={`shrink-0 whitespace-nowrap px-3 py-2 text-[9px] font-bold uppercase tracking-[0.14em] transition-colors sm:text-[10px] ${
+                index === activeIdx ? "bg-cream text-dark" : "bg-cream/10 text-cream/70 hover:bg-cream/20"
+              }`}
+            >
+              {v.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function FloorPlansSection({
   floorPlans,
 }: {
   floorPlans: NonNullable<ProjectData["floorPlansDetails"]>;
 }) {
   const [activePlanIdx, setActivePlanIdx] = useState(0);
+  const [activeViewIdx, setActiveViewIdx] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   if (!floorPlans.length) return null;
 
   const plan = floorPlans[activePlanIdx] ?? floorPlans[0];
+  const views = getPlanViews(plan);
+  const activeView = views[activeViewIdx] ?? views[0];
+
+  const selectPlan = (index: number) => {
+    setActivePlanIdx(index);
+    setActiveViewIdx(0);
+  };
 
   return (
     <SectionWrapper dark={false} className="!py-12 md:!py-16 bg-[#EDE8DF] border-y border-dark/10">
@@ -1334,66 +1507,121 @@ function FloorPlansSection({
         </Link>
       </div>
 
-      <div className="flex flex-col gap-4 sm:gap-5">
-        <div className="border border-dark/10 bg-cream p-1.5 sm:p-2 md:p-3">
-          <div className="relative aspect-[16/10] max-h-[280px] w-full overflow-hidden bg-[#F5F0E8] sm:max-h-[400px] md:max-h-[540px]">
-            <Image
-              src={plan.image}
-              alt={`${plan.name} floor plan preview`}
-              fill
-              className="object-cover object-center"
-              sizes="(max-width: 768px) 100vw, 1200px"
-              priority={activePlanIdx === 0}
-            />
-            <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-center gap-2 bg-gradient-to-t from-dark/75 via-dark/35 to-transparent p-3 text-center sm:justify-between sm:gap-3 sm:p-4 sm:text-left md:p-5">
-              <div className="min-w-0 flex-1 sm:flex-none">
-                <span className="text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cream/70">
-                  Selected model
-                </span>
-                <h3 className="font-display text-base font-light text-cream sm:text-lg md:text-xl">{plan.name}</h3>
-              </div>
-              <span className="shrink-0 rounded-sm border border-cream/20 bg-cream/10 px-2 py-0.5 text-[7px] font-bold uppercase tracking-widest text-cream sm:px-2.5 sm:py-1 sm:text-[8px]">
-                {plan.availability}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid w-full grid-cols-3 items-stretch gap-2 sm:gap-3 md:gap-4">
+      <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {floorPlans.map((item, index) => {
             const isActive = index === activePlanIdx;
+            const letter = item.seriesLetter ?? getPlanShortName(item.name).charAt(0);
             return (
               <button
                 key={item.name}
                 type="button"
                 title={item.name}
-                onClick={() => setActivePlanIdx(index)}
-                className={`flex h-full min-w-0 flex-col items-center border bg-cream px-1.5 py-2 text-center transition-colors cursor-pointer sm:px-3 sm:py-3 sm:text-left md:px-4 md:py-3.5 ${
-                  isActive ? "border-rust ring-1 ring-rust/30" : "border-dark/10 hover:border-dark/25"
+                onClick={() => selectPlan(index)}
+                className={`group relative flex min-w-0 flex-col items-start border bg-cream px-2.5 py-3 text-left transition-all cursor-pointer sm:px-4 sm:py-4 ${
+                  isActive
+                    ? "border-rust bg-cream border-l-[3px] border-l-rust"
+                    : "border-dark/10 hover:border-dark/25 hover:bg-[#F8F4EC]"
                 }`}
               >
-                <h3 className="w-full font-display text-[8px] font-light leading-tight text-dark sm:text-sm md:text-base">
-                  <span className="sm:hidden">{getPlanShortName(item.name)}</span>
-                  <span className="hidden sm:inline">{item.name}</span>
-                </h3>
-                <p className="mt-1.5 hidden w-full text-[11px] font-light leading-snug text-dark/60 sm:block md:text-xs">
-                  {item.bedrooms} bed · {item.bathrooms} bath · {item.parking} pkg · {item.area.toLocaleString()} sq.ft.
+                <span
+                  className={`mb-2 flex h-8 w-8 items-center justify-center font-display text-sm transition-colors sm:h-9 sm:w-9 sm:text-base ${
+                    isActive ? "bg-rust text-cream" : "bg-dark/8 text-dark/70 group-hover:bg-dark/12"
+                  }`}
+                >
+                  {letter}
+                </span>
+                <h3 className="font-display text-sm font-light text-dark sm:text-base md:text-lg">{item.name}</h3>
+                <p className="mt-1 hidden text-[11px] font-light leading-snug text-dark/55 sm:block md:text-xs">
+                  {item.bedrooms} bed · {item.bathrooms} bath · {item.area.toLocaleString()} sq.ft.
                 </p>
-                <div className="mt-auto flex w-full flex-col items-center gap-0.5 border-t border-dark/10 pt-1.5 sm:mt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:pt-2">
-                  <span className="font-display text-[8px] leading-none text-dark sm:text-sm">
-                    <span className="sm:hidden">{formatPlanPriceShort(item.price)}</span>
-                    <span className="hidden sm:inline">{item.price}</span>
-                  </span>
-                  <span className="text-[6px] font-bold uppercase leading-none tracking-wide text-dark/45 sm:text-[8px] sm:tracking-widest">
-                    <span className="sm:hidden">{formatPlanAvailabilityShort(item.availability)}</span>
-                    <span className="hidden sm:inline">{item.availability}</span>
-                  </span>
-                </div>
+                <span className="mt-2 text-[8px] font-bold uppercase tracking-widest text-dark/40 sm:mt-3">
+                  {getPlanViews(item).length > 1
+                    ? `${getPlanViews(item).length} sheets`
+                    : "Plan set"}
+                </span>
               </button>
             );
           })}
         </div>
+
+        <div className="border border-dark/10 bg-cream">
+          <div className="flex flex-nowrap gap-1 overflow-x-auto border-b border-dark/10 p-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:flex-wrap sm:gap-1.5 sm:overflow-visible sm:p-3 [&::-webkit-scrollbar]:hidden">
+            {views.map((view, index) => {
+              const isViewActive = index === activeViewIdx;
+              return (
+                <button
+                  key={`${view.label}-${view.image}`}
+                  type="button"
+                  onClick={() => setActiveViewIdx(index)}
+                  className={`shrink-0 whitespace-nowrap px-2 py-2 text-[8px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-3 sm:text-[10px] sm:tracking-[0.18em] ${
+                    isViewActive
+                      ? "bg-dark text-cream"
+                      : "bg-transparent text-dark/55 hover:bg-dark/5 hover:text-dark"
+                  }`}
+                >
+                  {view.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(true)}
+            className="group relative block aspect-[4/3] w-full cursor-zoom-in bg-[#F5F0E8] text-left sm:aspect-[3/2] md:min-h-[520px] md:aspect-auto lg:min-h-[640px]"
+            aria-label={`Open ${activeView.label} fullscreen`}
+          >
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.25]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(26,22,18,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(26,22,18,0.06) 1px, transparent 1px)",
+                backgroundSize: "24px 24px",
+              }}
+            />
+            <Image
+              key={activeView.image}
+              src={activeView.image}
+              alt={`${plan.name} — ${activeView.label}`}
+              fill
+              className="object-contain object-center p-1 transition-opacity group-hover:opacity-95 sm:p-1.5"
+              sizes="(max-width: 768px) 100vw, 1200px"
+              priority={activePlanIdx === 0 && activeViewIdx === 0}
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 bg-gradient-to-b from-dark/45 to-transparent px-3 py-2.5 sm:px-4 sm:py-3">
+              <div>
+                <span className="text-[7px] font-bold uppercase tracking-[0.2em] text-cream/70 sm:text-[8px]">
+                  {activeView.label}
+                </span>
+                <h3 className="font-display text-base font-light text-cream sm:text-lg md:text-xl">
+                  {plan.name}
+                  {plan.seriesLetter ? (
+                    <span className="ml-2 text-cream/60">Series {plan.seriesLetter}</span>
+                  ) : null}
+                </h3>
+              </div>
+              <span className="shrink-0 border border-cream/25 bg-cream/10 px-2 py-1 text-[7px] font-bold uppercase tracking-widest text-cream sm:text-[8px]">
+                {plan.availability}
+              </span>
+            </div>
+            <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-sm border border-dark/15 bg-cream/90 px-2 py-1 text-[8px] font-bold uppercase tracking-widest text-dark/70 sm:bottom-4 sm:right-4 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
+              <ZoomIn className="h-3.5 w-3.5" />
+              Full screen
+            </span>
+          </button>
+        </div>
       </div>
+
+      {lightboxOpen ? (
+        <FloorPlanLightbox
+          planName={plan.name}
+          seriesLetter={plan.seriesLetter}
+          views={views}
+          initialIdx={activeViewIdx}
+          onClose={() => setLightboxOpen(false)}
+        />
+      ) : null}
     </SectionWrapper>
   );
 }
@@ -1572,24 +1800,15 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
    D. MASTER PLAN / SITE PLAN (static preview → interactive map)
    =========================================================================== */
 function MasterPlanSection({
-  components,
   projectSlug,
   projectName,
   sitePlanSvg,
 }: {
-  components: NonNullable<ProjectData["masterPlanComponents"]>;
   projectSlug: string;
   projectName: string;
   sitePlanSvg: string;
 }) {
   const interactiveMapHref = `/InteractiveSiteMap?project=${projectSlug}`;
-  const masterPlanItems = components.length
-    ? components
-    : [
-      { name: "Plot Layout", desc: "Low-density homesite arrangement with clearly proportioned residential plots." },
-      { name: "Amenities Zoning", desc: "Community amenities grouped for easy access from the residential blocks." },
-      { name: "Entry & Exit", desc: "Defined access points for smooth arrival, controlled entry, and internal circulation." },
-    ];
 
   return (
     <SectionWrapper dark={false} className="!pt-6 !pb-10 md:!pt-8 md:!pb-14 bg-[#F5F0E8]">
@@ -1633,25 +1852,6 @@ function MasterPlanSection({
               </span>
             </div>
           </Link>
-        </div>
-
-        <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-1.5 sm:max-w-none sm:grid-cols-3 sm:gap-3">
-          {masterPlanItems.map((item, index) => (
-            <div
-              key={item.name}
-              className="border border-dark/10 bg-cream px-2.5 py-2 text-center sm:px-3 sm:py-3 sm:text-left md:px-4 md:py-3.5"
-            >
-              <span className="text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-rust">
-                0{index + 1}
-              </span>
-              <h3 className="mt-0.5 font-display text-xs font-light text-dark sm:mt-1 sm:text-sm md:text-base">
-                {item.name}
-              </h3>
-              <p className="mt-1 text-[10px] font-light leading-tight text-dark/60 sm:mt-1.5 sm:text-[11px] sm:leading-snug md:text-xs md:leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
     </SectionWrapper>
@@ -2518,7 +2718,7 @@ function LightboxModal({
   albumTitle,
   onClose,
 }: {
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; lightboxSrc?: string }[];
   currentIdx: number;
   albumTitle: string;
   onClose: () => void;
@@ -2575,9 +2775,12 @@ function LightboxModal({
 
         <div className="relative flex-1 w-full h-[70vh] max-h-[600px]">
           <Image
-            src={images[activeIdx].src}
+            src={images[activeIdx].lightboxSrc ?? images[activeIdx].src}
             alt={images[activeIdx].alt}
             fill
+            unoptimized={(images[activeIdx].lightboxSrc ?? images[activeIdx].src).includes(
+              "res.cloudinary.com",
+            )}
             className="object-contain"
             sizes="90vw"
           />

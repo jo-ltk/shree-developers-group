@@ -41,7 +41,11 @@ export type ProjectData = {
   masterPlanComponents?: { name: string; desc: string }[];
   floorPlansDetails?: {
     name: string;
+    /** Series letter shown on plan cards (e.g. A, B, E) */
+    seriesLetter?: string;
     image: string;
+    /** Additional plan sheets (first floor, second floor, terrace, options) */
+    views?: { label: string; image: string }[];
     bedrooms: number;
     bathrooms: number;
     parking: number;
@@ -104,6 +108,8 @@ export type ProjectData = {
   heroLocationLabel?: string;
   heroHideStatusBadge?: boolean;
   heroCtaSecondary?: string;
+  /** Floating accent frames layered over the hero image */
+  heroAccentImages?: { src: string; alt: string; caption?: string }[];
 };
 
 export const DEDICATED_PROJECT_SLUGS = ["sydney-oaks", "elysian-gates"] as const;
@@ -475,20 +481,6 @@ export const allProjects: ProjectData[] = [
           "Delivered by Shree Developers Group with transparent documentation and responsive site support.",
       },
     ],
-    masterPlanComponents: [
-      {
-        name: "Plot Layout",
-        desc: "Premium, low-density layout comprising 42 estate homesites structured for privacy, natural ventilation, and wooded setbacks.",
-      },
-      {
-        name: "Amenities Zoning",
-        desc: "A central community core grouping the swimming pool, fully-equipped gym, children's play court, and outdoor walking path.",
-      },
-      {
-        name: "Entry & Exit",
-        desc: "Single-point gated access lobby with 24/7 security cabin control, perimeter sensor arrays, and video surveillance.",
-      },
-    ],
     highlightsList: [
       "Expansive wooded backyard retreats bordering natural corridors",
       "Curated lifestyle amenities at the private community core",
@@ -635,14 +627,14 @@ export const allProjects: ProjectData[] = [
     index: "10",
     slug: "sydney-oaks",
     title: "Sydney Oaks",
-    location: "Gwinnett County, GA",
+    location: "Forsyth County, GA",
     type: "89 Town Homes",
     year: "Ongoing",
     status: "active",
     highlight: "Thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture",
     summary: "Spacious estate lots and modern farmhouse architecture blending seamlessly into the natural Gwinnett landscape.",
-    brief: "Sydney Oaks brings modern farmhouse architecture to a thoughtfully planned neighborhood in Gwinnett County. With spacious estate lots and a focus on blending the built environment with the natural landscape, Sydney Oaks offers a balanced lifestyle. The homes feature open-concept floor plans, premium materials, and a design language that feels both current and timeless.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82",
+    brief: "Sydney Oaks brings modern farmhouse architecture to a thoughtfully planned neighborhood in Forsyth County. With spacious estate lots and a focus on blending the built environment with the natural landscape, Sydney Oaks offers a balanced lifestyle. The homes feature open-concept floor plans, premium materials, and a design language that feels both current and timeless.",
+    image: "/images/sydney-oaks-hero.png",
     plans: [
       { label: "Community Layout", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
       { label: "4BHK Farmhouse Plan", image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80" },
@@ -728,6 +720,23 @@ export const allProjects: ProjectData[] = [
       "Starting from the low $500s",
     ],
     heroCtaSecondary: "Schedule a Visit",
+    heroAccentImages: [
+      {
+        src: "/images/sydney-oaks-accent-01.png",
+        alt: "Sydney Oaks streetscape render",
+        caption: "Streetscape",
+      },
+      {
+        src: "/images/sydney-oaks-accent-02.png",
+        alt: "Sydney Oaks community aerial view",
+        caption: "Community",
+      },
+      {
+        src: "/images/sydney-oaks-accent-03.png",
+        alt: "Sydney Oaks townhome exterior",
+        caption: "Townhome",
+      },
+    ],
     reraNumber: "RERA-GA-8923",
     possessionDate: "Q4 2026",
     projectArea: "12 Acres",
@@ -826,11 +835,6 @@ export const allProjects: ProjectData[] = [
           "Forsyth County continues to grow rapidly, making Sydney Oaks an attractive opportunity for homeowners and investors alike.",
       },
     ],
-    masterPlanComponents: [
-      { name: "Plot Layout", desc: "Premium, low-density layout comprising 89 beautifully proportioned estate townhome plots structured for high natural ventilation and spacing." },
-      { name: "Amenities Zoning", desc: "A central 2-acre community park core grouping the swimming pool, fully-equipped gym, children's play court, and outdoor walking path." },
-      { name: "Entry & Exit", desc: "Single-point gated access lobby with 24/7 security cabin control, perimeter sensor arrays, and video surveillance." }
-    ],
     highlightsList: [
       "Wooded backyard retreats bordering natural trails",
       "Curated lifestyle amenities at our private community core",
@@ -839,8 +843,16 @@ export const allProjects: ProjectData[] = [
     ],
     floorPlansDetails: [
       {
-        name: "The Maple Townhome",
-        image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80",
+        name: "Aspen",
+        seriesLetter: "A",
+        image: "/images/floor-plans/aspen/first-floor.jpg",
+        views: [
+          { label: "First Floor", image: "/images/floor-plans/aspen/first-floor.jpg" },
+          { label: "Second Floor", image: "/images/floor-plans/aspen/second-floor.jpg" },
+          { label: "Terrace", image: "/images/floor-plans/aspen/terrace.jpg" },
+          { label: "Optional 01", image: "/images/floor-plans/aspen/optional-01.jpg" },
+          { label: "Optional 02", image: "/images/floor-plans/aspen/optional-02.jpg" },
+        ],
         bedrooms: 3,
         bathrooms: 2.5,
         parking: 2,
@@ -848,11 +860,19 @@ export const allProjects: ProjectData[] = [
         price: "$410,000",
         emi: "$2,150/mo",
         availability: "Available",
-        virtualTourUrl: "#tour-maple"
+        virtualTourUrl: "#tour-aspen",
       },
       {
-        name: "Oak Ridge Villa",
-        image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+        name: "Birch",
+        seriesLetter: "B",
+        image: "/images/floor-plans/birch/first-floor.jpg",
+        views: [
+          { label: "First Floor", image: "/images/floor-plans/birch/first-floor.jpg" },
+          { label: "Second Floor", image: "/images/floor-plans/birch/second-floor.jpg" },
+          { label: "Terrace", image: "/images/floor-plans/birch/terrace.jpg" },
+          { label: "Optional 01", image: "/images/floor-plans/birch/optional-01.jpg" },
+          { label: "Optional 02", image: "/images/floor-plans/birch/optional-02.jpg" },
+        ],
         bedrooms: 4,
         bathrooms: 3.5,
         parking: 2,
@@ -860,20 +880,27 @@ export const allProjects: ProjectData[] = [
         price: "$495,000",
         emi: "$2,650/mo",
         availability: "Available",
-        virtualTourUrl: "#tour-oakridge"
+        virtualTourUrl: "#tour-birch",
       },
       {
-        name: "The Sequoia Estate",
-        image: "https://images.unsplash.com/photo-1536895058696-a69b1c7ba34f?auto=format&fit=crop&w=1200&q=80",
-        bedrooms: 5,
-        bathrooms: 4,
-        parking: 3,
-        area: 4200,
-        price: "$580,000",
-        emi: "$3,100/mo",
+        name: "Elm",
+        seriesLetter: "E",
+        image: "/images/floor-plans/elm/first-floor.jpg",
+        views: [
+          { label: "First Floor", image: "/images/floor-plans/elm/first-floor.jpg" },
+          { label: "Second Floor", image: "/images/floor-plans/elm/second-floor.jpg" },
+          { label: "Terrace", image: "/images/floor-plans/elm/terrace.jpg" },
+          { label: "Optional", image: "/images/floor-plans/elm/optional-01.jpg" },
+        ],
+        bedrooms: 4,
+        bathrooms: 3.5,
+        parking: 2,
+        area: 3800,
+        price: "$520,000",
+        emi: "$2,750/mo",
         availability: "Coming Soon",
-        virtualTourUrl: "#tour-sequoia"
-      }
+        virtualTourUrl: "#tour-elm",
+      },
     ],
     unitsList: [
       {

@@ -26,6 +26,14 @@ function statusForLot(index: number): LotStatus {
   return statuses[0];
 }
 
+const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 3, 6, 7, 9, 10, 11]);
+
+function sydneyOaksStatusForLot(id: number): LotStatus {
+  if (SYDNEY_OAKS_SOLD_LOT_IDS.has(id)) return "Sold";
+  if (id >= 35 && id <= 46) return "Coming Soon";
+  return "Future";
+}
+
 function priceForLot(index: number, status: LotStatus) {
   if (status === "Sold") return "Sold";
   if (status === "Future") return "Pricing TBD";
@@ -34,10 +42,14 @@ function priceForLot(index: number, status: LotStatus) {
   return `From $${Math.round(base / 1000).toLocaleString()}k`;
 }
 
-const generateLots = (count: number, seed: number = 1): Lot[] => {
+const generateLots = (
+  count: number,
+  seed: number = 1,
+  resolveStatus: (id: number) => LotStatus = (id) => statusForLot(id + seed),
+): Lot[] => {
   return Array.from({ length: count }, (_, offset) => {
     const id = offset + 1;
-    const status = statusForLot(id + seed);
+    const status = resolveStatus(id);
     const beds = 3 + ((id + seed) % 3);
     const baths = (id + seed) % 4 === 0 ? 3.5 : (id + seed) % 3 === 0 ? 2.5 : 2;
     const sqft = 1780 + (((id + seed) * 91) % 980);
@@ -88,7 +100,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     id: 'sydney-oaks',
     name: 'Sydney Oaks',
     url: '/svg/siteMap-final.svg',
-    lots: generateLots(89, 0),
+    lots: generateLots(89, 0, sydneyOaksStatusForLot),
     hotspotSettings: {
       padding: 0.3,
       radiusOffset: 5,

@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import galleryCloudinary from "@/data/gallery-cloudinary.json";
-import { cloudinaryImageUrl } from "@/lib/cloudinary";
+import { getVisualJourneyGalleryImages } from "@/lib/visual-journey-gallery";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionHeadline } from "./ui/section-headline";
 import { SectionLabel } from "./ui/section-label";
@@ -21,30 +20,7 @@ const NoScrollbarStyle = () => (
   `}</style>
 );
 
-const galleryTitles = [
-  "Refined Vision",
-  "Modern Living",
-  "Elegant Spaces",
-  "Serene Sanctuaries",
-  "Grand Arrivals",
-  "Luxe Textures",
-  "Bespoke Design",
-  "Urban Oasis",
-  "Timeless Style",
-  "Sophisticated Comfort",
-  "Pure Aesthetics",
-  "Living Art",
-  "Exquisite Detail",
-  "Final Vision",
-] as const;
-
-const galleryImages = galleryCloudinary.map((item, i) => ({
-  publicId: item.publicId,
-  thumbUrl: cloudinaryImageUrl(item.publicId, { width: 900, quality: 90 }),
-  fullUrl: cloudinaryImageUrl(item.publicId, { width: 2400, quality: 92 }),
-  alt: `Refined living interior ${i + 1}`,
-  title: galleryTitles[i],
-}));
+const galleryImages = getVisualJourneyGalleryImages();
 
 export function ImageGallery() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
