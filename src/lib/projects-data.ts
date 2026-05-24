@@ -27,7 +27,7 @@ export type ProjectData = {
   // New fields for Sydney Oaks dedicated page
   name?: string;
   priceText?: string;
-  statusBadge?: "Ready to Move" | "Ongoing" | "Coming Soon";
+  statusBadge?: "Ready to Move" | "Ongoing" | "Coming Soon" | "Completed";
   tagline?: string;
   reraNumber?: string;
   possessionDate?: string;
@@ -1079,8 +1079,8 @@ export const allProjects: ProjectData[] = [
     title: "Hanover Park at Stockbridge",
     location: "Stockbridge, GA",
     type: "Townhomes & Single-Family Homes",
-    year: "Coming Soon",
-    status: "active",
+    year: "Completed",
+    status: "completed",
     highlight:
       "Resort-inspired community with clubhouse, pool, putting green, pickleball courts, and walkable neighborhood design",
     summary:
@@ -1134,8 +1134,8 @@ export const allProjects: ProjectData[] = [
     ],
     locationMap: "/images/hanover-park/master-plan.jpg",
     name: "Hanover Park at Stockbridge",
-    priceText: "Register for Updates",
-    statusBadge: "Coming Soon",
+    priceText: "Community Complete",
+    statusBadge: "Completed",
     tagline: "Resort-Inspired Living in Stockbridge",
     heroDescription:
       "A walkable, resort-inspired neighborhood designed around wellness, leisure, and community connection — with timeless architecture and modern comfort at every homesite.",
@@ -1149,7 +1149,7 @@ export const allProjects: ProjectData[] = [
       "Putting green & pickleball courts",
       "Walkable community planning",
     ],
-    heroCtaSecondary: "Register Interest",
+    heroCtaSecondary: "Explore Community",
     heroAccentImages: [
       {
         src: "/images/hanover-park/gallery-01.jpg",
@@ -1170,7 +1170,7 @@ export const allProjects: ProjectData[] = [
     possessionDate: "TBA",
     projectArea: "Master-Planned Community",
     totalUnits: "Townhomes & Single-Family Homes",
-    priceRange: "Coming Soon",
+    priceRange: "Completed",
     propertyType: "Townhomes & Single-Family",
     sitePlanPdfUrl: "/images/hanover-park/master-plan.jpg",
     sitePlanSvg: "/images/hanover-park/master-plan.jpg",
@@ -1299,7 +1299,7 @@ export const allProjects: ProjectData[] = [
       {
         question: "When will homes be available?",
         answer:
-          "Hanover Park at Stockbridge is in pre-launch planning. Register your interest to receive updates on pricing, lot releases, and sales events.",
+          "Hanover Park at Stockbridge is a completed community. Contact us for resale opportunities or to learn more about the neighborhood.",
       },
       {
         question: "Where is the community located?",

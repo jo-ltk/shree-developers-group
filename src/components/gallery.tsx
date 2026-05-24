@@ -40,7 +40,7 @@ const communities: Community[] = [
     location: "Gwinnett County",
     status: "Ongoing",
     price: "From low $400s",
-    image: "/svg/sydney-oaks.svg",
+    image: "/images/sydney-oaks-gallery-card.png",
     index: "01",
     concept:
       "A thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture blending into the natural landscape.",
@@ -66,14 +66,14 @@ const communities: Community[] = [
     name: "Hanover Park at Stockbridge",
     type: "Townhomes & Single-Family",
     location: "Stockbridge, GA",
-    status: "Ongoing",
-    price: "Register for Updates",
+    status: "Completed",
+    price: "Community Complete",
     image: "/images/hanover-park/gallery-03.jpg",
     index: "03",
     concept:
       "A resort-inspired neighborhood with pool, putting green, pickleball courts, and walkable community living.",
     specs: { beds: 3, baths: 2, area: "FROM 1,850 SQ FT" },
-    availability: "Available",
+    availability: "Complete",
   },
   {
     slug: "the-pointe",
