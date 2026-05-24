@@ -268,6 +268,7 @@ export function MapStage({
 
                       {/* Hit target */}
                       <rect
+                        data-map-lot
                         role="button"
                         tabIndex={matchesFilter ? 0 : -1}
                         aria-label={`Select homesite Lot ${lot.lotNumber}`}

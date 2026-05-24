@@ -187,6 +187,7 @@ export function ElysianGatesStage({
                   )}
 
                   <rect
+                    data-map-lot
                     x={hotspot.x} y={hotspot.y}
                     width={hotspot.width} height={hotspot.height}
                     fill="transparent"

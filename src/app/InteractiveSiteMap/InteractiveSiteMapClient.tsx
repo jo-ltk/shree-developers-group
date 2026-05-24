@@ -24,6 +24,7 @@ import { ButtonPrimary } from "@/components/ui/button-primary";
 import { Ornament } from "@/components/ui/ornament";
 import { ImagePanel } from "@/components/ui/image-panel";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
+import { MapViewport } from "./components/MapViewport";
 
 type Filter = "All" | LotStatus;
 type MobileTab = "map" | "list";
@@ -208,23 +209,25 @@ const MapPanel = ({
         </div>
       </div>
     }>
-      {selectedMap.id === "sydney-oaks" ? (
-        <SydneyOaksStage
-          activeFilter={activeFilter}
-          selectedLotId={selectedLotId}
-          onSelectLot={handleSelectLot}
-          lots={selectedMap.lots}
-        />
-      ) : selectedMap.id === "hanover-park-at-stockbridge" ? (
-        <HanoverParkStage />
-      ) : (
-        <ElysianGatesStage
-          activeFilter={activeFilter}
-          selectedLotId={selectedLotId}
-          onSelectLot={handleSelectLot}
-          lots={selectedMap.lots}
-        />
-      )}
+      <MapViewport>
+        {selectedMap.id === "sydney-oaks" ? (
+          <SydneyOaksStage
+            activeFilter={activeFilter}
+            selectedLotId={selectedLotId}
+            onSelectLot={handleSelectLot}
+            lots={selectedMap.lots}
+          />
+        ) : selectedMap.id === "hanover-park-at-stockbridge" ? (
+          <HanoverParkStage />
+        ) : (
+          <ElysianGatesStage
+            activeFilter={activeFilter}
+            selectedLotId={selectedLotId}
+            onSelectLot={handleSelectLot}
+            lots={selectedMap.lots}
+          />
+        )}
+      </MapViewport>
     </ErrorBoundary>
 
     {/* Compass — desktop only */}
@@ -518,65 +521,67 @@ export function InteractiveSiteMapClient({
             selectedMap={selectedMap}
           />
 
-          {/* Bottom selected-lot strip — Extremely compact for mobile */}
           {/* Bottom selected-lot strip — clean single row */}
-<motion.div
-  key={`m-strip-${selectedLot.id}`}
-  layout={false}
-  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-  animate={{ opacity: 1, y: 0 }}
-  className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] lg:pb-4"
->
-  <div className="flex items-center gap-4">
-    {/* Thumbnail */}
-    <div className="w-[64px] h-[64px] shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF]" style={{ borderRadius: 3 }}>
-      <img
-        src={selectedLot.image}
-        alt={selectedLot.title}
-        className="h-full w-full object-cover"
-      />
-    </div>
+          <motion.div
+            key={`m-strip-${selectedLot.id}`}
+            layout={false}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] max-[430px]:px-3 max-[430px]:py-2.5 max-[430px]:pb-[calc(env(safe-area-inset-bottom)+0.5rem)]"
+          >
+            <div className="flex items-center gap-3 max-[430px]:gap-2.5">
+              <div
+                className="h-16 w-16 max-[430px]:h-12 max-[430px]:w-12 shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF]"
+                style={{ borderRadius: 3 }}
+              >
+                <img
+                  src={selectedLot.image}
+                  alt={selectedLot.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
 
-    {/* Info */}
-    <div className="min-w-0 flex-1">
-      {/* Lot number + price on one line */}
-      <div className="flex items-center gap-1.5 mb-0.5">
-        <Annotation className="!font-bold responsive-stat-label !text-[#D43F33]">
-          Lot {selectedLot.lotNumber}
-        </Annotation>
-        <span className="h-1 w-1 rounded-full bg-[#1C1208]/20 shrink-0" />
-        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40">
-          {selectedLot.price}
-        </Annotation>
-      </div>
+              <div className="min-w-0 flex-1">
+                <div className="mb-0.5 flex items-center gap-1.5 max-[430px]:mb-0 max-[430px]:gap-1">
+                  <Annotation className="!font-bold responsive-stat-label !text-[#D43F33] max-[430px]:!text-[9px] max-[430px]:!tracking-[0.12em]">
+                    Lot {selectedLot.lotNumber}
+                  </Annotation>
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-[#1C1208]/20" />
+                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[9px] max-[430px]:!tracking-[0.12em]">
+                    {selectedLot.price}
+                  </Annotation>
+                </div>
 
-      {/* Title */}
-      <h3
-        className="truncate !font-light leading-tight !text-[#1C1208] mb-1 responsive-headline-xl"
-        style={{ fontFamily: "'Cormorant Garamond', serif" }}
-      >
-        {selectedLot.title}
-      </h3>
+                <h3
+                  className="mb-0.5 truncate text-xl font-light leading-tight text-[#1C1208] max-[430px]:mb-0 max-[430px]:text-base"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {selectedLot.title}
+                </h3>
 
-      {/* Specs inline */}
-      <div className="flex items-center gap-2">
-        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35">{selectedLot.beds} Beds</Annotation>
-        <span className="w-px h-2 bg-[#1C1208]/12" />
-        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35">{selectedLot.baths} Baths</Annotation>
-        <span className="w-px h-2 bg-[#1C1208]/12" />
-        <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35">{selectedLot.sqft.toLocaleString()} sq ft</Annotation>
-      </div>
-    </div>
+                <div className="flex items-center gap-2 max-[430px]:gap-1.5">
+                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
+                    {selectedLot.beds} Beds
+                  </Annotation>
+                  <span className="h-2 w-px bg-[#1C1208]/12" />
+                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
+                    {selectedLot.baths} Baths
+                  </Annotation>
+                  <span className="h-2 w-px bg-[#1C1208]/12" />
+                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
+                    {selectedLot.sqft.toLocaleString()} sq ft
+                  </Annotation>
+                </div>
+              </div>
 
-    {/* CTA */}
-    <ButtonPrimary
-      href="/#request-info"
-      className="shrink-0 h-10 px-4 !text-[0.55rem] !tracking-[0.2em]"
-    >
-      Inquire
-    </ButtonPrimary>
-  </div>
-</motion.div>
+              <ButtonPrimary
+                href="/#request-info"
+                className="shrink-0 !h-10 !px-4 !text-[0.55rem] !tracking-[0.2em] max-[430px]:!h-9 max-[430px]:!gap-2 max-[430px]:!px-3 max-[430px]:!text-[0.5rem] max-[430px]:[&>div]:!h-6 max-[430px]:[&>div]:!w-6"
+              >
+                Inquire
+              </ButtonPrimary>
+            </div>
+          </motion.div>
         </div>
 
         {/* ── LIST TAB ── */}
