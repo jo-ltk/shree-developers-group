@@ -17,14 +17,14 @@ const projectNavLinks = [
 ];
 
 const navColumns = [
-  { title: "About", href: "/about", links: [] as string[] },
+  // { title: "About", href: "/about", links: [] as string[] },
   { title: "Projects", href: "/#gallery", links: projectNavLinks.map((p) => p.label) },
   { title: "Interactive Map", href: "/InteractiveSiteMap", links: [] as string[] },
-  { title: "Contact", href: "/#footer", links: [] as string[] },
+  { title: "Contact", href: "/#request-info", links: [] as string[] },
 ];
 
 const desktopGridClass =
-  "grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] items-start gap-x-8";
+  "grid grid-cols-[minmax(12rem,1.35fr)_repeat(3,minmax(0,1fr))] items-start gap-x-8";
 
 export function NavbarEditorial() {
   const [isOpen, setIsOpen] = useState(false);
@@ -247,11 +247,11 @@ export function NavbarEditorial() {
                 style={{ transitionDelay: "240ms" }}
               >
                 <div className="mb-6 h-px w-full bg-[rgba(183,170,152,0.35)]" />
-                <div className="grid grid-cols-[minmax(12rem,1.35fr)_repeat(4,minmax(0,1fr))] gap-x-8">
+                <div className="grid grid-cols-[minmax(12rem,1.35fr)_repeat(3,minmax(0,1fr))] gap-x-8">
                   <div aria-hidden="true" />
-                  <div className="col-span-4 flex justify-end">
+                  <div className="col-span-3 flex justify-end">
                     <a
-                      href="#footer"
+                      href="/#request-info"
                       className="group flex w-full max-w-[36rem] items-center border-b border-[rgba(183,170,152,0.55)] pb-2 !text-[var(--text-primary)] transition-colors duration-200 hover:border-[var(--color-accent)]"
                     >
                       <BodyText className="flex-1 responsive-body-sm">Private appointments and project inquiries</BodyText>
@@ -348,7 +348,7 @@ export function NavbarEditorial() {
 
             <div className="mt-10">
               <Link
-                href="#footer"
+                href="/#request-info"
                 onClick={() => setMobileOpen(false)}
                 className="inline-flex h-[48px] items-center gap-3 bg-[var(--color-accent)] px-7 text-[#3A342E] transition-all duration-200 hover:brightness-105"
                 style={{

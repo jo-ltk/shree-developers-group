@@ -9,10 +9,10 @@ import { Annotation } from "./ui/annotation";
 import { BodyText } from "./ui/body-text";
 
 const navLinks = [
-  { title: "About", href: "/about" },
+  // { title: "About", href: "/about" },
   { title: "Projects", href: "/#gallery" },
   { title: "Interactive Map", href: "/InteractiveSiteMap" },
-  { title: "Contact", href: "/#footer" },
+  { title: "Contact", href: "/#request-info" },
 ];
 
 export function NavbarAnimated() {

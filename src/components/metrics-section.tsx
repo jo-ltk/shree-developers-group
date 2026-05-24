@@ -30,7 +30,7 @@ export default function CommunityDetailsPage() {
       <div id="visit" className="scroll-mt-20" />
 
       {/* ENQUIRY */}
-      <section id="request-info" className="!pt-4 !pb-6 md:!pt-8 md:!pb-16 bg-[#F5F0E8]">
+      <section id="request-info" className="scroll-mt-24 !pt-4 !pb-6 md:!pt-8 md:!pb-16 bg-[#F5F0E8]">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
           <div className="flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-24 items-center justify-items-center w-full">
             {/* LEFT */}

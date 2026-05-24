@@ -82,7 +82,7 @@ export function AboutSnippet() {
           </div>
 
           <div className="pt-2 sm:pt-4">
-            <ButtonPrimary href="/about">Learn More About Us</ButtonPrimary>
+            <ButtonPrimary href="/#about-shree">Learn More About Us</ButtonPrimary>
           </div>
         </div>
 

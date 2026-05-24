@@ -123,9 +123,8 @@ export function IntroStatement() {
         </div>
         */}
 
-        {/* CTA */}
         <div data-intro-reveal>
-          <ButtonPrimary href="/about" className="responsive-btn-text">
+          <ButtonPrimary href="/#about-shree" className="responsive-btn-text">
             Learn More About Us
           </ButtonPrimary>
         </div>

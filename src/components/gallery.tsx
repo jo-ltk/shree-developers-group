@@ -66,14 +66,14 @@ const communities: Community[] = [
     name: "Hanover Park at Stockbridge",
     type: "Townhomes & Single-Family",
     location: "Stockbridge, GA",
-    status: "Coming Soon",
-    price: "Register Interest",
+    status: "Ongoing",
+    price: "Register for Updates",
     image: "/images/hanover-park/hero.png",
     index: "03",
     concept:
       "A resort-inspired neighborhood with pool, putting green, pickleball courts, and walkable community living.",
     specs: { beds: 3, baths: 2, area: "FROM 1,850 SQ FT" },
-    availability: "Coming Soon",
+    availability: "Available",
   },
   {
     slug: "the-pointe",
@@ -107,7 +107,7 @@ function CommunityCard({
   const hasProjectPage = isDedicatedProjectSlug(c.slug);
   const isSoon = c.status === "Coming Soon" && !hasProjectPage;
   const href = isSoon
-    ? "/contact"
+    ? "/#request-info"
     : hasProjectPage
       ? `/projects/${c.slug}`
       : `/InteractiveSiteMap?project=${c.slug}`;
@@ -311,23 +311,6 @@ export function Gallery() {
             />
           ))}
         </div>
-
-        <div className="flex justify-center py-8">
-          <button
-            onClick={() => (window.location.href = "/projects")}
-            className="group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8 !text-white no-underline overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)] responsive-btn-text cursor-pointer"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.25em" }}
-          >
-            <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
-            <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
-            <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Projects</span>
-            <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </div>
-          </button>
-        </div>
       </div>
 
       {/* Mobile Version */}
@@ -356,23 +339,6 @@ export function Gallery() {
               />
             ))}
           </FeaturedCommunitiesCarousel>
-        </div>
-
-        <div className="pt-8">
-          <button
-            onClick={() => (window.location.href = "/projects")}
-            className="group relative flex h-14 w-full items-center justify-center gap-3 bg-rust px-6 !text-white no-underline overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(212,63,51,0.27)]"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.65rem", letterSpacing: "0.28em" }}
-          >
-            <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
-            <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
-            <span className="relative z-10 font-bold uppercase whitespace-nowrap">View All Projects</span>
-            <div className="relative z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center border border-white/30 transition-transform duration-300 group-hover:translate-x-1">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </div>
-          </button>
         </div>
       </div>
     </SectionWrapper>

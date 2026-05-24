@@ -32,7 +32,7 @@ export function QuickActions() {
 
         {/* CTAs */}
         <div className="mb-6 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-5 sm:gap-5">
-          <ButtonPrimary href="/projects" className="!h-[50px] !px-7 responsive-btn-text">
+          <ButtonPrimary href="/#gallery" className="!h-[50px] !px-7 responsive-btn-text">
             Explore Communities
           </ButtonPrimary>
 

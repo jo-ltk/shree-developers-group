@@ -448,7 +448,7 @@ export function InteractiveSiteMapClient({
               <SpecGrid selectedLot={selectedLot} compact />
 
               <div className="mt-8">
-                <ButtonPrimary href={`/contact?source=InteractiveSiteMap&lot=${selectedLot.lotNumber}`} className="w-full">
+                <ButtonPrimary href="/#request-info" className="w-full">
                   Request Lot Details
                 </ButtonPrimary>
               </div>
@@ -570,7 +570,7 @@ export function InteractiveSiteMapClient({
 
     {/* CTA */}
     <ButtonPrimary
-      href={`/contact?source=InteractiveSiteMap&lot=${selectedLot.lotNumber}`}
+      href="/#request-info"
       className="shrink-0 h-10 px-4 !text-[0.55rem] !tracking-[0.2em]"
     >
       Inquire

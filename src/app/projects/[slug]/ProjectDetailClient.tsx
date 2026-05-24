@@ -1537,7 +1537,7 @@ function FloorPlansSection({
         </div>
 
         <Link
-          href="/contact?source=FloorPlans"
+          href="/#request-info"
           className="inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 bg-rust px-6 text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.22em] !text-white no-underline transition-colors hover:bg-dark md:w-auto md:max-w-none shrink-0"
         >
           Request Plan Set
@@ -2656,7 +2656,7 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
                 <span className="font-display text-sm font-semibold text-dark">{project.price}</span>
                 {/* Since the user requested only one details page for Sydney Oaks, other links route to Contact */}
                 <Link
-                  href="/contact"
+                  href="/#request-info"
                   className="text-[9px] uppercase tracking-widest font-bold text-rust hover:text-dark transition-colors inline-flex items-center gap-1"
                 >
                   Register Interest
@@ -2713,7 +2713,7 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
                       <div className="border-t border-dark/10 pt-4 flex items-center justify-between gap-4">
                         <span className="font-display text-sm font-semibold text-dark">{project.price}</span>
                         <Link
-                          href="/contact"
+                          href="/#request-info"
                           className="text-[9px] uppercase tracking-widest font-bold text-rust hover:text-dark transition-colors inline-flex items-center gap-1"
                         >
                           Register Interest

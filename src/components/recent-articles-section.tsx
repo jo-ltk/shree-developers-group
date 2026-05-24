@@ -195,24 +195,6 @@ export function RecentArticlesSection() {
           </ScrollSnapCarousel>
         </div>
       </div>
-
-      {/* Footer Button */}
-      <div className="flex justify-center pt-8">
-        <button
-          onClick={() => (window.location.href = "/projects")}
-          className="group relative inline-flex h-[46px] items-center gap-3 bg-rust px-5 !text-white no-underline overflow-hidden responsive-btn-text cursor-pointer"
-          style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.6rem", letterSpacing: "0.25em" }}
-        >
-          <span className="absolute top-[5px] left-[5px] w-2 h-2 pointer-events-none border-t border-l border-white/30" />
-          <span className="absolute bottom-[5px] right-[5px] w-2 h-2 pointer-events-none border-b border-r border-white/30" />
-          <span className="uppercase font-bold whitespace-nowrap relative z-10">View All Insights</span>
-          <div className="flex items-center justify-center w-7 h-7 border border-white/30 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 relative z-10">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </button>
-      </div>
     </SectionWrapper>
   );
 }

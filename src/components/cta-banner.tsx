@@ -194,7 +194,7 @@ export function CtaBanner() {
           {/* BUTTONS */}
           <div className="flex items-center justify-center gap-2 sm:gap-5 mt-8">
             <ButtonPrimary
-              href="#contact"
+              href="#request-info"
               className="!h-12 px-2 sm:!px-10 whitespace-nowrap !text-[9px] sm:!text-[10px] shrink-0"
             >
               Schedule Tour

@@ -98,7 +98,7 @@ export function TeamSection() {
             Shree Developers Group works with a simple belief: real estate feels luxurious when 
             buyers understand what is being built, why it matters, and who stands behind it.
           </BodyText>
-          <ButtonGhost href="#footer" className="responsive-btn-text">Start A Conversation</ButtonGhost>
+          <ButtonGhost href="#request-info" className="responsive-btn-text">Start A Conversation</ButtonGhost>
         </div>
       </div>
 

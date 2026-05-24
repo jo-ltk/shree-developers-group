@@ -1,17 +1,88 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { ArrowRight, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Instagram, Facebook, Linkedin } from "lucide-react";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { SectionWrapper } from "./ui/section-wrapper";
-import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
-import { CrosshairIcon } from "./ui/crosshair-icon";
 import { BrandMark } from "./ui/brand-mark";
 
+function ContactBlock({
+  className,
+  align = "left",
+}: {
+  className?: string;
+  align?: "left" | "right";
+}) {
+  const isRight = align === "right";
 
+  return (
+    <div className={className}>
+      <Annotation light className="!text-[#F5F0E8]/40 responsive-stat-label">
+        01 / COMMUNICATION
+      </Annotation>
+      <div className="space-y-2 mt-3">
+        <a
+          href="mailto:hello@shreedevelopersgroup.com"
+          className="group inline-block"
+        >
+          <span className="block font-serif italic text-lg !text-[#F5F0E8] border-b border-[#F5F0E8]/10 pb-1 group-hover:border-rust transition-colors responsive-body-sm whitespace-nowrap">
+            hello@shreedevelopersgroup.com
+          </span>
+        </a>
+        <div className={`flex flex-col gap-1 ${isRight ? "items-end" : "items-start"}`}>
+          <a
+            href="tel:+17707897044"
+            className="block font-mono tracking-widest !text-[#F5F0E8]/80 hover:!text-rust transition-colors responsive-btn-text"
+          >
+            +1 (770) 789-7044
+          </a>
+          <a
+            href="https://wa.me/17707897044"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block font-mono text-sm tracking-widest !text-[#F5F0E8]/60 hover:!text-rust transition-colors responsive-btn-text"
+          >
+            WhatsApp Available
+          </a>
+        </div>
+        <BodyText
+          size="sm"
+          light
+          className={`!text-[#F5F0E8]/60 !leading-snug responsive-body-sm max-w-xs ${isRight ? "ml-auto" : ""}`}
+        >
+          Speak with us about the details that define your next chapter.
+        </BodyText>
+        <SocialLinks
+          className={`flex items-center gap-5 pt-1 ${isRight ? "justify-end" : "justify-start"}`}
+        />
+      </div>
+    </div>
+  );
+}
+
+function SocialLinks({ className }: { className?: string }) {
+  return (
+    <div className={className}>
+      <a
+        href="https://www.instagram.com/shreedevelopersgroup?igsh=ZW8xY2R0N285enh4"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#F5F0E8]/40 hover:text-rust transition-colors"
+      >
+        <Instagram className="w-5 h-5" />
+      </a>
+      <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors">
+        <Facebook className="w-5 h-5" />
+      </a>
+      <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors">
+        <Linkedin className="w-5 h-5" />
+      </a>
+    </div>
+  );
+}
 
 export function FooterSection() {
   const footerRef = useRef<HTMLElement | null>(null);
@@ -38,67 +109,69 @@ export function FooterSection() {
   }, []);
 
   return (
-    <SectionWrapper id="footer" ref={footerRef} dark={true} className="!pt-4 !pb-8 md:!pt-8 md:!pb-12 overflow-hidden">
-      <div className="relative">
+    <SectionWrapper
+      id="footer"
+      ref={footerRef}
+      dark={true}
+      noPadding
+      className="py-5 md:py-6 overflow-hidden"
+    >
+      {/* Mobile — unchanged stacked left layout */}
+      <div
+        data-footer-animate
+        className="md:hidden grid grid-cols-1 gap-6 border-t border-[#F5F0E8]/10 pt-4"
+      >
+        <SectionHeadline
+          size="xl"
+          light
+          className="!text-[#F5F0E8] responsive-headline-xl"
+        >
+          Let&apos;s architect
+          <br />
+          your legacy
+        </SectionHeadline>
 
-        {/* COMPACT ARCHITECTURAL GRID */}
-        <div data-footer-animate className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-[#F5F0E8]/10 pt-4">
-
-          {/* CTA */}
-          <div className="space-y-6">
-            <SectionHeadline
-              size="xl"
-              light
-              className="!text-[#F5F0E8] responsive-headline-xl"
-            >
-              Let&apos;s architect
-              <br />
-              your legacy
-            </SectionHeadline>
-          </div>
-
-          {/* COMMUNICATION */}
-          <div className="space-y-6">
-            <Annotation light className="!text-[#F5F0E8]/40 responsive-stat-label">01 / COMMUNICATION</Annotation>
-            <div className="space-y-4">
-              <a
-                href="mailto:hello@shreedevelopersgroup.com"
-                className="group block"
-              >
-                <span className="block font-serif italic text-lg !text-[#F5F0E8] border-b border-[#F5F0E8]/10 pb-1 group-hover:border-rust transition-colors responsive-body-sm">
-                  hello@shree<br />developersgroup.com
-                </span>
-              </a>
-              <div className="mt-2 mb-4 flex flex-col gap-1">
-                <a href="tel:+17707897044" className="block font-mono tracking-widest !text-[#F5F0E8]/80 hover:!text-rust transition-colors responsive-btn-text">
-                  +1 (770) 789-7044
-                </a>
-                <a href="https://wa.me/17707897044" target="_blank" rel="noopener noreferrer" className="block font-mono text-sm tracking-widest !text-[#F5F0E8]/60 hover:!text-rust transition-colors responsive-btn-text">
-                  WhatsApp Available
-                </a>
-              </div>
-              <BodyText size="sm" light className="!text-[#F5F0E8]/60 !leading-relaxed responsive-body-sm">
-                Speak with us about the details that define your next chapter.
-              </BodyText>
-              <div className="flex items-center gap-5 pt-2">
-                <a href="https://www.instagram.com/shreedevelopersgroup?igsh=ZW8xY2R0N285enh4" target="_blank" rel="noopener noreferrer" className="text-[#F5F0E8]/40 hover:text-rust transition-colors"><Instagram className="w-5 h-5" /></a>
-                <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors"><Facebook className="w-5 h-5" /></a>
-                <a href="#" className="text-[#F5F0E8]/40 hover:text-rust transition-colors"><Linkedin className="w-5 h-5" /></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* LOGO BAR */}
-        <div data-footer-animate className="mt-0 flex flex-col items-center justify-center border-t border-[#F5F0E8]/5 pt-0">
+        <div className="flex w-full flex-col items-start justify-start py-2">
           <BrandMark
             variant="black"
-            className="h-16 w-48 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700"
-            imageClassName="invert"
+            className="h-20 w-52 opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+            imageClassName="invert object-left"
           />
-          <Annotation light className="mt-2 !text-[#F5F0E8]/20 responsive-stat-label">
+          <Annotation light className="mt-2 !text-[#F5F0E8]/20 responsive-stat-label text-left">
             SHREE DEVELOPERS GROUP
           </Annotation>
         </div>
+
+        <ContactBlock className="space-y-3 text-left" />
+      </div>
+
+      {/* Desktop — 3-column: headline | logo | contact */}
+      <div
+        data-footer-animate
+        className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:gap-8 md:items-center border-t border-[#F5F0E8]/10 pt-4"
+      >
+        <SectionHeadline
+          size="xl"
+          light
+          className="!text-[#F5F0E8] responsive-headline-xl"
+        >
+          Let&apos;s architect
+          <br />
+          your legacy
+        </SectionHeadline>
+
+        <div className="flex flex-col items-center justify-center px-6">
+          <BrandMark
+            variant="black"
+            className="h-28 w-72 opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+            imageClassName="invert object-center"
+          />
+          <Annotation light className="mt-2 !text-[#F5F0E8]/20 responsive-stat-label text-center">
+            SHREE DEVELOPERS GROUP
+          </Annotation>
+        </div>
+
+        <ContactBlock align="right" className="min-w-[240px] text-right" />
       </div>
     </SectionWrapper>
   );
