@@ -68,11 +68,25 @@ const communities: Community[] = [
     location: "Stockbridge, GA",
     status: "Coming Soon",
     price: "Register Interest",
-    image: "/images/hanover-park/hero.jpg",
+    image: "/images/hanover-park/hero.png",
     index: "03",
     concept:
       "A resort-inspired neighborhood with pool, putting green, pickleball courts, and walkable community living.",
     specs: { beds: 3, baths: 2, area: "FROM 1,850 SQ FT" },
+    availability: "Coming Soon",
+  },
+  {
+    slug: "the-pointe",
+    name: "The Pointe",
+    type: "Retail & Single-Family",
+    location: "Market Place Blvd · Exit 14",
+    status: "Coming Soon",
+    price: "Register Interest",
+    image: "/images/hanover-park/hero.jpg",
+    index: "04",
+    concept:
+      "A mixed-use destination with 40,000 sq. ft. of retail and 89 single-family homes just off Exit 14 on Market Place Blvd.",
+    specs: { beds: 0, baths: 0, area: "89 SINGLE-FAMILY HOMES" },
     availability: "Coming Soon",
   },
 ];
@@ -124,17 +138,17 @@ function CommunityCard({
         />
 
         <div
-          className={`absolute left-3 right-3 z-10 flex items-start justify-between gap-2 ${
+          className={`absolute left-3 right-3 z-10 flex items-start gap-2 ${
             featuredMobile ? "top-4" : "top-3"
           }`}
         >
           <div
-            className={`max-w-[48%] rounded-full border border-white/20 bg-white/90 backdrop-blur-md ${
+            className={`min-w-0 flex-1 overflow-hidden rounded-full border border-white/20 bg-white/90 backdrop-blur-md ${
               featuredMobile ? "px-3.5 py-1.5" : "px-2.5 py-1"
             }`}
           >
             <Annotation
-              className={`!font-bold truncate !text-[#1C1208] ${
+              className={`block !font-bold truncate !text-[#1C1208] ${
                 featuredMobile ? "!text-[0.65rem] !tracking-[0.18em]" : "responsive-stat-label"
               }`}
             >
@@ -287,7 +301,7 @@ export function Gallery() {
           </SectionHeadline>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:gap-10 mt-8 md:mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mt-8 md:mt-12">
           {communities.map((c, idx) => (
             <CommunityCard
               key={c.slug}
@@ -316,7 +330,7 @@ export function Gallery() {
         </div>
       </div>
 
-      {/* Mobile Version (New Slider) */}
+      {/* Mobile Version */}
       <div className="md:hidden" ref={containerRef}>
         <div className="mb-10 flex flex-col gap-4">
           <SectionLabel className="!mb-0 !text-[0.7rem] !tracking-[0.28em]">

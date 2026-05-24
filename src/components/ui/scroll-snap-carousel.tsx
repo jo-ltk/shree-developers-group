@@ -13,6 +13,17 @@ import { cn } from "@/lib/utils";
 
 const AUTOPLAY_MS = 3500;
 const RESUME_IDLE_MS = 5000;
+const SWIPE_LOCK_PX = 10;
+const SWIPE_COMMIT_PX = 48;
+
+type TouchAxis = "x" | "y";
+
+type TouchGesture = {
+  startX: number;
+  startY: number;
+  currentX: number;
+  lock: TouchAxis | null;
+};
 
 export type ScrollSnapCarouselProps = {
   children: ReactNode;
@@ -43,26 +54,29 @@ export function ScrollSnapCarousel({
   dotActiveClassName = "h-1.5 w-12 bg-[#1C1208]",
   dotInactiveClassName = "h-1.5 w-4 bg-[#1C1208]/15",
 }: ScrollSnapCarouselProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const touchRef = useRef<TouchGesture>({
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    lock: null,
+  });
+
   const [activeIndex, setActiveIndex] = useState(0);
+  const [dragPx, setDragPx] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const [autoplayPaused, setAutoplayPaused] = useState(false);
   const reduceMotion = useReducedMotion();
   const items = Children.toArray(children).filter(Boolean);
   const slideCount = items.length;
 
   const activeIndexRef = useRef(0);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoplayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
-
-  const programmaticScrollRef = useRef(false);
-  const programmaticScrollTargetRef = useRef<number | null>(null);
-  const programmaticScrollEndRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const autoplayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const scrollBehavior = reduceMotion ? "auto" : "smooth";
 
   const setIndex = useCallback(
     (index: number) => {
@@ -72,65 +86,11 @@ export function ScrollSnapCarousel({
     [onIndexChange],
   );
 
-  const endProgrammaticScroll = useCallback(() => {
-    if (programmaticScrollEndRef.current) {
-      clearTimeout(programmaticScrollEndRef.current);
-      programmaticScrollEndRef.current = null;
-    }
-
-    const target = programmaticScrollTargetRef.current;
-    programmaticScrollRef.current = false;
-    programmaticScrollTargetRef.current = null;
-
-    if (target !== null) setIndex(target);
-  }, [setIndex]);
-
-  const scrollToIndex = useCallback(
-    (index: number, behavior?: ScrollBehavior) => {
-      const el = scrollRef.current;
-      if (!el) return;
-
-      const slide = el.querySelector<HTMLElement>(
-        `[data-carousel-slide="${index}"]`,
-      );
-      if (!slide) return;
-
-      const resolvedBehavior = behavior ?? scrollBehavior;
-
-      programmaticScrollRef.current = true;
-      programmaticScrollTargetRef.current = index;
+  const goToIndex = useCallback(
+    (index: number) => {
       setIndex(index);
-
-      slide.scrollIntoView({
-        behavior: resolvedBehavior,
-        inline: "start",
-        block: "nearest",
-      });
-
-      if (programmaticScrollEndRef.current) {
-        clearTimeout(programmaticScrollEndRef.current);
-      }
-
-      const finish = () => endProgrammaticScroll();
-
-      if ("onscrollend" in el) {
-        const onScrollEnd = () => {
-          el.removeEventListener("scrollend", onScrollEnd);
-          finish();
-        };
-        el.addEventListener("scrollend", onScrollEnd, { once: true });
-        programmaticScrollEndRef.current = setTimeout(() => {
-          el.removeEventListener("scrollend", onScrollEnd);
-          finish();
-        }, resolvedBehavior === "smooth" ? 700 : 80);
-      } else {
-        programmaticScrollEndRef.current = setTimeout(
-          finish,
-          resolvedBehavior === "smooth" ? 500 : 50,
-        );
-      }
     },
-    [endProgrammaticScroll, scrollBehavior, setIndex],
+    [setIndex],
   );
 
   const pauseAutoplay = useCallback(() => {
@@ -153,50 +113,89 @@ export function ScrollSnapCarousel({
     scheduleAutoplayResume();
   }, [pauseAutoplay, scheduleAutoplayResume]);
 
+  const clampDrag = useCallback((dx: number, index: number) => {
+    if (index <= 0 && dx > 0) return dx * 0.3;
+    if (index >= slideCount - 1 && dx < 0) return dx * 0.3;
+    return dx;
+  }, [slideCount]);
+
   useEffect(() => {
-    const el = scrollRef.current;
+    const el = viewportRef.current;
     if (!el || slideCount <= 1) return;
 
-    const slides = el.querySelectorAll("[data-carousel-slide]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (programmaticScrollRef.current) return;
-
-        let bestIdx: number | null = null;
-        let bestRatio = 0;
-
-        for (const entry of entries) {
-          if (!entry.isIntersecting || entry.intersectionRatio < 0.55) continue;
-          const idx = Number(
-            (entry.target as HTMLElement).dataset.carouselSlide,
-          );
-          if (!Number.isNaN(idx) && entry.intersectionRatio > bestRatio) {
-            bestRatio = entry.intersectionRatio;
-            bestIdx = idx;
-          }
-        }
-
-        if (bestIdx !== null) setIndex(bestIdx);
-      },
-      { root: el, threshold: [0.55, 0.75] },
-    );
-
-    slides.forEach((slide) => observer.observe(slide));
-    return () => observer.disconnect();
-  }, [slideCount, setIndex]);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const onScroll = () => {
-      if (programmaticScrollRef.current) return;
-      handleUserInteraction();
+    const resetTouch = () => {
+      touchRef.current.lock = null;
+      setDragPx(0);
+      setIsDragging(false);
     };
 
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [handleUserInteraction]);
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      touchRef.current = {
+        startX: touch.clientX,
+        startY: touch.clientY,
+        currentX: touch.clientX,
+        lock: null,
+      };
+      setDragPx(0);
+      setIsDragging(false);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      const state = touchRef.current;
+      const dx = touch.clientX - state.startX;
+      const dy = touch.clientY - state.startY;
+
+      if (!state.lock) {
+        if (Math.abs(dx) < SWIPE_LOCK_PX && Math.abs(dy) < SWIPE_LOCK_PX) return;
+        state.lock = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+      }
+
+      if (state.lock === "y") return;
+
+      state.currentX = touch.clientX;
+      e.preventDefault();
+      setIsDragging(true);
+      setDragPx(clampDrag(dx, activeIndexRef.current));
+    };
+
+    const onTouchEnd = () => {
+      const state = touchRef.current;
+
+      if (state.lock === "x") {
+        const dx = state.currentX - state.startX;
+        const index = activeIndexRef.current;
+
+        if (Math.abs(dx) >= SWIPE_COMMIT_PX) {
+          handleUserInteraction();
+          if (dx < 0 && index < slideCount - 1) {
+            goToIndex(index + 1);
+          } else if (dx > 0 && index > 0) {
+            goToIndex(index - 1);
+          }
+        }
+      }
+
+      resetTouch();
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+    };
+  }, [clampDrag, goToIndex, handleUserInteraction, slideCount]);
 
   useEffect(() => {
     if (autoplayTimerRef.current) {
@@ -210,7 +209,7 @@ export function ScrollSnapCarousel({
 
     autoplayTimerRef.current = setInterval(() => {
       const next = (activeIndexRef.current + 1) % slideCount;
-      scrollToIndex(next);
+      goToIndex(next);
     }, autoplayMs);
 
     return () => {
@@ -219,14 +218,11 @@ export function ScrollSnapCarousel({
         autoplayTimerRef.current = null;
       }
     };
-  }, [autoplayMs, autoplayPaused, isInView, reduceMotion, scrollToIndex, slideCount]);
+  }, [autoplayMs, autoplayPaused, goToIndex, isInView, reduceMotion, slideCount]);
 
   useEffect(() => {
     return () => {
       if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-      if (programmaticScrollEndRef.current) {
-        clearTimeout(programmaticScrollEndRef.current);
-      }
       pauseAutoplay();
     };
   }, [pauseAutoplay]);
@@ -237,23 +233,30 @@ export function ScrollSnapCarousel({
     ? "duration-0"
     : "duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]";
 
+  const slideTransition = reduceMotion
+    ? "duration-0"
+    : "duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]";
+
   return (
     <section
       className={cn("relative w-full", className)}
       aria-label={ariaLabel}
       aria-roledescription="carousel"
     >
-      <div className={cn("overflow-hidden", viewportClassName)}>
+      <div
+        ref={viewportRef}
+        className={cn("overflow-hidden touch-pan-y", viewportClassName)}
+      >
         <div
-          ref={scrollRef}
           role="group"
           aria-label={`Slides, ${activeIndex + 1} of ${slideCount}`}
-          onPointerDown={handleUserInteraction}
-          onTouchStart={handleUserInteraction}
           className={cn(
-            "flex w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth touch-pan-x",
-            "[-webkit-overflow-scrolling:touch] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "flex w-full will-change-transform",
+            isDragging ? "transition-none" : slideTransition,
           )}
+          style={{
+            transform: `translate3d(calc(-${activeIndex * 100}% + ${dragPx}px), 0, 0)`,
+          }}
         >
           {items.map((child, index) => (
             <div
@@ -261,10 +264,9 @@ export function ScrollSnapCarousel({
               data-carousel-slide={index}
               aria-roledescription="slide"
               aria-label={`Slide ${index + 1} of ${slideCount}`}
-              className={cn(
-                "w-full min-w-full shrink-0 snap-start snap-always",
-                slideClassName,
-              )}
+              aria-hidden={index !== activeIndex}
+              inert={index !== activeIndex ? true : undefined}
+              className={cn("w-full min-w-full shrink-0", slideClassName)}
             >
               {child}
             </div>
@@ -291,7 +293,7 @@ export function ScrollSnapCarousel({
               aria-label={`Slide ${index + 1} of ${slideCount}`}
               onClick={() => {
                 handleUserInteraction();
-                scrollToIndex(index);
+                goToIndex(index);
               }}
               className={cn(
                 "rounded-full transition-[width,background-color]",

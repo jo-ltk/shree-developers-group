@@ -194,7 +194,7 @@ export function HanoverParkDetails({ stacked = false }: { stacked?: boolean }) {
     >
       <div className="absolute inset-0">
         <img
-          src="/images/hanover-park/hero.jpg"
+          src="/images/hanover-park/hero.png"
           alt="Hanover Park at Stockbridge"
           className="w-full h-full object-cover opacity-30 scale-[1.04]"
         />

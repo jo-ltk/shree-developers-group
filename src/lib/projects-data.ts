@@ -1087,7 +1087,7 @@ export const allProjects: ProjectData[] = [
       "A walkable, resort-inspired neighborhood in Stockbridge pairing timeless architecture with wellness-focused amenities and modern comfort.",
     brief:
       "Hanover Park at Stockbridge is a modern, resort-inspired residential community focused on wellness, leisure, walkability, and connection. The master-planned neighborhood combines townhomes and single-family homes around a centralized amenity core with a resort-style pool, PopStroke-inspired putting green, pickleball courts, and an elegant clubhouse.",
-    image: "/images/hanover-park/hero.jpg",
+    image: "/images/hanover-park/hero.png",
     plans: [
       { label: "Master Site Plan", image: "/images/hanover-park/master-plan.jpg" },
       { label: "Community Layout", image: "/images/hanover-park/master-plan.jpg" },
