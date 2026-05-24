@@ -320,15 +320,15 @@ export function Gallery() {
 
       {/* Mobile Version */}
       <div className="md:hidden" ref={containerRef}>
-        <div className="mb-10 flex flex-col gap-4">
-          <SectionLabel className="!mb-0 !text-[0.7rem] !tracking-[0.28em]">
+        <div className="mb-10 flex flex-col items-center gap-4 text-center">
+          <SectionLabel className="!mb-0 !items-center !justify-center !text-[0.7rem] !tracking-[0.28em]">
             Featured Living
           </SectionLabel>
           <SectionHeadline
             size="xl"
-            className="!text-[clamp(2.75rem,10vw,3.5rem)] !leading-[1.05] tracking-tight m-0"
+            className="!text-center responsive-headline-xl m-0"
           >
-            Communities built <br /> to last
+            Communities built to last
           </SectionHeadline>
         </div>
 
