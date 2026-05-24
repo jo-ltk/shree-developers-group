@@ -76,13 +76,13 @@ export function ProjectHeroCollage({
                 onClick={() => setActiveIndex(isActive ? null : i)}
                 aria-pressed={isActive}
                 aria-label={`Show ${img.caption ?? img.alt} in main view`}
-                className={`group relative cursor-pointer bg-cream text-left transition-colors ${
+                className={`group relative min-w-0 cursor-pointer bg-cream text-left transition-colors ${
                   isActive ? "bg-cream-deep" : "hover:bg-cream-deep/60"
                 }`}
               >
                 <motion.div
                   layout
-                  className={`relative aspect-[5/3] w-full overflow-hidden ${
+                  className={`relative aspect-[2/1] w-full overflow-hidden sm:aspect-[5/3] ${
                     isActive ? "ring-2 ring-inset ring-rust" : ""
                   }`}
                 >
@@ -99,7 +99,7 @@ export function ProjectHeroCollage({
                 {img.caption ? (
                   <motion.p
                     layout
-                    className={`border-t px-1 py-1.5 text-center text-[7px] font-bold uppercase tracking-[0.18em] sm:px-2 sm:py-2 sm:text-[8px] sm:tracking-[0.22em] ${
+                    className={`hidden min-w-0 border-t px-2 py-2 text-center text-[8px] font-bold uppercase tracking-[0.22em] whitespace-nowrap md:block ${
                       isActive ? "border-rust/25 text-rust" : "border-dark/8 text-dark/50"
                     }`}
                     style={{ fontFamily: "'Montserrat', sans-serif" }}

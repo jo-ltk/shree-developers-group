@@ -653,7 +653,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
         {/* Marquee Slider */}
         <div className="group relative ml-[calc(-50vw+50%)] w-screen max-w-none overflow-hidden">
           <div
-            className="animate-marquee flex min-w-max items-center gap-3 sm:gap-4 md:gap-6 group-hover:[animation-play-state:paused]"
+            className="animate-marquee flex min-w-max items-center gap-0 group-hover:[animation-play-state:paused]"
             style={{
               animation: "marquee 50s linear infinite",
             }}
@@ -662,7 +662,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
               <div
                 key={idx}
                 onClick={() => openLightbox(idx % galleryImages.length)}
-                className="relative h-[min(42vh,280px)] w-[min(72vw,240px)] shrink-0 cursor-pointer overflow-hidden border border-dark/5 bg-cream-deep sm:h-[45vh] sm:w-[280px] md:h-[60vh] md:w-[450px]"
+                className="relative h-[min(42vh,280px)] w-[min(72vw,240px)] shrink-0 cursor-pointer overflow-hidden bg-cream-deep sm:h-[45vh] sm:w-[280px] md:h-[60vh] md:w-[450px]"
               >
                 <Image
                   src={image.src}

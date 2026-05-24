@@ -68,7 +68,7 @@ const communities: Community[] = [
     location: "Stockbridge, GA",
     status: "Ongoing",
     price: "Register for Updates",
-    image: "/images/hanover-park/hero.png",
+    image: "/images/hanover-park/gallery-03.jpg",
     index: "03",
     concept:
       "A resort-inspired neighborhood with pool, putting green, pickleball courts, and walkable community living.",
@@ -82,7 +82,7 @@ const communities: Community[] = [
     location: "Market Place Blvd · Exit 14",
     status: "Coming Soon",
     price: "Register Interest",
-    image: "/images/hanover-park/hero.jpg",
+    image: "/images/the-pointe/hero.jpg",
     index: "04",
     concept:
       "A mixed-use destination with 40,000 sq. ft. of retail and 89 single-family homes just off Exit 14 on Market Place Blvd.",
@@ -128,12 +128,17 @@ function CommunityCard({
         ].join(" ")}
       >
         <Image
+          key={`${c.slug}-${c.image}`}
           src={c.image}
           alt={c.name}
           fill
+          sizes="(max-width: 768px) 100vw, 25vw"
+          unoptimized={c.slug === "the-pointe"}
           className={[
             "object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105",
-            isSoon ? "opacity-60 grayscale" : "opacity-100",
+            isSoon && c.slug !== "the-pointe"
+              ? "opacity-60 grayscale"
+              : "opacity-100",
           ].join(" ")}
         />
 

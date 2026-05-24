@@ -6,6 +6,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type ReactElement,
   type ReactNode,
 } from "react";
 import { useReducedMotion } from "framer-motion";
@@ -260,7 +261,7 @@ export function ScrollSnapCarousel({
         >
           {items.map((child, index) => (
             <div
-              key={index}
+              key={(child as ReactElement)?.key ?? index}
               data-carousel-slide={index}
               aria-roledescription="slide"
               aria-label={`Slide ${index + 1} of ${slideCount}`}
