@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
+    localPatterns: [
+      {
+        pathname: "/images/**",
+      },
+    ],
     remotePatterns: [
       {
         protocol: "https",

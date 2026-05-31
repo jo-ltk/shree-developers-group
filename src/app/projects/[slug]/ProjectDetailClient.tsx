@@ -53,6 +53,8 @@ import {
 } from "lucide-react";
 import type { ProjectData } from "@/lib/projects-data";
 import { getVisualJourneyGalleryImages } from "@/lib/visual-journey-gallery";
+import { getElysianGatesGalleryImages } from "@/lib/elysian-gates-gallery";
+import { cloudinaryVideoPosterUrl, cloudinaryVideoUrl } from "@/lib/cloudinary";
 import { ensureGsapPlugins } from "@/lib/gsap";
 import { NavbarEditorial } from "@/components/navbar-editorial";
 import { FooterSection } from "@/components/footer-section";
@@ -276,6 +278,14 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       }));
     }
 
+    if (project.slug === "elysian-gates") {
+      return getElysianGatesGalleryImages().map((image) => ({
+        src: image.thumbUrl,
+        lightboxSrc: image.fullUrl,
+        alt: image.title,
+      }));
+    }
+
     const list: { src: string; alt: string; lightboxSrc?: string }[] = [
       { src: project.image, alt: `${name} Exterior` },
     ];
@@ -434,9 +444,13 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
             {/* Right Hero Image */}
             <div
               data-reveal
-              className={`col-span-12 relative mt-2 sm:mt-0 w-full self-stretch overflow-hidden bg-[#EDE8DF] border border-dark/10 min-h-[240px] sm:min-h-[300px] ${
+              className={`col-span-12 relative mt-2 sm:mt-0 w-full self-stretch overflow-hidden border border-dark/10 min-h-[50vh] sm:min-h-[55vh] ${
+                project.heroImageObjectFit === "cover"
+                  ? "bg-white lg:min-h-[calc(100vh-8rem)]"
+                  : "bg-[#EDE8DF]"
+              } ${
                 heroKeySpecs?.length
-                  ? "lg:col-span-6 lg:mt-0 lg:h-full lg:min-h-full"
+                  ? "lg:col-span-6 lg:mt-0 lg:h-full"
                   : "lg:col-span-7 lg:min-h-[540px] xl:min-h-[620px]"
               }`}
             >
@@ -445,6 +459,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                   mainSrc={project.image}
                   mainAlt={`${name} Exterior`}
                   accents={project.heroAccentImages}
+                  mainObjectFit={project.heroImageObjectFit}
                 />
               ) : (
                 <Image
@@ -453,7 +468,11 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                   fill
                   priority
                   sizes="(max-width: 1200px) 100vw, 50vw"
-                  className="object-cover"
+                  className={
+                    project.heroImageObjectFit === "contain"
+                      ? "object-contain"
+                      : "object-cover"
+                  }
                 />
               )}
             </div>
@@ -701,6 +720,10 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
           `}</style>
         </div>
       </section>
+
+      {project.modelWalkthroughVideos && project.modelWalkthroughVideos.length > 0 ? (
+        <ModelWalkthroughSection videos={project.modelWalkthroughVideos} />
+      ) : null}
 
       {/* D. MASTER PLAN / SITE PLAN */}
       <MasterPlanSection
@@ -1394,6 +1417,132 @@ function getPlanViews(plan: NonNullable<ProjectData["floorPlansDetails"]>[number
   return [{ label: "Floor Plan", image: plan.image }];
 }
 
+function ModelWalkthroughSection({
+  videos,
+}: {
+  videos: NonNullable<ProjectData["modelWalkthroughVideos"]>;
+}) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isInViewRef = useRef(false);
+  const active = videos[activeIdx] ?? videos[0];
+
+  const playWalkthroughVideo = (video: HTMLVideoElement) => {
+    video.play().catch(() => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+  };
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInViewRef.current = entry.isIntersecting;
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (entry.isIntersecting) {
+          playWalkthroughVideo(video);
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.4 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !isInViewRef.current) return;
+
+    const tryPlay = () => playWalkthroughVideo(video);
+
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      tryPlay();
+      return;
+    }
+
+    video.addEventListener("canplay", tryPlay, { once: true });
+    return () => video.removeEventListener("canplay", tryPlay);
+  }, [active.cloudinaryPublicId]);
+
+  return (
+    <SectionWrapper dark={true} className="!py-12 md:!py-16">
+      <div
+        data-reveal
+        className="mb-8 flex flex-col items-center gap-4 text-center md:mb-10 md:flex-row md:items-end md:justify-between md:text-left"
+      >
+        <div className="w-full max-w-xl md:max-w-none">
+          <SectionLabel light className="justify-center md:justify-start">
+            Virtual Walkthrough
+          </SectionLabel>
+          <SectionHeadline size="lg" light className="!text-cream">
+            Model home <em className="italic">videos</em>
+          </SectionHeadline>
+        </div>
+        <Annotation light className="!text-rust max-w-xs text-center md:text-left">
+          Cloud-hosted renders · Jamestown, Vicksburg & McAllister
+        </Annotation>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        {videos.map((item, index) => {
+          const isActive = index === activeIdx;
+          return (
+            <button
+              key={item.modelName}
+              type="button"
+              onClick={() => setActiveIdx(index)}
+              className={`border px-3 py-3 text-left transition-all sm:px-4 sm:py-4 ${
+                isActive
+                  ? "border-rust bg-cream text-dark border-l-[3px] border-l-rust"
+                  : "border-cream/15 bg-dark-mid text-cream hover:border-cream/30"
+              }`}
+            >
+              <span className="block text-[8px] font-bold uppercase tracking-[0.18em] text-rust sm:text-[9px]">
+                Series {item.modelName.charAt(0)}
+              </span>
+              <span className="mt-1 block font-display text-sm sm:text-base">{item.modelName}</span>
+              <span className="mt-1 hidden text-[11px] font-light text-current/70 sm:block">
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div ref={sectionRef} className="mt-5 overflow-hidden border border-cream/10 bg-dark-mid">
+        <video
+          ref={videoRef}
+          key={active.cloudinaryPublicId}
+          className="aspect-video w-full bg-black object-contain"
+          controls
+          playsInline
+          preload="auto"
+          poster={cloudinaryVideoPosterUrl(active.cloudinaryPublicId)}
+        >
+          <source src={cloudinaryVideoUrl(active.cloudinaryPublicId)} type="video/mp4" />
+        </video>
+        <div className="flex items-center justify-between gap-4 border-t border-cream/10 px-4 py-3 sm:px-5">
+          <div>
+            <span className="text-[8px] font-bold uppercase tracking-[0.18em] text-rust">
+              {active.label}
+            </span>
+            <p className="font-display text-base text-cream sm:text-lg">{active.modelName}</p>
+          </div>
+        </div>
+      </div>
+    </SectionWrapper>
+  );
+}
+
 function FloorPlanLightbox({
   planName,
   seriesLetter,
@@ -1607,7 +1756,7 @@ function FloorPlansSection({
               const isViewActive = index === activeViewIdx;
               return (
                 <button
-                  key={`${view.label}-${view.image}`}
+                  key={`${view.label}-${view.image ?? view.video ?? index}`}
                   type="button"
                   onClick={() => setActiveViewIdx(index)}
                   className={`shrink-0 whitespace-nowrap px-2 py-2 text-[8px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-3 sm:text-[10px] sm:tracking-[0.18em] ${
@@ -1622,59 +1771,96 @@ function FloorPlansSection({
             })}
           </div>
 
-          <button
-            type="button"
-            onClick={() => setLightboxOpen(true)}
-            className="group relative block aspect-[4/3] w-full cursor-zoom-in bg-[#F5F0E8] text-left sm:aspect-[3/2] md:min-h-[520px] md:aspect-auto lg:min-h-[640px]"
-            aria-label={`Open ${activeView.label} fullscreen`}
-          >
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.25]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(26,22,18,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(26,22,18,0.06) 1px, transparent 1px)",
-                backgroundSize: "24px 24px",
-              }}
-            />
-            <Image
-              key={activeView.image}
-              src={activeView.image}
-              alt={`${plan.name} — ${activeView.label}`}
-              fill
-              className="object-contain object-center p-1 transition-opacity group-hover:opacity-95 sm:p-1.5"
-              sizes="(max-width: 768px) 100vw, 1200px"
-              priority={activePlanIdx === 0 && activeViewIdx === 0}
-            />
-            <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 bg-gradient-to-b from-dark/45 to-transparent px-3 py-2.5 sm:px-4 sm:py-3">
-              <div>
-                <span className="text-[7px] font-bold uppercase tracking-[0.2em] text-cream/70 sm:text-[8px]">
-                  {activeView.label}
+          {(() => {
+            const previewClass =
+              "group relative block aspect-[4/3] w-full bg-[#F5F0E8] text-left sm:aspect-[3/2] md:min-h-[520px] md:aspect-auto lg:min-h-[640px]";
+            const previewBody = (
+              <>
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-[0.25]"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(26,22,18,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(26,22,18,0.06) 1px, transparent 1px)",
+                    backgroundSize: "24px 24px",
+                  }}
+                />
+                {activeView.video ? (
+                  <video
+                    key={activeView.video}
+                    className="absolute inset-0 h-full w-full object-contain p-1 sm:p-1.5"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={cloudinaryVideoPosterUrl(activeView.video)}
+                  >
+                    <source src={cloudinaryVideoUrl(activeView.video)} type="video/mp4" />
+                  </video>
+                ) : (
+                  <Image
+                    key={activeView.image}
+                    src={activeView.image ?? plan.image}
+                    alt={`${plan.name} — ${activeView.label}`}
+                    fill
+                    className="object-contain object-center p-1 transition-opacity group-hover:opacity-95 sm:p-1.5"
+                    sizes="(max-width: 768px) 100vw, 1200px"
+                    priority={activePlanIdx === 0 && activeViewIdx === 0}
+                  />
+                )}
+                <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 bg-gradient-to-b from-dark/45 to-transparent px-3 py-2.5 sm:px-4 sm:py-3">
+                  <div>
+                    <span className="text-[7px] font-bold uppercase tracking-[0.2em] text-cream/70 sm:text-[8px]">
+                      {activeView.label}
+                    </span>
+                    <h3 className="font-display text-base font-light text-cream sm:text-lg md:text-xl">
+                      {plan.name}
+                      {plan.seriesLetter ? (
+                        <span className="ml-2 text-cream/60">Series {plan.seriesLetter}</span>
+                      ) : null}
+                    </h3>
+                  </div>
+                  <span className="shrink-0 border border-cream/25 bg-cream/10 px-2 py-1 text-[7px] font-bold uppercase tracking-widest text-cream sm:text-[8px]">
+                    {plan.availability}
+                  </span>
+                </div>
+                <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-sm border border-dark/15 bg-cream/90 px-2 py-1 text-[8px] font-bold uppercase tracking-widest text-dark/70 sm:bottom-4 sm:right-4 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
+                  {activeView.video ? (
+                    <>Playing walkthrough</>
+                  ) : (
+                    <>
+                      <ZoomIn className="h-3.5 w-3.5" />
+                      Full screen
+                    </>
+                  )}
                 </span>
-                <h3 className="font-display text-base font-light text-cream sm:text-lg md:text-xl">
-                  {plan.name}
-                  {plan.seriesLetter ? (
-                    <span className="ml-2 text-cream/60">Series {plan.seriesLetter}</span>
-                  ) : null}
-                </h3>
-              </div>
-              <span className="shrink-0 border border-cream/25 bg-cream/10 px-2 py-1 text-[7px] font-bold uppercase tracking-widest text-cream sm:text-[8px]">
-                {plan.availability}
-              </span>
-            </div>
-            <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-sm border border-dark/15 bg-cream/90 px-2 py-1 text-[8px] font-bold uppercase tracking-widest text-dark/70 sm:bottom-4 sm:right-4 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
-              <ZoomIn className="h-3.5 w-3.5" />
-              Full screen
-            </span>
-          </button>
+              </>
+            );
+
+            if (activeView.video) {
+              return <div className={previewClass}>{previewBody}</div>;
+            }
+
+            return (
+              <button
+                type="button"
+                onClick={() => setLightboxOpen(true)}
+                className={`${previewClass} cursor-zoom-in`}
+                aria-label={`Open ${activeView.label} fullscreen`}
+              >
+                {previewBody}
+              </button>
+            );
+          })()}
         </div>
       </div>
 
-      {lightboxOpen ? (
+      {lightboxOpen && !activeView.video ? (
         <FloorPlanLightbox
           planName={plan.name}
           seriesLetter={plan.seriesLetter}
-          views={views}
-          initialIdx={activeViewIdx}
+          views={views.filter((view): view is { label: string; image: string } => Boolean(view.image))}
+          initialIdx={views
+            .slice(0, activeViewIdx + 1)
+            .filter((view) => Boolean(view.image)).length - 1}
           onClose={() => setLightboxOpen(false)}
         />
       ) : null}
@@ -2725,7 +2911,7 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
       price: "From $1.3M",
       location: "Suwanee, GA",
       details: "44-Acre Gated Enclave",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+      image: "/images/elysian-gates/hero.jpg"
     },
     {
       name: "Lakeside Heights",

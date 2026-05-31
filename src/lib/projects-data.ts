@@ -45,7 +45,7 @@ export type ProjectData = {
     seriesLetter?: string;
     image: string;
     /** Additional plan sheets (first floor, second floor, terrace, options) */
-    views?: { label: string; image: string }[];
+    views?: { label: string; image?: string; video?: string }[];
     bedrooms: number;
     bathrooms: number;
     parking: number;
@@ -110,6 +110,8 @@ export type ProjectData = {
   heroCtaSecondary?: string;
   /** Floating accent frames layered over the hero image */
   heroAccentImages?: { src: string; alt: string; caption?: string }[];
+  /** Hero main image fit — use contain for site plans and diagrams */
+  heroImageObjectFit?: "cover" | "contain";
   /** Phased project development timeline (dedicated project pages) */
   developmentTimeline?: {
     sectionLabel?: string;
@@ -136,6 +138,12 @@ export type ProjectData = {
       coordinates?: { lat: number; lng: number };
     }[];
   };
+  /** Cloudinary-hosted model walkthrough videos (dedicated project pages) */
+  modelWalkthroughVideos?: {
+    modelName: string;
+    label: string;
+    cloudinaryPublicId: string;
+  }[];
 };
 
 export const DEDICATED_PROJECT_SLUGS = [
@@ -423,20 +431,69 @@ export const allProjects: ProjectData[] = [
       "A private, high-performance enclave in Suwanee where architectural precision meets the quiet seclusion of North Georgia's wooded landscape.",
     brief:
       "Elysian Gates is a premiere gated enclave in Suwanee, GA — 44 acres with just 28 estate homes. Designed for those who seek architectural performance and natural seclusion, each residence offers 5–6 bedroom layouts with expansive wooded backyards and a level of privacy rarely found in modern developments.",
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=82",
+    image: "/images/elysian-gates/hero.jpg",
+    heroImageObjectFit: "cover",
     plans: [
-      { label: "Community Layout", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" },
-      { label: "5-Bedroom Estate Plan", image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80" },
+      { label: "Community Layout", image: "/images/elysian-gates/master-plan.jpg" },
+      { label: "Jamestown Floor Plan", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-gf-floor-layout.png" },
     ],
     renders: [
-      { label: "Entrance Gate Render", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=80" },
-      { label: "Aerial Woods View", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80", isVideo: true },
+      { label: "Jamestown Estate Render", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-a--1-.png" },
+      { label: "Vicksburg Estate Render", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-a--1.png" },
     ],
     progress: [],
-    amenities: [
-      "Pickleball Courts",
-      "Gazebo",
-      "Walking Trails",
+    amenities: [],
+    amenitySections: [
+      {
+        title: "Community Amenities",
+        items: [
+          "Gated 44-acre private enclave",
+          "Pickleball courts",
+          "Community gazebo",
+          "Walking trails throughout",
+          "Wooded backyard setbacks",
+        ],
+      },
+      {
+        title: "Lifestyle & Recreation",
+        items: [
+          "Lambert High School district",
+          "Halcyon & Avalon nearby",
+          "Northside Hospital Forsyth access",
+          "Private trail connectivity",
+          "Suwanee Town Center proximity",
+        ],
+      },
+      {
+        title: "Interior Features",
+        items: [
+          "5–6 bedroom estate layouts",
+          "Expansive double-height spaces",
+          "Premium stonework and masonry",
+          "High-efficiency HVAC systems",
+          "Award-winning architectural design",
+        ],
+      },
+      {
+        title: "Kitchen Features",
+        items: [
+          "Chef-inspired kitchen layouts",
+          "Quartz and stone countertops",
+          "Premium appliance packages",
+          "Large islands with seating",
+          "Butler's pantry options",
+        ],
+      },
+      {
+        title: "Energy Efficient Features",
+        items: [
+          "High-efficiency insulation",
+          "Low-E insulated windows",
+          "Programmable thermostats",
+          "Eco-conscious construction standards",
+          "Natural daylight optimization",
+        ],
+      },
     ],
     locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
     developmentTimeline: {
@@ -479,6 +536,8 @@ export const allProjects: ProjectData[] = [
     configurationLabel: "5–6 Bedrooms",
     heroDescription:
       "A gated Suwanee enclave on 44 acres with 28 estate homes — zoned for Lambert High School, ranked among the top 10 high schools in the nation.",
+    heroLocationLabel: "Suwanee, GA",
+    heroHideStatusBadge: true,
     heroKeySpecs: [
       "44-acre gated enclave",
       "28 estate homes",
@@ -486,6 +545,25 @@ export const allProjects: ProjectData[] = [
       "$1.3M – $2M",
       "Zoned for Lambert High School",
     ],
+    heroCtaSecondary: "Schedule a Visit",
+    heroAccentImages: [
+      {
+        src: "/images/elysian-gates/accents/accent-jamestown.png",
+        alt: "Jamestown estate exterior render",
+        caption: "Jamestown",
+      },
+      {
+        src: "/images/elysian-gates/accents/accent-vicksburg.png",
+        alt: "Vicksburg estate exterior render",
+        caption: "Vicksburg",
+      },
+      {
+        src: "/images/elysian-gates/accents/accent-mcallister.png",
+        alt: "McAllister estate exterior render",
+        caption: "McAllister",
+      },
+    ],
+    overviewSectionLabel: "Community Overview",
     overviewParagraphs: [
       "Elysian Gates is conceived as a private sanctuary for families seeking architectural performance and natural seclusion in Suwanee, GA. Spanning 44 acres with just 28 estate homes, each residence leverages high-efficiency systems, premium stonework, and expansive glazing that frames the protected wooded backdrop.",
       "Each home is positioned to capture optimal ventilation and daylight throughout the seasons, ensuring comfortable living and bright gathering spaces. Zoned for Lambert High School — consistently ranked among the top 10 high schools in the nation — residents enjoy pickleball courts, a community gazebo, and walking trails within a fully gated enclave.",
@@ -508,6 +586,8 @@ export const allProjects: ProjectData[] = [
         desc: "The gated layout adjoins private paths into preserved hardwood corridors and community greens.",
       },
     ],
+    locationSectionLabel: "Location Advantages",
+    locationHeadline: "Prime connectivity in Suwanee",
     locationConnectivityBlurb:
       "Positioned in Suwanee's premier residential corridors, Elysian Gates is zoned exclusively for Lambert High School — one of the top 10 high schools in the nation.",
     locationPlaceGroups: [
@@ -547,6 +627,8 @@ export const allProjects: ProjectData[] = [
         },
       ],
     },
+    keyAdvantagesSectionLabel: "Why Choose This Project",
+    keyAdvantagesHeadline: "Why Elysian Gates?",
     keyAdvantages: [
       {
         title: "Premium Location",
@@ -577,8 +659,22 @@ export const allProjects: ProjectData[] = [
     ],
     floorPlansDetails: [
       {
-        name: "The Magnolia Villa",
-        image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=80",
+        name: "Jamestown",
+        seriesLetter: "J",
+        image: "/images/elysian-gates/floor-plans/jamestown/jamestown-gf-floor-layout.png",
+        views: [
+          { label: "Ground Floor", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-gf-floor-layout.png" },
+          { label: "First Floor", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-ff-floor-layout.jpg" },
+          { label: "GF Aerial", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-gf-aerial--view.jpg" },
+          { label: "FF Aerial", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-ff-aerial--view.jpg" },
+          { label: "GF Top View", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-gf-top--view.jpg" },
+          { label: "FF Top View", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-ff-top--view.jpg" },
+          { label: "Option A — Front", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-a--1-.png" },
+          { label: "Option A — Rear", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-a--2.png" },
+          { label: "Option B — Front", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-b--1-.png" },
+          { label: "Option B — Rear", image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-b--2.png" },
+          { label: "Walkthrough", video: "elysian-gates/jamestown-preview" },
+        ],
         bedrooms: 5,
         bathrooms: 4.5,
         parking: 3,
@@ -586,11 +682,25 @@ export const allProjects: ProjectData[] = [
         price: "$1,300,000",
         emi: "$6,750/mo",
         availability: "Available",
-        virtualTourUrl: "#tour-magnolia",
+        virtualTourUrl: "elysian-gates/jamestown-preview",
       },
       {
-        name: "The Laurel Grand Estate",
-        image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80",
+        name: "Vicksburg",
+        seriesLetter: "V",
+        image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-gf-floor-layout.jpg",
+        views: [
+          { label: "Ground Floor", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-gf-floor-layout.jpg" },
+          { label: "First Floor", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-ff-floor-layout.png" },
+          { label: "GF Aerial", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-gf-aerial-view.jpg" },
+          { label: "FF Aerial", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-ff-aerial-view.jpg" },
+          { label: "GF Top View", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-gf-top-view.jpg" },
+          { label: "FF Top View", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-ff-top-view.jpg" },
+          { label: "Option A — Front", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-a--1.png" },
+          { label: "Option A — Rear", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-a--2.png" },
+          { label: "Option B — Front", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-b---1.png" },
+          { label: "Option B — Rear", image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-b---2.png" },
+          { label: "Walkthrough", video: "elysian-gates/vicksburg-foyer-walkthrough" },
+        ],
         bedrooms: 5,
         bathrooms: 5,
         parking: 3,
@@ -598,11 +708,27 @@ export const allProjects: ProjectData[] = [
         price: "$1,650,000",
         emi: "$8,575/mo",
         availability: "Available",
-        virtualTourUrl: "#tour-laurel",
+        virtualTourUrl: "elysian-gates/vicksburg-foyer-walkthrough",
       },
       {
-        name: "The Cypress Grand Estate",
-        image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
+        name: "McAllister",
+        seriesLetter: "M",
+        image: "/images/elysian-gates/floor-plans/mcallister/gf-floor-layout.jpg",
+        views: [
+          { label: "Ground Floor", image: "/images/elysian-gates/floor-plans/mcallister/gf-floor-layout.jpg" },
+          { label: "First Floor", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-ff-floor-plan.jpg" },
+          { label: "GF Aerial", image: "/images/elysian-gates/floor-plans/mcallister/mcallister--gf-arial-view.jpg" },
+          { label: "FF Aerial", image: "/images/elysian-gates/floor-plans/mcallister/mcallister--ff-arial-view.jpg" },
+          { label: "GF Top View", image: "/images/elysian-gates/floor-plans/mcallister/mcallister--gf-top-view.jpg" },
+          { label: "FF Top View", image: "/images/elysian-gates/floor-plans/mcallister/mcallister--ff-top-view.jpg" },
+          { label: "Option A — White Front", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-a---white-1.png" },
+          { label: "Option A — White Rear", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-a---white-2.png" },
+          { label: "Option A — Stone Front", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-a---non-white-1.png" },
+          { label: "Option A — Stone Rear", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-a---non-white-2.png" },
+          { label: "Option B — White Front", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-b----white-1.png" },
+          { label: "Option B — White Rear", image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-b----white-2.png" },
+          { label: "Walkthrough", video: "elysian-gates/mcallister-foyer-walkthrough" },
+        ],
         bedrooms: 6,
         bathrooms: 5.5,
         parking: 3,
@@ -610,49 +736,66 @@ export const allProjects: ProjectData[] = [
         price: "$2,000,000",
         emi: "$10,400/mo",
         availability: "Coming Soon",
-        virtualTourUrl: "#tour-cypress",
+        virtualTourUrl: "elysian-gates/mcallister-foyer-walkthrough",
+      },
+    ],
+    modelWalkthroughVideos: [
+      {
+        modelName: "Jamestown",
+        label: "Exterior & option preview",
+        cloudinaryPublicId: "elysian-gates/jamestown-preview",
+      },
+      {
+        modelName: "Vicksburg",
+        label: "Foyer roaming walkthrough",
+        cloudinaryPublicId: "elysian-gates/vicksburg-foyer-walkthrough",
+      },
+      {
+        modelName: "McAllister",
+        label: "Foyer roaming walkthrough",
+        cloudinaryPublicId: "elysian-gates/mcallister-foyer-walkthrough",
       },
     ],
     unitsList: [
       {
-        id: "Unit 201-A",
-        name: "The Magnolia Villa (Lot 08)",
+        id: "Lot 08",
+        name: "Jamestown (Lot 08)",
         bhk: 5,
         area: 5200,
         facing: "East-Facing",
         price: "$1,300,000",
         availability: "Available",
-        image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+        image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-a--1-.png",
       },
       {
-        id: "Unit 204-B",
-        name: "The Laurel Grand Estate (Lot 19)",
+        id: "Lot 19",
+        name: "Vicksburg (Lot 19)",
         bhk: 5,
         area: 5800,
         facing: "North-Facing",
         price: "$1,650,000",
         availability: "Booking Open",
-        image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80",
+        image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-a--1.png",
       },
       {
-        id: "Unit 207-C",
-        name: "The Cypress Grand Estate (Lot 03)",
+        id: "Lot 03",
+        name: "McAllister (Lot 03)",
         bhk: 6,
         area: 6400,
         facing: "West-Facing",
         price: "$2,000,000",
         availability: "Available",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+        image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-a---white-1.png",
       },
       {
-        id: "Unit 211-D",
-        name: "The Magnolia Villa (Lot 14)",
+        id: "Lot 14",
+        name: "Jamestown (Lot 14)",
         bhk: 5,
         area: 5200,
         facing: "South-Facing",
         price: "$1,350,000",
         availability: "Sold Out",
-        image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80",
+        image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-b--1-.png",
       },
     ],
     nearbyPlaces: [

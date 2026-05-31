@@ -23,3 +23,30 @@ export function cloudinaryImageUrl(
 
   return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${transforms}/${publicId}`;
 }
+
+type CloudinaryVideoOptions = {
+  width?: number;
+  quality?: "auto" | "auto:good" | "auto:best";
+};
+
+/** Build a Cloudinary video delivery URL. */
+export function cloudinaryVideoUrl(
+  publicId: string,
+  { width, quality = "auto:good" }: CloudinaryVideoOptions = {},
+): string {
+  const transforms = [
+    "f_auto",
+    `q_${quality}`,
+    width ? `w_${width}` : null,
+    "c_limit",
+  ]
+    .filter(Boolean)
+    .join(",");
+
+  return `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/${transforms}/${publicId}.mp4`;
+}
+
+/** Poster frame URL for a Cloudinary-hosted video. */
+export function cloudinaryVideoPosterUrl(publicId: string): string {
+  return `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/so_0/${publicId}.jpg`;
+}

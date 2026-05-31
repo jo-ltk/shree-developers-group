@@ -15,11 +15,13 @@ export function ProjectHeroCollage({
   mainAlt,
   accents,
   priority = true,
+  mainObjectFit = "cover",
 }: {
   mainSrc: string;
   mainAlt: string;
   accents: HeroAccentImage[];
   priority?: boolean;
+  mainObjectFit?: "cover" | "contain";
 }) {
   const items = accents.slice(0, 3);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -52,7 +54,7 @@ export function ProjectHeroCollage({
               fill
               priority={priority && activeIndex === null}
               sizes="(max-width: 1200px) 100vw, 50vw"
-              className="object-cover"
+              className={mainObjectFit === "contain" ? "object-contain" : "object-cover"}
             />
           </motion.div>
         </AnimatePresence>

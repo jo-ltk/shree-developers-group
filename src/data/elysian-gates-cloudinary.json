@@ -1,0 +1,86 @@
+[
+  {
+    "index": 1,
+    "publicId": "elysian-gates/gallery-01",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258898/elysian-gates/gallery-01.jpg",
+    "title": "Jamestown Estate"
+  },
+  {
+    "index": 2,
+    "publicId": "elysian-gates/gallery-02",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258901/elysian-gates/gallery-02.jpg",
+    "title": "Jamestown Facade"
+  },
+  {
+    "index": 3,
+    "publicId": "elysian-gates/gallery-03",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258903/elysian-gates/gallery-03.jpg",
+    "title": "Jamestown Option B"
+  },
+  {
+    "index": 4,
+    "publicId": "elysian-gates/gallery-04",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258905/elysian-gates/gallery-04.jpg",
+    "title": "Jamestown Aerial"
+  },
+  {
+    "index": 5,
+    "publicId": "elysian-gates/gallery-05",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258906/elysian-gates/gallery-05.jpg",
+    "title": "Jamestown Second Floor"
+  },
+  {
+    "index": 6,
+    "publicId": "elysian-gates/gallery-06",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258909/elysian-gates/gallery-06.jpg",
+    "title": "Vicksburg Estate"
+  },
+  {
+    "index": 7,
+    "publicId": "elysian-gates/gallery-07",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258912/elysian-gates/gallery-07.jpg",
+    "title": "Vicksburg Facade"
+  },
+  {
+    "index": 8,
+    "publicId": "elysian-gates/gallery-08",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258914/elysian-gates/gallery-08.jpg",
+    "title": "Vicksburg Option B"
+  },
+  {
+    "index": 9,
+    "publicId": "elysian-gates/gallery-09",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258916/elysian-gates/gallery-09.jpg",
+    "title": "Vicksburg Aerial"
+  },
+  {
+    "index": 10,
+    "publicId": "elysian-gates/gallery-10",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258919/elysian-gates/gallery-10.jpg",
+    "title": "Vicksburg Second Floor"
+  },
+  {
+    "index": 11,
+    "publicId": "elysian-gates/gallery-11",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258922/elysian-gates/gallery-11.jpg",
+    "title": "McAllister Estate"
+  },
+  {
+    "index": 12,
+    "publicId": "elysian-gates/gallery-12",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258926/elysian-gates/gallery-12.jpg",
+    "title": "McAllister Facade"
+  },
+  {
+    "index": 13,
+    "publicId": "elysian-gates/gallery-13",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258929/elysian-gates/gallery-13.jpg",
+    "title": "McAllister Aerial"
+  },
+  {
+    "index": 14,
+    "publicId": "elysian-gates/gallery-14",
+    "url": "https://res.cloudinary.com/dduy8wigb/image/upload/v1780258931/elysian-gates/gallery-14.jpg",
+    "title": "McAllister Second Floor"
+  }
+]

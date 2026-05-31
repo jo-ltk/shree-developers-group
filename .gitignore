@@ -19,3 +19,6 @@ pnpm-debug.log*
 # misc
 .DS_Store
 Thumbs.db
+
+# local upload scratch (large videos + temp assets; hosted on Cloudinary)
+scratch/
