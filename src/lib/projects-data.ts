@@ -110,6 +110,16 @@ export type ProjectData = {
   heroCtaSecondary?: string;
   /** Floating accent frames layered over the hero image */
   heroAccentImages?: { src: string; alt: string; caption?: string }[];
+  /** Phased project development timeline (dedicated project pages) */
+  developmentTimeline?: {
+    sectionLabel?: string;
+    headline?: string;
+    description?: string;
+    phases: {
+      title: string;
+      items: string[];
+    }[];
+  };
   /** Premium map section with nearby attractions (dedicated project pages) */
   locationNearbySection?: {
     sectionLabel: string;
@@ -422,10 +432,7 @@ export const allProjects: ProjectData[] = [
       { label: "Entrance Gate Render", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=80" },
       { label: "Aerial Woods View", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80", isVideo: true },
     ],
-    progress: [
-      { date: "May 2026", note: "Final landscaping for Phase 1 completed", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80" },
-      { date: "Feb 2026", note: "Model home interiors finalized" },
-    ],
+    progress: [],
     amenities: [
       "Swimming Pool",
       "Club House",
@@ -441,6 +448,30 @@ export const allProjects: ProjectData[] = [
       "Party Hall",
     ],
     locationMap: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
+    developmentTimeline: {
+      sectionLabel: "Development Timeline",
+      headline: "Project development timeline",
+      description:
+        "The phased development approach ensures premium construction quality, controlled execution standards, and a refined luxury community outcome.",
+      phases: [
+        {
+          title: "Phase I",
+          items: [
+            "Land preparation and infrastructure development",
+            "Civil engineering and utility coordination",
+            "Road and site development works",
+          ],
+        },
+        {
+          title: "Phase II",
+          items: [
+            "Vertical home construction",
+            "Architectural finishing and landscape execution",
+            "Final stabilization and homeowner delivery process",
+          ],
+        },
+      ],
+    },
     name: "Elysian Gates",
     priceText: "From mid $500s",
     statusBadge: "Ongoing",

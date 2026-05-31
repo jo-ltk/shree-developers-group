@@ -737,6 +737,11 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
         headline={project.keyAdvantagesHeadline}
       />
 
+      {/* M. DEVELOPMENT TIMELINE */}
+      {project.developmentTimeline && (
+        <DevelopmentTimelineSection timeline={project.developmentTimeline} />
+      )}
+
       {/* J. ENQUIRY SECTION */}
       <section id="enquiry" className="scroll-mt-20 pt-4 pb-8 sm:pt-5 sm:pb-10 md:pt-6 md:pb-14 bg-cream">
         <div className="mx-auto max-w-[1450px] px-4 sm:px-8 md:px-12 lg:px-20">
@@ -2529,6 +2534,104 @@ function LocationAdvantagesSection({
             </>
           ) : null}
         </div>
+      </div>
+    </SectionWrapper>
+  );
+}
+
+/* ===========================================================================
+   10. DEVELOPMENT TIMELINE SECTION
+   =========================================================================== */
+const DEVELOPMENT_PHASE_ICONS: LucideIcon[] = [Layers, Building2];
+
+function DevelopmentTimelineSection({
+  timeline,
+}: {
+  timeline: NonNullable<ProjectData["developmentTimeline"]>;
+}) {
+  const { sectionLabel, headline, description, phases } = timeline;
+
+  if (!phases.length) return null;
+
+  return (
+    <SectionWrapper dark={false} className="!pt-6 !pb-8 md:!pt-10 md:!pb-12 bg-[#EDE8DF] border-y border-dark/10">
+      <div className="mx-auto max-w-[1450px]">
+        <div className="mb-8 flex flex-col items-center text-center md:mb-10 md:items-start md:text-left">
+          <SectionLabel className="justify-center md:justify-start !mb-3 md:!mb-5">
+            {sectionLabel ?? "Development Timeline"}
+          </SectionLabel>
+          <SectionHeadline size="lg" className="font-display font-light max-w-xl md:max-w-none">
+            {headline ? (
+              headline
+            ) : (
+              <>
+                Project development <em className="font-normal italic">timeline</em>
+              </>
+            )}
+          </SectionHeadline>
+        </div>
+
+        <div className="relative mb-8 md:mb-10">
+          <div className="absolute top-[28px] left-[8%] right-[8%] hidden h-[2px] bg-dark/10 md:block">
+            <motion.div
+              className="h-full bg-rust"
+              initial={{ width: "0%" }}
+              whileInView={{ width: "100%" }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-px md:bg-dark/10 md:border md:border-dark/10">
+            {phases.map((phase, idx) => {
+              const PhaseIcon = DEVELOPMENT_PHASE_ICONS[idx % DEVELOPMENT_PHASE_ICONS.length];
+
+              return (
+                <motion.div
+                  key={phase.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative flex flex-col border border-dark/10 bg-cream/70 p-6 md:border-0 md:bg-cream md:p-8 lg:p-10"
+                >
+                  <div className="mb-6 flex items-center justify-between md:mb-8">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-rust">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <div className="relative z-10 flex h-14 w-14 items-center justify-center border border-rust/20 bg-cream text-rust md:h-16 md:w-16">
+                      <PhaseIcon className="h-6 w-6 md:h-7 md:w-7" strokeWidth={1.75} />
+                    </div>
+                  </div>
+
+                  <h3 className="font-display text-2xl font-light text-dark md:text-3xl">{phase.title}</h3>
+
+                  <ul className="mt-5 space-y-3 md:mt-6">
+                    {phase.items.map((item) => (
+                      <li key={item} className="flex items-start gap-3 text-sm font-light leading-relaxed text-dark/75">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-rust" strokeWidth={1.75} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {description && (
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-3xl text-center text-sm font-light leading-relaxed text-dark/70 md:text-base md:text-left"
+            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+          >
+            {description}
+          </motion.p>
+        )}
       </div>
     </SectionWrapper>
   );
