@@ -81,6 +81,9 @@ const amenityIconMap: Record<string, LucideIcon> = {
   "indoor games": Gamepad2,
   "co-working space": BriefcaseBusiness,
   "party hall": PartyPopper,
+  "pickleball courts": Trophy,
+  gazebo: Trees,
+  "walking trails": Footprints,
 };
 
 function getAmenityIcon(amenity: string) {
@@ -152,6 +155,13 @@ function getAmenitySectionIcon(title: string) {
   return amenitySectionIconMap[title.toLowerCase()] || CheckCircle2;
 }
 
+function getFlatAmenityGridColsClass(count: number): string {
+  if (count <= 1) return "grid-cols-1";
+  if (count === 2) return "grid-cols-2";
+  if (count === 3) return "grid-cols-1 sm:grid-cols-3";
+  return "grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
+}
+
 const locationGroupIconMap: Record<string, LucideIcon> = {
   "nearby recreation": Waves,
   "shopping & grocery": ShoppingCart,
@@ -192,7 +202,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   }, []);
 
   const name = project.name || project.title;
-  const configurationLabel = project.configurationLabel || "3 & 4 BHK";
+  const configurationLabel = project.configurationLabel || "3–4 Bedrooms";
   const overviewParagraphs = project.overviewParagraphs || [
     `${name} is conceived as a sanctuary for families seeking a balanced, nature-integrated lifestyle. Designed with modern farmhouse architecture as the foundation, each residence leverages natural wood siding, limestone masonry, and expansive double-glazed panels that showcase the protected landscape.`,
     "Each home is positioned to capture optimal ventilation and sun exposure throughout the seasons, ensuring natural temperature regulation and bright common spaces. Connectivity runs deep here — residents enjoy secure access to local trails, premier schools, and civic centers, all within a fully gated community framework.",
@@ -214,7 +224,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
     project.locationConnectivityBlurb ||
     `Positioned along ${project.location}'s central access ways, ${name} bridges the boundary between natural seclusion and rapid civic reach.`;
   const sitePlanSvg = project.sitePlanSvg || "/svg/siteMap-final.svg";
-  const tagline = project.tagline || "Luxury homes in Suwanee, Georgia";
+  const tagline = project.tagline || "Luxury homes in Cumming, Georgia";
   const priceText = project.priceText || "From low $400s";
   const statusBadge = project.statusBadge || "Ongoing";
   const heroDescription = project.heroDescription;
@@ -224,10 +234,10 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const heroCtaSecondary = project.heroCtaSecondary || "Schedule Visit";
   const reraNumber = project.reraNumber || "RERA-GA-8923";
   const possessionDate = project.possessionDate || "Q4 2026";
-  const projectArea = project.projectArea || "12 Acres";
+  const projectArea = project.projectArea || "22 Acres";
   const totalUnits = project.totalUnits || "89 Town Homes";
   const priceRange = project.priceRange || "$410k - $580k";
-  const propertyType = project.propertyType || "Luxury Villas";
+  const propertyType = project.propertyType || "Townhomes";
   const highlightsList = project.highlightsList || [
     "Wooded backyard retreats bordering natural trails",
     "Curated lifestyle amenities at our private community core",
@@ -468,7 +478,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
             </div>
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Compass className="text-rust w-5 h-5 mb-2 shrink-0" />
-              <Annotation light className="mb-1">Configuration</Annotation>
+              <Annotation light className="mb-1">Bedrooms</Annotation>
               <span className="font-display font-light text-sm text-cream">{configurationLabel}</span>
             </div>
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
@@ -1334,7 +1344,10 @@ function AmenitiesSection({
         </SectionHeadline>
       </div>
 
-      <div data-reveal className="grid grid-cols-2 gap-px border border-[#F5F0E8]/10 bg-[#F5F0E8]/10 md:grid-cols-3 lg:grid-cols-4">
+      <div
+        data-reveal
+        className={`grid gap-px border border-[#F5F0E8]/10 bg-[#F5F0E8]/10 ${getFlatAmenityGridColsClass(flatAmenities.length)}`}
+      >
         {flatAmenities.map((amenity, i) => {
           const AmenityIcon = getAmenityIcon(amenity);
 
@@ -1826,7 +1839,7 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
                 href="#enquiry"
                 className="w-full sm:flex-1 h-[48px] border border-dark/20 !text-dark uppercase font-bold tracking-[0.2em] text-[10px] hover:bg-dark/5 transition-colors duration-300 flex items-center justify-center"
               >
-                Check Plot Layouts
+                View Floor Plans
               </a>
             </div>
 
@@ -1861,7 +1874,7 @@ function MasterPlanSection({
             Master Plan / Site Plan
           </SectionLabel>
           <SectionHeadline size="lg" className="font-display font-light">
-            Plot layout & <em className="font-normal italic">site planning</em>
+            Home layouts & <em className="font-normal italic">site planning</em>
           </SectionHeadline>
         </div>
 
@@ -1890,7 +1903,7 @@ function MasterPlanSection({
             />
             <div className="absolute inset-0 flex items-end justify-center bg-dark/0 p-4 transition-colors group-hover:bg-dark/10 md:p-6">
               <span className="inline-flex items-center gap-2 bg-dark px-4 py-2 text-[9px] font-bold uppercase tracking-[0.2em] text-cream opacity-0 transition-opacity group-hover:opacity-100 md:text-[10px]">
-                View lots & highlights
+                View homes & highlights
                 <ArrowRight className="h-3.5 w-3.5" />
               </span>
             </div>
@@ -1904,8 +1917,12 @@ function MasterPlanSection({
 /* ===========================================================================
    7. AVAILABLE UNITS SECTION (Filter & Sort Options)
    =========================================================================== */
+function formatBedrooms(count: number) {
+  return `${count} ${count === 1 ? "Bedroom" : "Bedrooms"}`;
+}
+
 function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
-  const [bhkFilter, setBhkFilter] = useState<number | "all">("all");
+  const [bedroomFilter, setBedroomFilter] = useState<number | "all">("all");
   const [priceFilter, setPriceFilter] = useState<number | "all">("all"); // Limit filter
   const [sortByArea, setSortByArea] = useState<"asc" | "desc" | "none">("none");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -1914,9 +1931,9 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
   const filteredUnits = useMemo(() => {
     let result = [...(units || [])];
 
-    // Filter by BHK
-    if (bhkFilter !== "all") {
-      result = result.filter((u) => u.bhk === bhkFilter);
+    // Filter by bedroom count
+    if (bedroomFilter !== "all") {
+      result = result.filter((u) => u.bhk === bedroomFilter);
     }
 
     // Filter by Price Limit
@@ -1935,7 +1952,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
     }
 
     return result;
-  }, [units, bhkFilter, priceFilter, sortByArea]);
+  }, [units, bedroomFilter, priceFilter, sortByArea]);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -1947,24 +1964,24 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
         <div>
           <SectionLabel>Acquisition</SectionLabel>
           <SectionHeadline size="lg" className="font-display font-light">
-            Available <em className="font-normal italic">units</em>
+            Available <em className="font-normal italic">homes</em>
           </SectionHeadline>
         </div>
 
         {/* Filter Controls Panel */}
         <div className="grid grid-cols-3 gap-1.5 w-full md:flex md:flex-row md:flex-nowrap md:gap-3 md:items-end md:w-auto">
-          {/* BHK Filter */}
+          {/* Bedroom Filter */}
           <div className="flex flex-col w-full md:w-[130px]">
-            <span className="text-[8px] uppercase tracking-wider font-semibold text-dark/50 mb-1.5">Filter BHK</span>
+            <span className="text-[8px] uppercase tracking-wider font-semibold text-dark/50 mb-1.5">Bedrooms</span>
             <select
-              value={bhkFilter}
-              onChange={(e) => setBhkFilter(e.target.value === "all" ? "all" : Number(e.target.value))}
+              value={bedroomFilter}
+              onChange={(e) => setBedroomFilter(e.target.value === "all" ? "all" : Number(e.target.value))}
               className="bg-cream border border-dark/10 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs text-dark outline-none cursor-pointer rounded-sm w-full truncate"
             >
-              <option value="all">All BHKs</option>
-              <option value="3">3 BHK</option>
-              <option value="4">4 BHK</option>
-              <option value="5">5 BHK</option>
+              <option value="all">All Bedrooms</option>
+              <option value="3">3 Bedrooms</option>
+              <option value="4">4 Bedrooms</option>
+              <option value="5">5 Bedrooms</option>
             </select>
           </div>
 
@@ -2029,7 +2046,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
                     <span className="text-[9px] uppercase tracking-widest font-semibold text-rust">{u.facing}</span>
                     <h4 className="font-display text-lg font-medium text-dark leading-tight">{u.name}</h4>
                     <div className="flex gap-4 pt-2 text-xs text-dark/70">
-                      <span className="font-semibold">{u.bhk} BHK</span>
+                      <span className="font-semibold">{formatBedrooms(u.bhk)}</span>
                       <span className="w-px h-3 bg-dark/15 align-middle" />
                       <span>{u.area.toLocaleString()} sq.ft.</span>
                     </div>
@@ -2050,9 +2067,9 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
           </div>
         ) : (
           <div className="py-16 text-center border border-dashed border-dark/15 bg-cream/30 space-y-2">
-            <Annotation className="!text-dark/40">NO AVAILABLE PLOTS MATCH FILTERS</Annotation>
+            <Annotation className="!text-dark/40">NO AVAILABLE HOMES MATCH FILTERS</Annotation>
             <button
-              onClick={() => { setBhkFilter("all"); setPriceFilter("all"); setSortByArea("none"); }}
+              onClick={() => { setBedroomFilter("all"); setPriceFilter("all"); setSortByArea("none"); }}
               className="text-xs text-rust font-bold uppercase tracking-widest hover:underline cursor-pointer"
             >
               Clear Active Filters
@@ -2108,7 +2125,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
                           <span className="text-[9px] uppercase tracking-widest font-semibold text-rust">{u.facing}</span>
                           <h4 className="font-display text-lg font-medium text-dark leading-tight">{u.name}</h4>
                           <div className="flex gap-4 pt-2 text-xs text-dark/70">
-                            <span className="font-semibold">{u.bhk} BHK</span>
+                            <span className="font-semibold">{formatBedrooms(u.bhk)}</span>
                             <span className="w-px h-3 bg-dark/15 align-middle" />
                             <span>{u.area.toLocaleString()} sq.ft.</span>
                           </div>
@@ -2147,9 +2164,9 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
           </div>
         ) : (
           <div className="py-16 text-center border border-dashed border-dark/15 bg-cream/30 space-y-2">
-            <Annotation className="!text-dark/40">NO AVAILABLE PLOTS MATCH FILTERS</Annotation>
+            <Annotation className="!text-dark/40">NO AVAILABLE HOMES MATCH FILTERS</Annotation>
             <button
-              onClick={() => { setBhkFilter("all"); setPriceFilter("all"); setSortByArea("none"); }}
+              onClick={() => { setBedroomFilter("all"); setPriceFilter("all"); setSortByArea("none"); }}
               className="text-xs text-rust font-bold uppercase tracking-widest hover:underline cursor-pointer"
             >
               Clear Active Filters
@@ -2705,9 +2722,9 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
     {
       name: "Elysian Gates",
       slug: "elysian-gates",
-      price: "From mid $500s",
-      location: "Forsyth County, GA",
-      details: "Private Wooded Enclave",
+      price: "From $1.3M",
+      location: "Suwanee, GA",
+      details: "44-Acre Gated Enclave",
       image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
     },
     {

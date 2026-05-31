@@ -1,5 +1,18 @@
 export type LotStatus = "Available" | "Coming Soon" | "Future" | "Sold";
 
+export type HomePlan = {
+  id: string;
+  name: string;
+  seriesLetter?: string;
+  sqft: number;
+  beds: number;
+  baths: number;
+  garage: number;
+  story: "Single Story" | "Two Story";
+  image: string;
+  price: string;
+};
+
 export type Lot = {
   id: number;
   lotNumber: string;
@@ -13,6 +26,9 @@ export type Lot = {
   status: LotStatus;
   image: string;
   description: string;
+  /** When set, any home site can be built with any of these floor plans */
+  availablePlans?: HomePlan[];
+  defaultPlanId?: string;
 };
 
 export type Hotspot = {

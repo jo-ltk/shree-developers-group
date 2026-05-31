@@ -7,9 +7,10 @@ import {
   Navigation,
   Shield,
   Trees,
-  ShieldCheck,
   Waves,
   Footprints,
+  GraduationCap,
+  Trophy,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionHeadline } from "@/components/ui/section-headline";
@@ -86,7 +87,7 @@ export function CommunityDetails() {
             <div className="flex items-center responsive-minimum-gap">
               <MapPin className="text-[#D43F33] w-[14px] h-[14px]" strokeWidth={2} />
               <Annotation className="!text-[#F5F0E8]/80 !font-medium responsive-stat-label">
-                Suwanee, Georgia
+                Cumming, Georgia
               </Annotation>
             </div>
 
@@ -94,8 +95,10 @@ export function CommunityDetails() {
               className="!text-white/80 responsive-body-sm max-w-xl mx-auto lg:mx-0 m-0 leading-relaxed"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Luxury residences thoughtfully designed around community living,
-              connectivity, architecture, and long-term value.
+              A 22-acre mixed-use townhome community featuring 3–4 bedroom
+              homes starting in the low $400s, with 89 townhomes, 21,000 sq. ft.
+              of retail, and 24,000 sq. ft. of office space — thoughtfully
+              designed for connected living, convenience, and long-term value.
             </BodyText>
 
             {/* Actions Group */}
@@ -156,23 +159,23 @@ export function CommunityDetails() {
 const elysianFeatures = [
   {
     num: "01",
-    title: "Gated Perimeter",
-    icon: Shield,
+    title: "Lambert High School",
+    icon: GraduationCap,
   },
   {
     num: "02",
-    title: "High-Performance",
-    icon: Building2,
+    title: "Pickleball Courts",
+    icon: Trophy,
   },
   {
     num: "03",
-    title: "Private Lots",
+    title: "Gazebo",
     icon: Trees,
   },
   {
     num: "04",
-    title: "24/7 Security",
-    icon: ShieldCheck,
+    title: "Walking Trails",
+    icon: Footprints,
   },
 ];
 
@@ -337,7 +340,7 @@ export function ElysianGatesDetails({ stacked = false }: { stacked?: boolean }) 
             <div className="flex items-center responsive-minimum-gap">
               <MapPin className="text-[#D43F33] w-[14px] h-[14px]" strokeWidth={2} />
               <Annotation className="!text-[#F5F0E8]/80 !font-medium responsive-stat-label">
-                Forsyth County, Georgia
+                Suwanee, Georgia
               </Annotation>
             </div>
 
@@ -345,7 +348,9 @@ export function ElysianGatesDetails({ stacked = false }: { stacked?: boolean }) 
               className="!text-white/80 responsive-body-sm max-w-xl mx-auto lg:mx-0 m-0 leading-relaxed"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              A private, high-performance enclave where architectural precision meets the quiet seclusion of North Georgia's wooded landscape.
+              A private gated enclave on 44 acres with 28 estate homes — 5–6 bedroom residences
+              from $1.3M, zoned for Lambert High School and surrounded by pickleball courts,
+              a gazebo, and walking trails.
             </BodyText>
 
             {/* Actions Group */}

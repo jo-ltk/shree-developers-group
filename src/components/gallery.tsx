@@ -28,6 +28,7 @@ interface Community {
     beds: number;
     baths: number;
     area: string;
+    bedroomLabel?: string;
   };
   availability: string;
 }
@@ -37,28 +38,28 @@ const communities: Community[] = [
     slug: "sydney-oaks",
     name: "Sydney Oaks",
     type: "89 Town Homes",
-    location: "Gwinnett County",
+    location: "Cumming, GA",
     status: "Ongoing",
     price: "From low $400s",
     image: "/images/sydney-oaks-gallery-card.png",
     index: "01",
     concept:
-      "A thoughtfully planned neighborhood with spacious lots and modern farmhouse architecture blending into the natural landscape.",
-    specs: { beds: 4, baths: 3, area: "4,200 SQ. FT." },
+      "A 22-acre mixed-use community with 89 townhomes, 21,000 sq. ft. retail, and 24,000 sq. ft. office space.",
+    specs: { beds: 3, baths: 2.5, area: "FROM 1,971 SQ FT", bedroomLabel: "3–4 Bedrooms" },
     availability: "Available",
   },
   {
     slug: "elysian-gates",
     name: "Elysian Gates",
     type: "Gated Enclave",
-    location: "Forsyth County",
+    location: "Suwanee",
     status: "Ongoing",
-    price: "From mid $500s",
+    price: "From $1.3M",
     image: "/svg/elysian-gates.svg",
     index: "02",
     concept:
-      "Exclusive gated living featuring high-performance homes and private wooded backyards for ultimate seclusion.",
-    specs: { beds: 5, baths: 4, area: "5,800 SQ. FT." },
+      "44-acre gated enclave with 28 estate homes, pickleball courts, gazebo, and walking trails in Suwanee.",
+    specs: { beds: 5, baths: 5, area: "6,400 SQ. FT.", bedroomLabel: "5–6 Bedrooms" },
     availability: "Available",
   },
   {
@@ -270,9 +271,10 @@ function CommunityCard({
                 featuredMobile ? "!text-[0.7rem] !tracking-[0.2em]" : "responsive-stat-label"
               }`}
             >
-              {c.specs.beds > 0 ? `${c.specs.beds} Bed | ${c.specs.baths} Bath` : c.price}
+              {c.specs.bedroomLabel ??
+                (c.specs.beds > 0 ? `${c.specs.beds} Bed | ${c.specs.baths} Bath` : c.price)}
             </Annotation>
-            {c.specs.beds > 0 && (
+            {(c.specs.bedroomLabel || c.specs.beds > 0) && (
               <>
                 <span className="w-px h-3 bg-[#1C1208]/15" />
                 <Annotation

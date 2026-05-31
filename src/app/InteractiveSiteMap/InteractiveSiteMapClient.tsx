@@ -12,7 +12,7 @@ import { ElysianGatesStage } from "./components/ElysianGatesStage";
 import { HanoverParkStage } from "./components/HanoverParkStage";
 import { MapSwitcher } from "./components/MapSwitcher";
 import { filters, MAP_CONFIGS, type MapConfig } from "./data/lots";
-import type { Lot, LotStatus } from "./types/site-map";
+import type { HomePlan, Lot, LotStatus } from "./types/site-map";
 
 // Premium UI Components
 import { SectionLabel } from "@/components/ui/section-label";
@@ -28,6 +28,31 @@ import { MapViewport } from "./components/MapViewport";
 
 type Filter = "All" | LotStatus;
 type MobileTab = "map" | "list";
+
+function resolveLotDisplay(lot: Lot, planId?: string): Lot & { planName?: string } {
+  if (!lot.availablePlans?.length) return lot;
+
+  const plan =
+    lot.availablePlans.find((entry) => entry.id === planId) ??
+    lot.availablePlans.find((entry) => entry.id === lot.defaultPlanId) ??
+    lot.availablePlans[0];
+
+  return {
+    ...lot,
+    title: `Home ${lot.lotNumber}`,
+    beds: plan.beds,
+    baths: plan.baths,
+    sqft: plan.sqft,
+    garage: plan.garage,
+    story: plan.story,
+    image: plan.image,
+    planName: plan.name,
+  };
+}
+
+function formatBedroomCount(count: number) {
+  return `${count} ${count === 1 ? "Bedroom" : "Bedrooms"}`;
+}
 
 function filterCount(filter: Filter, lots: Lot[]) {
   if (filter === "All") return lots.length;
@@ -169,7 +194,9 @@ const LotRows = ({
           </Annotation>
           <div className="mt-1 flex items-center gap-2">
             <Annotation className="!text-[#1C1208]/40 responsive-stat-label !font-medium">
-              {lot.sqft.toLocaleString()} SQ FT
+              {lot.availablePlans?.length
+                ? `${lot.availablePlans.length} Floor Plans`
+                : `${lot.sqft.toLocaleString()} SQ FT`}
             </Annotation>
             <span className="h-0.5 w-0.5 rounded-full bg-[#1C1208]/20" />
             <Annotation className="!text-[#1C1208]/40 responsive-stat-label !font-medium">
@@ -241,7 +268,7 @@ const MapPanel = ({
 const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?: boolean }) => (
   <div className="grid min-w-0 grid-cols-4 border-t border-[#1C1208]/10">
     {[
-      { label: "Beds",   value: selectedLot.beds,   Icon: BedDouble },
+      { label: "Bedrooms", value: selectedLot.beds, Icon: BedDouble },
       { label: "Baths",  value: selectedLot.baths,  Icon: Bath },
       { label: "Garage", value: selectedLot.garage, Icon: Car },
       { label: "Story",  value: selectedLot.story === "Two Story" ? "2" : "1", Icon: Home },
@@ -255,6 +282,53 @@ const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?
         </Annotation>
       </div>
     ))}
+  </div>
+);
+
+const PlanPicker = ({
+  plans,
+  selectedPlanId,
+  onSelect,
+}: {
+  plans: HomePlan[];
+  selectedPlanId: string;
+  onSelect: (id: string) => void;
+}) => (
+  <div className="mb-5">
+    <Annotation className="mb-2 !font-bold">Available Floor Plans</Annotation>
+    <p className="mb-3 text-xs leading-relaxed text-[#1C1208]/55">
+      Any home site can be built with any of these townhome plans.
+    </p>
+    <div className="grid grid-cols-1 gap-2">
+      {plans.map((plan) => {
+        const active = plan.id === selectedPlanId;
+        return (
+          <button
+            key={plan.id}
+            type="button"
+            onClick={() => onSelect(plan.id)}
+            className={`flex items-center gap-3 border px-3 py-3 text-left transition-colors ${
+              active
+                ? "border-[#D43F33] bg-[#EDE8DF]"
+                : "border-[#1C1208]/10 bg-cream hover:border-[#1C1208]/20"
+            }`}
+          >
+            <div className="h-14 w-14 shrink-0 overflow-hidden border border-[#1C1208]/10 bg-[#EDE8DF]">
+              <img src={plan.image} alt={`${plan.name} floor plan`} className="h-full w-full object-cover" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <Annotation className={`!font-bold ${active ? "!text-[#D43F33]" : "!text-[#1C1208]"}`}>
+                {plan.name}
+                {plan.seriesLetter ? ` · Series ${plan.seriesLetter}` : ""}
+              </Annotation>
+              <BodyText size="sm" className="mt-1 !text-[#1C1208]/60">
+                {formatBedroomCount(plan.beds)} · {plan.baths} Bath · {plan.sqft.toLocaleString()} sq ft
+              </BodyText>
+            </div>
+          </button>
+        );
+      })}
+    </div>
   </div>
 );
 
@@ -295,7 +369,18 @@ export function InteractiveSiteMapClient({
   });
 
   const selectedLotId = mapLotSelection[selectedMapId];
-  const selectedLot = lots.find((lot) => lot.id === selectedLotId) ?? lots[0];
+  const baseSelectedLot = lots.find((lot) => lot.id === selectedLotId) ?? lots[0];
+  const [selectedPlanId, setSelectedPlanId] = useState(
+    baseSelectedLot.defaultPlanId ?? baseSelectedLot.availablePlans?.[0]?.id ?? "aspen",
+  );
+
+  useEffect(() => {
+    setSelectedPlanId(
+      baseSelectedLot.defaultPlanId ?? baseSelectedLot.availablePlans?.[0]?.id ?? "aspen",
+    );
+  }, [baseSelectedLot.id, selectedMapId]);
+
+  const selectedLot = resolveLotDisplay(baseSelectedLot, selectedPlanId);
   
   const visibleLots =
     activeFilter === "All" 
@@ -431,17 +516,31 @@ export function InteractiveSiteMapClient({
             className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain [scrollbar-width:thin] [scrollbar-color:#1C120820_transparent]"
           >
             <article className="min-w-0 max-w-full px-5 py-6 xl:px-6 xl:py-8">
-              <SectionLabel counter={`LOT ${selectedLot.lotNumber.toString().padStart(2, '0')}`}>
-                Selected Homesite
+              <SectionLabel counter={`HOME ${selectedLot.lotNumber.toString().padStart(2, "0")}`}>
+                Selected Home
               </SectionLabel>
               
-              <SectionHeadline size="md" className="mb-3 break-words">
+              <SectionHeadline size="md" className="mb-1 break-words">
                 {selectedLot.title}
               </SectionHeadline>
+
+              {"planName" in selectedLot && selectedLot.planName ? (
+                <Annotation className="mb-3 !font-bold !text-[#D43F33]">
+                  {selectedLot.planName} Plan · {selectedLot.sqft.toLocaleString()} sq ft
+                </Annotation>
+              ) : null}
 
               <BodyText size="sm" className="mb-6 text-[#1C1208]/60">
                 {selectedLot.description}
               </BodyText>
+
+              {baseSelectedLot.availablePlans?.length ? (
+                <PlanPicker
+                  plans={baseSelectedLot.availablePlans}
+                  selectedPlanId={selectedPlanId}
+                  onSelect={setSelectedPlanId}
+                />
+              ) : null}
 
               <div className="mb-5 grid min-w-0 grid-cols-2 gap-2 border-t border-[#1C1208]/10 pt-4">
                  <StatItem compact value={selectedLot.price} label="Price" />
@@ -452,7 +551,7 @@ export function InteractiveSiteMapClient({
 
               <div className="mt-8">
                 <ButtonPrimary href="/#request-info" className="w-full">
-                  Request Lot Details
+                  Request Home Details
                 </ButtonPrimary>
               </div>
 
@@ -460,7 +559,7 @@ export function InteractiveSiteMapClient({
 
               <div className="mb-4 flex min-w-0 items-center justify-between gap-2">
                 <SectionLabel className="mb-0 shrink-0">
-                   All Homesites
+                   All Homes
                 </SectionLabel>
                 <Annotation className="shrink-0">{visibleLots.length} Results</Annotation>
               </div>
@@ -544,7 +643,7 @@ export function InteractiveSiteMapClient({
               <div className="min-w-0 flex-1">
                 <div className="mb-0.5 flex items-center gap-1.5 max-[430px]:mb-0 max-[430px]:gap-1">
                   <Annotation className="!font-bold responsive-stat-label !text-[#D43F33] max-[430px]:!text-[9px] max-[430px]:!tracking-[0.12em]">
-                    Lot {selectedLot.lotNumber}
+                    Home {selectedLot.lotNumber}
                   </Annotation>
                   <span className="h-1 w-1 shrink-0 rounded-full bg-[#1C1208]/20" />
                   <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[9px] max-[430px]:!tracking-[0.12em]">
@@ -561,7 +660,7 @@ export function InteractiveSiteMapClient({
 
                 <div className="flex items-center gap-2 max-[430px]:gap-1.5">
                   <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
-                    {selectedLot.beds} Beds
+                    {formatBedroomCount(selectedLot.beds)}
                   </Annotation>
                   <span className="h-2 w-px bg-[#1C1208]/12" />
                   <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
@@ -589,8 +688,8 @@ export function InteractiveSiteMapClient({
           <div className="flex flex-1 flex-col overflow-hidden">
             <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#1C120820_transparent]">
               <div className="px-4 py-6 border-b border-[#1C1208]/10">
-                <SectionLabel counter={`${visibleLots.length} PLOTS`}>
-                   Available Homesites
+                <SectionLabel counter={`${visibleLots.length} HOMES`}>
+                   Available Homes
                 </SectionLabel>
               </div>
               <LotRows 

@@ -1,4 +1,8 @@
 import type { Lot, LotStatus } from "../types/site-map";
+import {
+  SYDNEY_OAKS_COMMUNITY_SUMMARY,
+  SYDNEY_OAKS_TOWNHOME_PLANS,
+} from "./sydney-oaks-plans";
 
 const statuses: LotStatus[] = ["Available", "Coming Soon", "Future", "Sold"];
 const planNames = [
@@ -40,6 +44,39 @@ function priceForLot(index: number, status: LotStatus) {
 
   const base = 640000 + ((index * 13750) % 285000);
   return `From $${Math.round(base / 1000).toLocaleString()}k`;
+}
+
+function sydneyOaksPriceForStatus(status: LotStatus) {
+  if (status === "Sold") return "Sold";
+  if (status === "Future") return "Pricing TBD";
+  return "From low $400s";
+}
+
+function generateSydneyOaksLots(count: number): Lot[] {
+  const defaultPlan = SYDNEY_OAKS_TOWNHOME_PLANS[0];
+
+  return Array.from({ length: count }, (_, offset) => {
+    const id = offset + 1;
+    const status = sydneyOaksStatusForLot(id);
+
+    return {
+      id,
+      lotNumber: `${id}`,
+      title: `Home ${id}`,
+      price: sydneyOaksPriceForStatus(status),
+      beds: defaultPlan.beds,
+      baths: defaultPlan.baths,
+      sqft: defaultPlan.sqft,
+      garage: defaultPlan.garage,
+      story: defaultPlan.story,
+      status,
+      image: defaultPlan.image,
+      description:
+        "Any home site at Sydney Oaks can be built with the Aspen, Birch, or Elm townhome plan. Choose the layout that fits your family — all three options are available on every home.",
+      availablePlans: SYDNEY_OAKS_TOWNHOME_PLANS,
+      defaultPlanId: defaultPlan.id,
+    };
+  });
 }
 
 const generateLots = (
@@ -100,7 +137,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     id: 'sydney-oaks',
     name: 'Sydney Oaks',
     url: '/svg/siteMap-final.svg',
-    lots: generateLots(89, 0, sydneyOaksStatusForLot),
+    lots: generateSydneyOaksLots(89),
     hotspotSettings: {
       padding: 0.3,
       radiusOffset: 5,
@@ -114,7 +151,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     id: 'elysian-gates',
     name: 'Elysian Gates',
     url: '/svg/elysian-gates.svg',
-    lots: generateLots(120, 100),
+    lots: generateLots(28, 100),
     hotspotSettings: {
       padding: 0.25,
       radiusOffset: 4,
@@ -143,3 +180,4 @@ export const MAP_CONFIGS: MapConfig[] = [
 // For backward compatibility during refactor
 export const lots = MAP_CONFIGS[0].lots;
 export const lotById = new Map(lots.map((lot) => [lot.id, lot]));
+export { SYDNEY_OAKS_COMMUNITY_SUMMARY, SYDNEY_OAKS_TOWNHOME_PLANS };

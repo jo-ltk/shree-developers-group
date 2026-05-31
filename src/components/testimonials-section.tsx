@@ -16,7 +16,7 @@ const testimonials = [
     type: "video",
     quote: "Moving to Sydney Oaks was the best decision for our family. The sense of community is unmatched.",
     name: "The Carter Family",
-    location: "Sydney Oaks, Suwanee",
+    location: "Sydney Oaks, Cumming",
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800",
   },
   {

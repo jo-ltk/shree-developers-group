@@ -16,7 +16,7 @@ const marqueeRows = [
     duration: "65s",
   },
   {
-    items: ["Villas", "Apartments", "Plotted Homesites", "Neighborhood Comfort", "Brochure Clarity"],
+    items: ["Villas", "Apartments", "Homesites", "Neighborhood Comfort", "Brochure Clarity"],
     reverse: false,
     duration: "55s",
   },

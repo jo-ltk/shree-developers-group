@@ -271,7 +271,7 @@ export function MapStage({
                         data-map-lot
                         role="button"
                         tabIndex={matchesFilter ? 0 : -1}
-                        aria-label={`Select homesite Lot ${lot.lotNumber}`}
+                        aria-label={`Select Home ${lot.lotNumber}`}
                         x={hotspot.x} y={hotspot.y}
                         width={hotspot.width} height={hotspot.height}
                         rx={10} fill="transparent" stroke="transparent"
