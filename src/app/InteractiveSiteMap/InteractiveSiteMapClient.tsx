@@ -49,7 +49,7 @@ function resolveLotDisplay(lot: Lot, planId?: string): Lot & { planName?: string
 
   return {
     ...lot,
-    title: `Home ${lot.lotNumber}`,
+    title: lot.title,
     beds: plan.beds,
     baths: plan.baths,
     sqft: plan.sqft,

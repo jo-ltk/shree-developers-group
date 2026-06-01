@@ -3,6 +3,7 @@ import { getProjectBySlug } from "@/lib/projects-data";
 import type { Lot, LotStatus } from "../types/site-map";
 import { ELYSIAN_GATES_ESTATE_PLANS } from "./elysian-gates-plans";
 import { formatPlanNameList } from "./project-floor-plans";
+import { sydneyOaksPlanForLot } from "./sydney-oaks-lot-plans";
 import {
   SYDNEY_OAKS_COMMUNITY_SUMMARY,
   SYDNEY_OAKS_TOWNHOME_PLANS,
@@ -50,36 +51,32 @@ function priceForLot(index: number, status: LotStatus) {
   return `From $${Math.round(base / 1000).toLocaleString()}k`;
 }
 
-function sydneyOaksPriceForStatus(status: LotStatus) {
+function sydneyOaksPriceForLot(status: LotStatus, plan: ReturnType<typeof sydneyOaksPlanForLot>) {
   if (status === "Sold") return "Sold";
   if (status === "Future") return "Pricing TBD";
-  return "From low $400s";
+  return plan.price;
 }
 
 function generateSydneyOaksLots(count: number): Lot[] {
-  const defaultPlan = SYDNEY_OAKS_TOWNHOME_PLANS[0];
-  const planNames = formatPlanNameList(SYDNEY_OAKS_TOWNHOME_PLANS);
-
   return Array.from({ length: count }, (_, offset) => {
     const id = offset + 1;
     const status = sydneyOaksStatusForLot(id);
+    const plan = sydneyOaksPlanForLot(id);
+    const seriesLabel = plan.seriesLetter ? `Series ${plan.seriesLetter}` : plan.name;
 
     return {
       id,
       lotNumber: `${id}`,
-      title: `Home ${id}`,
-      price: sydneyOaksPriceForStatus(status),
-      beds: defaultPlan.beds,
-      baths: defaultPlan.baths,
-      sqft: defaultPlan.sqft,
-      garage: defaultPlan.garage,
-      story: defaultPlan.story,
+      title: `Home ${id} — ${plan.name}`,
+      price: sydneyOaksPriceForLot(status, plan),
+      beds: plan.beds,
+      baths: plan.baths,
+      sqft: plan.sqft,
+      garage: plan.garage,
+      story: plan.story,
       status,
-      image: defaultPlan.image,
-      description:
-        `Any home site at Sydney Oaks can be built with the ${planNames} townhome plan. Choose the layout that fits your family — all options are available on every home.`,
-      availablePlans: SYDNEY_OAKS_TOWNHOME_PLANS,
-      defaultPlanId: defaultPlan.id,
+      image: plan.image,
+      description: `Home ${id} is assigned to the ${plan.name} townhome plan (${seriesLabel}).`,
     };
   });
 }
