@@ -68,6 +68,12 @@ import { FigMarker } from "@/components/ui/fig-marker";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 import { MobileHorizontalCarousel } from "@/components/ui/mobile-horizontal-carousel";
 import { LocationNearbySection } from "@/components/location-nearby-section";
+import {
+  COMPANY_CONTACT,
+  COMPANY_TEL,
+  COMPANY_WHATSAPP,
+} from "@/lib/contact";
+import { submitContactForm } from "@/lib/submit-contact-form";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const amenityIconMap: Record<string, LucideIcon> = {
@@ -949,6 +955,8 @@ function FormSelect({
    =========================================================================== */
 function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -957,20 +965,40 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
     callbackMethod: "Phone"
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.email) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        callbackTime: "Morning",
-        callbackMethod: "Phone"
+
+    setSubmitError(null);
+    setIsSubmitting(true);
+    try {
+      await submitContactForm({
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
+        callbackTime: formData.callbackTime,
+        callbackMethod: formData.callbackMethod,
+        projectTitle,
+        source: "Project consultation form",
       });
-    }, 4000);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          callbackTime: "Morning",
+          callbackMethod: "Phone"
+        });
+      }, 4000);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fieldClass =
@@ -1058,11 +1086,17 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
           </div>
 
           <div className="space-y-3.5 pt-1 sm:space-y-4 sm:pt-2">
+            {submitError && (
+              <p className="text-center text-xs text-rust" role="alert">
+                {submitError}
+              </p>
+            )}
             <button
               type="submit"
-              className="h-12 w-full cursor-pointer bg-dark text-[10px] font-bold uppercase tracking-[0.18em] text-white transition-colors duration-500 hover:bg-rust sm:h-[48px] sm:tracking-[0.2em]"
+              disabled={isSubmitting}
+              className="h-12 w-full cursor-pointer bg-dark text-[10px] font-bold uppercase tracking-[0.18em] text-white transition-colors duration-500 hover:bg-rust disabled:cursor-not-allowed disabled:opacity-60 sm:h-[48px] sm:tracking-[0.2em]"
             >
-              Book Callback Request
+              {isSubmitting ? "Submitting…" : "Book Callback Request"}
             </button>
 
             {/* Quick-Contact Direct Buttons */}
@@ -1072,7 +1106,7 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
               </span>
               <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
                 <a
-                  href="https://wa.me/14045550123"
+                  href={COMPANY_WHATSAPP}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Chat on WhatsApp"
@@ -1082,7 +1116,7 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
                   <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">WhatsApp</span>
                 </a>
                 <a
-                  href="https://instagram.com/shreedevelopers"
+                  href={COMPANY_CONTACT.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Follow on Instagram"
@@ -1092,7 +1126,7 @@ function StickyEnquiryForm({ projectTitle }: { projectTitle: string }) {
                   <span className="text-[8px] font-bold uppercase tracking-wider sm:text-[9px]">Instagram</span>
                 </a>
                 <a
-                  href="tel:+14045550123"
+                  href={COMPANY_TEL}
                   aria-label="Call now"
                   className="group flex min-h-[48px] flex-col items-center justify-center gap-1.5 rounded-sm border border-dark/15 bg-cream py-2.5 text-dark transition-colors duration-300 hover:border-rust hover:bg-rust/5 hover:text-rust cursor-pointer select-none"
                 >

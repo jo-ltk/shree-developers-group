@@ -12,6 +12,7 @@ import { ButtonPrimary } from "./ui/button-primary";
 import { ButtonGhost } from "./ui/button-ghost";
 import { Annotation } from "./ui/annotation";
 import { CrosshairIcon } from "./ui/crosshair-icon";
+import { COMPANY_MAILTO } from "@/lib/contact";
 
 const headlineLines = [
   {
@@ -201,7 +202,7 @@ export function CtaBanner() {
             </ButtonPrimary>
 
             <ButtonGhost
-              href="mailto:sales@shreedevelopersgroup.com"
+              href={COMPANY_MAILTO}
               light
               className="!h-12 px-2 sm:!px-10 border-white/30 hover:border-white whitespace-nowrap !text-white/90 !text-[9px] sm:!text-[10px] shrink-0"
             >

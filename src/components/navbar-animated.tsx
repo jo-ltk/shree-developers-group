@@ -4,6 +4,10 @@ import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X, Instagram, Facebook, Linkedin } from "lucide-react";
 import Link from "next/link";
+import {
+  COMPANY_CONTACT,
+  COMPANY_MAILTO,
+} from "@/lib/contact";
 import { BrandMark } from "@/components/ui/brand-mark";
 import { Annotation } from "./ui/annotation";
 import { BodyText } from "./ui/body-text";
@@ -156,12 +160,12 @@ export function NavbarAnimated() {
               >
                 <div>
                   <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Inquiries</h4>
-                  <a href="mailto:info@shreedevelopers.com" className="text-base font-light lg:text-lg hover:text-rust transition-colors">info@shreedevelopers.com</a>
+                  <a href={COMPANY_MAILTO} className="text-base font-light lg:text-lg hover:text-rust transition-colors">{COMPANY_CONTACT.email}</a>
                 </div>
                 <div className="lg:text-center">
                   <h4 className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Follow Us</h4>
                   <div className="flex gap-6 lg:justify-center">
-                    <a href="#" className="hover:text-rust transition-colors"><Instagram className="h-5 w-5" /></a>
+                    <a href={COMPANY_CONTACT.instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:text-rust transition-colors"><Instagram className="h-5 w-5" /></a>
                     <a href="#" className="hover:text-rust transition-colors"><Facebook className="h-5 w-5" /></a>
                     <a href="#" className="hover:text-rust transition-colors"><Linkedin className="h-5 w-5" /></a>
                   </div>

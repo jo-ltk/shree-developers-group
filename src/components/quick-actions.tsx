@@ -5,6 +5,7 @@ import { ButtonPrimary } from "./ui/button-primary";
 import { Instagram } from "lucide-react";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
+import { COMPANY_CONTACT, COMPANY_WHATSAPP } from "@/lib/contact";
 
 export function QuickActions() {
   return (
@@ -47,7 +48,9 @@ export function QuickActions() {
         </Annotation>
         <div className="flex flex-wrap items-center justify-center gap-5">
           <a
-            href="https://wa.me/yournumber"
+            href={COMPANY_WHATSAPP}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group flex items-center gap-2.5 text-dark/50 transition-colors hover:text-rust"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-full border border-dark/10 transition-colors group-hover:border-rust/30 group-hover:bg-rust/5">
@@ -59,7 +62,9 @@ export function QuickActions() {
           </a>
           <div className="h-3.5 w-px bg-dark/10" />
           <a
-            href="https://instagram.com/yourhandle"
+            href={COMPANY_CONTACT.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group flex items-center gap-2.5 text-dark/50 transition-colors hover:text-rust"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-full border border-dark/10 transition-colors group-hover:border-rust/30 group-hover:bg-rust/5">

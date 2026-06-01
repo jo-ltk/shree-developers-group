@@ -8,6 +8,12 @@ import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 import { BrandMark } from "./ui/brand-mark";
+import {
+  COMPANY_CONTACT,
+  COMPANY_MAILTO,
+  COMPANY_TEL,
+  COMPANY_WHATSAPP,
+} from "@/lib/contact";
 
 function ContactBlock({
   className,
@@ -24,28 +30,33 @@ function ContactBlock({
         01 / COMMUNICATION
       </Annotation>
       <div className="space-y-2 mt-3">
-        <a
-          href="mailto:hello@shreedevelopersgroup.com"
-          className="group inline-block"
-        >
+        <a href={COMPANY_MAILTO} className="group inline-block">
           <span className="block font-serif italic text-lg !text-[#F5F0E8] border-b border-[#F5F0E8]/10 pb-1 group-hover:border-rust transition-colors responsive-body-sm whitespace-nowrap">
-            hello@shreedevelopersgroup.com
+            {COMPANY_CONTACT.email}
           </span>
         </a>
         <div className={`flex flex-col gap-1 ${isRight ? "items-end" : "items-start"}`}>
           <a
-            href="tel:+17707897044"
+            href={COMPANY_TEL}
             className="block font-mono tracking-widest !text-[#F5F0E8]/80 hover:!text-rust transition-colors responsive-btn-text"
           >
-            +1 (770) 789-7044
+            {COMPANY_CONTACT.phoneDisplay}
           </a>
           <a
-            href="https://wa.me/17707897044"
+            href={COMPANY_WHATSAPP}
             target="_blank"
             rel="noopener noreferrer"
             className="block font-mono text-sm tracking-widest !text-[#F5F0E8]/60 hover:!text-rust transition-colors responsive-btn-text"
           >
             WhatsApp Available
+          </a>
+          <a
+            href={COMPANY_CONTACT.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`block font-mono text-sm tracking-wide !text-[#F5F0E8]/60 hover:!text-rust transition-colors responsive-body-sm max-w-xs ${isRight ? "text-right" : "text-left"}`}
+          >
+            {COMPANY_CONTACT.address}
           </a>
         </div>
         <BodyText
@@ -67,7 +78,7 @@ function SocialLinks({ className }: { className?: string }) {
   return (
     <div className={className}>
       <a
-        href="https://www.instagram.com/shreedevelopersgroup?igsh=ZW8xY2R0N285enh4"
+        href={COMPANY_CONTACT.instagramUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="text-[#F5F0E8]/40 hover:text-rust transition-colors"
