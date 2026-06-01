@@ -164,7 +164,7 @@ function getFlatAmenityGridColsClass(count: number): string {
   return "grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
 }
 
-/** Plan picker cards (Jamestown, collections, etc.) — stack on phone, row from sm+ */
+/** Plan picker cards (Jamestown, collections, etc.) — horizontal tabs on phone, card row from sm+ */
 function getFloorPlanSelectorGridColsClass(count: number): string {
   if (count <= 1) return "grid-cols-1";
   if (count === 2) return "grid-cols-1 sm:grid-cols-2";
@@ -1721,8 +1721,49 @@ function FloorPlansSection({
       </div>
 
       <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
+        {/* Mobile: horizontal unit tabs */}
+        <div className="sm:hidden">
+          <div className="flex flex-nowrap gap-1 overflow-x-auto border border-dark/10 bg-cream p-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {floorPlans.map((item, index) => {
+              const isActive = index === activePlanIdx;
+              const letter = item.seriesLetter ?? getPlanShortName(item.name).charAt(0);
+              return (
+                <button
+                  key={item.name}
+                  type="button"
+                  title={item.name}
+                  onClick={() => selectPlan(index)}
+                  className={`flex shrink-0 items-center gap-2 whitespace-nowrap px-3 py-2.5 text-left transition-colors cursor-pointer ${
+                    isActive
+                      ? "bg-dark text-cream"
+                      : "bg-transparent text-dark/55 hover:bg-dark/5 hover:text-dark"
+                  }`}
+                >
+                  <span
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center font-display text-xs ${
+                      isActive ? "bg-rust text-cream" : "bg-dark/8 text-dark/70"
+                    }`}
+                  >
+                    {letter}
+                  </span>
+                  <span className="font-display text-sm font-light leading-none">{item.name}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="border border-t-0 border-dark/10 bg-cream px-4 py-3 text-center">
+            <p className="text-[11px] font-light leading-snug text-dark/55">
+              {plan.bedrooms} bed · {plan.bathrooms} bath · {plan.area.toLocaleString()} sq.ft.
+            </p>
+            <span className="mt-1 inline-block text-[8px] font-bold uppercase tracking-widest text-dark/40">
+              {views.length > 1 ? `${views.length} sheets` : "Plan set"}
+            </span>
+          </div>
+        </div>
+
+        {/* sm+: plan picker cards */}
         <div
-          className={`grid gap-2.5 sm:gap-3 ${getFloorPlanSelectorGridColsClass(floorPlans.length)}`}
+          className={`hidden gap-2.5 sm:grid sm:gap-3 ${getFloorPlanSelectorGridColsClass(floorPlans.length)}`}
         >
           {floorPlans.map((item, index) => {
             const isActive = index === activePlanIdx;
