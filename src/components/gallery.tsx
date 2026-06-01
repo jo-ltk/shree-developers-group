@@ -10,7 +10,9 @@ import { BodyText } from "./ui/body-text";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { FeaturedCommunitiesCarousel } from "./ui/featured-communities-carousel";
-import { isDedicatedProjectSlug } from "@/lib/projects-data";
+import { MAP_CONFIGS } from "@/app/InteractiveSiteMap/data/lots";
+
+const interactiveMapSlugs = new Set(MAP_CONFIGS.map((m) => m.id));
 
 type Status = "Ongoing" | "Completed" | "Coming Soon";
 
@@ -55,7 +57,7 @@ const communities: Community[] = [
     location: "Suwanee",
     status: "Ongoing",
     price: "From $1.3M",
-    image: "/svg/elysian-gates.svg",
+    image: "/images/elysian-gates/featured-community.jpg",
     index: "02",
     concept:
       "44-acre gated enclave with 28 estate homes, pickleball courts, gazebo, and walking trails in Suwanee.",
@@ -105,13 +107,14 @@ function CommunityCard({
   slidePosition?: number;
   slideTotal?: number;
 }) {
-  const hasProjectPage = isDedicatedProjectSlug(c.slug);
-  const isSoon = c.status === "Coming Soon" && !hasProjectPage;
-  const href = isSoon
-    ? "/#request-info"
-    : hasProjectPage
-      ? `/projects/${c.slug}`
+  const isSoon = c.status === "Coming Soon";
+  const hasInteractiveMap = interactiveMapSlugs.has(c.slug);
+  const href = hasInteractiveMap
+    ? `/InteractiveSiteMap?project=${c.slug}`
+    : isSoon
+      ? "/#request-info"
       : `/InteractiveSiteMap?project=${c.slug}`;
+  const ctaLabel = isSoon ? "Register Interest" : "Interactive Map";
 
   return (
     <Link
@@ -202,11 +205,7 @@ function CommunityCard({
                   : "responsive-btn-text"
               }`}
             >
-              {isSoon
-                ? "Register Interest"
-                : hasProjectPage
-                  ? "View Project"
-                  : "Interactive Map"}
+              {ctaLabel}
             </span>
 
             <div className="w-5 h-5 rounded-full bg-[#1C1208]/5 group-hover:bg-[#D43F33]/10 flex items-center justify-center transition-colors duration-300">
@@ -298,7 +297,7 @@ export function Gallery() {
   const isInView = useInView(containerRef, { once: false, amount: 0.3 });
 
   return (
-    <SectionWrapper id="gallery" dark={false} className="!pt-14 !pb-12 md:!pt-24 md:!pb-4 overflow-hidden">
+    <SectionWrapper id="gallery" dark={false} className="!pt-14 !pb-14 md:!pt-24 md:!pb-16 overflow-hidden">
       {/* Desktop Version */}
       <div className="hidden md:block">
         <div className="flex flex-col items-center md:items-start text-center md:text-left responsive-minimum-gap mb-8 md:mb-12">

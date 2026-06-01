@@ -164,6 +164,14 @@ function getFlatAmenityGridColsClass(count: number): string {
   return "grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
 }
 
+/** Plan picker cards (Jamestown, collections, etc.) — stack on phone, row from sm+ */
+function getFloorPlanSelectorGridColsClass(count: number): string {
+  if (count <= 1) return "grid-cols-1";
+  if (count === 2) return "grid-cols-1 sm:grid-cols-2";
+  if (count === 3) return "grid-cols-1 sm:grid-cols-3";
+  return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+}
+
 const locationGroupIconMap: Record<string, LucideIcon> = {
   "nearby recreation": Waves,
   "shopping & grocery": ShoppingCart,
@@ -1492,7 +1500,7 @@ function ModelWalkthroughSection({
         </Annotation>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+      <div className={`grid gap-2 sm:gap-3 ${getFloorPlanSelectorGridColsClass(videos.length)}`}>
         {videos.map((item, index) => {
           const isActive = index === activeIdx;
           return (
@@ -1500,7 +1508,7 @@ function ModelWalkthroughSection({
               key={item.modelName}
               type="button"
               onClick={() => setActiveIdx(index)}
-              className={`border px-3 py-3 text-left transition-all sm:px-4 sm:py-4 ${
+              className={`w-full border px-4 py-3.5 text-left transition-all sm:px-4 sm:py-4 ${
                 isActive
                   ? "border-rust bg-cream text-dark border-l-[3px] border-l-rust"
                   : "border-cream/15 bg-dark-mid text-cream hover:border-cream/30"
@@ -1713,7 +1721,9 @@ function FloorPlansSection({
       </div>
 
       <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        <div
+          className={`grid gap-2.5 sm:gap-3 ${getFloorPlanSelectorGridColsClass(floorPlans.length)}`}
+        >
           {floorPlans.map((item, index) => {
             const isActive = index === activePlanIdx;
             const letter = item.seriesLetter ?? getPlanShortName(item.name).charAt(0);
@@ -1723,24 +1733,26 @@ function FloorPlansSection({
                 type="button"
                 title={item.name}
                 onClick={() => selectPlan(index)}
-                className={`group relative flex min-w-0 flex-col items-start border bg-cream px-2.5 py-3 text-left transition-all cursor-pointer sm:px-4 sm:py-4 ${
+                className={`group relative flex w-full min-w-0 flex-col items-start border bg-cream px-4 py-4 text-left transition-all cursor-pointer sm:px-4 sm:py-4 ${
                   isActive
                     ? "border-rust bg-cream border-l-[3px] border-l-rust"
                     : "border-dark/10 hover:border-dark/25 hover:bg-[#F8F4EC]"
                 }`}
               >
                 <span
-                  className={`mb-2 flex h-8 w-8 items-center justify-center font-display text-sm transition-colors sm:h-9 sm:w-9 sm:text-base ${
+                  className={`mb-2.5 flex h-9 w-9 shrink-0 items-center justify-center font-display text-sm transition-colors sm:h-9 sm:w-9 sm:text-base ${
                     isActive ? "bg-rust text-cream" : "bg-dark/8 text-dark/70 group-hover:bg-dark/12"
                   }`}
                 >
                   {letter}
                 </span>
-                <h3 className="font-display text-sm font-light text-dark sm:text-base md:text-lg">{item.name}</h3>
-                <p className="mt-1 hidden text-[11px] font-light leading-snug text-dark/55 sm:block md:text-xs">
+                <h3 className="font-display text-base font-light leading-snug text-dark break-words sm:text-lg md:text-xl">
+                  {item.name}
+                </h3>
+                <p className="mt-1.5 text-[11px] font-light leading-snug text-dark/55 md:text-xs">
                   {item.bedrooms} bed · {item.bathrooms} bath · {item.area.toLocaleString()} sq.ft.
                 </p>
-                <span className="mt-2 text-[8px] font-bold uppercase tracking-widest text-dark/40 sm:mt-3">
+                <span className="mt-2.5 text-[8px] font-bold uppercase tracking-widest text-dark/40 sm:mt-3">
                   {getPlanViews(item).length > 1
                     ? `${getPlanViews(item).length} sheets`
                     : "Plan set"}

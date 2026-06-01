@@ -65,7 +65,7 @@ export function ImageGallery() {
   const repeatedImages = [...galleryImages, ...galleryImages, ...galleryImages];
 
   return (
-    <SectionWrapper id="experience-gallery" dark={false} className="!pt-0 !pb-0 overflow-hidden">
+    <SectionWrapper id="experience-gallery" dark={false} className="!pt-6 !pb-0 md:!pt-10 overflow-hidden">
       <NoScrollbarStyle />
       
       <div className="flex flex-col items-center mb-0">
