@@ -5,37 +5,53 @@ import { useLayoutEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ScrollSnapCarousel } from "./ui/scroll-snap-carousel";
 import { ensureGsapPlugins } from "@/lib/gsap";
+import { cloudinaryImageUrl } from "@/lib/cloudinary";
 import { SectionWrapper } from "./ui/section-wrapper";
 import { SectionLabel } from "./ui/section-label";
 import { SectionHeadline } from "./ui/section-headline";
 import { BodyText } from "./ui/body-text";
 import { Annotation } from "./ui/annotation";
 
+/** Card images: ~400px column × 2× DPR; Cloudinary serves WebP/AVIF via f_auto. */
+const BLOG_CARD_WIDTH = 800;
+
 const articles = [
   {
     title: "Thank You to Our Team",
     description:
       "Sydney Oaks wouldn't be possible without the relentless hard work and dedication of this team. While appreciation day is every day for us, we wanted to take a moment to officially remind everyone how incredibly valued you are. Thank you for bringing this vision to life!",
-    image: "/images/blog/sydney-oaks-team-appreciation.jpg",
+    imagePublicId: "shree-blog/sydney-oaks-team-appreciation",
     date: "March 29, 2025",
   },
   {
     title: "The Doors are Open at Sydney Oaks",
     description:
       "On Thursday, April 23, 2026, we celebrated the grand opening of our brand-new designer model home at 1161 Dahlonega Hwy, Cumming, Georgia. Guests enjoyed an exclusive first-look event featuring guided tours of these stunning modern townhomes and excellent refreshments.",
-    image: "/images/blog/sydney-oaks-grand-opening.jpg",
+    imagePublicId: "shree-blog/sydney-oaks-grand-opening",
     date: "April 23, 2026",
   },
   {
     title: "Exciting Progress at Sydney Oaks",
     description:
       "Exciting progress is unfolding at Sydney Oaks in Atlanta, Georgia. While the premier community's site was cleared of original trees for grading and initial construction, a meticulous landscaping plan will soon bring back lush greenery and vibrant canopy trees to restore its natural beauty.",
-    image: "/images/blog/sydney-oaks-landscaping-progress.jpg",
+    imagePublicId: "shree-blog/sydney-oaks-landscaping-progress",
     date: "Dec 10, 2025",
   },
-];
+] as const;
 
-function ArticleCard({ article, index }: { article: (typeof articles)[number]; index: number }) {
+function ArticleCard({
+  article,
+  index,
+  priority = false,
+}: {
+  article: (typeof articles)[number];
+  index: number;
+  priority?: boolean;
+}) {
+  const imageSrc = cloudinaryImageUrl(article.imagePublicId, {
+    width: BLOG_CARD_WIDTH,
+    quality: "auto:good",
+  });
   return (
     <motion.article
       key={article.title}
@@ -47,9 +63,13 @@ function ArticleCard({ article, index }: { article: (typeof articles)[number]; i
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden">
         <Image
-          src={article.image}
+          src={imageSrc}
           alt={article.title}
           fill
+          unoptimized
+          priority={priority}
+          loading={priority ? undefined : "lazy"}
+          sizes="(max-width: 768px) 85vw, 33vw"
           className="object-cover"
         />
       </div>
@@ -120,7 +140,12 @@ export function RecentArticlesSection() {
       <div className="hidden md:grid gap-px bg-border/20 grid-cols-3">
         <AnimatePresence mode="popLayout">
           {visibleArticles.map((article, index) => (
-            <ArticleCard key={article.title} article={article} index={index} />
+            <ArticleCard
+              key={article.title}
+              article={article}
+              index={index}
+              priority={index === 0}
+            />
           ))}
         </AnimatePresence>
       </div>
@@ -139,7 +164,12 @@ export function RecentArticlesSection() {
             dotInactiveClassName="h-1 w-3 bg-[#1C1208]/10"
           >
             {mobileArticles.map((article, idx) => (
-              <ArticleCard key={article.title} article={article} index={idx} />
+              <ArticleCard
+                key={article.title}
+                article={article}
+                index={idx}
+                priority={idx === 0}
+              />
             ))}
           </ScrollSnapCarousel>
         </div>
