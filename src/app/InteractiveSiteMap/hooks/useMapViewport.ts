@@ -6,6 +6,7 @@ const MIN_SCALE = 1;
 const MAX_SCALE = 3.5;
 const ZOOM_STEP = 0.35;
 const MIN_PINCH_DISTANCE = 10;
+const DRAG_THRESHOLD_PX = 4;
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -41,6 +42,7 @@ type DragState = {
   startY: number;
   originX: number;
   originY: number;
+  captured: boolean;
 };
 
 type PinchState = {
@@ -101,7 +103,7 @@ export function useMapViewport() {
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       if (e.button !== 0) return;
-      const target = e.target as HTMLElement;
+      const target = e.target as Element;
       if (target.closest("[data-map-control]")) return;
 
       movedRef.current = false;
@@ -111,9 +113,8 @@ export function useMapViewport() {
         startY: e.clientY,
         originX: offset.x,
         originY: offset.y,
+        captured: false,
       };
-      setIsDragging(true);
-      e.currentTarget.setPointerCapture(e.pointerId);
     },
     [offset.x, offset.y],
   );
@@ -127,9 +128,21 @@ export function useMapViewport() {
       const dy = e.clientY - drag.startY;
       if (scale <= 1) return;
 
-      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
-        movedRef.current = true;
+      const pastThreshold =
+        Math.abs(dx) > DRAG_THRESHOLD_PX || Math.abs(dy) > DRAG_THRESHOLD_PX;
+      if (!pastThreshold) return;
+
+      if (!drag.captured) {
+        dragRef.current = { ...drag, captured: true };
+        setIsDragging(true);
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
       }
+
+      movedRef.current = true;
       applyOffset(drag.originX + dx, drag.originY + dy);
     },
     [applyOffset, scale],
@@ -138,15 +151,17 @@ export function useMapViewport() {
   const onPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     const drag = dragRef.current;
     if (drag && drag.pointerId === e.pointerId) {
+      if (drag.captured) {
+        try {
+          e.currentTarget.releasePointerCapture(e.pointerId);
+        } catch {
+          /* already released */
+        }
+      }
       dragRef.current = null;
       setIsDragging(false);
       if (scaleRef.current <= MIN_SCALE) {
         movedRef.current = false;
-      }
-      try {
-        e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch {
-        /* already released */
       }
     }
   }, []);

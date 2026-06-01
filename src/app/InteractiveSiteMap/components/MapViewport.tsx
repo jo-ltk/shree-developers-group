@@ -25,12 +25,13 @@ export function MapViewport({ children }: { children: ReactNode }) {
         onClickCapture={(e) => {
           if (!movedRef.current) return;
 
-          const target = e.target as HTMLElement;
-          if (target.closest("[data-map-lot], [data-map-control]")) {
+          const target = e.target as Element;
+          if (target.closest("[data-map-control]")) {
             movedRef.current = false;
             return;
           }
 
+          // Suppress stray clicks after pan (retargeted to viewport DIV)
           e.stopPropagation();
           e.preventDefault();
           movedRef.current = false;
