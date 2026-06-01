@@ -1,7 +1,17 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, Bath, BedDouble, Car, Home, MessageCircle, Map, List } from "lucide-react";
+import {
+  ArrowLeft,
+  Bath,
+  BedDouble,
+  Car,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  List,
+  Map,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -46,6 +56,7 @@ function resolveLotDisplay(lot: Lot, planId?: string): Lot & { planName?: string
     garage: plan.garage,
     story: plan.story,
     image: plan.image,
+    price: plan.price,
     planName: plan.name,
   };
 }
@@ -53,6 +64,18 @@ function resolveLotDisplay(lot: Lot, planId?: string): Lot & { planName?: string
 function formatBedroomCount(count: number) {
   return `${count} ${count === 1 ? "Bedroom" : "Bedrooms"}`;
 }
+
+function defaultPlanIdForLot(lot: Lot) {
+  return lot.defaultPlanId ?? lot.availablePlans?.[0]?.id ?? "";
+}
+
+const MOBILE_FILTER_LABELS: Record<Filter, string> = {
+  All: "All",
+  Available: "Avail.",
+  "Coming Soon": "Soon",
+  Future: "Future",
+  Sold: "Sold",
+};
 
 function filterCount(filter: Filter, lots: Lot[]) {
   if (filter === "All") return lots.length;
@@ -122,16 +145,16 @@ const FilterBar = ({
   </div>
 );
 
-const FilterBarCompact = ({ 
-  activeFilter, 
+const FilterBarCompact = ({
+  activeFilter,
   setActiveFilter,
   lots,
-}: { 
-  activeFilter: Filter, 
-  setActiveFilter: (f: Filter) => void,
-  lots: Lot[],
+}: {
+  activeFilter: Filter;
+  setActiveFilter: (f: Filter) => void;
+  lots: Lot[];
 }) => (
-  <div className="flex items-center gap-1 overflow-x-auto [scrollbar-width:none]">
+  <div className="-mx-1 flex items-center gap-0.5 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
     {filters.map((f) => {
       const active = activeFilter === f;
       return (
@@ -139,17 +162,15 @@ const FilterBarCompact = ({
           key={f}
           type="button"
           onClick={() => setActiveFilter(f)}
-          className={`relative flex items-center gap-2 whitespace-nowrap px-3 h-8 transition-all duration-300 responsive-stat-label ${
-            active
-              ? "!text-[#1C1208]"
-              : "!text-[#1C1208]/40"
+          className={`relative flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm px-2.5 h-9 transition-all duration-300 responsive-stat-label ${
+            active ? "!text-[#1C1208] bg-[#EDE8DF]" : "!text-[#1C1208]/45"
           }`}
-          style={{
-            fontWeight: 600,
-          }}
+          style={{ fontWeight: 600 }}
         >
-          <span>{f}</span>
-          <span className={`text-[0.5rem] tabular-nums ${active ? "text-[#D43F33]" : "text-[#1C1208]/30"}`}>
+          <span>{MOBILE_FILTER_LABELS[f]}</span>
+          <span
+            className={`text-[0.5rem] tabular-nums ${active ? "text-[#D43F33]" : "text-[#1C1208]/30"}`}
+          >
             {filterCount(f, lots)}
           </span>
         </button>
@@ -285,7 +306,7 @@ const SpecGrid = ({ selectedLot, compact = false }: { selectedLot: Lot, compact?
   </div>
 );
 
-const PlanPicker = ({
+const PlanChips = ({
   plans,
   selectedPlanId,
   onSelect,
@@ -294,11 +315,57 @@ const PlanPicker = ({
   selectedPlanId: string;
   onSelect: (id: string) => void;
 }) => (
-  <div className="mb-5">
-    <Annotation className="mb-2 !font-bold">Available Floor Plans</Annotation>
-    <p className="mb-3 text-xs leading-relaxed text-[#1C1208]/55">
-      Any home site can be built with any of these townhome plans.
-    </p>
+  <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    {plans.map((plan) => {
+      const active = plan.id === selectedPlanId;
+      return (
+        <button
+          key={plan.id}
+          type="button"
+          onClick={() => onSelect(plan.id)}
+          className={`flex shrink-0 items-center gap-2 border px-3 py-2 text-left transition-colors ${
+            active
+              ? "border-[#D43F33] bg-[#EDE8DF]"
+              : "border-[#1C1208]/12 bg-cream"
+          }`}
+        >
+          <div className="h-9 w-9 shrink-0 overflow-hidden border border-[#1C1208]/10 bg-[#EDE8DF]">
+            <img src={plan.image} alt="" className="h-full w-full object-cover" />
+          </div>
+          <div className="min-w-0">
+            <Annotation className={`!font-bold !text-[10px] ${active ? "!text-[#D43F33]" : "!text-[#1C1208]"}`}>
+              {plan.name}
+            </Annotation>
+            <BodyText size="sm" className="!text-[9px] !text-[#1C1208]/55 whitespace-nowrap">
+              {plan.sqft.toLocaleString()} sq ft
+            </BodyText>
+          </div>
+        </button>
+      );
+    })}
+  </div>
+);
+
+const PlanPicker = ({
+  plans,
+  selectedPlanId,
+  onSelect,
+  compact = false,
+}: {
+  plans: HomePlan[];
+  selectedPlanId: string;
+  onSelect: (id: string) => void;
+  compact?: boolean;
+}) => (
+  <div className={compact ? "mb-4" : "mb-5"}>
+    <Annotation className={`mb-2 !font-bold ${compact ? "!text-[10px]" : ""}`}>
+      Available Floor Plans
+    </Annotation>
+    {!compact && (
+      <p className="mb-3 text-xs leading-relaxed text-[#1C1208]/55">
+        Any home site can be built with any of these plans.
+      </p>
+    )}
     <div className="grid grid-cols-1 gap-2">
       {plans.map((plan) => {
         const active = plan.id === selectedPlanId;
@@ -307,13 +374,19 @@ const PlanPicker = ({
             key={plan.id}
             type="button"
             onClick={() => onSelect(plan.id)}
-            className={`flex items-center gap-3 border px-3 py-3 text-left transition-colors ${
+            className={`flex items-center gap-3 border px-3 text-left transition-colors ${
+              compact ? "py-2.5" : "py-3"
+            } ${
               active
                 ? "border-[#D43F33] bg-[#EDE8DF]"
                 : "border-[#1C1208]/10 bg-cream hover:border-[#1C1208]/20"
             }`}
           >
-            <div className="h-14 w-14 shrink-0 overflow-hidden border border-[#1C1208]/10 bg-[#EDE8DF]">
+            <div
+              className={`shrink-0 overflow-hidden border border-[#1C1208]/10 bg-[#EDE8DF] ${
+                compact ? "h-12 w-12" : "h-14 w-14"
+              }`}
+            >
               <img src={plan.image} alt={`${plan.name} floor plan`} className="h-full w-full object-cover" />
             </div>
             <div className="min-w-0 flex-1">
@@ -332,6 +405,179 @@ const PlanPicker = ({
   </div>
 );
 
+const MobileLotDetails = ({
+  selectedLot,
+  baseSelectedLot,
+  selectedPlanId,
+  onSelectPlan,
+  expanded,
+  onToggleExpanded,
+  variant,
+}: {
+  selectedLot: Lot & { planName?: string };
+  baseSelectedLot: Lot;
+  selectedPlanId: string;
+  onSelectPlan: (id: string) => void;
+  expanded: boolean;
+  onToggleExpanded: () => void;
+  variant: "sheet" | "panel";
+}) => {
+  const hasPlans = Boolean(baseSelectedLot.availablePlans?.length);
+  const isSheet = variant === "sheet";
+
+  return (
+    <div
+      className={
+        isSheet
+          ? "shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] pb-[calc(env(safe-area-inset-bottom)+0.5rem)]"
+          : "border-b border-[#1C1208]/10 bg-[#F5F0E8]"
+      }
+    >
+      <div className={`px-4 ${isSheet ? "pt-3 max-[430px]:px-3 max-[430px]:pt-2.5" : "py-5"}`}>
+        {isSheet && (
+          <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-[#1C1208]/15" aria-hidden />
+        )}
+
+        <div className="flex items-start gap-3 max-[430px]:gap-2.5">
+          <div
+            className={`shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF] ${
+              isSheet ? "h-16 w-16 max-[430px]:h-14 max-[430px]:w-14" : "h-20 w-20"
+            }`}
+            style={{ borderRadius: 3 }}
+          >
+            <img src={selectedLot.image} alt={selectedLot.title} className="h-full w-full object-cover" />
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <div className="mb-1 flex flex-wrap items-center gap-2">
+              <Annotation
+                className={`!font-bold !text-[#D43F33] ${isSheet ? "responsive-stat-label max-[430px]:!text-[9px]" : ""}`}
+              >
+                Home {selectedLot.lotNumber}
+              </Annotation>
+              <Annotation
+                className={`border px-2 py-0.5 !font-bold ${listBadgeClass(selectedLot.status)} ${
+                  isSheet ? "responsive-stat-label max-[430px]:!text-[8px]" : "text-[0.55rem]"
+                }`}
+              >
+                {selectedLot.status}
+              </Annotation>
+            </div>
+
+            <h3
+              className={`font-light leading-tight text-[#1C1208] ${
+                isSheet ? "text-xl max-[430px]:text-base" : "text-2xl"
+              }`}
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              {selectedLot.title}
+            </h3>
+
+            {"planName" in selectedLot && selectedLot.planName ? (
+              <Annotation className="mt-1 !font-bold !text-[#D43F33] max-[430px]:!text-[9px]">
+                {selectedLot.planName} · {selectedLot.sqft.toLocaleString()} sq ft
+              </Annotation>
+            ) : null}
+
+            <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+              <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[8px]">
+                {selectedLot.price}
+              </Annotation>
+              <span className="h-1 w-1 rounded-full bg-[#1C1208]/20" />
+              <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[8px]">
+                {formatBedroomCount(selectedLot.beds)} · {selectedLot.baths} Bath
+              </Annotation>
+            </div>
+          </div>
+        </div>
+
+        {hasPlans && !expanded && (
+          <div className="mt-3">
+            <Annotation className="mb-2 !font-bold !text-[9px] !text-[#1C1208]/45 uppercase tracking-[0.14em]">
+              Select floor plan
+            </Annotation>
+            <PlanChips
+              plans={baseSelectedLot.availablePlans!}
+              selectedPlanId={selectedPlanId}
+              onSelect={onSelectPlan}
+            />
+          </div>
+        )}
+
+        {isSheet && (
+          <button
+            type="button"
+            onClick={onToggleExpanded}
+            className="mt-3 flex w-full items-center justify-center gap-2 border border-[#1C1208]/10 bg-[#EDE8DF]/60 py-2.5 text-[#1C1208] transition-colors active:bg-[#EDE8DF]"
+          >
+            <Annotation className="!font-bold !text-[10px] !tracking-[0.16em]">
+              {expanded ? "Show less" : hasPlans ? "Floor plans & full details" : "Full details"}
+            </Annotation>
+            {expanded ? (
+              <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+            ) : (
+              <ChevronUp className="h-3.5 w-3.5 opacity-50" />
+            )}
+          </button>
+        )}
+
+        <AnimatePresence initial={false}>
+          {(expanded || !isSheet) && (
+            <motion.div
+              key="mobile-lot-details-expanded"
+              initial={isSheet ? { height: 0, opacity: 0 } : false}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={isSheet ? { height: 0, opacity: 0 } : undefined}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className={isSheet ? "mt-4 max-h-[min(52dvh,380px)] overflow-y-auto overscroll-contain [scrollbar-width:thin]" : ""}>
+                {hasPlans && expanded && (
+                  <PlanPicker
+                    plans={baseSelectedLot.availablePlans!}
+                    selectedPlanId={selectedPlanId}
+                    onSelect={onSelectPlan}
+                    compact
+                  />
+                )}
+
+                <div className="mb-4 grid grid-cols-2 gap-2 border-t border-[#1C1208]/10 pt-4">
+                  <StatItem compact value={selectedLot.price} label="Price" />
+                  <StatItem
+                    compact
+                    value={selectedLot.sqft.toLocaleString()}
+                    label="Total SQ FT"
+                    separator
+                  />
+                </div>
+
+                <SpecGrid selectedLot={selectedLot} compact />
+
+                <div className="mt-5">
+                  <ButtonPrimary href="/#request-info" className="w-full">
+                    Request Home Details
+                  </ButtonPrimary>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {isSheet && !expanded && (
+          <div className="mt-3">
+            <ButtonPrimary
+              href="/#request-info"
+              className="w-full !h-11 max-[430px]:!h-10 !text-[0.55rem]"
+            >
+              Inquire
+            </ButtonPrimary>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export function InteractiveSiteMapClient({
   initialProject,
 }: {
@@ -339,6 +585,7 @@ export function InteractiveSiteMapClient({
 }) {
   const [activeFilter, setActiveFilter] = useState<Filter>("All");
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
+  const [mobileDetailsExpanded, setMobileDetailsExpanded] = useState(false);
   const [selectedMapId, setSelectedMapId] = useState(MAP_CONFIGS[0].id);
   
   // Read the `project` search param on mount and auto-select the matching map
@@ -370,15 +617,17 @@ export function InteractiveSiteMapClient({
 
   const selectedLotId = mapLotSelection[selectedMapId];
   const baseSelectedLot = lots.find((lot) => lot.id === selectedLotId) ?? lots[0];
-  const [selectedPlanId, setSelectedPlanId] = useState(
-    baseSelectedLot.defaultPlanId ?? baseSelectedLot.availablePlans?.[0]?.id ?? "aspen",
+  const [selectedPlanId, setSelectedPlanId] = useState(() =>
+    defaultPlanIdForLot(baseSelectedLot),
   );
 
   useEffect(() => {
-    setSelectedPlanId(
-      baseSelectedLot.defaultPlanId ?? baseSelectedLot.availablePlans?.[0]?.id ?? "aspen",
-    );
+    setSelectedPlanId(defaultPlanIdForLot(baseSelectedLot));
   }, [baseSelectedLot.id, selectedMapId]);
+
+  useEffect(() => {
+    setMobileDetailsExpanded(false);
+  }, [selectedLotId, selectedMapId]);
 
   const selectedLot = resolveLotDisplay(baseSelectedLot, selectedPlanId);
   
@@ -390,8 +639,7 @@ export function InteractiveSiteMapClient({
   // ── Handlers ─────────────────────────────────────────────────────────────
 
   function handleSelectLot(id: number) {
-    setMapLotSelection(prev => ({ ...prev, [selectedMapId]: id }));
-    setMobileTab("map");
+    setMapLotSelection((prev) => ({ ...prev, [selectedMapId]: id }));
     const sb = document.getElementById("sb-scroll");
     if (sb) sb.scrollTo({ top: 0, behavior: "auto" });
   }
@@ -586,21 +834,24 @@ export function InteractiveSiteMapClient({
       ════════════════════════════════════ */}
       <div className="flex flex-1 flex-col overflow-hidden lg:hidden">
 
-        <div className="flex shrink-0 items-center justify-between border-b border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-2">
-          <div className="flex-1 min-w-0">
-            <FilterBarCompact 
-              activeFilter={activeFilter} 
-              setActiveFilter={handleFilterChange} 
-              lots={lots}
-            />
-          </div>
-          <div className="ml-4 shrink-0">
-            <MapSwitcher 
-              selectedMapId={selectedMapId} 
-              setSelectedMapId={setSelectedMapId} 
-              configs={MAP_CONFIGS} 
-              variant="mobile"
-            />
+        <div className="flex shrink-0 flex-col gap-2 border-b border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-2.5 max-[430px]:px-3 max-[430px]:py-2">
+          <FilterBarCompact
+            activeFilter={activeFilter}
+            setActiveFilter={handleFilterChange}
+            lots={lots}
+          />
+          <div className="flex items-center justify-between gap-3 border-t border-[#1C1208]/8 pt-2">
+            <div className="min-w-0 flex-1">
+              <MapSwitcher
+                selectedMapId={selectedMapId}
+                setSelectedMapId={setSelectedMapId}
+                configs={MAP_CONFIGS}
+                variant="mobile"
+              />
+            </div>
+            <Annotation className="shrink-0 !text-[9px] !text-[#1C1208]/35 !tracking-[0.12em]">
+              {visibleLots.length} homes
+            </Annotation>
           </div>
         </div>
 
@@ -620,83 +871,40 @@ export function InteractiveSiteMapClient({
             selectedMap={selectedMap}
           />
 
-          {/* Bottom selected-lot strip — clean single row */}
-          <motion.div
-            key={`m-strip-${selectedLot.id}`}
-            layout={false}
-            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] px-4 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] max-[430px]:px-3 max-[430px]:py-2.5 max-[430px]:pb-[calc(env(safe-area-inset-bottom)+0.5rem)]"
-          >
-            <div className="flex items-center gap-3 max-[430px]:gap-2.5">
-              <div
-                className="h-16 w-16 max-[430px]:h-12 max-[430px]:w-12 shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF]"
-                style={{ borderRadius: 3 }}
-              >
-                <img
-                  src={selectedLot.image}
-                  alt={selectedLot.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <div className="mb-0.5 flex items-center gap-1.5 max-[430px]:mb-0 max-[430px]:gap-1">
-                  <Annotation className="!font-bold responsive-stat-label !text-[#D43F33] max-[430px]:!text-[9px] max-[430px]:!tracking-[0.12em]">
-                    Home {selectedLot.lotNumber}
-                  </Annotation>
-                  <span className="h-1 w-1 shrink-0 rounded-full bg-[#1C1208]/20" />
-                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[9px] max-[430px]:!tracking-[0.12em]">
-                    {selectedLot.price}
-                  </Annotation>
-                </div>
-
-                <h3
-                  className="mb-0.5 truncate text-xl font-light leading-tight text-[#1C1208] max-[430px]:mb-0 max-[430px]:text-base"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  {selectedLot.title}
-                </h3>
-
-                <div className="flex items-center gap-2 max-[430px]:gap-1.5">
-                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
-                    {formatBedroomCount(selectedLot.beds)}
-                  </Annotation>
-                  <span className="h-2 w-px bg-[#1C1208]/12" />
-                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
-                    {selectedLot.baths} Baths
-                  </Annotation>
-                  <span className="h-2 w-px bg-[#1C1208]/12" />
-                  <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/35 max-[430px]:!text-[8px] max-[430px]:!tracking-[0.1em]">
-                    {selectedLot.sqft.toLocaleString()} sq ft
-                  </Annotation>
-                </div>
-              </div>
-
-              <ButtonPrimary
-                href="/#request-info"
-                className="shrink-0 !h-10 !px-4 !text-[0.55rem] !tracking-[0.2em] max-[430px]:!h-9 max-[430px]:!gap-2 max-[430px]:!px-3 max-[430px]:!text-[0.5rem] max-[430px]:[&>div]:!h-6 max-[430px]:[&>div]:!w-6"
-              >
-                Inquire
-              </ButtonPrimary>
-            </div>
-          </motion.div>
+          <MobileLotDetails
+            selectedLot={selectedLot}
+            baseSelectedLot={baseSelectedLot}
+            selectedPlanId={selectedPlanId}
+            onSelectPlan={setSelectedPlanId}
+            expanded={mobileDetailsExpanded}
+            onToggleExpanded={() => setMobileDetailsExpanded((open) => !open)}
+            variant="sheet"
+          />
         </div>
 
         {/* ── LIST TAB ── */}
         {mobileTab === "list" && (
-          <div className="flex flex-1 flex-col overflow-hidden">
-            <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#1C120820_transparent]">
-              <div className="px-4 py-6 border-b border-[#1C1208]/10">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-width:thin] [scrollbar-color:#1C120820_transparent]">
+              <MobileLotDetails
+                selectedLot={selectedLot}
+                baseSelectedLot={baseSelectedLot}
+                selectedPlanId={selectedPlanId}
+                onSelectPlan={setSelectedPlanId}
+                expanded
+                onToggleExpanded={() => undefined}
+                variant="panel"
+              />
+              <div className="px-4 py-4 border-b border-[#1C1208]/10 max-[430px]:px-3">
                 <SectionLabel counter={`${visibleLots.length} HOMES`}>
-                   Available Homes
+                  Available Homes
                 </SectionLabel>
               </div>
-              <LotRows 
-                visibleLots={visibleLots} 
-                selectedLotId={selectedLotId} 
-                handleSelectLot={handleSelectLot} 
-                reduceMotion={reduceMotion} 
+              <LotRows
+                visibleLots={visibleLots}
+                selectedLotId={selectedLotId}
+                handleSelectLot={handleSelectLot}
+                reduceMotion={reduceMotion}
               />
             </div>
           </div>

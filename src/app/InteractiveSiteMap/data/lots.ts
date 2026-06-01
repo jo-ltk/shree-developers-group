@@ -1,4 +1,8 @@
+import { getProjectBySlug } from "@/lib/projects-data";
+
 import type { Lot, LotStatus } from "../types/site-map";
+import { ELYSIAN_GATES_ESTATE_PLANS } from "./elysian-gates-plans";
+import { formatPlanNameList } from "./project-floor-plans";
 import {
   SYDNEY_OAKS_COMMUNITY_SUMMARY,
   SYDNEY_OAKS_TOWNHOME_PLANS,
@@ -54,6 +58,7 @@ function sydneyOaksPriceForStatus(status: LotStatus) {
 
 function generateSydneyOaksLots(count: number): Lot[] {
   const defaultPlan = SYDNEY_OAKS_TOWNHOME_PLANS[0];
+  const planNames = formatPlanNameList(SYDNEY_OAKS_TOWNHOME_PLANS);
 
   return Array.from({ length: count }, (_, offset) => {
     const id = offset + 1;
@@ -72,8 +77,42 @@ function generateSydneyOaksLots(count: number): Lot[] {
       status,
       image: defaultPlan.image,
       description:
-        "Any home site at Sydney Oaks can be built with the Aspen, Birch, or Elm townhome plan. Choose the layout that fits your family — all three options are available on every home.",
+        `Any home site at Sydney Oaks can be built with the ${planNames} townhome plan. Choose the layout that fits your family — all options are available on every home.`,
       availablePlans: SYDNEY_OAKS_TOWNHOME_PLANS,
+      defaultPlanId: defaultPlan.id,
+    };
+  });
+}
+
+function elysianGatesPriceForStatus(status: LotStatus) {
+  if (status === "Sold") return "Sold";
+  if (status === "Future") return "Pricing TBD";
+  return getProjectBySlug("elysian-gates")?.priceText ?? "From $1.3M";
+}
+
+function generateElysianGatesLots(count: number): Lot[] {
+  const defaultPlan = ELYSIAN_GATES_ESTATE_PLANS[0];
+  const planNames = formatPlanNameList(ELYSIAN_GATES_ESTATE_PLANS);
+
+  return Array.from({ length: count }, (_, offset) => {
+    const id = offset + 1;
+    const status = statusForLot(id + 100);
+
+    return {
+      id,
+      lotNumber: `${id}`,
+      title: `Home ${id}`,
+      price: elysianGatesPriceForStatus(status),
+      beds: defaultPlan.beds,
+      baths: defaultPlan.baths,
+      sqft: defaultPlan.sqft,
+      garage: defaultPlan.garage,
+      story: defaultPlan.story,
+      status,
+      image: defaultPlan.image,
+      description:
+        `Any homesite at Elysian Gates can be built with the ${planNames} estate plan. Choose the layout that fits your family — all options are available on every homesite.`,
+      availablePlans: ELYSIAN_GATES_ESTATE_PLANS,
       defaultPlanId: defaultPlan.id,
     };
   });
@@ -151,7 +190,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     id: 'elysian-gates',
     name: 'Elysian Gates',
     url: '/svg/elysian-gates.svg',
-    lots: generateLots(28, 100),
+    lots: generateElysianGatesLots(28),
     hotspotSettings: {
       padding: 0.25,
       radiusOffset: 4,
@@ -180,4 +219,8 @@ export const MAP_CONFIGS: MapConfig[] = [
 // For backward compatibility during refactor
 export const lots = MAP_CONFIGS[0].lots;
 export const lotById = new Map(lots.map((lot) => [lot.id, lot]));
-export { SYDNEY_OAKS_COMMUNITY_SUMMARY, SYDNEY_OAKS_TOWNHOME_PLANS };
+export {
+  ELYSIAN_GATES_ESTATE_PLANS,
+  SYDNEY_OAKS_COMMUNITY_SUMMARY,
+  SYDNEY_OAKS_TOWNHOME_PLANS,
+};
