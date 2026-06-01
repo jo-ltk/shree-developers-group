@@ -1,3 +1,7 @@
+/**
+ * Re-upload blog card images to Cloudinary.
+ * Sources are not in git — place JPEGs under public/images/blog/ before running.
+ */
 import { v2 as cloudinary } from "cloudinary";
 import { readFileSync } from "fs";
 import { resolve, dirname } from "path";
