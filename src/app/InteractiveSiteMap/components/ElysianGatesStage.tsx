@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Lot, Hotspot, LotStatus, MapViewBox } from "../types/site-map";
+import { LotHotspotOverlay } from "./LotHotspotOverlay";
 
 type Filter = "All" | LotStatus;
 
@@ -14,8 +15,6 @@ const SETTINGS = {
   radiusOffset: 4,
   cxOffsetFactor: 1.26,
   cyOffsetFactor: 2.05,
-  strokeColor: "#D43F33",
-  strokeWidth: 6,
 };
 
 /**
@@ -151,50 +150,17 @@ export function ElysianGatesStage({
                 />
               )}
 
-              {renderedHotspots.map(({ hotspot, matchesFilter, isSelected }) => (
-                <g key={hotspot.id}>
-                    {/* Glow ring */}
-                    {activeFilter !== "All" && matchesFilter && (
-                        <circle
-                            cx={hotspot.x + hotspot.width / SETTINGS.cxOffsetFactor}
-                            cy={hotspot.y + hotspot.height / SETTINGS.cyOffsetFactor}
-                            r={hotspot.width / 2 + SETTINGS.radiusOffset}
-                            className="fill-none"
-                            stroke="rgba(201,174,123,0.75)" strokeWidth={3}
-                            style={{ filter: "drop-shadow(0 0 8px rgba(201,174,123,0.7))" }}
-                        />
-                    )}
-
-                    {/* Fog overlay */}
-                    {!matchesFilter && (
-                        <circle
-                            cx={hotspot.x + hotspot.width / SETTINGS.cxOffsetFactor}
-                            cy={hotspot.y + hotspot.height / SETTINGS.cyOffsetFactor}
-                            r={hotspot.width / 2 + SETTINGS.radiusOffset}
-                            fill="rgba(245,240,232,0.82)"
-                        />
-                    )}
-
-                  {isSelected && (
-                    <circle
-                      cx={hotspot.x + hotspot.width / SETTINGS.cxOffsetFactor}
-                      cy={hotspot.y + hotspot.height / SETTINGS.cyOffsetFactor}
-                      r={hotspot.width / 2 + SETTINGS.radiusOffset}
-                      className="fill-none lot-pulse-ring"
-                      stroke={SETTINGS.strokeColor}
-                      strokeWidth={SETTINGS.strokeWidth}
-                    />
-                  )}
-
-                  <rect
-                    data-map-lot
-                    x={hotspot.x} y={hotspot.y}
-                    width={hotspot.width} height={hotspot.height}
-                    fill="transparent"
-                    className={matchesFilter ? "cursor-pointer" : "cursor-default"}
-                    onClick={() => matchesFilter && onSelectLot(hotspot.id)}
-                  />
-                </g>
+              {renderedHotspots.map(({ hotspot, lot, matchesFilter, isSelected }) => (
+                <LotHotspotOverlay
+                  key={hotspot.id}
+                  hotspot={hotspot}
+                  lot={lot}
+                  matchesFilter={matchesFilter}
+                  isSelected={isSelected}
+                  activeFilter={activeFilter}
+                  settings={SETTINGS}
+                  onSelectLot={onSelectLot}
+                />
               ))}
             </svg>
           </div>
