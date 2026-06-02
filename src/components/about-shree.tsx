@@ -10,6 +10,7 @@ import { BodyText } from "@/components/ui/body-text";
 import { StatItem } from "@/components/ui/stat-item";
 import { ShieldCheck, MapPinned } from "lucide-react";
 import { Annotation } from "./ui/annotation";
+import { StoryFoundersStrip } from "./story-founders-strip";
 import { cn } from "@/lib/utils";
 
 const CHAPTERS = [
@@ -291,7 +292,7 @@ export function AboutShree() {
                     key={c.id}
                     aria-hidden={!isActive}
                     className={cn(
-                      "flex w-full flex-col justify-start gap-4 px-8 pb-6 pt-6 sm:px-10 lg:px-0 lg:pb-8 lg:pt-0",
+                      "flex w-full flex-col justify-start gap-4 pb-6 pt-6 lg:px-0 lg:pb-8 lg:pt-0",
                       "transition-opacity duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
                       isActive
                         ? "relative opacity-100"
@@ -321,7 +322,7 @@ export function AboutShree() {
             </div>
 
             <div
-              className="flex items-center gap-1.5 px-8 pb-4 pt-4 sm:px-10 lg:px-0"
+              className="flex items-center gap-1.5 pb-4 pt-4 lg:px-0"
               role="tablist"
               aria-label="Story chapter position"
             >
@@ -342,6 +343,11 @@ export function AboutShree() {
             </div>
           </div>
 
+        </div>
+
+        {/* ── Founders strip ── */}
+        <div className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 2xl:px-32">
+          <StoryFoundersStrip />
         </div>
       </div>
 
