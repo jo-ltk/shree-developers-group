@@ -3,8 +3,15 @@
 import type { ReactNode } from "react";
 import { useMapViewport } from "../hooks/useMapViewport";
 import { MapZoomControls } from "./MapControls";
+import { SiteMapStatusLegend } from "./SiteMapStatusLegend";
 
-export function MapViewport({ children }: { children: ReactNode }) {
+export function MapViewport({
+  children,
+  showStatusLegend = false,
+}: {
+  children: ReactNode;
+  showStatusLegend?: boolean;
+}) {
   const {
     containerRef,
     zoomIn,
@@ -31,7 +38,6 @@ export function MapViewport({ children }: { children: ReactNode }) {
             return;
           }
 
-          // Suppress stray clicks after pan (retargeted to viewport DIV)
           e.stopPropagation();
           e.preventDefault();
           movedRef.current = false;
@@ -43,25 +49,35 @@ export function MapViewport({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      {/* Desktop — refined vertical stack, bottom-right */}
-      <MapZoomControls
-        variant="desktop"
-        onZoomIn={zoomIn}
-        onZoomOut={zoomOut}
-        onReset={reset}
-        canReset={canPan}
-        className="absolute bottom-8 right-8 z-30 hidden lg:flex"
-      />
+      {/* Desktop — zoom, then legend underneath (bottom-right, off the map) */}
+      <div className="pointer-events-none absolute bottom-8 right-8 z-30 hidden flex-col items-end gap-1.5 lg:flex">
+        <MapZoomControls
+          variant="desktop"
+          onZoomIn={zoomIn}
+          onZoomOut={zoomOut}
+          onReset={reset}
+          canReset={canPan}
+          className="pointer-events-auto"
+        />
+        {showStatusLegend && (
+          <SiteMapStatusLegend variant="desktop" />
+        )}
+      </div>
 
-      {/* Mobile — large touch targets, above lot strip */}
-      <MapZoomControls
-        variant="mobile"
-        onZoomIn={zoomIn}
-        onZoomOut={zoomOut}
-        onReset={reset}
-        canReset={canPan}
-        className="absolute bottom-4 right-3 z-30 flex lg:hidden max-[430px]:bottom-3 max-[430px]:right-2"
-      />
+      {/* Mobile — zoom pill on top, compact dot strip below */}
+      <div className="pointer-events-none absolute bottom-4 right-3 z-30 flex flex-col items-end gap-1.5 lg:hidden max-[430px]:bottom-3 max-[430px]:right-2">
+        <MapZoomControls
+          variant="mobile"
+          onZoomIn={zoomIn}
+          onZoomOut={zoomOut}
+          onReset={reset}
+          canReset={canPan}
+          className="pointer-events-auto"
+        />
+        {showStatusLegend && (
+          <SiteMapStatusLegend variant="mobile" />
+        )}
+      </div>
     </div>
   );
 }

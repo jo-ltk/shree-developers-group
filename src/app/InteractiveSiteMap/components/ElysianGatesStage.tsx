@@ -11,7 +11,7 @@ const MAP_URL = "/svg/elysian-gates.svg";
 
 // ELYSIAN GATES SPECIFIC SETTINGS
 const SETTINGS = {
-  padding: 0.25,
+  padding: 0.42,
   radiusOffset: 4,
   cxOffsetFactor: 1.26,
   cyOffsetFactor: 2.05,

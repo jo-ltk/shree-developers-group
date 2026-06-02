@@ -257,7 +257,7 @@ const MapPanel = ({
         </div>
       </div>
     }>
-      <MapViewport>
+      <MapViewport showStatusLegend={selectedMap.id !== "hanover-park-at-stockbridge"}>
         {selectedMap.id === "sydney-oaks" ? (
           <SydneyOaksStage
             activeFilter={activeFilter}

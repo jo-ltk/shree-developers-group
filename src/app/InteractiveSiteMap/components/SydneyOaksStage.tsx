@@ -11,7 +11,7 @@ const MAP_URL = "/svg/siteMap-final.svg";
 
 // SYDNEY OAKS SPECIFIC SETTINGS
 const SETTINGS = {
-  padding: 0.3,
+  padding: 0.42,
   radiusOffset: 5,
   cxOffsetFactor: 1.27,
   cyOffsetFactor: 2.0,

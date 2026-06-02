@@ -1,39 +1,38 @@
 import type { LotStatus } from "../types/site-map";
 
-export type LotStatusRingStyle = {
-  stroke: string;
+export type LotStatusOverlayStyle = {
   fill: string;
+  stroke: string;
   strokeWidth: number;
 };
 
-/** Hotspot ring colors: green = available, black = coming soon / future, red = sold */
-export function lotStatusRingStyle(
+/** Lot status rings: green = available, red = sold, dark = coming soon */
+export function lotStatusOverlayStyle(
   status: LotStatus,
   selected = false,
-): LotStatusRingStyle {
-  const fillOpacity = selected ? 0.3 : 0.22;
-  const strokeWidth = selected ? 4 : 2.5;
+): LotStatusOverlayStyle {
+  const strokeWidth = selected ? 4.5 : 3;
 
   switch (status) {
     case "Available":
       return {
-        stroke: "#14532D",
-        fill: `rgba(20, 83, 45, ${fillOpacity})`,
+        fill: "rgba(22, 163, 74, 0.32)",
+        stroke: selected ? "#D43F33" : "#15803D",
         strokeWidth,
       };
     case "Sold":
       return {
-        stroke: "#991B1B",
-        fill: `rgba(153, 27, 27, ${fillOpacity})`,
+        fill: "rgba(185, 28, 28, 0.34)",
+        stroke: selected ? "#D43F33" : "#B91C1C",
         strokeWidth,
       };
     case "Coming Soon":
     case "Future":
     default:
       return {
-        stroke: "#1C1208",
-        fill: `rgba(28, 18, 8, ${fillOpacity})`,
-        strokeWidth,
+        fill: "rgba(28, 18, 8, 0.22)",
+        stroke: selected ? "#D43F33" : "#1C1208",
+        strokeWidth: selected ? 4.5 : 2.5,
       };
   }
 }
