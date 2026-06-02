@@ -361,8 +361,10 @@ export function AboutShree() {
         ].map(({ value, label, muted }) => (
           <div
             key={label}
-            className={`px-4 sm:px-8 py-6 sm:py-10 flex flex-col items-center lg:items-start text-center lg:text-left
-              ${muted ? "bg-[#EDE8DF]" : "bg-[#F5F0E8]"}`}
+            className={cn(
+              "px-4 sm:px-8 py-6 sm:py-10 flex flex-col items-center text-center",
+              muted ? "bg-[#EDE8DF]" : "bg-[#F5F0E8]",
+            )}
           >
             <StatItem value={value} label={label} />
           </div>

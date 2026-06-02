@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import {
   Phone,
-  MessageCircle,
   Instagram,
   ChevronDown,
 } from "lucide-react";
@@ -13,6 +12,7 @@ import { SectionHeadline } from "@/components/ui/section-headline";
 import { BodyText } from "@/components/ui/body-text";
 import { Annotation } from "@/components/ui/annotation";
 import { SectionLabel } from "./ui/section-label";
+import { WhatsAppBrandIcon } from "@/components/ui/whatsapp-brand-icon";
 import {
   COMPANY_CONTACT,
   COMPANY_TEL,
@@ -133,9 +133,11 @@ export default function CommunityDetailsPage() {
                     transition={{ duration: 0.4, ease: "circOut" }}
                     className="flex items-center justify-center gap-3 p-4 md:p-6 bg-white border border-[#1C1208]/5 group"
                   >
-                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-[#25D366] group-hover:text-white group-hover:scale-110 transition-all" />
+                    <span className="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center md:h-6 md:w-6">
+                      <WhatsAppBrandIcon className="h-4 w-4 text-[#25D366] transition-colors duration-300 group-hover:text-white md:h-5 md:w-5" />
+                    </span>
                     <Annotation
-                      className="!font-bold transition-colors responsive-stat-label"
+                      className="!font-bold !text-dark/70 transition-colors duration-300 group-hover:!text-white responsive-stat-label"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                       }}
@@ -152,9 +154,11 @@ export default function CommunityDetailsPage() {
                     transition={{ duration: 0.4, ease: "circOut" }}
                     className="flex items-center justify-center gap-3 p-4 md:p-6 bg-white border border-[#1C1208]/5 group"
                   >
-                    <Instagram className="w-4 h-4 md:w-5 md:h-5 text-[#E4405F] group-hover:text-white group-hover:rotate-12 group-hover:scale-110 transition-all" />
+                    <span className="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center md:h-6 md:w-6">
+                      <Instagram className="h-4 w-4 text-[#E4405F] transition-colors duration-300 group-hover:text-white md:h-5 md:w-5" strokeWidth={1.75} />
+                    </span>
                     <Annotation
-                      className="!font-bold transition-colors responsive-stat-label"
+                      className="!font-bold !text-dark/70 transition-colors duration-300 group-hover:!text-white responsive-stat-label"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                       }}
