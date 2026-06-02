@@ -11,20 +11,20 @@ export function lotStatusRingStyle(
   status: LotStatus,
   selected = false,
 ): LotStatusRingStyle {
-  const fillOpacity = selected ? 0.24 : 0.14;
-  const strokeWidth = selected ? 4 : 2;
+  const fillOpacity = selected ? 0.3 : 0.22;
+  const strokeWidth = selected ? 4 : 2.5;
 
   switch (status) {
     case "Available":
       return {
-        stroke: "#16A34A",
-        fill: `rgba(22, 163, 74, ${fillOpacity})`,
+        stroke: "#14532D",
+        fill: `rgba(20, 83, 45, ${fillOpacity})`,
         strokeWidth,
       };
     case "Sold":
       return {
-        stroke: "#DC2626",
-        fill: `rgba(220, 38, 38, ${fillOpacity})`,
+        stroke: "#991B1B",
+        fill: `rgba(153, 27, 27, ${fillOpacity})`,
         strokeWidth,
       };
     case "Coming Soon":

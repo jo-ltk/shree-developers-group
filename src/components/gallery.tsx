@@ -61,7 +61,7 @@ const communities: Community[] = [
     index: "02",
     concept:
       "44-acre gated enclave with 28 estate homes, pickleball courts, gazebo, and walking trails in Suwanee.",
-    specs: { beds: 5, baths: 5, area: "5,000 SQ. FT.", bedroomLabel: "5–6 Bedrooms" },
+    specs: { beds: 5, baths: 4.5, area: "5,000 SQ. FT.", bedroomLabel: "5 Bedrooms" },
     availability: "Available",
   },
   {

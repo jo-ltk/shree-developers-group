@@ -348,7 +348,7 @@ export function ElysianGatesDetails({ stacked = false }: { stacked?: boolean }) 
               className="!text-white/80 responsive-body-sm max-w-xl mx-auto lg:mx-0 m-0 leading-relaxed"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              A private gated enclave on 44 acres with 28 estate homes — 5–6 bedroom residences
+              A private gated enclave on 44 acres with 28 estate homes — 5-bedroom residences
               from $1.3M, zoned for Lambert High School and surrounded by pickleball courts,
               a gazebo, and walking trails.
             </BodyText>
