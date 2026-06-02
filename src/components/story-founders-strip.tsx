@@ -130,9 +130,6 @@ function CompanyGridTile({ className }: { className?: string }) {
         >
           Shree Developers
         </p>
-        <Annotation className="!text-[#B45309]/70 !tracking-[0.18em]">
-          Est. 2009 · GA
-        </Annotation>
         <p
           className="mx-auto max-w-[11rem] font-light leading-snug text-[#1C1208]/45 text-[0.6rem] sm:text-[0.65rem]"
           style={{ fontFamily: "'Poppins', sans-serif" }}
