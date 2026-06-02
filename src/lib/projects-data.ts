@@ -1139,11 +1139,11 @@ export const allProjects: ProjectData[] = [
       {
         name: "Aspen",
         seriesLetter: "A",
-        image: "/images/floor-plans/aspen/first-floor.jpg",
+        image: "/images/floor-plans/aspen/terrace.jpg",
         views: [
+          { label: "Terrace", image: "/images/floor-plans/aspen/terrace.jpg" },
           { label: "First Floor", image: "/images/floor-plans/aspen/first-floor.jpg" },
           { label: "Second Floor", image: "/images/floor-plans/aspen/second-floor.jpg" },
-          { label: "Terrace", image: "/images/floor-plans/aspen/terrace.jpg" },
           { label: "Optional 01", image: "/images/floor-plans/aspen/optional-01.jpg" },
           { label: "Optional 02", image: "/images/floor-plans/aspen/optional-02.jpg" },
         ],
@@ -1159,11 +1159,11 @@ export const allProjects: ProjectData[] = [
       {
         name: "Birch",
         seriesLetter: "B",
-        image: "/images/floor-plans/birch/first-floor.jpg",
+        image: "/images/floor-plans/birch/terrace.jpg",
         views: [
+          { label: "Terrace", image: "/images/floor-plans/birch/terrace.jpg" },
           { label: "First Floor", image: "/images/floor-plans/birch/first-floor.jpg" },
           { label: "Second Floor", image: "/images/floor-plans/birch/second-floor.jpg" },
-          { label: "Terrace", image: "/images/floor-plans/birch/terrace.jpg" },
           { label: "Optional 01", image: "/images/floor-plans/birch/optional-01.jpg" },
           { label: "Optional 02", image: "/images/floor-plans/birch/optional-02.jpg" },
         ],
@@ -1179,11 +1179,11 @@ export const allProjects: ProjectData[] = [
       {
         name: "Elm",
         seriesLetter: "E",
-        image: "/images/floor-plans/elm/first-floor.jpg",
+        image: "/images/floor-plans/elm/terrace.jpg",
         views: [
+          { label: "Terrace", image: "/images/floor-plans/elm/terrace.jpg" },
           { label: "First Floor", image: "/images/floor-plans/elm/first-floor.jpg" },
           { label: "Second Floor", image: "/images/floor-plans/elm/second-floor.jpg" },
-          { label: "Terrace", image: "/images/floor-plans/elm/terrace.jpg" },
           { label: "Optional", image: "/images/floor-plans/elm/optional-01.jpg" },
         ],
         bedrooms: 4,
