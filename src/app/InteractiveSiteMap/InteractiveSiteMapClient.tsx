@@ -72,8 +72,8 @@ function defaultPlanIdForLot(lot: Lot) {
 const MOBILE_FILTER_LABELS: Record<Filter, string> = {
   All: "All",
   Available: "Avail.",
-  "Coming Soon": "Soon",
-  Future: "Future",
+  "Coming Soon": "Building",
+  Future: "Upcoming",
   Sold: "Sold",
 };
 
@@ -95,7 +95,11 @@ function listBadgeClass(status: LotStatus) {
   if (status === "Available")
     return "border-[#C9AE7B]/40 text-[#8B6A20] bg-[#C9AE7B]/10";
   if (status === "Sold")
-    return "border-[#1C1208]/15 text-[#1C1208]/40 bg-[#1C1208]/5";
+    return "border-[#B91C1C]/35 text-[#B91C1C] bg-[#B91C1C]/8";
+  if (status === "Coming Soon")
+    return "border-[#C9AE7B]/50 text-[#8B6A20] bg-[#C9AE7B]/12";
+  if (status === "Future")
+    return "border-[#1C1208]/20 text-[#1C1208]/55 bg-[#1C1208]/5";
   return "border-[#D43F33]/30 text-[#D43F33] bg-[#D43F33]/5";
 }
 

@@ -1,7 +1,12 @@
 const LEGEND_ITEMS = [
-  { short: "Avail", label: "Available", fill: "rgba(22, 163, 74, 0.55)", stroke: "#15803D" },
-  { short: "Sold", label: "Sold", fill: "rgba(185, 28, 28, 0.55)", stroke: "#B91C1C" },
-  { short: "Soon", label: "Coming soon", fill: "rgba(28, 18, 8, 0.35)", stroke: "#1C1208" },
+  { short: "Sold", label: "Sold out", fill: "rgba(185, 28, 28, 0.55)", stroke: "#B91C1C" },
+  {
+    short: "Avail",
+    label: "Construction starting",
+    fill: "rgba(22, 163, 74, 0.55)",
+    stroke: "#15803D",
+  },
+  { short: "Soon", label: "Upcoming", fill: "rgba(28, 18, 8, 0.28)", stroke: "#1C1208" },
 ] as const;
 
 function LegendDot({
@@ -28,7 +33,7 @@ export function SiteMapStatusLegend({ variant }: { variant: "desktop" | "mobile"
       <div
         data-map-control
         className="flex items-center gap-2.5 rounded-full border border-[#1C1208]/12 bg-[#F5F0E8]/94 px-2.5 py-1.5 shadow-[0_6px_20px_rgba(28,18,8,0.1)] backdrop-blur-md"
-        aria-label="Homesite status: available, sold, coming soon"
+        aria-label="Homesite status: sold out, construction starting, upcoming"
       >
         {LEGEND_ITEMS.map(({ short, label, fill, stroke }) => (
           <span

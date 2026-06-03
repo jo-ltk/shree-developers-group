@@ -1,34 +1,32 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Lot, Hotspot, LotStatus, MapViewBox } from "../types/site-map";
+import {
+  applyHotspotOverrides,
+  defaultHotspotRingSettings,
+  hotspotCenter,
+  hotspotRadiusForLot,
+  parseLotHotspotsInHiddenSvg,
+} from "../utils/hotspot-geometry";
+import { SITE_MAP_CANVAS } from "../utils/site-map-constants";
 import { LotHotspotOverlay } from "./LotHotspotOverlay";
+import { SiteMapCanvas } from "./SiteMapCanvas";
 
 type Filter = "All" | LotStatus;
 
-const FALLBACK_VIEWBOX: MapViewBox = { x: 0, y: 0, width: 3392, height: 2160 };
 const MAP_URL = "/svg/elysian-gates.svg";
+const MAP_ID = "elysian-gates";
 
-// ELYSIAN GATES SPECIFIC SETTINGS
-const SETTINGS = {
-  padding: 0.42,
-  radiusOffset: 4,
-  cxOffsetFactor: 1.26,
-  cyOffsetFactor: 2.05,
-};
-
-/**
- * Parses the viewBox from the raw SVG string
- */
 function parseViewBoxFromMarkup(markup: string): MapViewBox {
   const match = markup.match(/<svg[^>]*viewBox=["']([^"']+)["']/i);
-  if (match && match[1]) {
+  if (match?.[1]) {
     const values = match[1].trim().split(/\s+/).map(Number);
     if (values.length === 4 && values.every(Number.isFinite)) {
       return { x: values[0], y: values[1], width: values[2], height: values[3] };
     }
   }
-  return FALLBACK_VIEWBOX;
+  return SITE_MAP_CANVAS.viewBox;
 }
 
 export function ElysianGatesStage({
@@ -42,12 +40,28 @@ export function ElysianGatesStage({
   onSelectLot: (lotId: number) => void;
   lots: Lot[];
 }) {
-  const artworkRef = useRef<HTMLDivElement>(null);
   const [svgMarkup, setSvgMarkup] = useState("");
-  const [hotspots, setHotspots] = useState<Hotspot[]>([]);
-  const [viewBox, setViewBox] = useState<MapViewBox>(FALLBACK_VIEWBOX);
+  const [viewBox, setViewBox] = useState<MapViewBox>(SITE_MAP_CANVAS.viewBox);
 
   const lotById = useMemo(() => new Map(lots.map((lot) => [lot.id, lot])), [lots]);
+
+  const baseRingSettings = useMemo(
+    () => defaultHotspotRingSettings(viewBox.width),
+    [viewBox.width],
+  );
+
+  const { hotspots, ringSettings } = useMemo(() => {
+    if (!svgMarkup) {
+      return { hotspots: [] as Hotspot[], ringSettings: baseRingSettings };
+    }
+    const parsed = parseLotHotspotsInHiddenSvg(svgMarkup, baseRingSettings);
+    const { hotspots: adjusted, settings } = applyHotspotOverrides(
+      parsed,
+      MAP_ID,
+      baseRingSettings,
+    );
+    return { hotspots: adjusted, ringSettings: settings };
+  }, [svgMarkup, baseRingSettings]);
 
   useEffect(() => {
     fetch(MAP_URL)
@@ -59,112 +73,78 @@ export function ElysianGatesStage({
       .catch((err) => console.error("Error loading Elysian Gates SVG:", err));
   }, []);
 
-  useEffect(() => {
-    if (!svgMarkup) return;
-    
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(svgMarkup, "image/svg+xml");
-    const svg = doc.querySelector("svg");
-    if (!svg) return;
-
-    const container = document.createElement("div");
-    container.style.position = "absolute";
-    container.style.visibility = "hidden";
-    container.style.pointerEvents = "none";
-    container.appendChild(svg.cloneNode(true));
-    document.body.appendChild(container);
-
-    const tempSvg = container.querySelector("svg")!;
-    const tempLotGroups = Array.from(tempSvg.querySelectorAll<SVGGElement>('g[id*="lot-"]'));
-
-    const parsed = tempLotGroups.map((group) => {
-      const path = group.querySelector<SVGPathElement>("path");
-      const idMatch = group.id.match(/lot-(\d+)/i);
-      const id = idMatch ? Number.parseInt(idMatch[1], 10) : 0;
-      if (!id) return null;
-
-      const target = path || group;
-      const bbox = target.getBBox();
-      
-      const size = Math.max(bbox.width, bbox.height);
-      const finalSize = size * (1 + SETTINGS.padding * 2);
-
-      return {
-        id,
-        x: bbox.x + bbox.width / 2 - finalSize / 2,
-        y: bbox.y + bbox.height / 2 - finalSize / 2,
-        width: finalSize,
-        height: finalSize,
-      };
-    }).filter((h): h is Hotspot => h !== null);
-
-    document.body.removeChild(container);
-    requestAnimationFrame(() => {
-      setHotspots(parsed);
-    });
-  }, [svgMarkup]);
-
   const renderedHotspots = useMemo(() => {
-    return hotspots.map((h) => {
-      const lot = lotById.get(h.id);
-      if (!lot) return null;
-      const matchesFilter = activeFilter === "All" || lot.status === activeFilter;
-      const isSelected = selectedLotId === h.id;
-      return { hotspot: h, lot, matchesFilter, isSelected };
-    }).filter(item => item !== null);
+    return hotspots
+      .map((h) => {
+        const lot = lotById.get(h.id);
+        if (!lot) return null;
+        const matchesFilter = activeFilter === "All" || lot.status === activeFilter;
+        const isSelected = selectedLotId === h.id;
+        return { hotspot: h, lot, matchesFilter, isSelected };
+      })
+      .filter((item) => item !== null);
   }, [hotspots, lotById, activeFilter, selectedLotId]);
 
-  const selectedHotspot = useMemo(() => 
-    renderedHotspots.find(h => h.isSelected)?.hotspot, 
-  [renderedHotspots]);
+  const selectedHotspot = useMemo(
+    () => renderedHotspots.find((h) => h.isSelected)?.hotspot,
+    [renderedHotspots],
+  );
+
+  const selectedRingR = selectedHotspot
+    ? hotspotRadiusForLot(selectedHotspot, ringSettings)
+    : 0;
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#F5F0E8]">
-      <div className="h-full w-full">
-          <div ref={artworkRef} className="h-full w-full">
-            <svg viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`} className="h-full w-full">
-                <defs>
-                    <mask id="elysian-focus-aperture">
-                        <rect x={viewBox.x} y={viewBox.y} width={viewBox.width} height={viewBox.height} fill="white" />
-                        {selectedHotspot && (
-                            <circle 
-                                cx={selectedHotspot.x + selectedHotspot.width / SETTINGS.cxOffsetFactor} 
-                                cy={selectedHotspot.y + selectedHotspot.height / SETTINGS.cyOffsetFactor} 
-                                r={selectedHotspot.width / 2 + SETTINGS.radiusOffset} 
-                                fill="black" 
-                            />
-                        )}
-                    </mask>
-                </defs>
+    <SiteMapCanvas viewBox={viewBox}>
+      <defs>
+        <mask id="elysian-focus-aperture">
+          <rect x={viewBox.x} y={viewBox.y} width={viewBox.width} height={viewBox.height} fill="white" />
+          {selectedHotspot && (() => {
+            const { cx, cy } = hotspotCenter(selectedHotspot);
+            return (
+              <circle
+                cx={cx}
+                cy={cy}
+                r={selectedRingR}
+                fill="black"
+                shapeRendering="geometricPrecision"
+              />
+            );
+          })()}
+        </mask>
+      </defs>
 
-              <g dangerouslySetInnerHTML={{ __html: svgMarkup.replace(/<svg[^>]*>/i, "").replace(/<\/svg>/i, "") }} />
-              
-              {selectedLotId > 0 && (
-                <rect
-                  x={viewBox.x} y={viewBox.y}
-                  width={viewBox.width} height={viewBox.height}
-                  fill="rgba(245,240,232,0.12)"
-                  mask="url(#elysian-focus-aperture)"
-                  className="transition-all duration-700 ease-out"
-                  style={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
-                />
-              )}
+      <g
+        dangerouslySetInnerHTML={{
+          __html: svgMarkup.replace(/<svg[^>]*>/i, "").replace(/<\/svg>/i, ""),
+        }}
+      />
 
-              {renderedHotspots.map(({ hotspot, lot, matchesFilter, isSelected }) => (
-                <LotHotspotOverlay
-                  key={hotspot.id}
-                  hotspot={hotspot}
-                  lot={lot}
-                  matchesFilter={matchesFilter}
-                  isSelected={isSelected}
-                  activeFilter={activeFilter}
-                  settings={SETTINGS}
-                  onSelectLot={onSelectLot}
-                />
-              ))}
-            </svg>
-          </div>
-      </div>
-    </div>
+      {selectedLotId > 0 && (
+        <rect
+          x={viewBox.x}
+          y={viewBox.y}
+          width={viewBox.width}
+          height={viewBox.height}
+          fill="rgba(245,240,232,0.12)"
+          mask="url(#elysian-focus-aperture)"
+          className="transition-all duration-700 ease-out"
+          style={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
+        />
+      )}
+
+      {renderedHotspots.map(({ hotspot, lot, matchesFilter, isSelected }) => (
+        <LotHotspotOverlay
+          key={hotspot.id}
+          hotspot={hotspot}
+          lot={lot}
+          matchesFilter={matchesFilter}
+          isSelected={isSelected}
+          activeFilter={activeFilter}
+          settings={ringSettings}
+          onSelectLot={onSelectLot}
+        />
+      ))}
+    </SiteMapCanvas>
   );
 }

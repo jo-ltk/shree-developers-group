@@ -37,6 +37,8 @@ export type Hotspot = {
   y: number;
   width: number;
   height: number;
+  /** Set when a manual per-lot size override is applied */
+  ringRadius?: number;
 };
 
 export type MapViewBox = {

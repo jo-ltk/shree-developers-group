@@ -1,14 +1,17 @@
 "use client";
 
 import type { Hotspot, Lot, LotStatus } from "../types/site-map";
+import {
+  hotspotCenter,
+  hotspotRadiusForLot,
+  type HotspotRingSettings,
+} from "../utils/hotspot-geometry";
 import { lotStatusOverlayStyle } from "../utils/lot-status-colors";
 
 type Filter = "All" | LotStatus;
 
-type HotspotSettings = {
-  radiusOffset: number;
-  cxOffsetFactor: number;
-  cyOffsetFactor: number;
+const RING_RENDER_PROPS = {
+  shapeRendering: "geometricPrecision" as const,
 };
 
 export function LotHotspotOverlay({
@@ -25,12 +28,11 @@ export function LotHotspotOverlay({
   matchesFilter: boolean;
   isSelected: boolean;
   activeFilter: Filter;
-  settings: HotspotSettings;
+  settings: HotspotRingSettings;
   onSelectLot: (lotId: number) => void;
 }) {
-  const cx = hotspot.x + hotspot.width / settings.cxOffsetFactor;
-  const cy = hotspot.y + hotspot.height / settings.cyOffsetFactor;
-  const ringR = hotspot.width / 2 + settings.radiusOffset;
+  const { cx, cy } = hotspotCenter(hotspot);
+  const ringR = hotspotRadiusForLot(hotspot, settings);
   const overlay = lotStatusOverlayStyle(lot.status, isSelected);
 
   return (
@@ -40,20 +42,13 @@ export function LotHotspotOverlay({
           <circle
             cx={cx}
             cy={cy}
-            r={ringR + 1.5}
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth={overlay.strokeWidth + 2}
-          />
-          <circle
-            cx={cx}
-            cy={cy}
             r={ringR}
             fill={overlay.fill}
             stroke={overlay.stroke}
             strokeWidth={overlay.strokeWidth}
             className={isSelected ? "lot-pulse-ring" : undefined}
             style={{ transition: "fill 240ms ease, stroke 240ms ease" }}
+            {...RING_RENDER_PROPS}
           />
         </g>
       )}
@@ -62,11 +57,12 @@ export function LotHotspotOverlay({
         <circle
           cx={cx}
           cy={cy}
-          r={ringR + 2}
+          r={ringR + 1}
           fill="none"
           stroke="#C9AE7B"
-          strokeWidth={3.5}
+          strokeWidth={2.5}
           pointerEvents="none"
+          {...RING_RENDER_PROPS}
         />
       )}
 
@@ -78,6 +74,7 @@ export function LotHotspotOverlay({
           fill="rgba(245, 240, 232, 0.75)"
           pointerEvents="none"
           style={{ transition: "fill 350ms ease" }}
+          {...RING_RENDER_PROPS}
         />
       )}
 

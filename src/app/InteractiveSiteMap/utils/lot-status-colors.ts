@@ -6,32 +6,53 @@ export type LotStatusOverlayStyle = {
   strokeWidth: number;
 };
 
-/** Lot status rings: green = available, red = sold, dark = coming soon */
+const AVAILABLE_GREEN_STYLE = {
+  fill: "rgba(22, 163, 74, 0.32)",
+  stroke: "#15803D",
+} as const;
+
+const SOLD_RED_STYLE = {
+  fill: "rgba(185, 28, 28, 0.34)",
+  stroke: "#B91C1C",
+} as const;
+
+const UPCOMING_GREY_STYLE = {
+  fill: "rgba(28, 18, 8, 0.2)",
+  stroke: "#1C1208",
+} as const;
+
+/** Lot status rings: green = construction/available, red = sold, grey = upcoming */
 export function lotStatusOverlayStyle(
   status: LotStatus,
   selected = false,
 ): LotStatusOverlayStyle {
   const strokeWidth = selected ? 4.5 : 3;
+  const selectedStroke = "#D43F33";
 
   switch (status) {
     case "Available":
       return {
-        fill: "rgba(22, 163, 74, 0.32)",
-        stroke: selected ? "#D43F33" : "#15803D",
+        fill: AVAILABLE_GREEN_STYLE.fill,
+        stroke: selected ? selectedStroke : AVAILABLE_GREEN_STYLE.stroke,
+        strokeWidth,
+      };
+    case "Coming Soon":
+      return {
+        fill: "rgba(201, 174, 123, 0.38)",
+        stroke: selected ? selectedStroke : "#8B6A20",
         strokeWidth,
       };
     case "Sold":
       return {
-        fill: "rgba(185, 28, 28, 0.34)",
-        stroke: selected ? "#D43F33" : "#B91C1C",
+        fill: SOLD_RED_STYLE.fill,
+        stroke: selected ? selectedStroke : SOLD_RED_STYLE.stroke,
         strokeWidth,
       };
-    case "Coming Soon":
     case "Future":
     default:
       return {
-        fill: "rgba(28, 18, 8, 0.22)",
-        stroke: selected ? "#D43F33" : "#1C1208",
+        fill: UPCOMING_GREY_STYLE.fill,
+        stroke: selected ? selectedStroke : UPCOMING_GREY_STYLE.stroke,
         strokeWidth: selected ? 4.5 : 2.5,
       };
   }

@@ -3,6 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Lot, Hotspot, LotStatus, MapViewBox } from "../types/site-map";
+import {
+  buildHotspotFromLotGroup,
+  hotspotCenter,
+  hotspotRadius,
+} from "../utils/hotspot-geometry";
 
 type Filter = "All" | LotStatus;
 
@@ -34,10 +39,8 @@ export function MapStage({
   mapUrl: string;
   lots: Lot[];
   settings: {
-    padding: number;
-    radiusOffset: number;
-    cxOffsetFactor: number;
-    cyOffsetFactor: number;
+    ringRadius: number;
+    hitPadding: number;
     strokeColor: string;
     strokeWidth: number;
   };
@@ -86,52 +89,12 @@ export function MapStage({
 
     const lotGroups = Array.from(svg.querySelectorAll<SVGGElement>('g[id*="lot-"]'));
     const parsed = lotGroups
-      .map((group) => {
-        const rect = group.querySelector<SVGRectElement>("rect");
-        const path = group.querySelector<SVGPathElement>("path");
-        const idMatch = group.id.match(/lot-(\d+)/i);
-        const id = idMatch
-          ? Number.parseInt(idMatch[1], 10)
-          : Number.parseInt(group.id.replace(/[^\d]/g, ""), 10);
-        if (!Number.isFinite(id)) return null;
-
-        const target = path || group;
-        const bbox = target.getBBox();
-        const svgRoot = svg;
-        const matrix = svgRoot.getScreenCTM()?.inverse().multiply(target.getScreenCTM()!);
-
-        let ox, oy, ow, oh;
-        if (matrix) {
-          const pt = svgRoot.createSVGPoint();
-          pt.x = bbox.x;
-          pt.y = bbox.y;
-          const topLeft = pt.matrixTransform(matrix);
-
-          pt.x = bbox.x + bbox.width;
-          pt.y = bbox.y + bbox.height;
-          const bottomRight = pt.matrixTransform(matrix);
-
-          ox = topLeft.x;
-          oy = topLeft.y;
-          ow = bottomRight.x - topLeft.x;
-          oh = bottomRight.y - topLeft.y;
-        } else {
-          ox = bbox.x; oy = bbox.y; ow = bbox.width; oh = bbox.height;
-        }
-
-        // Force a square hotspot for a perfect circle selection
-        const size = Math.max(ow, oh);
-        const padding = settings.padding; // Use dynamic padding
-        const finalSize = size * (1 + padding * 2);
-
-        return {
-          id,
-          x: ox + ow / 2 - finalSize / 2,
-          y: oy + oh / 2 - finalSize / 2,
-          width: finalSize,
-          height: finalSize,
-        };
-      })
+      .map((group) =>
+        buildHotspotFromLotGroup(group, {
+          ringRadius: settings.ringRadius,
+          hitPadding: settings.hitPadding,
+        }),
+      )
       .filter((h): h is Hotspot => h !== null)
       .sort((a, b) => a.id - b.id);
 
@@ -226,43 +189,49 @@ export function MapStage({
                 {renderedHotspots.map((item) => {
                   if (!item) return null;
                   const { hotspot, lot, matchesFilter, isSelected } = item;
+                  const { cx, cy } = hotspotCenter(hotspot);
+                  const ringR = hotspotRadius({
+                    ringRadius: settings.ringRadius,
+                    hitPadding: settings.hitPadding,
+                  });
                   return (
                     <g key={hotspot.id}>
-                      {/* Gold glow ring — filtered lots */}
                       {activeFilter !== "All" && matchesFilter && (
                         <circle
-                          cx={hotspot.x + hotspot.width / settings.cxOffsetFactor}
-                          cy={hotspot.y + hotspot.height / settings.cyOffsetFactor}
-                          r={hotspot.width / 2 + settings.radiusOffset}
-                          className="fill-none stroke-[#D43F33]/20"
-                          stroke="rgba(201,174,123,0.75)" strokeWidth={3}
+                          cx={cx}
+                          cy={cy}
+                          r={ringR + 1}
+                          className="fill-none"
+                          stroke="rgba(201,174,123,0.75)"
+                          strokeWidth={2.5}
                           pointerEvents="none"
-                          style={{ filter: "drop-shadow(0 0 8px rgba(201,174,123,0.7))", transition: "opacity 350ms ease" }}
+                          shapeRendering="geometricPrecision"
+                          style={{ transition: "opacity 350ms ease" }}
                         />
                       )}
 
-                      {/* Fog overlay — non-matching lots */}
                       {!matchesFilter && (
                         <circle
-                          cx={hotspot.x + hotspot.width / settings.cxOffsetFactor}
-                          cy={hotspot.y + hotspot.height / settings.cyOffsetFactor}
-                          r={hotspot.width / 2 + settings.radiusOffset}
+                          cx={cx}
+                          cy={cy}
+                          r={ringR}
                           fill="rgba(245,240,232,0.82)"
                           pointerEvents="none"
+                          shapeRendering="geometricPrecision"
                           style={{ transition: "fill 350ms ease" }}
                         />
                       )}
 
-                      {/* Active Selection Ring */}
                       {isSelected && (
                         <circle
-                          cx={hotspot.x + hotspot.width / settings.cxOffsetFactor}
-                          cy={hotspot.y + hotspot.height / settings.cyOffsetFactor}
-                          r={hotspot.width / 2 + settings.radiusOffset}
+                          cx={cx}
+                          cy={cy}
+                          r={ringR}
                           className="fill-none lot-pulse-ring"
                           stroke={settings.strokeColor}
                           strokeWidth={settings.strokeWidth}
                           pointerEvents="none"
+                          shapeRendering="geometricPrecision"
                         />
                       )}
 

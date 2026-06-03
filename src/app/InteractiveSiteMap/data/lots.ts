@@ -1,6 +1,7 @@
 import { getProjectBySlug } from "@/lib/projects-data";
 
 import type { Lot, LotStatus } from "../types/site-map";
+import { defaultHotspotRingSettings } from "../utils/hotspot-geometry";
 import { ELYSIAN_GATES_ESTATE_PLANS } from "./elysian-gates-plans";
 import { formatPlanNameList } from "./project-floor-plans";
 import { sydneyOaksPlanForLot } from "./sydney-oaks-lot-plans";
@@ -35,11 +36,16 @@ function statusForLot(index: number): LotStatus {
   return statuses[0];
 }
 
+/** Sydney Oaks homesite availability (interactive map + list). */
 const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 3, 6, 7, 9, 10, 11]);
+
+const SYDNEY_OAKS_CONSTRUCTION_LOT_IDS = new Set(
+  Array.from({ length: 46 - 35 + 1 }, (_, i) => 35 + i),
+);
 
 function sydneyOaksStatusForLot(id: number): LotStatus {
   if (SYDNEY_OAKS_SOLD_LOT_IDS.has(id)) return "Sold";
-  if (id >= 35 && id <= 46) return "Coming Soon";
+  if (SYDNEY_OAKS_CONSTRUCTION_LOT_IDS.has(id)) return "Available";
   return "Future";
 }
 
@@ -51,10 +57,30 @@ function priceForLot(index: number, status: LotStatus) {
   return `From $${Math.round(base / 1000).toLocaleString()}k`;
 }
 
-function sydneyOaksPriceForLot(status: LotStatus, plan: ReturnType<typeof sydneyOaksPlanForLot>) {
-  if (status === "Sold") return "Sold";
-  if (status === "Future") return "Pricing TBD";
+function sydneyOaksPriceForLot(
+  id: number,
+  status: LotStatus,
+  plan: ReturnType<typeof sydneyOaksPlanForLot>,
+) {
+  if (status === "Sold") return "Sold Out";
+  if (SYDNEY_OAKS_CONSTRUCTION_LOT_IDS.has(id)) return "Construction Starting";
+  if (status === "Future") return "Upcoming";
   return plan.price;
+}
+
+function sydneyOaksDescriptionForLot(
+  id: number,
+  status: LotStatus,
+  planName: string,
+  seriesLabel: string,
+) {
+  if (status === "Sold") {
+    return `Home ${id} is sold out.`;
+  }
+  if (SYDNEY_OAKS_CONSTRUCTION_LOT_IDS.has(id)) {
+    return `Home ${id} — construction starting. ${planName} townhome (${seriesLabel}).`;
+  }
+  return `Home ${id} — upcoming release. ${planName} townhome (${seriesLabel}).`;
 }
 
 function generateSydneyOaksLots(count: number): Lot[] {
@@ -68,7 +94,7 @@ function generateSydneyOaksLots(count: number): Lot[] {
       id,
       lotNumber: `${id}`,
       title: `Home ${id} — ${plan.name}`,
-      price: sydneyOaksPriceForLot(status, plan),
+      price: sydneyOaksPriceForLot(id, status, plan),
       beds: plan.beds,
       baths: plan.baths,
       sqft: plan.sqft,
@@ -76,15 +102,39 @@ function generateSydneyOaksLots(count: number): Lot[] {
       story: plan.story,
       status,
       image: plan.image,
-      description: `Home ${id} is assigned to the ${plan.name} townhome plan (${seriesLabel}).`,
+      description: sydneyOaksDescriptionForLot(id, status, plan.name, seriesLabel),
     };
   });
 }
 
-function elysianGatesPriceForStatus(status: LotStatus) {
-  if (status === "Sold") return "Sold";
-  if (status === "Future") return "Pricing TBD";
+/** Elysian Gates homesite availability — edit sets to match sales (same model as Sydney Oaks). */
+const ELYSIAN_GATES_SOLD_LOT_IDS = new Set([2, 10, 19, 21]);
+
+const ELYSIAN_GATES_CONSTRUCTION_LOT_IDS = new Set([
+  3, 4, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 22, 23, 24, 27, 28,
+]);
+
+function elysianGatesStatusForLot(id: number): LotStatus {
+  if (ELYSIAN_GATES_SOLD_LOT_IDS.has(id)) return "Sold";
+  if (ELYSIAN_GATES_CONSTRUCTION_LOT_IDS.has(id)) return "Available";
+  return "Future";
+}
+
+function elysianGatesPriceForLot(id: number, status: LotStatus) {
+  if (status === "Sold") return "Sold Out";
+  if (ELYSIAN_GATES_CONSTRUCTION_LOT_IDS.has(id)) return "Construction Starting";
+  if (status === "Future") return "Upcoming";
   return getProjectBySlug("elysian-gates")?.priceText ?? "From $1.3M";
+}
+
+function elysianGatesDescriptionForLot(id: number, status: LotStatus, planNames: string) {
+  if (status === "Sold") {
+    return `Homesite ${id} is sold out.`;
+  }
+  if (ELYSIAN_GATES_CONSTRUCTION_LOT_IDS.has(id)) {
+    return `Homesite ${id} — construction starting. Build with the ${planNames} estate plans.`;
+  }
+  return `Homesite ${id} — upcoming release. Build with the ${planNames} estate plans.`;
 }
 
 function generateElysianGatesLots(count: number): Lot[] {
@@ -93,13 +143,13 @@ function generateElysianGatesLots(count: number): Lot[] {
 
   return Array.from({ length: count }, (_, offset) => {
     const id = offset + 1;
-    const status = statusForLot(id + 100);
+    const status = elysianGatesStatusForLot(id);
 
     return {
       id,
       lotNumber: `${id}`,
       title: `Home ${id}`,
-      price: elysianGatesPriceForStatus(status),
+      price: elysianGatesPriceForLot(id, status),
       beds: defaultPlan.beds,
       baths: defaultPlan.baths,
       sqft: defaultPlan.sqft,
@@ -107,8 +157,7 @@ function generateElysianGatesLots(count: number): Lot[] {
       story: defaultPlan.story,
       status,
       image: defaultPlan.image,
-      description:
-        `Any homesite at Elysian Gates can be built with the ${planNames} estate plan. Choose the layout that fits your family — all options are available on every homesite.`,
+      description: elysianGatesDescriptionForLot(id, status, planNames),
       availablePlans: ELYSIAN_GATES_ESTATE_PLANS,
       defaultPlanId: defaultPlan.id,
     };
@@ -159,10 +208,8 @@ export interface MapConfig {
   url: string;
   lots: Lot[];
   hotspotSettings: {
-    padding: number;
-    radiusOffset: number;
-    cxOffsetFactor: number;
-    cyOffsetFactor: number;
+    ringRadius: number;
+    hitPadding: number;
     strokeColor: string;
     strokeWidth: number;
   };
@@ -175,10 +222,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     url: '/svg/siteMap-final.svg',
     lots: generateSydneyOaksLots(89),
     hotspotSettings: {
-      padding: 0.3,
-      radiusOffset: 5,
-      cxOffsetFactor: 1.27, // Your manual change
-      cyOffsetFactor: 2.0,  // Increase to move UP, Decrease to move DOWN
+      ...defaultHotspotRingSettings(),
       strokeColor: "#8B2A2A",
       strokeWidth: 6,
     }
@@ -189,10 +233,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     url: '/svg/elysian-gates.svg',
     lots: generateElysianGatesLots(28),
     hotspotSettings: {
-      padding: 0.25,
-      radiusOffset: 4,
-      cxOffsetFactor: 1.05,
-      cyOffsetFactor: 2.10,  // Increase to move UP, Decrease to move DOWN
+      ...defaultHotspotRingSettings(),
       strokeColor: "#D43F33",
       strokeWidth: 2,
     }
@@ -203,10 +244,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     url: '/images/hanover-park/master-plan.jpg',
     lots: generateLots(72, 200, () => "Coming Soon"),
     hotspotSettings: {
-      padding: 0.25,
-      radiusOffset: 4,
-      cxOffsetFactor: 1.05,
-      cyOffsetFactor: 2.1,
+      ...defaultHotspotRingSettings(),
       strokeColor: "#D43F33",
       strokeWidth: 2,
     },
