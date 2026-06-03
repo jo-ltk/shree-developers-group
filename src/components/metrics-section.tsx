@@ -96,20 +96,20 @@ export default function CommunityDetailsPage() {
                 <motion.a
                   href={COMPANY_TEL}
                   whileHover={{ backgroundColor: "#1C1208" }}
-                  transition={{ duration: 0.4, ease: "circOut" }}
-                  className="flex items-center justify-between gap-4 p-5 md:p-6 bg-white border border-[#1C1208]/5 group transition-all w-full"
+                  transition={{ duration: 0.15, ease: "circOut" }}
+                  className="flex items-center justify-between gap-4 p-5 md:p-6 bg-white border border-[#1C1208]/5 group transition-all duration-150 w-full"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-11 h-11 md:w-13 md:h-13 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208] group-hover:bg-[#D43F33] group-hover:text-white transition-all duration-500 flex-shrink-0">
-                      <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    <div className="w-11 h-11 md:w-13 md:h-13 bg-[#1C1208]/5 flex items-center justify-center text-[#1C1208] group-hover:bg-[#D43F33] group-hover:text-white transition-all duration-150 flex-shrink-0">
+                      <Phone className="w-5 h-5 group-hover:scale-110 transition-transform duration-150" />
                     </div>
 
                     <div className="text-left">
-                      <Annotation className="!text-dark/30 group-hover:!text-white/40 mb-1 transition-colors responsive-stat-label">
+                      <Annotation className="!text-dark/30 group-hover:!text-white/40 mb-1 transition-colors duration-150 responsive-stat-label">
                         Call Now
                       </Annotation>
                       <span
-                        className="font-sans font-bold tracking-widest text-dark group-hover:text-white transition-colors"
+                        className="font-sans font-bold tracking-widest text-dark group-hover:text-white transition-colors duration-150"
                         style={{ fontSize: "1rem", letterSpacing: "0.08em" }}
                       >
                         {COMPANY_CONTACT.phoneDisplay}
@@ -117,8 +117,8 @@ export default function CommunityDetailsPage() {
                     </div>
                   </div>
 
-                  <div className="w-8 h-8 flex items-center justify-center border border-[#1C1208]/10 group-hover:border-white/20 transition-colors flex-shrink-0">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-dark/40 group-hover:text-white transition-colors">
+                  <div className="w-8 h-8 flex items-center justify-center border border-[#1C1208]/10 group-hover:border-white/20 transition-colors duration-150 flex-shrink-0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-dark/40 group-hover:text-white transition-colors duration-150">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </div>
