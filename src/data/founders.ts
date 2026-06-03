@@ -4,8 +4,6 @@ export const FOUNDERS = [
     id: "yashesh-shah",
     name: "Yashesh Shah",
     role: "Founder & President",
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80",
     description: [
       "Yashesh Shah is the Founder and President of Shree Developers Group, a luxury real estate development firm specializing in the creation of distinctive residential communities and thoughtfully planned mixed-use developments throughout Georgia.",
       "Driven by a passion for placemaking and an unwavering commitment to excellence, Yashesh has built his reputation on transforming exceptional land into enduring communities. With extensive experience spanning land acquisition, entitlement, development, infrastructure, construction, and project execution, he brings a comprehensive vision to every project while maintaining a meticulous attention to detail.",
@@ -19,8 +17,6 @@ export const FOUNDERS = [
     id: "tejas-shah",
     name: "Tejas Shah",
     role: "Co-Founder & Managing Principal",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80",
     description: [
       "Tejas Shah is the Co-Founder and Managing Principal of Shree Developers Group, a luxury real estate development firm specializing in strategic growth, investment leadership, and thoughtfully planned mixed-use developments throughout Georgia.",
       "He provides strategic leadership for the firm's growth, investment strategy, and long-term vision, overseeing financial operations, capital markets activities, investor partnerships, and overall business strategy from concept through execution.",

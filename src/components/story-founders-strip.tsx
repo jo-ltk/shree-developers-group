@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import {
   FOUNDERS,
   getFounderBioPreview,
@@ -62,18 +61,7 @@ function FounderCard({ founder }: { founder: Founder }) {
   );
 
   return (
-    <article className="group w-full after:table after:clear-both after:content-['']">
-      <div className="relative float-left mr-3 mb-2 aspect-[3/4] w-[7.25rem] overflow-hidden bg-[#1C1208]/[0.04] sm:mr-4 sm:w-[8.5rem] lg:w-[9.5rem]">
-        <Image
-          src={founder.image}
-          alt={founder.name}
-          fill
-          sizes="(min-width: 1024px) 152px, (min-width: 640px) 136px, 116px"
-          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04] grayscale-[20%] group-hover:grayscale-0"
-        />
-        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-[#1C1208]/10 transition-colors duration-500 group-hover:ring-[#B45309]/30" />
-      </div>
-
+    <article className="w-full">
       <h3
         className="text-[0.88rem] font-semibold leading-tight text-[#1C1208] sm:text-[0.95rem]"
         style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -95,7 +83,7 @@ function FounderCard({ founder }: { founder: Founder }) {
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
           aria-expanded={expanded}
-          className="clear-both mt-2 block text-left text-[0.62rem] font-medium uppercase tracking-[0.12em] text-[#B45309] transition-colors hover:text-[#1C1208] sm:text-[0.65rem]"
+          className="mt-2 block text-left text-[0.62rem] font-medium uppercase tracking-[0.12em] text-[#B45309] transition-colors hover:text-[#1C1208] sm:text-[0.65rem]"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           {expanded ? "Read less" : "Read more"}
@@ -120,7 +108,7 @@ function ProfessionalPartnersSection() {
         Our Professional Partners
       </h3>
 
-      <p className="mt-3 max-w-[52ch] font-light leading-relaxed text-[#1C1208]/55" style={bodyStyle}>
+      <p className="mt-3 w-full font-light leading-relaxed text-[#1C1208]/55" style={bodyStyle}>
         {PROFESSIONAL_PARTNERS_INTRO}
       </p>
 
