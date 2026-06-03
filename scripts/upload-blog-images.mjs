@@ -3,7 +3,7 @@
  * Sources are not in git — place JPEGs under public/images/blog/ before running.
  */
 import { v2 as cloudinary } from "cloudinary";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -29,6 +29,10 @@ cloudinary.config({
 
 const images = [
   {
+    file: "public/images/blog/elysian-gates-groundwork-begins.jpg",
+    publicId: "shree-blog/elysian-gates-groundwork-begins",
+  },
+  {
     file: "public/images/blog/sydney-oaks-team-appreciation.jpg",
     publicId: "shree-blog/sydney-oaks-team-appreciation",
   },
@@ -44,7 +48,12 @@ const images = [
 
 const results = [];
 for (const { file, publicId } of images) {
-  const res = await cloudinary.uploader.upload(resolve(root, file), {
+  const path = resolve(root, file);
+  if (!existsSync(path)) {
+    console.warn(`Skip (missing): ${file}`);
+    continue;
+  }
+  const res = await cloudinary.uploader.upload(path, {
     public_id: publicId,
     overwrite: true,
     resource_type: "image",

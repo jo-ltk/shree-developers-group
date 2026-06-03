@@ -24,6 +24,13 @@ const articles = [
     date: "March 29, 2025",
   },
   {
+    title: "The Beginning of Elysian Gates",
+    description:
+      "Groundwork is officially underway at 999 Settles Road in Atlanta, Georgia! Preliminary site measurements and ground clearance have begun on the future home of our exclusive 28-plot single-family gated community. We are currently finalizing preparations and waiting for the groundbreaking ceremony to officially start the project soon. Stay tuned for updates as we bring this vision to life!",
+    imagePublicId: "shree-blog/elysian-gates-groundwork-begins",
+    date: "May 13, 2026",
+  },
+  {
     title: "The Doors are Open at Sydney Oaks",
     description:
       "On Thursday, April 23, 2026, we celebrated the grand opening of our brand-new designer model home at 1161 Dahlonega Hwy, Cumming, Georgia. Guests enjoyed an exclusive first-look event featuring guided tours of these stunning modern townhomes and excellent refreshments.",
@@ -55,9 +62,8 @@ function ArticleCard({
   return (
     <motion.article
       key={article.title}
-      initial={index >= 3 ? { opacity: 0, y: 20 } : false}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: (index - 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
       data-article-card
       className="relative flex h-full flex-col bg-cream"
     >
@@ -69,7 +75,7 @@ function ArticleCard({
           unoptimized
           priority={priority}
           loading={priority ? undefined : "lazy"}
-          sizes="(max-width: 768px) 85vw, 33vw"
+          sizes="(max-width: 768px) 85vw, (max-width: 1280px) 50vw, 25vw"
           className="object-cover"
         />
       </div>
@@ -92,9 +98,7 @@ export function RecentArticlesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: false, amount: 0.3 });
-  const initialLimit = 3;
-  const visibleArticles = articles.slice(0, initialLimit);
-  const mobileArticles = articles.slice(0, initialLimit);
+  const visibleArticles = articles;
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -137,7 +141,7 @@ export function RecentArticlesSection() {
       </div>
 
       {/* Desktop Version */}
-      <div className="hidden md:grid gap-px bg-border/20 grid-cols-3">
+      <div className="hidden md:grid gap-px bg-border/20 md:grid-cols-2 lg:grid-cols-4">
         <AnimatePresence mode="popLayout">
           {visibleArticles.map((article, index) => (
             <ArticleCard
@@ -163,7 +167,7 @@ export function RecentArticlesSection() {
             dotActiveClassName="h-1 w-10 bg-[#1C1208]"
             dotInactiveClassName="h-1 w-3 bg-[#1C1208]/10"
           >
-            {mobileArticles.map((article, idx) => (
+            {visibleArticles.map((article, idx) => (
               <ArticleCard
                 key={article.title}
                 article={article}
