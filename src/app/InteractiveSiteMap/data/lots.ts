@@ -39,9 +39,10 @@ function statusForLot(index: number): LotStatus {
 /** Sydney Oaks homesite availability (interactive map + list). */
 const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 3, 6, 7, 9, 10, 11]);
 
-const SYDNEY_OAKS_CONSTRUCTION_LOT_IDS = new Set(
-  Array.from({ length: 46 - 35 + 1 }, (_, i) => 35 + i),
-);
+const SYDNEY_OAKS_CONSTRUCTION_LOT_IDS = new Set([
+  4, 5, 8, 12,
+  ...Array.from({ length: 46 - 35 + 1 }, (_, i) => 35 + i),
+]);
 
 function sydneyOaksStatusForLot(id: number): LotStatus {
   if (SYDNEY_OAKS_SOLD_LOT_IDS.has(id)) return "Sold";
