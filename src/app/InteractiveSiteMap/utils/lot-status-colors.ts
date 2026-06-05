@@ -12,7 +12,7 @@ const AVAILABLE_GREEN_STYLE = {
 } as const;
 
 const SOLD_RED_STYLE = {
-  fill: "rgba(185, 28, 28, 0.34)",
+  fill: "rgba(185, 28, 28, 0.52)",
   stroke: "#B91C1C",
 } as const;
 
@@ -46,7 +46,7 @@ export function lotStatusOverlayStyle(
       return {
         fill: SOLD_RED_STYLE.fill,
         stroke: selected ? selectedStroke : SOLD_RED_STYLE.stroke,
-        strokeWidth,
+        strokeWidth: selected ? 5 : 3.5,
       };
     case "Future":
     default:

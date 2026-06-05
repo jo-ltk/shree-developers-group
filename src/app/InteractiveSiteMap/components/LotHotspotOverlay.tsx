@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+
 import type { Hotspot, Lot, LotStatus } from "../types/site-map";
 import {
   hotspotCenter,
@@ -14,7 +16,7 @@ const RING_RENDER_PROPS = {
   shapeRendering: "geometricPrecision" as const,
 };
 
-export function LotHotspotOverlay({
+export const LotHotspotOverlay = memo(function LotHotspotOverlay({
   hotspot,
   lot,
   matchesFilter,
@@ -34,24 +36,23 @@ export function LotHotspotOverlay({
   const { cx, cy } = hotspotCenter(hotspot);
   const ringR = hotspotRadiusForLot(hotspot, settings);
   const overlay = lotStatusOverlayStyle(lot.status, isSelected);
+  const dimmed = activeFilter !== "All" && !matchesFilter;
 
   return (
     <g>
-      {matchesFilter && (
-        <g pointerEvents="none">
-          <circle
-            cx={cx}
-            cy={cy}
-            r={ringR}
-            fill={overlay.fill}
-            stroke={overlay.stroke}
-            strokeWidth={overlay.strokeWidth}
-            className={isSelected ? "lot-pulse-ring" : undefined}
-            style={{ transition: "fill 240ms ease, stroke 240ms ease" }}
-            {...RING_RENDER_PROPS}
-          />
-        </g>
-      )}
+      <g pointerEvents="none" opacity={dimmed ? 0.55 : 1}>
+        <circle
+          cx={cx}
+          cy={cy}
+          r={ringR}
+          fill={overlay.fill}
+          stroke={overlay.stroke}
+          strokeWidth={overlay.strokeWidth}
+          className={isSelected ? "lot-pulse-ring" : undefined}
+          style={{ transition: "fill 240ms ease, stroke 240ms ease, opacity 240ms ease" }}
+          {...RING_RENDER_PROPS}
+        />
+      </g>
 
       {activeFilter !== "All" && matchesFilter && (
         <circle
@@ -59,21 +60,9 @@ export function LotHotspotOverlay({
           cy={cy}
           r={ringR + 1}
           fill="none"
-          stroke="#C9AE7B"
+          stroke={lot.status === "Sold" ? "#B91C1C" : "#15803D"}
           strokeWidth={2.5}
           pointerEvents="none"
-          {...RING_RENDER_PROPS}
-        />
-      )}
-
-      {!matchesFilter && (
-        <circle
-          cx={cx}
-          cy={cy}
-          r={ringR}
-          fill="rgba(245, 240, 232, 0.75)"
-          pointerEvents="none"
-          style={{ transition: "fill 350ms ease" }}
           {...RING_RENDER_PROPS}
         />
       )}
@@ -85,9 +74,9 @@ export function LotHotspotOverlay({
         width={hotspot.width}
         height={hotspot.height}
         fill="transparent"
-        className={matchesFilter ? "cursor-pointer" : "cursor-default"}
-        onClick={() => matchesFilter && onSelectLot(hotspot.id)}
+        className="cursor-pointer"
+        onClick={() => onSelectLot(hotspot.id)}
       />
     </g>
   );
-}
+});

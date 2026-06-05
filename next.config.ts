@@ -35,7 +35,22 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    const immutableCache = [
+      {
+        key: "Cache-Control",
+        value: "public, max-age=31536000, immutable",
+      },
+    ];
+
     return [
+      {
+        source: "/svg/:path*",
+        headers: immutableCache,
+      },
+      {
+        source: "/images/site-maps/:path*",
+        headers: immutableCache,
+      },
       {
         source: "/(.*)",
         headers: [
@@ -47,7 +62,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://maps.googleapis.com https://maps.gstatic.com https://*.google.com https://*.ggpht.com https://*.googleusercontent.com",
               "font-src 'self' data: https://fonts.gstatic.com https://maps.gstatic.com",
-              "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://*.gstatic.com",
+              "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://*.gstatic.com https://res.cloudinary.com",
               "frame-src 'self' https://www.google.com https://maps.google.com",
               "worker-src 'self' blob:",
               "child-src 'self' blob:",

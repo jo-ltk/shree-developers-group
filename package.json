@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "site-map:optimize": "node scripts/optimize-site-map-svgs.mjs && node scripts/finalize-site-map-svgs.mjs",
+    "site-map:upload": "node scripts/upload-site-map-assets.mjs",
     "cloudinary:download": "node scripts/download-cloudinary-media.mjs",
     "cloudinary:upload": "node scripts/upload-cloudinary-media.mjs",
     "cloudinary:verify": "node scripts/verify-cloudinary-media.mjs"
@@ -40,6 +42,8 @@
     "@types/react-dom": "^19.2.0",
     "eslint": "^9.36.0",
     "eslint-config-next": "16.2.2",
+    "happy-dom": "^20.10.1",
+    "svgo": "^4.0.1",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.3"
   }

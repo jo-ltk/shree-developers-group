@@ -8,9 +8,11 @@ import { SiteMapStatusLegend } from "./SiteMapStatusLegend";
 export function MapViewport({
   children,
   showStatusLegend = false,
+  legendMode = "full",
 }: {
   children: ReactNode;
   showStatusLegend?: boolean;
+  legendMode?: "full" | "available-sold";
 }) {
   const {
     containerRef,
@@ -60,7 +62,7 @@ export function MapViewport({
           className="pointer-events-auto"
         />
         {showStatusLegend && (
-          <SiteMapStatusLegend variant="desktop" />
+          <SiteMapStatusLegend variant="desktop" mode={legendMode} />
         )}
       </div>
 
@@ -75,7 +77,7 @@ export function MapViewport({
           className="pointer-events-auto"
         />
         {showStatusLegend && (
-          <SiteMapStatusLegend variant="mobile" />
+          <SiteMapStatusLegend variant="mobile" mode={legendMode} />
         )}
       </div>
     </div>

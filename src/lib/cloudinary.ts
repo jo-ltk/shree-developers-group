@@ -46,6 +46,11 @@ export function cloudinaryVideoUrl(
   return `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/${transforms}/${publicId}.mp4`;
 }
 
+/** Build a Cloudinary raw delivery URL for SVG site maps. */
+export function cloudinaryRawUrl(publicId: string): string {
+  return `https://res.cloudinary.com/${CLOUD_NAME}/raw/upload/fl_sanitize/${publicId}.svg`;
+}
+
 /** Poster frame URL for a Cloudinary-hosted video. */
 export function cloudinaryVideoPosterUrl(publicId: string): string {
   return `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/so_0/${publicId}.jpg`;

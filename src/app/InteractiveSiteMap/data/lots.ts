@@ -82,6 +82,8 @@ function generateSydneyOaksLots(count: number): Lot[] {
       status,
       image: plan.image,
       description: sydneyOaksDescriptionForLot(id, status, plan.name, seriesLabel),
+      availablePlans: SYDNEY_OAKS_TOWNHOME_PLANS,
+      defaultPlanId: plan.id,
     };
   });
 }
@@ -112,7 +114,10 @@ function elysianGatesTitleForLot(id: number) {
   return orientation ? `Home ${id} — ${orientation}` : `Home ${id}`;
 }
 
-function elysianGatesDescriptionForLot(id: number, planNames: string) {
+function elysianGatesDescriptionForLot(id: number, status: LotStatus, planNames: string) {
+  if (status === "Sold") {
+    return `Homesite ${id} is sold out.`;
+  }
   const orientation = ELYSIAN_GATES_LOT_ORIENTATION[id];
   const facing = orientation ? ` ${orientation} facing.` : "";
   return `Homesite ${id} — available.${facing} Build with the ${planNames} estate plans.`;
@@ -137,7 +142,7 @@ function generateElysianGatesLots(count: number): Lot[] {
       story: defaultPlan.story,
       status,
       image: defaultPlan.image,
-      description: elysianGatesDescriptionForLot(id, planNames),
+      description: elysianGatesDescriptionForLot(id, status, planNames),
       availablePlans: ELYSIAN_GATES_ESTATE_PLANS,
       defaultPlanId: defaultPlan.id,
     };
@@ -186,8 +191,10 @@ export interface MapConfig {
   name: string;
   url: string;
   lots: Lot[];
-  /** When true, sold lots are omitted from the map and sidebar (Elysian Gates). */
-  hideSoldLots?: boolean;
+  /** Filter tabs shown for this map (defaults to all statuses). */
+  statusFilters?: Array<"All" | LotStatus>;
+  /** Legend style — Elysian Gates uses green/red only. */
+  legendMode?: "full" | "available-sold";
   hotspotSettings: {
     ringRadius: number;
     hitPadding: number;
@@ -202,6 +209,8 @@ export const MAP_CONFIGS: MapConfig[] = [
     name: 'Sydney Oaks',
     url: '/svg/siteMap-final.svg',
     lots: generateSydneyOaksLots(89),
+    statusFilters: ["All", "Available", "Sold"],
+    legendMode: "available-sold",
     hotspotSettings: {
       ...defaultHotspotRingSettings(),
       strokeColor: "#8B2A2A",
@@ -213,7 +222,8 @@ export const MAP_CONFIGS: MapConfig[] = [
     name: 'Elysian Gates',
     url: '/svg/elysian-gates.svg',
     lots: generateElysianGatesLots(28),
-    hideSoldLots: true,
+    statusFilters: ["All", "Available", "Sold"],
+    legendMode: "available-sold",
     hotspotSettings: {
       ...defaultHotspotRingSettings(),
       strokeColor: "#D43F33",

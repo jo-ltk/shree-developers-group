@@ -27,23 +27,38 @@ function LegendDot({
 }
 
 /** Compact legend — sits below zoom controls (desktop: labeled row, mobile: dot strip). */
-export function SiteMapStatusLegend({ variant }: { variant: "desktop" | "mobile" }) {
+export function SiteMapStatusLegend({
+  variant,
+  mode = "full",
+}: {
+  variant: "desktop" | "mobile";
+  mode?: "full" | "available-sold";
+}) {
+  const items =
+    mode === "available-sold"
+      ? LEGEND_ITEMS.filter((item) => item.short === "Sold" || item.short === "Avail")
+      : LEGEND_ITEMS;
+
   if (variant === "mobile") {
     return (
       <div
         data-map-control
         className="flex items-center gap-2.5 rounded-full border border-[#1C1208]/12 bg-[#F5F0E8]/94 px-2.5 py-1.5 shadow-[0_6px_20px_rgba(28,18,8,0.1)] backdrop-blur-md"
-        aria-label="Homesite status: sold out, construction starting, upcoming"
+        aria-label={
+          mode === "available-sold"
+            ? "Homesite status: available, sold out"
+            : "Homesite status: sold out, construction starting, upcoming"
+        }
       >
-        {LEGEND_ITEMS.map(({ short, label, fill, stroke }) => (
+        {items.map(({ short, label, fill, stroke }) => (
           <span
             key={short}
             className="flex items-center gap-1"
-            title={label}
+            title={mode === "available-sold" && short === "Avail" ? "Available" : label}
           >
             <LegendDot fill={fill} stroke={stroke} size="sm" />
             <span className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#1C1208]/70">
-              {short}
+              {mode === "available-sold" && short === "Avail" ? "Open" : short}
             </span>
           </span>
         ))}
@@ -59,10 +74,12 @@ export function SiteMapStatusLegend({ variant }: { variant: "desktop" | "mobile"
       aria-label="Homesite status"
     >
       <ul className="flex flex-col gap-1">
-        {LEGEND_ITEMS.map(({ label, fill, stroke }) => (
+        {items.map(({ short, label, fill, stroke }) => (
           <li key={label} className="flex items-center gap-1.5 whitespace-nowrap">
             <LegendDot fill={fill} stroke={stroke} />
-            <span className="text-[9px] font-semibold leading-none text-[#1C1208]/75">{label}</span>
+            <span className="text-[9px] font-semibold leading-none text-[#1C1208]/75">
+              {mode === "available-sold" && short === "Avail" ? "Available" : label}
+            </span>
           </li>
         ))}
       </ul>

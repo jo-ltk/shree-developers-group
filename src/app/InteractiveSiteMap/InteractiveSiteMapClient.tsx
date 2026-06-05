@@ -114,6 +114,10 @@ function defaultPlanIdForLot(lot: Lot) {
   return lot.defaultPlanId ?? lot.availablePlans?.[0]?.id ?? "";
 }
 
+function mapFiltersFor(config: MapConfig): Array<"All" | LotStatus> {
+  return config.statusFilters ?? filters;
+}
+
 const MOBILE_FILTER_LABELS: Record<Filter, string> = {
   All: "All",
   Available: "Avail.",
@@ -128,24 +132,71 @@ function filterCount(filter: Filter, lots: Lot[]) {
   return lots.filter((lot) => lot.status.toLowerCase().replace(/\s+/g, '-') === target).length;
 }
 
+function statusDisplayLabel(status: LotStatus) {
+  if (status === "Sold") return "Sold Out";
+  if (status === "Available") return "Available";
+  return status;
+}
+
 function statusBadgeClass(status: LotStatus) {
   if (status === "Available")
-    return "border-[#C9AE7B]/40 bg-[#C9AE7B]/10 text-[#1C1208]";
+    return "border-[#15803D]/40 bg-[#16A34A]/10 text-[#15803D]";
   if (status === "Sold")
-    return "border-[#1C1208]/20 bg-[#1C1208]/5 text-[#1C1208]/60";
+    return "border-[#B91C1C]/45 bg-[#B91C1C]/12 text-[#B91C1C]";
   return "border-[#D43F33]/30 bg-[#D43F33]/5 text-[#D43F33]";
 }
 
 function listBadgeClass(status: LotStatus) {
   if (status === "Available")
-    return "border-[#C9AE7B]/40 text-[#8B6A20] bg-[#C9AE7B]/10";
+    return "border-[#15803D]/45 text-[#15803D] bg-[#16A34A]/12";
   if (status === "Sold")
-    return "border-[#B91C1C]/35 text-[#B91C1C] bg-[#B91C1C]/8";
+    return "border-[#B91C1C]/50 text-[#B91C1C] bg-[#B91C1C]/12";
   if (status === "Coming Soon")
     return "border-[#C9AE7B]/50 text-[#8B6A20] bg-[#C9AE7B]/12";
   if (status === "Future")
     return "border-[#1C1208]/20 text-[#1C1208]/55 bg-[#1C1208]/5";
   return "border-[#D43F33]/30 text-[#D43F33] bg-[#D43F33]/5";
+}
+
+function SoldOutBanner({
+  message,
+  compact = false,
+  className = "",
+}: {
+  message: string;
+  compact?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      role="status"
+      className={`border border-[#B91C1C]/30 bg-[#B91C1C]/[0.05] shadow-[inset_3px_0_0_#B91C1C] ${
+        compact ? "mb-3 px-3.5 py-2.5" : "mb-4 px-4 py-3"
+      } ${className}`}
+      style={{ borderRadius: 2 }}
+    >
+      <p
+        style={{
+          color: "#B91C1C",
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: compact ? "1.05rem" : "1.125rem",
+          fontWeight: 500,
+          lineHeight: 1.45,
+          margin: 0,
+        }}
+      >
+        {message}
+      </p>
+    </div>
+  );
+}
+
+function LotStatusCallout({ lot, compact = false }: { lot: Lot; compact?: boolean }) {
+  if (lot.status === "Sold") {
+    return <SoldOutBanner message={lot.description} compact={compact} />;
+  }
+
+  return null;
 }
 
 // ── Sub-components ─────────────────────────────────────────────────────────
@@ -154,13 +205,15 @@ const FilterBar = ({
   activeFilter, 
   setActiveFilter,
   lots,
+  mapFilters = filters,
 }: { 
   activeFilter: Filter, 
   setActiveFilter: (f: Filter) => void,
   lots: Lot[],
+  mapFilters?: Array<"All" | LotStatus>,
 }) => (
   <div className="flex items-center gap-1">
-    {filters.map((f) => {
+    {mapFilters.map((f) => {
       const active = activeFilter === f;
       return (
         <button
@@ -198,13 +251,15 @@ const FilterBarCompact = ({
   activeFilter,
   setActiveFilter,
   lots,
+  mapFilters = filters,
 }: {
   activeFilter: Filter;
   setActiveFilter: (f: Filter) => void;
   lots: Lot[];
+  mapFilters?: Array<"All" | LotStatus>;
 }) => (
   <div className="-mx-1 flex items-center gap-0.5 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-    {filters.map((f) => {
+    {mapFilters.map((f) => {
       const active = activeFilter === f;
       return (
         <button
@@ -271,7 +326,7 @@ const LotRows = ({
           </div>
         </div>
         <Annotation className={`shrink-0 border px-2 py-0.5 !font-bold responsive-stat-label ${listBadgeClass(lot.status)}`}>
-          {lot.status}
+          {statusDisplayLabel(lot.status)}
         </Annotation>
       </motion.button>
     ))}
@@ -302,7 +357,10 @@ const MapPanel = ({
         </div>
       </div>
     }>
-      <MapViewport showStatusLegend={selectedMap.id !== "hanover-park-at-stockbridge"}>
+      <MapViewport
+        showStatusLegend={selectedMap.id !== "hanover-park-at-stockbridge"}
+        legendMode={selectedMap.legendMode ?? "full"}
+      >
         {selectedMap.id === "sydney-oaks" ? (
           <SydneyOaksStage
             activeFilter={activeFilter}
@@ -505,9 +563,13 @@ const MobileLotDetails = ({
                   isSheet ? "responsive-stat-label max-[430px]:!text-[8px]" : "text-[0.55rem]"
                 }`}
               >
-                {selectedLot.status}
+                {statusDisplayLabel(selectedLot.status)}
               </Annotation>
             </div>
+
+            {selectedLot.status === "Sold" ? (
+              <LotStatusCallout lot={selectedLot} compact />
+            ) : null}
 
             <h3
               className={`font-light leading-tight text-[#1C1208] ${
@@ -592,17 +654,19 @@ const MobileLotDetails = ({
 
                 <SpecGrid selectedLot={selectedLot} compact />
 
-                <div className="mt-5">
-                  <ButtonPrimary href="/#request-info" className="w-full">
-                    Request Home Details
-                  </ButtonPrimary>
-                </div>
+                {selectedLot.status !== "Sold" ? (
+                  <div className="mt-5">
+                    <ButtonPrimary href="/#request-info" className="w-full">
+                      Request Home Details
+                    </ButtonPrimary>
+                  </div>
+                ) : null}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {isSheet && !expanded && (
+        {isSheet && !expanded && selectedLot.status !== "Sold" && (
           <div className="mt-3">
             <ButtonPrimary
               href="/#request-info"
@@ -643,16 +707,22 @@ export function InteractiveSiteMapClient({
   }, [initialProject]);
 
   const reduceMotion = useReducedMotion();
+
+  const [mapLotSelection, setMapLotSelection] = useState<Record<string, number>>(() => {
+    const initial: Record<string, number> = {};
+    MAP_CONFIGS.forEach((map) => {
+      initial[map.id] = map.lots[0]?.id ?? 1;
+    });
+    return initial;
+  });
   
   const selectedMap = MAP_CONFIGS.find(m => m.id === selectedMapId) || MAP_CONFIGS[0];
   const lots = selectedMap.lots;
-  
-  // Track selected lot per map
-  const [mapLotSelection, setMapLotSelection] = useState<Record<string, number>>(() => {
-    const initial: Record<string, number> = {};
-    MAP_CONFIGS.forEach(m => initial[m.id] = m.lots[0]?.id ?? 1);
-    return initial;
-  });
+  const mapFilters = mapFiltersFor(selectedMap);
+
+  useEffect(() => {
+    setActiveFilter("All");
+  }, [selectedMapId]);
 
   const selectedLotId = mapLotSelection[selectedMapId];
   const baseSelectedLot = lots.find((lot) => lot.id === selectedLotId) ?? lots[0];
@@ -671,9 +741,13 @@ export function InteractiveSiteMapClient({
   const selectedLot = resolveLotDisplay(baseSelectedLot, selectedPlanId);
   
   const visibleLots =
-    activeFilter === "All" 
-      ? lots 
-      : lots.filter((l) => l.status.toLowerCase().replace(/\s+/g, '-') === activeFilter.toLowerCase().replace(/\s+/g, '-'));
+    activeFilter === "All"
+      ? lots
+      : lots.filter(
+          (l) =>
+            l.status.toLowerCase().replace(/\s+/g, "-") ===
+            activeFilter.toLowerCase().replace(/\s+/g, "-"),
+        );
 
   // ── Handlers ─────────────────────────────────────────────────────────────
 
@@ -685,11 +759,12 @@ export function InteractiveSiteMapClient({
 
   function handleFilterChange(f: Filter) {
     setActiveFilter(f);
-    const target = f.toLowerCase().replace(/\s+/g, '-');
-    const filtered = f === "All" 
-      ? lots 
-      : lots.filter((l) => l.status.toLowerCase().replace(/\s+/g, '-') === target);
-    
+    const target = f.toLowerCase().replace(/\s+/g, "-");
+    const filtered =
+      f === "All"
+        ? lots
+        : lots.filter((l) => l.status.toLowerCase().replace(/\s+/g, "-") === target);
+
     if (filtered.length > 0 && !filtered.some((l) => l.id === selectedLotId)) {
       handleSelectLot(filtered[0].id);
     }
@@ -744,6 +819,7 @@ export function InteractiveSiteMapClient({
             activeFilter={activeFilter} 
             setActiveFilter={handleFilterChange} 
             lots={lots}
+            mapFilters={mapFilters}
           />
         </div>
 
@@ -792,7 +868,7 @@ export function InteractiveSiteMapClient({
                 alt={selectedLot.title}
                 aspectRatio="aspect-[5/3]"
                 className="w-full"
-                label={selectedLot.status.toUpperCase()}
+                label={statusDisplayLabel(selectedLot.status).toUpperCase()}
                 counter={selectedLot.lotNumber.toString().padStart(2, '0')}
                 priority
              />
@@ -817,9 +893,13 @@ export function InteractiveSiteMapClient({
                 </Annotation>
               ) : null}
 
-              <BodyText size="sm" className="mb-6 text-[#1C1208]/60">
-                {selectedLot.description}
-              </BodyText>
+              <LotStatusCallout lot={selectedLot} />
+
+              {selectedLot.status !== "Sold" && selectedLot.description ? (
+                <BodyText size="sm" className="mb-4 text-[#1C1208]/60">
+                  {selectedLot.description}
+                </BodyText>
+              ) : null}
 
               {baseSelectedLot.availablePlans?.length ? (
                 <PlanPicker
@@ -836,9 +916,11 @@ export function InteractiveSiteMapClient({
               <SpecGrid selectedLot={selectedLot} compact />
 
               <div className="mt-8">
-                <ButtonPrimary href="/#request-info" className="w-full">
-                  Request Home Details
-                </ButtonPrimary>
+                {baseSelectedLot.status !== "Sold" ? (
+                  <ButtonPrimary href="/#request-info" className="w-full">
+                    Request Home Details
+                  </ButtonPrimary>
+                ) : null}
               </div>
 
               <Ornament className="my-8" />
@@ -877,6 +959,7 @@ export function InteractiveSiteMapClient({
             activeFilter={activeFilter}
             setActiveFilter={handleFilterChange}
             lots={lots}
+            mapFilters={mapFilters}
           />
           <div className="flex items-center justify-between gap-3 border-t border-[#1C1208]/8 pt-2">
             <div className="min-w-0 flex-1">

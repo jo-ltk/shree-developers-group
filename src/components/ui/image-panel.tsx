@@ -48,7 +48,10 @@ export function ImagePanel({
           )}
           {label && (
             <span
-              className="text-[#F5F0E8] uppercase"
+              className={cn(
+                "uppercase",
+                label.includes("SOLD") ? "font-bold text-[#FCA5A5]" : "text-[#F5F0E8]",
+              )}
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "0.55rem",

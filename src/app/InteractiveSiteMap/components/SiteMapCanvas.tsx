@@ -1,11 +1,12 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { memo } from "react";
 
 import type { MapViewBox } from "../types/site-map";
 import { SITE_MAP_CANVAS } from "../utils/site-map-constants";
 
-export function SiteMapCanvas({
+function SiteMapCanvasInner({
   viewBox = SITE_MAP_CANVAS.viewBox,
   children,
 }: {
@@ -27,3 +28,5 @@ export function SiteMapCanvas({
     </div>
   );
 }
+
+export const SiteMapCanvas = memo(SiteMapCanvasInner);
