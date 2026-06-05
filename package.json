@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cloudinary:download": "node scripts/download-cloudinary-media.mjs",
+    "cloudinary:upload": "node scripts/upload-cloudinary-media.mjs",
+    "cloudinary:verify": "node scripts/verify-cloudinary-media.mjs"
   },
   "dependencies": {
     "@vis.gl/react-google-maps": "^1.8.3",
@@ -24,6 +27,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-zoom-pan-pinch": "^4.0.3",
+    "resend": "^6.12.4",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.3.1"
   },

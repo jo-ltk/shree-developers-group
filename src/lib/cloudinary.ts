@@ -1,5 +1,5 @@
 const CLOUD_NAME =
-  process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "dduy8wigb";
+  process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "dmbsa4gaz";
 
 type CloudinaryImageOptions = {
   width?: number;

@@ -10,8 +10,9 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 
-function loadEnv() {
-  const envPath = resolve(root, ".env");
+function loadEnvFile(filename) {
+  const envPath = resolve(root, filename);
+  if (!existsSync(envPath)) return;
   const text = readFileSync(envPath, "utf8");
   for (const line of text.split("\n")) {
     const m = line.match(/^([^#=]+)=(.*)$/);
@@ -19,13 +20,19 @@ function loadEnv() {
   }
 }
 
-loadEnv();
+loadEnvFile(".env.local");
+loadEnvFile(".env");
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+if (process.env.CLOUDINARY_URL) {
+  cloudinary.config({ secure: true });
+} else {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,
+  });
+}
 
 const images = [
   {

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 import { COMPANY_CONTACT } from "@/lib/contact";
 
 type ContactBody = {
@@ -44,7 +45,6 @@ export async function POST(request: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_EMAIL ?? COMPANY_CONTACT.email;
   const from =
     process.env.RESEND_FROM_EMAIL ??
     "Shree Developers Group <onboarding@resend.dev>";
@@ -78,24 +78,17 @@ export async function POST(request: Request) {
     ${body.source ? `<p><strong>Source:</strong> ${escapeHtml(body.source)}</p>` : ""}
   `.trim();
 
-  const resendResponse = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      reply_to: email,
-      subject: subjectParts.join(" "),
-      html,
-    }),
+  const resend = new Resend(apiKey);
+  const { error } = await resend.emails.send({
+    from,
+    to: COMPANY_CONTACT.email,
+    replyTo: email,
+    subject: subjectParts.join(" "),
+    html,
   });
 
-  if (!resendResponse.ok) {
-    const errText = await resendResponse.text();
-    console.error("[contact] Resend error:", resendResponse.status, errText);
+  if (error) {
+    console.error("[contact] Resend error:", JSON.stringify(error));
     return NextResponse.json(
       { error: "We could not send your enquiry. Please try again or contact us directly." },
       { status: 502 },

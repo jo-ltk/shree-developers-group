@@ -1,5 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
+import {
+  cloudinaryVideoPosterUrl,
+  cloudinaryVideoUrl,
+} from "@/lib/cloudinary";
+
+const HERO_DESKTOP_VIDEO = "hero_videos/hero_bg";
+const HERO_MOBILE_VIDEO = "hero_videos/hero_mobile_1778938404986";
 
 export function Hero() {
   return (
@@ -11,11 +18,11 @@ export function Hero() {
         loop
         playsInline
         preload="metadata"
-        poster="https://res.cloudinary.com/dduy8wigb/video/upload/v1778742536/hero_videos/hero_bg.jpg"
+        poster={cloudinaryVideoPosterUrl(HERO_DESKTOP_VIDEO)}
         className="hidden md:block absolute inset-0 w-full h-full object-cover object-center"
       >
         <source
-          src="https://res.cloudinary.com/dduy8wigb/video/upload/v1778742536/hero_videos/hero_bg.mp4"
+          src={cloudinaryVideoUrl(HERO_DESKTOP_VIDEO)}
           type="video/mp4"
         />
       </video>
@@ -28,11 +35,11 @@ export function Hero() {
           loop
           playsInline
           preload="metadata"
-          poster="https://res.cloudinary.com/dduy8wigb/video/upload/v1778742536/hero_videos/hero_bg.jpg"
+          poster={cloudinaryVideoPosterUrl(HERO_DESKTOP_VIDEO)}
           className="w-full h-full object-cover"
         >
           <source
-            src="https://res.cloudinary.com/dduy8wigb/video/upload/v1778938424/hero_videos/hero_mobile_1778938404986.mp4"
+            src={cloudinaryVideoUrl(HERO_MOBILE_VIDEO)}
             type="video/mp4"
           />
         </video>
