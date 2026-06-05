@@ -89,37 +89,37 @@ export function MapZoomControls({
     );
   }
 
-  /* Mobile — pill cluster, 44px+ touch targets */
+  /* Mobile — pill cluster, sized to match SiteMapStatusLegend mobile pill */
   return (
     <motion.div
       data-map-control
       initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.15 }}
-      className={`items-center gap-0.5 overflow-hidden rounded-full border border-[#1C1208]/15 bg-[#F5F0E8]/92 p-1 shadow-[0_8px_32px_rgba(28,18,8,0.12)] backdrop-blur-md ${className}`}
+      className={`flex flex-col items-center gap-px overflow-hidden rounded-full border border-[#1C1208]/12 bg-[#F5F0E8]/94 p-0.5 shadow-[0_6px_20px_rgba(28,18,8,0.1)] backdrop-blur-md ${className}`}
     >
       <ControlButton
         label="Zoom out"
         onClick={onZoomOut}
-        className="grid size-11 place-items-center rounded-full text-[#1C1208] active:bg-[#D43F33] active:text-white"
+        className="grid size-6 shrink-0 place-items-center rounded-full text-[#1C1208] active:bg-[#D43F33] active:text-white"
       >
-        <Minus className="size-5" strokeWidth={2} />
+        <Minus className="size-2.5" strokeWidth={1.75} />
       </ControlButton>
       {canReset && (
         <ControlButton
           label="Reset map view"
           onClick={onReset}
-          className="grid size-9 place-items-center rounded-full text-[#1C1208]/50 active:bg-[#1C1208]/8 active:text-[#1C1208]"
+          className="grid size-6 shrink-0 place-items-center rounded-full text-[#1C1208]/50 active:bg-[#1C1208]/8 active:text-[#1C1208]"
         >
-          <LocateFixed className="size-4" strokeWidth={2} />
+          <LocateFixed className="size-2" strokeWidth={1.75} />
         </ControlButton>
       )}
       <ControlButton
         label="Zoom in"
         onClick={onZoomIn}
-        className="grid size-11 place-items-center rounded-full bg-[#1C1208] text-[#F5F0E8] active:bg-[#D43F33]"
+        className="grid size-6 shrink-0 place-items-center rounded-full bg-[#1C1208] text-[#F5F0E8] active:bg-[#D43F33]"
       >
-        <Plus className="size-5" strokeWidth={2} />
+        <Plus className="size-2.5" strokeWidth={1.75} />
       </ControlButton>
     </motion.div>
   );
