@@ -25,7 +25,6 @@ export function homePlansFromProject(slug: string): HomePlan[] {
     garage: plan.parking,
     story: "Two Story",
     image: plan.image,
-    price: plan.price,
   }));
 }
 

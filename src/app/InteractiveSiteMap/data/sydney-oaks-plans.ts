@@ -8,4 +8,4 @@ const sydneyOaks = getProjectBySlug("sydney-oaks");
 
 export const SYDNEY_OAKS_COMMUNITY_SUMMARY =
   sydneyOaks?.summary ??
-  "22-acre townhome community in Cumming with 3–4 bedroom homes starting in the low $400s.";
+  "22-acre townhome community in Cumming with 3–4 bedroom homes.";

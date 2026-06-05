@@ -89,7 +89,7 @@ export default function CommunityDetailsPage() {
 
               <BodyText className="m-0 max-w-lg mx-auto lg:mx-0 text-center lg:text-left opacity-60 responsive-body-sm">
                 Our advisors are available to provide detailed project
-                briefings, pricing schedules, and site visit coordination.
+                briefings, floor plan details, and site visit coordination.
               </BodyText>
 
               <div className="space-y-4 w-full mx-auto lg:mx-0">

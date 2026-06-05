@@ -10,14 +10,12 @@ export type HomePlan = {
   garage: number;
   story: "Single Story" | "Two Story";
   image: string;
-  price: string;
 };
 
 export type Lot = {
   id: number;
   lotNumber: string;
   title: string;
-  price: string;
   beds: number;
   baths: number;
   sqft: number;

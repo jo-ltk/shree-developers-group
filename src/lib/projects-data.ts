@@ -26,14 +26,12 @@ export type ProjectData = {
 
   // New fields for Sydney Oaks dedicated page
   name?: string;
-  priceText?: string;
   statusBadge?: "Ready to Move" | "Ongoing" | "Coming Soon" | "Completed";
   tagline?: string;
   reraNumber?: string;
   possessionDate?: string;
   projectArea?: string;
   totalUnits?: string;
-  priceRange?: string;
   propertyType?: string;
   highlightsList?: string[];
   sitePlanPdfUrl?: string;
@@ -50,8 +48,6 @@ export type ProjectData = {
     bathrooms: number;
     parking: number;
     area: number;
-    price: string;
-    emi: string;
     availability: "Available" | "Sold Out" | "Coming Soon";
     virtualTourUrl: string;
   }[];
@@ -61,7 +57,6 @@ export type ProjectData = {
     bhk: number;
     area: number;
     facing: string;
-    price: string;
     availability: "Available" | "Booking Open" | "Sold Out";
     image: string;
   }[];
@@ -521,14 +516,12 @@ export const allProjects: ProjectData[] = [
       ],
     },
     name: "Elysian Gates",
-    priceText: "From $1.3M",
     statusBadge: "Ongoing",
     tagline: "Where Quiet Luxury Meets Wooded Seclusion",
     reraNumber: "RERA-GA-7841",
     possessionDate: "Q2 2027",
     projectArea: "44 Acres",
     totalUnits: "28 Estate Homes",
-    priceRange: "$1.3M - $2M",
     propertyType: "Luxury Estate Homes",
     sitePlanPdfUrl: "/pdfs/site-plan.pdf",
     floorPlansPdfUrl: "/pdfs/aspen-plan-set.pdf",
@@ -542,7 +535,6 @@ export const allProjects: ProjectData[] = [
       "44-acre gated enclave",
       "28 estate homes",
       "5-bedroom layouts",
-      "$1.3M – $2M",
       "Zoned for Lambert High School",
     ],
     heroCtaSecondary: "Schedule a Visit",
@@ -679,8 +671,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 4.5,
         parking: 3,
         area: 4000,
-        price: "$1,300,000",
-        emi: "$6,750/mo",
         availability: "Available",
         virtualTourUrl: "elysian-gates/jamestown-preview",
       },
@@ -705,8 +695,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 4.5,
         parking: 3,
         area: 4200,
-        price: "$1,650,000",
-        emi: "$8,575/mo",
         availability: "Available",
         virtualTourUrl: "elysian-gates/vicksburg-foyer-walkthrough",
       },
@@ -733,8 +721,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 5.5,
         parking: 3,
         area: 5000,
-        price: "$2,000,000",
-        emi: "$10,400/mo",
         availability: "Coming Soon",
         virtualTourUrl: "elysian-gates/mcallister-foyer-walkthrough",
       },
@@ -763,7 +749,6 @@ export const allProjects: ProjectData[] = [
         bhk: 5,
         area: 4000,
         facing: "East-Facing",
-        price: "$1,300,000",
         availability: "Available",
         image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-a--1-.png",
       },
@@ -773,7 +758,6 @@ export const allProjects: ProjectData[] = [
         bhk: 5,
         area: 4200,
         facing: "North-Facing",
-        price: "$1,650,000",
         availability: "Booking Open",
         image: "/images/elysian-gates/floor-plans/vicksburg/vicksburg-option-a--1.png",
       },
@@ -783,7 +767,6 @@ export const allProjects: ProjectData[] = [
         bhk: 5,
         area: 5000,
         facing: "West-Facing",
-        price: "$2,000,000",
         availability: "Available",
         image: "/images/elysian-gates/floor-plans/mcallister/mcallister-option-a---white-1.png",
       },
@@ -793,7 +776,6 @@ export const allProjects: ProjectData[] = [
         bhk: 5,
         area: 4000,
         facing: "South-Facing",
-        price: "$1,350,000",
         availability: "Sold Out",
         image: "/images/elysian-gates/floor-plans/jamestown/jamestown-option-b--1-.png",
       },
@@ -815,11 +797,11 @@ export const allProjects: ProjectData[] = [
       },
       {
         question: "What is the booking and reservation process?",
-        answer: "You can reserve a homesite or completed estate layout with an initial refundable reservation deposit of $7,500, followed by a 10% builder contract signing within 15 days.",
+        answer: "You can reserve a homesite or completed estate layout with an initial refundable reservation deposit, followed by a builder contract signing within 15 days.",
       },
       {
         question: "What are the monthly maintenance charges?",
-        answer: "Maintenance is estimated at $165/month, covering common park landscaping, road paving care, gazebo and trail upkeep, and 24/7 security guard services.",
+        answer: "Monthly maintenance covers common park landscaping, road paving care, gazebo and trail upkeep, and 24/7 security guard services.",
       },
       {
         question: "Are all legal approvals and RERA clearances in place?",
@@ -937,7 +919,6 @@ export const allProjects: ProjectData[] = [
 
     // New Fields
     name: "Sydney Oaks",
-    priceText: "From low $400s",
     statusBadge: "Ongoing",
     tagline: "Luxury Mixed-Use Townhome Community in Cumming, Georgia",
     heroDescription:
@@ -950,7 +931,6 @@ export const allProjects: ProjectData[] = [
       "3–4 bedroom townhome plans",
       "21,000 sq. ft. retail space",
       "24,000 sq. ft. office space",
-      "Starting from the low $400s",
     ],
     heroCtaSecondary: "Schedule a Visit",
     heroAccentImages: [
@@ -974,7 +954,6 @@ export const allProjects: ProjectData[] = [
     possessionDate: "Q4 2026",
     projectArea: "22 Acres",
     totalUnits: "89 Townhomes",
-    priceRange: "From low $400s",
     propertyType: "Townhomes",
     sitePlanPdfUrl: "/pdfs/site-plan.pdf",
     floorPlansPdfUrl: "/pdfs/aspen-plan-set.pdf",
@@ -1151,8 +1130,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 2.5,
         parking: 2,
         area: 1971,
-        price: "From low $400s",
-        emi: "$2,150/mo",
         availability: "Available",
         virtualTourUrl: "#tour-aspen",
       },
@@ -1171,8 +1148,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 3.5,
         parking: 2,
         area: 2026,
-        price: "From low $400s",
-        emi: "$2,250/mo",
         availability: "Available",
         virtualTourUrl: "#tour-birch",
       },
@@ -1190,8 +1165,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 3.5,
         parking: 2,
         area: 2065,
-        price: "From low $400s",
-        emi: "$2,350/mo",
         availability: "Coming Soon",
         virtualTourUrl: "#tour-elm",
       },
@@ -1203,7 +1176,6 @@ export const allProjects: ProjectData[] = [
         bhk: 3,
         area: 1971,
         facing: "East-Facing",
-        price: "From low $400s",
         availability: "Available",
         image: "/images/floor-plans/aspen/first-floor.jpg"
       },
@@ -1213,7 +1185,6 @@ export const allProjects: ProjectData[] = [
         bhk: 3,
         area: 1971,
         facing: "North-Facing",
-        price: "From low $400s",
         availability: "Booking Open",
         image: "/images/floor-plans/birch/first-floor.jpg"
       },
@@ -1223,7 +1194,6 @@ export const allProjects: ProjectData[] = [
         bhk: 4,
         area: 2065,
         facing: "West-Facing",
-        price: "From low $400s",
         availability: "Available",
         image: "/images/floor-plans/elm/first-floor.jpg"
       },
@@ -1233,7 +1203,6 @@ export const allProjects: ProjectData[] = [
         bhk: 3,
         area: 1971,
         facing: "South-Facing",
-        price: "From low $400s",
         availability: "Sold Out",
         image: "/images/floor-plans/aspen/first-floor.jpg"
       }
@@ -1250,11 +1219,11 @@ export const allProjects: ProjectData[] = [
       },
       {
         question: "What is the booking and reservation process?",
-        answer: "You can reserve a townhome with an initial refundable reservation deposit of $5,000, followed by a 10% builder contract signing within 15 days."
+        answer: "You can reserve a townhome with an initial refundable reservation deposit, followed by a builder contract signing within 15 days."
       },
       {
         question: "What are the monthly maintenance charges?",
-        answer: "Maintenance is estimated at $145/month, covering common park landscaping, road paving care, clubhouse upkeep, and 24/7 security guard services."
+        answer: "Monthly maintenance covers common park landscaping, road paving care, clubhouse upkeep, and 24/7 security guard services."
       },
       {
         question: "Are all legal approvals and RERA clearances in place?",
@@ -1347,7 +1316,6 @@ export const allProjects: ProjectData[] = [
     ],
     locationMap: "/images/hanover-park/master-plan.jpg",
     name: "Hanover Park at Stockbridge",
-    priceText: "Community Complete",
     statusBadge: "Completed",
     tagline: "Resort-Inspired Living in Stockbridge",
     heroDescription:
@@ -1383,7 +1351,6 @@ export const allProjects: ProjectData[] = [
     possessionDate: "TBA",
     projectArea: "Master-Planned Community",
     totalUnits: "Townhomes & Single-Family Homes",
-    priceRange: "Completed",
     propertyType: "Townhomes & Single-Family",
     sitePlanPdfUrl: "/images/hanover-park/master-plan.jpg",
     sitePlanSvg: "/images/hanover-park/master-plan.jpg",
@@ -1477,8 +1444,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 2.5,
         parking: 2,
         area: 1850,
-        price: "Coming Soon",
-        emi: "—",
         availability: "Coming Soon",
         virtualTourUrl: "#townhome",
       },
@@ -1490,8 +1455,6 @@ export const allProjects: ProjectData[] = [
         bathrooms: 3,
         parking: 2,
         area: 2300,
-        price: "Coming Soon",
-        emi: "—",
         availability: "Coming Soon",
         virtualTourUrl: "#single-family",
       },

@@ -16,7 +16,6 @@ import {
   ZoomOut,
   RotateCcw,
   Compass,
-  DollarSign,
   Layers,
   Calendar,
   Award,
@@ -241,7 +240,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
     `Positioned along ${project.location}'s central access ways, ${name} bridges the boundary between natural seclusion and rapid civic reach.`;
   const sitePlanSvg = project.sitePlanSvg || "/svg/siteMap-final.svg";
   const tagline = project.tagline || "Luxury homes in Cumming, Georgia";
-  const priceText = project.priceText || "From low $400s";
   const statusBadge = project.statusBadge || "Ongoing";
   const heroDescription = project.heroDescription;
   const heroKeySpecs = project.heroKeySpecs;
@@ -252,7 +250,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
   const possessionDate = project.possessionDate || "Q4 2026";
   const projectArea = project.projectArea || "22 Acres";
   const totalUnits = project.totalUnits || "89 Town Homes";
-  const priceRange = project.priceRange || "$410k - $580k";
   const propertyType = project.propertyType || "Townhomes";
   const highlightsList = project.highlightsList || [
     "Wooded backyard retreats bordering natural trails",
@@ -269,8 +266,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       bathrooms: 2.5,
       parking: 2,
       area: 2400,
-      price: "$410,000",
-      emi: "$2,150/mo",
       availability: "Available" as const,
       virtualTourUrl: "#tour-maple"
     }
@@ -416,11 +411,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                     </ul>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center lg:text-left">
-                    <div className="min-w-0 space-y-0.5 sm:space-y-1">
-                      <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Price</span>
-                      <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{priceText}</span>
-                    </div>
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3 text-center lg:text-left">
                     <div className="min-w-0 space-y-0.5 sm:space-y-1">
                       <span className="block text-[8px] sm:text-[9px] font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rust uppercase">Homes</span>
                       <span className="block font-display text-xs sm:text-base lg:text-lg text-dark leading-tight">{totalUnits}</span>
@@ -498,7 +489,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
       {/* QUICK INFO BAR (Premium Specs Dashboard) */}
       <section className="bg-dark text-cream border-y border-rust/10 py-8">
         <div className="mx-auto max-w-[1600px] px-6 sm:px-8 md:px-12 lg:px-20">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 lg:gap-6 items-stretch">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4 lg:gap-6 items-stretch">
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Layers className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Project Area</Annotation>
@@ -518,11 +509,6 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
               <Calendar className="text-rust w-5 h-5 mb-2 shrink-0" />
               <Annotation light className="mb-1">Possession Date</Annotation>
               <span className="font-display font-light text-sm text-cream">{possessionDate}</span>
-            </div>
-            <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
-              <DollarSign className="text-rust w-5 h-5 mb-2 shrink-0" />
-              <Annotation light className="mb-1">Price Range</Annotation>
-              <span className="font-display font-light text-sm text-cream">{priceRange}</span>
             </div>
             <div className="flex flex-col items-center justify-center text-center p-4 border border-cream/10 rounded-sm bg-cream/5 hover:bg-cream/10 transition-colors duration-300 h-full min-h-[120px]">
               <Home className="text-rust w-5 h-5 mb-2 shrink-0" />
@@ -804,7 +790,7 @@ export function ProjectDetailClient({ project }: { project: ProjectData }) {
                   </SectionHeadline>
                 </div>
                 <p className="mx-auto max-w-md text-sm font-light leading-relaxed text-dark/70 lg:mx-0 lg:max-w-lg">
-                  Request the {name} dossier, floor plan set, pricing guidance, and a convenient callback from our project advisor.
+                  Request the {name} dossier, floor plan set, and a convenient callback from our project advisor.
                 </p>
               </div>
 
@@ -1159,14 +1145,6 @@ function getPlanShortName(name: string) {
     .replace(/\s+Townhome$/i, "")
     .replace(/\s+Villa$/i, "")
     .replace(/\s+Estate$/i, "");
-}
-
-function formatPlanPriceShort(price: string) {
-  const value = parseInt(price.replace(/\D/g, ""), 10);
-  if (!value) return price;
-  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
-  if (value >= 1_000) return `$${Math.round(value / 1_000)}k`;
-  return price;
 }
 
 function formatPlanAvailabilityShort(status: string) {
@@ -1962,22 +1940,6 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
   const [activePlanIdx, setActivePlanIdx] = useState(0);
   const plan = floorPlans[activePlanIdx || 0];
 
-  // Pricing calculator values
-  const [loanTerm, setLoanTerm] = useState(30); // years
-  const [downPaymentPct, setDownPaymentPct] = useState(20); // percent
-
-  const estimatedEMI = useMemo(() => {
-    if (!plan) return "$0";
-    const numericPrice = parseInt(plan.price.replace(/[^0-9]/g, ""), 10);
-    const principal = numericPrice * (1 - downPaymentPct / 100);
-    const annualRate = 6.5; // fixed interest rate
-    const monthlyRate = (annualRate / 100) / 12;
-    const totalPayments = loanTerm * 12;
-
-    const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) / (Math.pow(1 + monthlyRate, totalPayments) - 1);
-    return `$${Math.round(emi).toLocaleString()}/mo`;
-  }, [plan, loanTerm, downPaymentPct]);
-
   if (!plan) return null;
 
   return (
@@ -2044,7 +2006,7 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
           </div>
         </div>
 
-        {/* Right Side: Details panel and custom pricing calculator */}
+        {/* Right Side: Details panel */}
         <div className="col-span-12 lg:col-span-5 space-y-6">
           <div className="bg-cream border border-dark/10 p-6 md:p-8 space-y-6 shadow-md relative">
             <span className="absolute top-3 right-3 text-[10px] font-bold text-rust bg-rust/5 px-2.5 py-0.5 rounded-full border border-rust/10 uppercase">
@@ -2053,52 +2015,10 @@ function FloorPlansCarousel({ floorPlans }: { floorPlans: NonNullable<ProjectDat
 
             <div>
               <Annotation className="!text-rust mb-1">{plan.name}</Annotation>
-              <h3 className="font-display font-light text-2xl md:text-3xl text-dark leading-tight">{plan.price}</h3>
-              <span className="text-xs text-dark/60 font-light block mt-1">Estimated EMI Starts from {plan.emi}</span>
-            </div>
-
-            <div className="border-t border-dark/15 pt-6 space-y-4">
-              <Annotation className="!text-dark/60 mb-2">MORTGAGE ESTIMATOR</Annotation>
-
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs text-dark font-medium">
-                  <span>Down Payment: {downPaymentPct}%</span>
-                  <span className="text-dark/60">${(parseInt(plan.price.replace(/[^0-9]/g, ""), 10) * downPaymentPct / 100).toLocaleString()}</span>
-                </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="50"
-                  step="5"
-                  value={downPaymentPct}
-                  onChange={(e) => setDownPaymentPct(Number(e.target.value))}
-                  className="w-full accent-rust h-1 bg-dark/15 rounded-lg cursor-pointer"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs text-dark font-medium">
-                  <span>Loan Term: {loanTerm} Years</span>
-                  <span className="text-dark/60">Fixed 6.5% Interest</span>
-                </div>
-                <input
-                  type="range"
-                  min="15"
-                  max="30"
-                  step="5"
-                  value={loanTerm}
-                  onChange={(e) => setLoanTerm(Number(e.target.value))}
-                  className="w-full accent-rust h-1 bg-dark/15 rounded-lg cursor-pointer"
-                />
-              </div>
-
-              <div className="bg-dark p-4 flex justify-between items-center text-cream mt-2 rounded-sm">
-                <div className="space-y-0.5">
-                  <span className="text-[8px] uppercase tracking-widest text-cream/50 font-bold block">Estimated Monthly EMI</span>
-                  <span className="text-xs text-rust font-bold">Principal + Interest</span>
-                </div>
-                <span className="font-display font-light text-2xl text-cream">{estimatedEMI}</span>
-              </div>
+              <h3 className="font-display font-light text-2xl md:text-3xl text-dark leading-tight">
+                {plan.bedrooms} Beds · {plan.bathrooms} Baths
+              </h3>
+              <span className="text-xs text-dark/60 font-light block mt-1">{plan.area.toLocaleString()} sq.ft.</span>
             </div>
 
             <div className="pt-2 flex flex-col sm:flex-row gap-4">
@@ -2196,7 +2116,6 @@ function formatBedrooms(count: number) {
 
 function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
   const [bedroomFilter, setBedroomFilter] = useState<number | "all">("all");
-  const [priceFilter, setPriceFilter] = useState<number | "all">("all"); // Limit filter
   const [sortByArea, setSortByArea] = useState<"asc" | "desc" | "none">("none");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -2209,14 +2128,6 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
       result = result.filter((u) => u.bhk === bedroomFilter);
     }
 
-    // Filter by Price Limit
-    if (priceFilter !== "all") {
-      result = result.filter((u) => {
-        const numPrice = parseInt(u.price.replace(/[^0-9]/g, ""), 10);
-        return numPrice <= priceFilter;
-      });
-    }
-
     // Sort by Area
     if (sortByArea === "asc") {
       result.sort((a, b) => a.area - b.area);
@@ -2225,7 +2136,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
     }
 
     return result;
-  }, [units, bedroomFilter, priceFilter, sortByArea]);
+  }, [units, bedroomFilter, sortByArea]);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -2242,7 +2153,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
         </div>
 
         {/* Filter Controls Panel */}
-        <div className="grid grid-cols-3 gap-1.5 w-full md:flex md:flex-row md:flex-nowrap md:gap-3 md:items-end md:w-auto">
+        <div className="grid grid-cols-2 gap-1.5 w-full md:flex md:flex-row md:flex-nowrap md:gap-3 md:items-end md:w-auto">
           {/* Bedroom Filter */}
           <div className="flex flex-col w-full md:w-[130px]">
             <span className="text-[8px] uppercase tracking-wider font-semibold text-dark/50 mb-1.5">Bedrooms</span>
@@ -2255,21 +2166,6 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
               <option value="3">3 Bedrooms</option>
               <option value="4">4 Bedrooms</option>
               <option value="5">5 Bedrooms</option>
-            </select>
-          </div>
-
-          {/* Price Filter */}
-          <div className="flex flex-col w-full md:w-[140px]">
-            <span className="text-[8px] uppercase tracking-wider font-semibold text-dark/50 mb-1.5">Max Price</span>
-            <select
-              value={priceFilter}
-              onChange={(e) => setPriceFilter(e.target.value === "all" ? "all" : Number(e.target.value))}
-              className="bg-cream border border-dark/10 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs text-dark outline-none cursor-pointer rounded-sm w-full truncate"
-            >
-              <option value="all">Any Price</option>
-              <option value="420000">Under $420k</option>
-              <option value="500000">Under $500k</option>
-              <option value="600000">Under $600k</option>
             </select>
           </div>
 
@@ -2325,8 +2221,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-dark/10 flex items-center justify-between gap-2">
-                    <span className="font-display font-light text-md text-dark">{u.price}</span>
+                  <div className="pt-3 border-t border-dark/10 flex items-center justify-end gap-2">
                     <a
                       href="#enquiry"
                       className="bg-dark hover:bg-rust !text-cream uppercase font-bold text-[8px] tracking-wider px-3.5 py-2 transition-colors rounded-sm"
@@ -2342,7 +2237,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
           <div className="py-16 text-center border border-dashed border-dark/15 bg-cream/30 space-y-2">
             <Annotation className="!text-dark/40">NO AVAILABLE HOMES MATCH FILTERS</Annotation>
             <button
-              onClick={() => { setBedroomFilter("all"); setPriceFilter("all"); setSortByArea("none"); }}
+              onClick={() => { setBedroomFilter("all"); setSortByArea("none"); }}
               className="text-xs text-rust font-bold uppercase tracking-widest hover:underline cursor-pointer"
             >
               Clear Active Filters
@@ -2404,8 +2299,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
                           </div>
                         </div>
 
-                        <div className="pt-3 border-t border-dark/10 flex items-center justify-between gap-2">
-                          <span className="font-display font-light text-md text-dark">{u.price}</span>
+                        <div className="pt-3 border-t border-dark/10 flex items-center justify-end gap-2">
                           <a
                             href="#enquiry"
                             className="bg-dark hover:bg-rust !text-cream uppercase font-bold text-[8px] tracking-wider px-3.5 py-2 transition-colors rounded-sm"
@@ -2439,7 +2333,7 @@ function AvailableUnitsSection({ units }: { units: ProjectData["unitsList"] }) {
           <div className="py-16 text-center border border-dashed border-dark/15 bg-cream/30 space-y-2">
             <Annotation className="!text-dark/40">NO AVAILABLE HOMES MATCH FILTERS</Annotation>
             <button
-              onClick={() => { setBedroomFilter("all"); setPriceFilter("all"); setSortByArea("none"); }}
+              onClick={() => { setBedroomFilter("all"); setSortByArea("none"); }}
               className="text-xs text-rust font-bold uppercase tracking-widest hover:underline cursor-pointer"
             >
               Clear Active Filters
@@ -2460,7 +2354,7 @@ const KEY_ADVANTAGE_ICONS: LucideIcon[] = [
   Users,
   ShoppingCart,
   Building2,
-  DollarSign,
+  Award,
   Compass,
   ShieldCheck,
 ];
@@ -2995,7 +2889,6 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
     {
       name: "Elysian Gates",
       slug: "elysian-gates",
-      price: "From $1.3M",
       location: "Suwanee, GA",
       details: "44-Acre Gated Enclave",
       image: "/images/elysian-gates/hero.jpg"
@@ -3003,7 +2896,6 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
     {
       name: "Lakeside Heights",
       slug: "lakeside-heights",
-      price: "From low $300s",
       location: "Gwinnett County, GA",
       details: "Scenic Lakefront Community",
       image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
@@ -3045,9 +2937,7 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
                 <p className="text-xs text-dark/60 font-light mt-1">{project.details}</p>
               </div>
 
-              <div className="border-t border-dark/10 pt-4 flex items-center justify-between gap-4">
-                <span className="font-display text-sm font-semibold text-dark">{project.price}</span>
-                {/* Since the user requested only one details page for Sydney Oaks, other links route to Contact */}
+              <div className="border-t border-dark/10 pt-4 flex items-center justify-end gap-4">
                 <Link
                   href="/#request-info"
                   className="text-[9px] uppercase tracking-widest font-bold text-rust hover:text-dark transition-colors inline-flex items-center gap-1"
@@ -3103,8 +2993,7 @@ function RelatedProjectsSection({ currentSlug }: { currentSlug: string }) {
                         <p className="text-xs text-dark/60 font-light mt-1">{project.details}</p>
                       </div>
 
-                      <div className="border-t border-dark/10 pt-4 flex items-center justify-between gap-4">
-                        <span className="font-display text-sm font-semibold text-dark">{project.price}</span>
+                      <div className="border-t border-dark/10 pt-4 flex items-center justify-end gap-4">
                         <Link
                           href="/#request-info"
                           className="text-[9px] uppercase tracking-widest font-bold text-rust hover:text-dark transition-colors inline-flex items-center gap-1"

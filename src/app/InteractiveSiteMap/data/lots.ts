@@ -1,5 +1,3 @@
-import { getProjectBySlug } from "@/lib/projects-data";
-
 import type { Lot, LotStatus } from "../types/site-map";
 import { defaultHotspotRingSettings } from "../utils/hotspot-geometry";
 import { ELYSIAN_GATES_ESTATE_PLANS } from "./elysian-gates-plans";
@@ -50,25 +48,6 @@ function sydneyOaksStatusForLot(id: number): LotStatus {
   return "Future";
 }
 
-function priceForLot(index: number, status: LotStatus) {
-  if (status === "Sold") return "Sold";
-  if (status === "Future") return "Pricing TBD";
-
-  const base = 640000 + ((index * 13750) % 285000);
-  return `From $${Math.round(base / 1000).toLocaleString()}k`;
-}
-
-function sydneyOaksPriceForLot(
-  id: number,
-  status: LotStatus,
-  plan: ReturnType<typeof sydneyOaksPlanForLot>,
-) {
-  if (status === "Sold") return "Sold Out";
-  if (SYDNEY_OAKS_CONSTRUCTION_LOT_IDS.has(id)) return "Construction Starting";
-  if (status === "Future") return "Upcoming";
-  return plan.price;
-}
-
 function sydneyOaksDescriptionForLot(
   id: number,
   status: LotStatus,
@@ -95,7 +74,6 @@ function generateSydneyOaksLots(count: number): Lot[] {
       id,
       lotNumber: `${id}`,
       title: `Home ${id} — ${plan.name}`,
-      price: sydneyOaksPriceForLot(id, status, plan),
       beds: plan.beds,
       baths: plan.baths,
       sqft: plan.sqft,
@@ -109,33 +87,35 @@ function generateSydneyOaksLots(count: number): Lot[] {
 }
 
 /** Elysian Gates homesite availability — edit sets to match sales (same model as Sydney Oaks). */
-const ELYSIAN_GATES_SOLD_LOT_IDS = new Set([2, 10, 19, 21]);
+const ELYSIAN_GATES_AVAILABLE_LOT_IDS = new Set([1, 2, 8, 9, 10, 16, 21, 22, 26, 28]);
 
-const ELYSIAN_GATES_CONSTRUCTION_LOT_IDS = new Set([
-  3, 4, 6, 7, 8, 9, 11, 13, 14, 16, 17, 18, 22, 23, 24, 27, 28,
-]);
+const ELYSIAN_GATES_LOT_ORIENTATION: Partial<Record<number, string>> = {
+  1: "South W",
+  2: "West",
+  8: "SW",
+  9: "N",
+  10: "NE",
+  16: "W",
+  21: "SW",
+  22: "SW",
+  26: "E",
+  28: "S",
+};
 
 function elysianGatesStatusForLot(id: number): LotStatus {
-  if (ELYSIAN_GATES_SOLD_LOT_IDS.has(id)) return "Sold";
-  if (ELYSIAN_GATES_CONSTRUCTION_LOT_IDS.has(id)) return "Available";
-  return "Future";
+  if (ELYSIAN_GATES_AVAILABLE_LOT_IDS.has(id)) return "Available";
+  return "Sold";
 }
 
-function elysianGatesPriceForLot(id: number, status: LotStatus) {
-  if (status === "Sold") return "Sold Out";
-  if (ELYSIAN_GATES_CONSTRUCTION_LOT_IDS.has(id)) return "Construction Starting";
-  if (status === "Future") return "Upcoming";
-  return getProjectBySlug("elysian-gates")?.priceText ?? "From $1.3M";
+function elysianGatesTitleForLot(id: number) {
+  const orientation = ELYSIAN_GATES_LOT_ORIENTATION[id];
+  return orientation ? `Home ${id} — ${orientation}` : `Home ${id}`;
 }
 
-function elysianGatesDescriptionForLot(id: number, status: LotStatus, planNames: string) {
-  if (status === "Sold") {
-    return `Homesite ${id} is sold out.`;
-  }
-  if (ELYSIAN_GATES_CONSTRUCTION_LOT_IDS.has(id)) {
-    return `Homesite ${id} — construction starting. Build with the ${planNames} estate plans.`;
-  }
-  return `Homesite ${id} — upcoming release. Build with the ${planNames} estate plans.`;
+function elysianGatesDescriptionForLot(id: number, planNames: string) {
+  const orientation = ELYSIAN_GATES_LOT_ORIENTATION[id];
+  const facing = orientation ? ` ${orientation} facing.` : "";
+  return `Homesite ${id} — available.${facing} Build with the ${planNames} estate plans.`;
 }
 
 function generateElysianGatesLots(count: number): Lot[] {
@@ -149,8 +129,7 @@ function generateElysianGatesLots(count: number): Lot[] {
     return {
       id,
       lotNumber: `${id}`,
-      title: `Home ${id}`,
-      price: elysianGatesPriceForLot(id, status),
+      title: elysianGatesTitleForLot(id),
       beds: defaultPlan.beds,
       baths: defaultPlan.baths,
       sqft: defaultPlan.sqft,
@@ -158,7 +137,7 @@ function generateElysianGatesLots(count: number): Lot[] {
       story: defaultPlan.story,
       status,
       image: defaultPlan.image,
-      description: elysianGatesDescriptionForLot(id, status, planNames),
+      description: elysianGatesDescriptionForLot(id, planNames),
       availablePlans: ELYSIAN_GATES_ESTATE_PLANS,
       defaultPlanId: defaultPlan.id,
     };
@@ -181,7 +160,6 @@ const generateLots = (
       id,
       lotNumber: `${id}`,
       title: planNames[(id + seed) % planNames.length],
-      price: priceForLot(id + seed, status),
       beds,
       baths,
       sqft,
@@ -208,6 +186,8 @@ export interface MapConfig {
   name: string;
   url: string;
   lots: Lot[];
+  /** When true, sold lots are omitted from the map and sidebar (Elysian Gates). */
+  hideSoldLots?: boolean;
   hotspotSettings: {
     ringRadius: number;
     hitPadding: number;
@@ -233,6 +213,7 @@ export const MAP_CONFIGS: MapConfig[] = [
     name: 'Elysian Gates',
     url: '/svg/elysian-gates.svg',
     lots: generateElysianGatesLots(28),
+    hideSoldLots: true,
     hotspotSettings: {
       ...defaultHotspotRingSettings(),
       strokeColor: "#D43F33",

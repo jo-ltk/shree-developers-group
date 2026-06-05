@@ -22,7 +22,6 @@ interface Community {
   type: string;
   location: string;
   status: Status;
-  price: string;
   image: string;
   index: string;
   concept: string;
@@ -42,7 +41,6 @@ const communities: Community[] = [
     type: "89 Town Homes",
     location: "Cumming, GA",
     status: "Ongoing",
-    price: "From low $400s",
     image: "/images/sydney-oaks-gallery-card.png",
     index: "01",
     concept:
@@ -56,7 +54,6 @@ const communities: Community[] = [
     type: "Gated Enclave",
     location: "Suwanee",
     status: "Ongoing",
-    price: "From $1.3M",
     image: "/images/elysian-gates/featured-community.jpg",
     index: "02",
     concept:
@@ -70,7 +67,6 @@ const communities: Community[] = [
     type: "Townhomes & Single-Family",
     location: "Stockbridge, GA",
     status: "Completed",
-    price: "Community Complete",
     image: "/images/hanover-park/gallery-03.jpg",
     index: "03",
     concept:
@@ -84,7 +80,6 @@ const communities: Community[] = [
     type: "Retail & Single-Family",
     location: "Market Place Blvd · Exit 14",
     status: "Coming Soon",
-    price: "Register Interest",
     image: "/images/the-pointe/hero.jpg",
     index: "04",
     concept:
@@ -271,20 +266,18 @@ function CommunityCard({
               }`}
             >
               {c.specs.bedroomLabel ??
-                (c.specs.beds > 0 ? `${c.specs.beds} Bed | ${c.specs.baths} Bath` : c.price)}
+                (c.specs.beds > 0
+                  ? `${c.specs.beds} Bed | ${c.specs.baths} Bath`
+                  : c.specs.area)}
             </Annotation>
-            {(c.specs.bedroomLabel || c.specs.beds > 0) && (
-              <>
-                <span className="w-px h-3 bg-[#1C1208]/15" />
-                <Annotation
-                  className={`!font-bold !text-[#1C1208]/70 ${
-                    featuredMobile ? "!text-[0.7rem] !tracking-[0.2em]" : "responsive-stat-label"
-                  }`}
-                >
-                  {c.price}
-                </Annotation>
-              </>
-            )}
+            <span className="w-px h-3 bg-[#1C1208]/15" />
+            <Annotation
+              className={`!font-bold !text-[#1C1208]/70 ${
+                featuredMobile ? "!text-[0.7rem] !tracking-[0.2em]" : "responsive-stat-label"
+              }`}
+            >
+              {c.availability}
+            </Annotation>
           </div>
         </div>
       </div>

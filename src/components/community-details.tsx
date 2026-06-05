@@ -96,7 +96,7 @@ export function CommunityDetails() {
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               A 22-acre mixed-use townhome community featuring 3–4 bedroom
-              homes starting in the low $400s, with 89 townhomes, 21,000 sq. ft.
+              homes, with 89 townhomes, 21,000 sq. ft.
               of retail, and 24,000 sq. ft. of office space — thoughtfully
               designed for connected living, convenience, and long-term value.
             </BodyText>
@@ -349,7 +349,7 @@ export function ElysianGatesDetails({ stacked = false }: { stacked?: boolean }) 
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               A private gated enclave on 44 acres with 28 estate homes — 5-bedroom residences
-              from $1.3M, zoned for Lambert High School and surrounded by pickleball courts,
+              zoned for Lambert High School and surrounded by pickleball courts,
               a gazebo, and walking trails.
             </BodyText>
 

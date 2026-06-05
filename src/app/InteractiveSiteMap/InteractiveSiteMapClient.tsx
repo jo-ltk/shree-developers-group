@@ -14,12 +14,10 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ErrorBoundary } from "@/components/error-boundary";
-import { SydneyOaksStage } from "./components/SydneyOaksStage";
-import { ElysianGatesStage } from "./components/ElysianGatesStage";
-import { HanoverParkStage } from "./components/HanoverParkStage";
 import { MapSwitcher } from "./components/MapSwitcher";
 import { filters, MAP_CONFIGS, type MapConfig } from "./data/lots";
 import type { HomePlan, Lot, LotStatus } from "./types/site-map";
@@ -35,6 +33,54 @@ import { Ornament } from "@/components/ui/ornament";
 import { ImagePanel } from "@/components/ui/image-panel";
 import { CrosshairIcon } from "@/components/ui/crosshair-icon";
 import { MapViewport } from "./components/MapViewport";
+
+const SydneyOaksStage = dynamic(
+  () =>
+    import("./components/SydneyOaksStage").then((mod) => ({
+      default: mod.SydneyOaksStage,
+    })),
+  {
+    loading: () => (
+      <div className="flex h-full w-full items-center justify-center bg-[#EDE8DF]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1C1208]/30">
+          Loading map…
+        </p>
+      </div>
+    ),
+  },
+);
+
+const ElysianGatesStage = dynamic(
+  () =>
+    import("./components/ElysianGatesStage").then((mod) => ({
+      default: mod.ElysianGatesStage,
+    })),
+  {
+    loading: () => (
+      <div className="flex h-full w-full items-center justify-center bg-[#EDE8DF]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1C1208]/30">
+          Loading map…
+        </p>
+      </div>
+    ),
+  },
+);
+
+const HanoverParkStage = dynamic(
+  () =>
+    import("./components/HanoverParkStage").then((mod) => ({
+      default: mod.HanoverParkStage,
+    })),
+  {
+    loading: () => (
+      <div className="flex h-full w-full items-center justify-center bg-[#EDE8DF]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1C1208]/30">
+          Loading map…
+        </p>
+      </div>
+    ),
+  },
+);
 
 type Filter = "All" | LotStatus;
 type MobileTab = "map" | "list";
@@ -56,7 +102,6 @@ function resolveLotDisplay(lot: Lot, planId?: string): Lot & { planName?: string
     garage: plan.garage,
     story: plan.story,
     image: plan.image,
-    price: plan.price,
     planName: plan.name,
   };
 }
@@ -222,10 +267,6 @@ const LotRows = ({
               {lot.availablePlans?.length
                 ? `${lot.availablePlans.length} Floor Plans`
                 : `${lot.sqft.toLocaleString()} SQ FT`}
-            </Annotation>
-            <span className="h-0.5 w-0.5 rounded-full bg-[#1C1208]/20" />
-            <Annotation className="!text-[#1C1208]/40 responsive-stat-label !font-medium">
-              {lot.price}
             </Annotation>
           </div>
         </div>
@@ -485,10 +526,6 @@ const MobileLotDetails = ({
 
             <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
               <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[8px]">
-                {selectedLot.price}
-              </Annotation>
-              <span className="h-1 w-1 rounded-full bg-[#1C1208]/20" />
-              <Annotation className="!font-bold responsive-stat-label !text-[#1C1208]/40 max-[430px]:!text-[8px]">
                 {formatBedroomCount(selectedLot.beds)} · {selectedLot.baths} Bath
               </Annotation>
             </div>
@@ -545,13 +582,11 @@ const MobileLotDetails = ({
                   />
                 )}
 
-                <div className="mb-4 grid grid-cols-2 gap-2 border-t border-[#1C1208]/10 pt-4">
-                  <StatItem compact value={selectedLot.price} label="Price" />
+                <div className="mb-4 border-t border-[#1C1208]/10 pt-4">
                   <StatItem
                     compact
                     value={selectedLot.sqft.toLocaleString()}
                     label="Total SQ FT"
-                    separator
                   />
                 </div>
 
@@ -794,9 +829,8 @@ export function InteractiveSiteMapClient({
                 />
               ) : null}
 
-              <div className="mb-5 grid min-w-0 grid-cols-2 gap-2 border-t border-[#1C1208]/10 pt-4">
-                 <StatItem compact value={selectedLot.price} label="Price" />
-                 <StatItem compact value={`${selectedLot.sqft.toLocaleString()}`} label="Total SQ FT" separator />
+              <div className="mb-5 border-t border-[#1C1208]/10 pt-4">
+                 <StatItem compact value={`${selectedLot.sqft.toLocaleString()}`} label="Total SQ FT" />
               </div>
 
               <SpecGrid selectedLot={selectedLot} compact />
