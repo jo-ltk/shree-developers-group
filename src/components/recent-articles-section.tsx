@@ -27,7 +27,7 @@ const articles = [
     title: "The Beginning of Elysian Gates",
     description:
       "Groundwork is officially underway at 999 Settles Road in Atlanta, Georgia! Preliminary site measurements and ground clearance have begun on the future home of our exclusive 28-plot single-family gated community. We are currently finalizing preparations and waiting for the groundbreaking ceremony to officially start the project soon. Stay tuned for updates as we bring this vision to life!",
-    imagePublicId: "shree-blog/elysian-gates-groundwork-begins",
+    imageSrc: "/images/blog/elysian-gates-groundwork-begins.jpg",
     date: "May 13, 2026",
   },
   {
@@ -46,19 +46,28 @@ const articles = [
   },
 ] as const;
 
+type Article = (typeof articles)[number];
+
+function getArticleImageSrc(article: Article): string {
+  if ("imageSrc" in article) {
+    return article.imageSrc;
+  }
+  return cloudinaryImageUrl(article.imagePublicId, {
+    width: BLOG_CARD_WIDTH,
+    quality: "auto:good",
+  });
+}
+
 function ArticleCard({
   article,
   index,
   priority = false,
 }: {
-  article: (typeof articles)[number];
+  article: Article;
   index: number;
   priority?: boolean;
 }) {
-  const imageSrc = cloudinaryImageUrl(article.imagePublicId, {
-    width: BLOG_CARD_WIDTH,
-    quality: "auto:good",
-  });
+  const imageSrc = getArticleImageSrc(article);
   return (
     <motion.article
       key={article.title}
