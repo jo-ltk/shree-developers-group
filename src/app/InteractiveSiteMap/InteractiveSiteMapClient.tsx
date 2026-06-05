@@ -515,6 +515,8 @@ const MobileLotDetails = ({
   onSelectPlan,
   expanded,
   onToggleExpanded,
+  collapsed,
+  onToggleCollapsed,
   variant,
 }: {
   selectedLot: Lot & { planName?: string };
@@ -523,24 +525,68 @@ const MobileLotDetails = ({
   onSelectPlan: (id: string) => void;
   expanded: boolean;
   onToggleExpanded: () => void;
+  collapsed?: boolean;
+  onToggleCollapsed?: () => void;
   variant: "sheet" | "panel";
 }) => {
   const hasPlans = Boolean(baseSelectedLot.availablePlans?.length);
   const isSheet = variant === "sheet";
+  const isCollapsed = Boolean(isSheet && collapsed);
 
   return (
     <div
       className={
         isSheet
-          ? "shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] pb-[calc(env(safe-area-inset-bottom)+0.5rem)]"
+          ? "shrink-0 border-t border-[#1C1208]/10 bg-[#F5F0E8] pb-[calc(env(safe-area-inset-bottom)+0.5rem)] transition-[max-height] duration-300 ease-out"
           : "border-b border-[#1C1208]/10 bg-[#F5F0E8]"
       }
     >
-      <div className={`px-4 ${isSheet ? "pt-3 max-[430px]:px-3 max-[430px]:pt-2.5" : "py-5"}`}>
-        {isSheet && (
-          <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-[#1C1208]/15" aria-hidden />
-        )}
+      {isSheet && onToggleCollapsed ? (
+        <button
+          type="button"
+          onClick={onToggleCollapsed}
+          aria-expanded={!isCollapsed}
+          aria-label={isCollapsed ? "Show home details" : "Collapse panel to show more map"}
+          className="flex w-full flex-col items-center gap-1 px-4 pb-1 pt-2.5 touch-manipulation max-[430px]:px-3"
+        >
+          <div className="h-1 w-10 rounded-full bg-[#1C1208]/20" />
+          {isCollapsed ? (
+            <ChevronUp className="h-3 w-3 opacity-35" aria-hidden />
+          ) : (
+            <ChevronDown className="h-3 w-3 opacity-35" aria-hidden />
+          )}
+        </button>
+      ) : null}
 
+      {isCollapsed ? (
+        <div className="flex items-center gap-2.5 px-4 pb-2.5 max-[430px]:gap-2 max-[430px]:px-3">
+          <div
+            className="h-11 w-11 shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF] max-[430px]:h-10 max-[430px]:w-10"
+            style={{ borderRadius: 3 }}
+          >
+            <img src={selectedLot.image} alt={selectedLot.title} className="h-full w-full object-cover" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Annotation className="!font-bold !text-[#D43F33] responsive-stat-label max-[430px]:!text-[9px]">
+                Home {selectedLot.lotNumber}
+              </Annotation>
+              <Annotation
+                className={`border px-1.5 py-0.5 !font-bold ${listBadgeClass(selectedLot.status)} responsive-stat-label max-[430px]:!text-[8px]`}
+              >
+                {statusDisplayLabel(selectedLot.status)}
+              </Annotation>
+            </div>
+            <p
+              className="mt-0.5 truncate font-light text-[#1C1208] max-[430px]:text-sm"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem" }}
+            >
+              {selectedLot.title}
+            </p>
+          </div>
+        </div>
+      ) : (
+      <div className={`px-4 ${isSheet ? "pt-1 max-[430px]:px-3 max-[430px]:pt-0.5" : "py-5"}`}>
         <div className="flex items-start gap-3 max-[430px]:gap-2.5">
           <div
             className={`shrink-0 overflow-hidden border border-[#1C1208]/12 bg-[#EDE8DF] ${
@@ -567,7 +613,7 @@ const MobileLotDetails = ({
               </Annotation>
             </div>
 
-            {selectedLot.status === "Sold" ? (
+            {selectedLot.status === "Sold" && !isSheet ? (
               <LotStatusCallout lot={selectedLot} compact />
             ) : null}
 
@@ -677,6 +723,7 @@ const MobileLotDetails = ({
           </div>
         )}
       </div>
+      )}
     </div>
   );
 };
@@ -689,6 +736,7 @@ export function InteractiveSiteMapClient({
   const [activeFilter, setActiveFilter] = useState<Filter>("All");
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
   const [mobileDetailsExpanded, setMobileDetailsExpanded] = useState(false);
+  const [mobileSheetCollapsed, setMobileSheetCollapsed] = useState(false);
   const [selectedMapId, setSelectedMapId] = useState(MAP_CONFIGS[0].id);
   
   // Read the `project` search param on mount and auto-select the matching map
@@ -736,6 +784,7 @@ export function InteractiveSiteMapClient({
 
   useEffect(() => {
     setMobileDetailsExpanded(false);
+    setMobileSheetCollapsed(false);
   }, [selectedLotId, selectedMapId]);
 
   const selectedLot = resolveLotDisplay(baseSelectedLot, selectedPlanId);
@@ -999,6 +1048,8 @@ export function InteractiveSiteMapClient({
             onSelectPlan={setSelectedPlanId}
             expanded={mobileDetailsExpanded}
             onToggleExpanded={() => setMobileDetailsExpanded((open) => !open)}
+            collapsed={mobileSheetCollapsed}
+            onToggleCollapsed={() => setMobileSheetCollapsed((open) => !open)}
             variant="sheet"
           />
         </div>
