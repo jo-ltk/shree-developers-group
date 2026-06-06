@@ -26,7 +26,7 @@ const articles = [
   {
     title: "The Beginning of Elysian Gates",
     description:
-      "Groundwork is officially underway at 999 Settles Road in Atlanta, Georgia! Preliminary site measurements and ground clearance have begun on the future home of our exclusive 28-plot single-family gated community. We are currently finalizing preparations and waiting for the groundbreaking ceremony to officially start the project soon. Stay tuned for updates as we bring this vision to life!",
+      "28 Gated community. There are only limited slots and visit our Interactive project map to analysis which all is available for buying. Stay tuned for updates as we bring the vision to life",
     imageSrc: "/images/blog/elysian-gates-groundwork-begins.jpg",
     date: "May 13, 2026",
   },
