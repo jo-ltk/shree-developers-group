@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { buildContactEnquiryEmailHtml } from "@/lib/contact-enquiry-email";
 import { COMPANY_CONTACT } from "@/lib/contact";
 
 type ContactBody = {
@@ -11,14 +12,6 @@ type ContactBody = {
   projectTitle?: string;
   source?: string;
 };
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
 
 export async function POST(request: Request) {
   let body: ContactBody;
@@ -67,16 +60,15 @@ export async function POST(request: Request) {
     subjectParts.push(`— ${body.source.trim()}`);
   }
 
-  const html = `
-    <h2>New website enquiry</h2>
-    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-    ${body.callbackTime ? `<p><strong>Preferred callback:</strong> ${escapeHtml(body.callbackTime)}</p>` : ""}
-    ${body.callbackMethod ? `<p><strong>Callback method:</strong> ${escapeHtml(body.callbackMethod)}</p>` : ""}
-    ${body.projectTitle ? `<p><strong>Project:</strong> ${escapeHtml(body.projectTitle)}</p>` : ""}
-    ${body.source ? `<p><strong>Source:</strong> ${escapeHtml(body.source)}</p>` : ""}
-  `.trim();
+  const html = buildContactEnquiryEmailHtml({
+    name,
+    phone,
+    email,
+    callbackTime: body.callbackTime,
+    callbackMethod: body.callbackMethod,
+    projectTitle: body.projectTitle,
+    source: body.source,
+  });
 
   const resend = new Resend(apiKey);
   const { error } = await resend.emails.send({
