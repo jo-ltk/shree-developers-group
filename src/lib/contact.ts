@@ -1,6 +1,6 @@
 /** Canonical company contact details — use across the site for consistency. */
 export const COMPANY_CONTACT = {
-  email: "yashesh102024@gmail.com",
+  email: "yashesh@shreedevelopersgroup.com",
   phoneDisplay: "+1 (770) 789-7044",
   /** E.164 for tel: and wa.me links (no spaces or punctuation). */
   phoneE164: "+17707897044",
