@@ -73,7 +73,7 @@ export async function POST(request: Request) {
   const resend = new Resend(apiKey);
   const { error } = await resend.emails.send({
     from,
-    to: COMPANY_CONTACT.email,
+    to: COMPANY_CONTACT.enquiryInbox,
     replyTo: email,
     subject: subjectParts.join(" "),
     html,
