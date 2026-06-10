@@ -35,11 +35,11 @@ function statusForLot(index: number): LotStatus {
 }
 
 /** Sydney Oaks homesite availability (interactive map + list). */
-const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 3, 6, 7, 9, 10, 11]);
+const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 4, 6, 7, 9, 10, 11, 12, 35, 37]);
 
 const SYDNEY_OAKS_CONSTRUCTION_LOT_IDS = new Set([
-  4, 5, 8, 12,
-  ...Array.from({ length: 46 - 35 + 1 }, (_, i) => 35 + i),
+  3, 5, 8,
+  36, 38, 39, 40, 41, 42, 43, 44, 45, 46,
 ]);
 
 function sydneyOaksStatusForLot(id: number): LotStatus {

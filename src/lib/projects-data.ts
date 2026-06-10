@@ -1230,7 +1230,7 @@ export const allProjects: ProjectData[] = [
         bhk: 3,
         area: 1971,
         facing: "East-Facing",
-        availability: "Available",
+        availability: "Sold Out",
         image: "/images/floor-plans/aspen/first-floor.jpg"
       },
       {
