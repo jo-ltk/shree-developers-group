@@ -1181,7 +1181,7 @@ export const allProjects: ProjectData[] = [
           { label: "Optional 02", image: "/images/floor-plans/aspen/optional-02.jpg" },
         ],
         bedrooms: 3,
-        bathrooms: 2.5,
+        bathrooms: 3.5,
         parking: 2,
         area: 1971,
         availability: "Available",

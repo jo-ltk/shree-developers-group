@@ -45,7 +45,7 @@ const communities: Community[] = [
     index: "01",
     concept:
       "A 22-acre mixed-use community with 89 townhomes, 21,000 sq. ft. retail, and 24,000 sq. ft. office space.",
-    specs: { beds: 3, baths: 2.5, area: "FROM 1,971 SQ FT", bedroomLabel: "3–4 Bedrooms" },
+    specs: { beds: 3, baths: 3.5, area: "FROM 1,971 SQ FT", bedroomLabel: "3–4 Bedrooms" },
     availability: "Available",
   },
   {
