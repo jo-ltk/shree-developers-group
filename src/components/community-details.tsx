@@ -422,8 +422,7 @@ const newnanFeatures = [
 
 /** Configurable PDF URL — update this value or set NEXT_PUBLIC_NEWNAN_CROSSING_PDF_URL when hosted on Cloudinary */
 export const NEWNAN_CROSSING_PDF_URL =
-  process.env.NEXT_PUBLIC_NEWNAN_CROSSING_PDF_URL ||
-  "https://res.cloudinary.com/shree-developers/raw/upload/v1/pdfs/newnan-crossing-overview.pdf";
+  process.env.NEXT_PUBLIC_NEWNAN_CROSSING_PDF_URL || "";
 
 function DownloadPdfButton({
   href,
@@ -436,10 +435,13 @@ function DownloadPdfButton({
   className?: string;
   children: React.ReactNode;
 }) {
+  const hasValidUrl = href && href.trim() !== "";
+  const targetHref = hasValidUrl ? href : "#request-info";
+
   return (
     <a
-      href={href}
-      download={filename ?? true}
+      href={targetHref}
+      {...(hasValidUrl ? { download: filename ?? true, target: "_blank", rel: "noopener noreferrer" } : {})}
       className={cn(
         "group relative inline-flex h-[46px] sm:h-[52px] items-center gap-3 sm:gap-4 bg-rust px-5 sm:px-8",
         "!text-white no-underline overflow-hidden",
