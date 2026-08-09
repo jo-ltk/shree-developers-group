@@ -121,6 +121,7 @@ function mapFiltersFor(config: MapConfig): Array<"All" | LotStatus> {
 const MOBILE_FILTER_LABELS: Record<Filter, string> = {
   All: "All",
   Available: "Avail.",
+  "Under Contract": "Contract",
   "Coming Soon": "Building",
   Future: "Upcoming",
   Sold: "Sold",
@@ -134,6 +135,7 @@ function filterCount(filter: Filter, lots: Lot[]) {
 
 function statusDisplayLabel(status: LotStatus) {
   if (status === "Sold") return "Sold Out";
+  if (status === "Under Contract") return "Under Contract";
   if (status === "Available") return "Available";
   return status;
 }
@@ -141,6 +143,8 @@ function statusDisplayLabel(status: LotStatus) {
 function statusBadgeClass(status: LotStatus) {
   if (status === "Available")
     return "border-[#15803D]/40 bg-[#16A34A]/10 text-[#15803D]";
+  if (status === "Under Contract")
+    return "border-[#D97706]/45 bg-[#D97706]/12 text-[#D97706]";
   if (status === "Sold")
     return "border-[#B91C1C]/45 bg-[#B91C1C]/12 text-[#B91C1C]";
   return "border-[#D43F33]/30 bg-[#D43F33]/5 text-[#D43F33]";
@@ -149,6 +153,8 @@ function statusBadgeClass(status: LotStatus) {
 function listBadgeClass(status: LotStatus) {
   if (status === "Available")
     return "border-[#15803D]/45 text-[#15803D] bg-[#16A34A]/12";
+  if (status === "Under Contract")
+    return "border-[#D97706]/50 text-[#D97706] bg-[#D97706]/12";
   if (status === "Sold")
     return "border-[#B91C1C]/50 text-[#B91C1C] bg-[#B91C1C]/12";
   if (status === "Coming Soon")
@@ -191,9 +197,45 @@ function SoldOutBanner({
   );
 }
 
+function UnderContractBanner({
+  message,
+  compact = false,
+  className = "",
+}: {
+  message: string;
+  compact?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      role="status"
+      className={`border border-[#D97706]/30 bg-[#D97706]/[0.05] shadow-[inset_3px_0_0_#D97706] ${
+        compact ? "mb-3 px-3.5 py-2.5" : "mb-4 px-4 py-3"
+      } ${className}`}
+      style={{ borderRadius: 2 }}
+    >
+      <p
+        style={{
+          color: "#D97706",
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: compact ? "1.05rem" : "1.125rem",
+          fontWeight: 500,
+          lineHeight: 1.45,
+          margin: 0,
+        }}
+      >
+        {message}
+      </p>
+    </div>
+  );
+}
+
 function LotStatusCallout({ lot, compact = false }: { lot: Lot; compact?: boolean }) {
   if (lot.status === "Sold") {
     return <SoldOutBanner message={lot.description} compact={compact} />;
+  }
+  if (lot.status === "Under Contract") {
+    return <UnderContractBanner message={lot.description} compact={compact} />;
   }
 
   return null;
@@ -613,7 +655,7 @@ const MobileLotDetails = ({
               </Annotation>
             </div>
 
-            {selectedLot.status === "Sold" && !isSheet ? (
+            {(selectedLot.status === "Sold" || selectedLot.status === "Under Contract") && !isSheet ? (
               <LotStatusCallout lot={selectedLot} compact />
             ) : null}
 

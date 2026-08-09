@@ -35,15 +35,16 @@ function statusForLot(index: number): LotStatus {
 }
 
 /** Sydney Oaks homesite availability (interactive map + list). */
-const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 4, 6, 7, 9, 10, 11, 12, 35, 37]);
+const SYDNEY_OAKS_SOLD_LOT_IDS = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+const SYDNEY_OAKS_UNDER_CONTRACT_LOT_IDS = new Set([35, 36, 37]);
 
 const SYDNEY_OAKS_CONSTRUCTION_LOT_IDS = new Set([
-  3, 5, 8,
-  36, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+  38, 39, 40, 41, 42, 43, 44, 45, 46,
 ]);
 
 function sydneyOaksStatusForLot(id: number): LotStatus {
   if (SYDNEY_OAKS_SOLD_LOT_IDS.has(id)) return "Sold";
+  if (SYDNEY_OAKS_UNDER_CONTRACT_LOT_IDS.has(id)) return "Under Contract";
   if (SYDNEY_OAKS_CONSTRUCTION_LOT_IDS.has(id)) return "Available";
   return "Future";
 }
@@ -56,6 +57,9 @@ function sydneyOaksDescriptionForLot(
 ) {
   if (status === "Sold") {
     return `Home ${id} is sold out.`;
+  }
+  if (status === "Under Contract") {
+    return `Home ${id} is currently under contract. ${planName} townhome (${seriesLabel}).`;
   }
   if (SYDNEY_OAKS_CONSTRUCTION_LOT_IDS.has(id)) {
     return `Home ${id} — construction starting. ${planName} townhome (${seriesLabel}).`;
@@ -181,6 +185,7 @@ const generateLots = (
 export const filters: Array<"All" | LotStatus> = [
   "All",
   "Available",
+  "Under Contract",
   "Coming Soon",
   "Future",
   "Sold",
@@ -193,8 +198,8 @@ export interface MapConfig {
   lots: Lot[];
   /** Filter tabs shown for this map (defaults to all statuses). */
   statusFilters?: Array<"All" | LotStatus>;
-  /** Legend style — Elysian Gates uses green/red only. */
-  legendMode?: "full" | "available-sold";
+  /** Legend style — Sydney Oaks includes Under Contract, Elysian Gates uses green/red only. */
+  legendMode?: "full" | "available-sold" | "sydney-oaks";
   hotspotSettings: {
     ringRadius: number;
     hitPadding: number;
@@ -209,8 +214,8 @@ export const MAP_CONFIGS: MapConfig[] = [
     name: 'Sydney Oaks',
     url: '/svg/siteMap-final.svg',
     lots: generateSydneyOaksLots(89),
-    statusFilters: ["All", "Available", "Sold"],
-    legendMode: "available-sold",
+    statusFilters: ["All", "Available", "Under Contract", "Sold"],
+    legendMode: "sydney-oaks",
     hotspotSettings: {
       ...defaultHotspotRingSettings(),
       strokeColor: "#8B2A2A",

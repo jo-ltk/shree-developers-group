@@ -1,4 +1,4 @@
-export type LotStatus = "Available" | "Coming Soon" | "Future" | "Sold";
+export type LotStatus = "Available" | "Coming Soon" | "Future" | "Sold" | "Under Contract";
 
 export type HomePlan = {
   id: string;

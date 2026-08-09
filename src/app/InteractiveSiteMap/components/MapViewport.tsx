@@ -12,7 +12,7 @@ export function MapViewport({
 }: {
   children: ReactNode;
   showStatusLegend?: boolean;
-  legendMode?: "full" | "available-sold";
+  legendMode?: "full" | "available-sold" | "sydney-oaks";
 }) {
   const {
     containerRef,

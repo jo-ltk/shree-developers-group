@@ -60,7 +60,13 @@ export const LotHotspotOverlay = memo(function LotHotspotOverlay({
           cy={cy}
           r={ringR + 1}
           fill="none"
-          stroke={lot.status === "Sold" ? "#B91C1C" : "#15803D"}
+          stroke={
+            lot.status === "Sold"
+              ? "#B91C1C"
+              : lot.status === "Under Contract"
+              ? "#D97706"
+              : "#15803D"
+          }
           strokeWidth={2.5}
           pointerEvents="none"
           {...RING_RENDER_PROPS}

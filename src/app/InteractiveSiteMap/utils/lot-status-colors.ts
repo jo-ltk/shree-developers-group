@@ -16,12 +16,17 @@ const SOLD_RED_STYLE = {
   stroke: "#B91C1C",
 } as const;
 
+const UNDER_CONTRACT_AMBER_STYLE = {
+  fill: "rgba(217, 119, 6, 0.45)",
+  stroke: "#D97706",
+} as const;
+
 const UPCOMING_GREY_STYLE = {
   fill: "rgba(28, 18, 8, 0.2)",
   stroke: "#1C1208",
 } as const;
 
-/** Lot status rings: green = construction/available, red = sold, grey = upcoming */
+/** Lot status rings: green = construction/available, red = sold, amber = under contract, grey = upcoming */
 export function lotStatusOverlayStyle(
   status: LotStatus,
   selected = false,
@@ -35,6 +40,12 @@ export function lotStatusOverlayStyle(
         fill: AVAILABLE_GREEN_STYLE.fill,
         stroke: selected ? selectedStroke : AVAILABLE_GREEN_STYLE.stroke,
         strokeWidth,
+      };
+    case "Under Contract":
+      return {
+        fill: UNDER_CONTRACT_AMBER_STYLE.fill,
+        stroke: selected ? selectedStroke : UNDER_CONTRACT_AMBER_STYLE.stroke,
+        strokeWidth: selected ? 4.5 : 3.5,
       };
     case "Coming Soon":
       return {
