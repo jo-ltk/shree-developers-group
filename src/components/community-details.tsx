@@ -420,9 +420,10 @@ const newnanFeatures = [
   { num: "04", title: "Community Spaces", icon: Trees },
 ];
 
-/** Configurable PDF URL — update this value or set NEXT_PUBLIC_NEWNAN_CROSSING_PDF_URL when hosted on Cloudinary */
+/** Configurable PDF URL — defaults to local web-compressed PDF or environment override */
 export const NEWNAN_CROSSING_PDF_URL =
-  process.env.NEXT_PUBLIC_NEWNAN_CROSSING_PDF_URL || "";
+  process.env.NEXT_PUBLIC_NEWNAN_CROSSING_PDF_URL ||
+  "/pdfs/newnan-crossing-overview.pdf";
 
 function DownloadPdfButton({
   href,
