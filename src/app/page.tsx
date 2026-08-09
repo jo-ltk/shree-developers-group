@@ -11,6 +11,7 @@ import {
   CommunityDetails,
   ElysianGatesDetails,
   HanoverParkDetails,
+  NewnanCrossingDetails,
 } from "@/components/community-details";
 import { AboutShree } from "@/components/about-shree";
 import { ProcessTimeline } from "@/components/process-timeline";
@@ -45,6 +46,7 @@ export default function Home() {
         <CommunityDetails />
         <ElysianGatesDetails stacked />
         <HanoverParkDetails stacked />
+        <NewnanCrossingDetails stacked />
         <CommunityDetailsPage />
       </div> 
 
